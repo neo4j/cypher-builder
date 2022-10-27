@@ -68,6 +68,22 @@ export function cypherDatetime(): CypherFunction {
     return new CypherFunction("datetime");
 }
 
+export function cypherDate(): CypherFunction {
+    return new CypherFunction("date");
+}
+
+export function cypherLocalDatetime(): CypherFunction {
+    return new CypherFunction("localdatetime");
+}
+
+export function cypherLocalTime(): CypherFunction {
+    return new CypherFunction("localtime");
+}
+
+export function cypherTime(): CypherFunction {
+    return new CypherFunction("time");
+}
+
 export function count(expr: Expr): CypherFunction {
     return new CypherFunction("count", [expr]);
 }
@@ -87,3 +103,9 @@ export function avg(expr: Expr): CypherFunction {
 export function sum(expr: Expr): CypherFunction {
     return new CypherFunction("sum", [expr]);
 }
+
+export function randomUUID(): CypherFunction {
+    return new CypherFunction("randomUUID");
+}
+
+
