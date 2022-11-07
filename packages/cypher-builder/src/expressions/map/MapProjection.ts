@@ -38,7 +38,7 @@ export class MapProjection implements CypherCompilable {
         if (values instanceof String) {
             this.projection.push(values as string);
         } else {
-            this.extraValues = { ...this.extraValues, ...values as Record<string, Expr> };
+            this.extraValues = { ...this.extraValues, ...(values as Record<string, Expr>) };
         }
     }
 

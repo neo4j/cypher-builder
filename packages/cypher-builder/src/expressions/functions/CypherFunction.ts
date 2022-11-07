@@ -109,5 +109,3 @@ export function sum(expr: Expr): CypherFunction {
 export function randomUUID(): CypherFunction {
     return new CypherFunction("randomUUID");
 }
-
-
