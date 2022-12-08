@@ -17,16 +17,8 @@
  * limitations under the License.
  */
 
-import { convertFormat, ConvertFormat } from "./date";
-import type { RunFirstColumn } from "./RunFirstColumn";
-import type { ValidatePredicate } from "./ValidatePredicate";
-
-export type ApocPredicate = ValidatePredicate;
-export type ApocExpr = RunFirstColumn | ConvertFormat;
-
-export { RunFirstColumn } from "./RunFirstColumn";
-export { ValidatePredicate } from "./ValidatePredicate";
-
-export const date = {
-    convertFormat,
-};
+export function padBlock(block: string, spaces = 4): string {
+    const paddingStr = " ".repeat(spaces);
+    const paddedNewLines = block.replace(/\n/g, `\n${paddingStr}`);
+    return `${paddingStr}${paddedNewLines}`;
+}

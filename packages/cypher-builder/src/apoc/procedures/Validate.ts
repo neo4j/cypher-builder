@@ -17,26 +17,34 @@
  * limitations under the License.
  */
 
-import type { Call } from "../Call";
+import type { ListExpr as List } from "../../expressions/list/ListExpr";
+import type { MapExpr as Map } from "../../expressions/map/MapExpr";
 import type { CypherEnvironment } from "../../Environment";
-import type { PropertyRef } from "../../references/PropertyRef";
-import type { Param } from "../../references/Param";
-import type { Variable } from "../../references/Variable";
+import type { Predicate } from "../../types";
+import { Literal } from "../../references/Literal";
 import { CypherASTNode } from "../../CypherASTNode";
 
-export type SetParam = [PropertyRef, Param<any>];
+/**
+ * @group Procedures
+ */
+export class Validate extends CypherASTNode {
+    private predicate: Predicate;
+    private message: string;
+    private params: List | Map | Literal;
 
-/** Represents a WITH statement to import variables into a CALL subquery */
-export class ImportWith extends CypherASTNode {
-    private params: Variable[];
-
-    constructor(parent: Call, params: Variable[] = []) {
-        super(parent);
+    constructor(predicate: Predicate, message: string, params: List | Literal | Map = new Literal([0])) {
+        super();
+        this.predicate = predicate;
+        this.message = message;
         this.params = params;
     }
 
+    /**
+     * @ignore
+     */
     public getCypher(env: CypherEnvironment): string {
-        const paramsStr = this.params.map((v) => v.getCypher(env));
-        return `WITH ${paramsStr.join(", ")}`;
+        const predicateCypher = this.predicate.getCypher(env);
+        const paramsCypher = this.params.getCypher(env);
+        return `apoc.util.validate(${predicateCypher}, "${this.message}", ${paramsCypher})`;
     }
 }

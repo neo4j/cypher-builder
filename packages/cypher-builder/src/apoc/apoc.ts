@@ -17,22 +17,7 @@
  * limitations under the License.
  */
 
-import { NamedReference, Reference } from "./Reference";
-
-/** Represents a variable */
-export class Variable extends Reference {
-    constructor() {
-        super("var");
-    }
-}
-
-/** For compatibility reasons, represents a plain string variable */
-export class NamedVariable extends Variable implements NamedReference {
-    public readonly id: string;
-
-    constructor(name: string) {
-        super();
-        this.id = name;
-        this.prefix = "";
-    }
-}
+export { RunFirstColumn } from "./functions/RunFirstColumn";
+export { ValidatePredicate } from "./functions/ValidatePredicate";
+export { Validate } from "./procedures/Validate";
+export * as date from "./functions/date";

@@ -17,11 +17,20 @@
  * limitations under the License.
  */
 
-import { Param } from "../references/Param";
+import Cypher from "..";
+import { normalizeVariable } from "./normalize-variable";
 
-export function convertToCypherParams<T>(original: Record<string, T>): Record<string, Param<T>> {
-    return Object.entries(original).reduce((acc, [key, value]) => {
-        acc[key] = new Param(value);
-        return acc;
-    }, {});
-}
+describe("normalizeVariable", () => {
+    test("returns the same variable if it is a CypherCompilable", () => {
+        const originalVariable = new Cypher.Literal("hello");
+        const result = normalizeVariable(originalVariable);
+
+        expect(result).toEqual(originalVariable);
+    });
+
+    test("generates a new literal variable if it is a primitive value", () => {
+        const result = normalizeVariable(5);
+
+        expect(result).toBeInstanceOf(Cypher.Literal);
+    });
+});

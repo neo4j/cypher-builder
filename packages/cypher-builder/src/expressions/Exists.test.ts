@@ -17,23 +17,24 @@
  * limitations under the License.
  */
 
+import { TestClause } from "../utils/TestClause";
 import Cypher from "..";
-import { expectTypeOf } from "expect-type";
 
-describe("CypherBuilder CallProcedure", () => {
-    test("CallProcedure types", () => {
-        expectTypeOf<Cypher.CallProcedure>().toMatchTypeOf<Cypher.CallProcedure>();
-    });
+describe("Exists", () => {
+    test("wraps clause within exists", () => {
+        const subquery = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).return("*");
 
-    test("Call validatePredicate", () => {
-        const validatePredicate = new Cypher.apoc.Validate(
-            Cypher.eq(new Cypher.Literal(1), new Cypher.Literal(2)),
-            "My Message"
-        );
-        const callClause = new Cypher.CallProcedure(validatePredicate);
+        const existsExpression = new Cypher.Exists(subquery);
 
-        const queryResult = callClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"CALL apoc.util.validate(1 = 2, \\"My Message\\", [0])"`);
+        const queryResult = new TestClause(existsExpression).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "EXISTS {
+                MATCH (this0:\`Movie\`)
+                RETURN *
+            }"
+        `);
+
         expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
     });
 });

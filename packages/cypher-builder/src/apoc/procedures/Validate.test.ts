@@ -17,32 +17,31 @@
  * limitations under the License.
  */
 
-import { CypherEnvironment } from "../../Environment";
-import Cypher from "../..";
 import { expectTypeOf } from "expect-type";
+import Cypher from "../..";
+import { CypherEnvironment } from "../../Environment";
 import type { CypherASTNode } from "../../CypherASTNode";
 
-describe("ValidatePredicate", () => {
+describe("Validate", () => {
     let env: CypherEnvironment;
 
     beforeEach(() => {
         env = new CypherEnvironment();
     });
 
-    test("ValidatePredicate types", () => {
-        expectTypeOf<Cypher.apoc.ValidatePredicate>().toMatchTypeOf<CypherASTNode>();
-        expectTypeOf<Cypher.apoc.ValidatePredicate>().toMatchTypeOf<Cypher.Predicate>();
+    test("Validate types", () => {
+        expectTypeOf<Cypher.apoc.Validate>().toMatchTypeOf<CypherASTNode>();
+        expectTypeOf<Cypher.apoc.Validate>().toMatchTypeOf<Cypher.Procedure>();
     });
 
-    test("Simple subquery", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
-        const subquery = new Cypher.Match(node).return(node);
-
-        const apocCall = new Cypher.apoc.RunFirstColumn(subquery, [node]);
-
-        expect(apocCall.getCypher(env)).toMatchInlineSnapshot(`
-            "apoc.cypher.runFirstColumnMany(\\"MATCH (this0:\`Movie\`)
-            RETURN this0\\", { this0: this0 })"
-        `);
+    test("Simple Validate", () => {
+        const validate = new Cypher.apoc.Validate(
+            Cypher.eq(new Cypher.Literal(1), new Cypher.Literal(2)),
+            "That's not how math works"
+        );
+        const callableProceedure = new Cypher.CallProcedure(validate);
+        expect(callableProceedure.getCypher(env)).toMatchInlineSnapshot(
+            `"CALL apoc.util.validate(1 = 2, \\"That's not how math works\\", [0])"`
+        );
     });
 });
