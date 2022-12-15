@@ -24,12 +24,13 @@
 <ul class="tsd-hierarchy">
 <li><span class="tsd-signature-type">WithReturn</span></li>
 <li><span class="tsd-signature-type">WithWith</span></li>
+<li><span class="tsd-signature-type">WithUnwind</span></li>
 <li><a href="Clause.html" class="tsd-signature-type" data-tsd-kind="Class">Clause</a>
 <ul class="tsd-hierarchy">
 <li><span class="target">Call</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/0d5023922/packages/cypher-builder/src/clauses/Call.ts#L31">clauses/Call.ts:31</a></li>
-<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/0d5023922/packages/cypher-builder/src/clauses/Call.ts#L38">clauses/Call.ts:38</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/851d74687/packages/cypher-builder/src/clauses/Call.ts#L32">clauses/Call.ts:32</a></li>
+<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/851d74687/packages/cypher-builder/src/clauses/Call.ts#L39">clauses/Call.ts:39</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -44,6 +45,7 @@
 <div class="tsd-index-list"><a href="Call.html#build" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>build</span></a>
 <a href="Call.html#innerWith" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>inner<wbr/>With</span></a>
 <a href="Call.html#return" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>return</span></a>
+<a href="Call.html#unwind" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>unwind</span></a>
 <a href="Call.html#with" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>with</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
@@ -59,9 +61,9 @@
 <li>
 <h5>subQuery: <a href="Clause.html" class="tsd-signature-type" data-tsd-kind="Class">Clause</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Call.html" class="tsd-signature-type" data-tsd-kind="Class">Call</a></h4><aside class="tsd-sources">
-<p>Inherited from <a href="Clause.html">Clause</a>.<a href="Clause.html#constructor">constructor</a></p>
+<p>Inherited from WithReturn.constructor</p>
 <ul>
-<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/0d5023922/packages/cypher-builder/src/clauses/Call.ts#L42">clauses/Call.ts:42</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/851d74687/packages/cypher-builder/src/clauses/Call.ts#L43">clauses/Call.ts:43</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="build" class="tsd-anchor"></a>
@@ -81,7 +83,7 @@
 <h4 class="tsd-returns-title">Returns <a href="../types/CypherResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">CypherResult</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Clause.html">Clause</a>.<a href="Clause.html#build">build</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/0d5023922/packages/cypher-builder/src/clauses/Clause.ts#L33">clauses/Clause.ts:33</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/851d74687/packages/cypher-builder/src/clauses/Clause.ts#L33">clauses/Clause.ts:33</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="innerWith" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>inner<wbr/>With</span><a href="#innerWith" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -94,7 +96,7 @@
 <h5><code class="tsd-tag ts-flagRest">Rest</code> <span class="tsd-signature-symbol">...</span>params: <a href="Variable.html" class="tsd-signature-type" data-tsd-kind="Class">Variable</a><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Call.html" class="tsd-signature-type" data-tsd-kind="Class">Call</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/0d5023922/packages/cypher-builder/src/clauses/Call.ts#L49">clauses/Call.ts:49</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/851d74687/packages/cypher-builder/src/clauses/Call.ts#L50">clauses/Call.ts:50</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="return" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>return</span><a href="#return" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -108,7 +110,21 @@
 <h4 class="tsd-returns-title">Returns <a href="Return.html" class="tsd-signature-type" data-tsd-kind="Class">Return</a></h4><aside class="tsd-sources">
 <p>Inherited from WithReturn.return</p>
 <ul>
-<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/0d5023922/packages/cypher-builder/src/clauses/mixins/WithReturn.ts#L27">clauses/mixins/WithReturn.ts:27</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/851d74687/packages/cypher-builder/src/clauses/mixins/WithReturn.ts#L27">clauses/mixins/WithReturn.ts:27</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="unwind" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>unwind</span><a href="#unwind" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="unwind.unwind-1">unwind<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>columns<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="../types/ProjectionColumn.html" class="tsd-signature-type" data-tsd-kind="Type alias">ProjectionColumn</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;*&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Unwind.html" class="tsd-signature-type" data-tsd-kind="Class">Unwind</a><a href="#unwind.unwind-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><code class="tsd-tag ts-flagRest">Rest</code> <span class="tsd-signature-symbol">...</span>columns: <span class="tsd-signature-symbol">(</span><a href="../types/ProjectionColumn.html" class="tsd-signature-type" data-tsd-kind="Type alias">ProjectionColumn</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;*&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="Unwind.html" class="tsd-signature-type" data-tsd-kind="Class">Unwind</a></h4><aside class="tsd-sources">
+<p>Inherited from WithUnwind.unwind</p>
+<ul>
+<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/851d74687/packages/cypher-builder/src/clauses/mixins/WithUnwind.ts#L27">clauses/mixins/WithUnwind.ts:27</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="with" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>with</span><a href="#with" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -122,7 +138,7 @@
 <h4 class="tsd-returns-title">Returns <a href="With.html" class="tsd-signature-type" data-tsd-kind="Class">With</a></h4><aside class="tsd-sources">
 <p>Inherited from WithWith.with</p>
 <ul>
-<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/0d5023922/packages/cypher-builder/src/clauses/mixins/WithWith.ts#L27">clauses/mixins/WithWith.ts:27</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/angrykoala/graphql/blob/851d74687/packages/cypher-builder/src/clauses/mixins/WithWith.ts#L27">clauses/mixins/WithWith.ts:27</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -150,5 +166,6 @@
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="Call.html#build" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>build</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="Call.html#innerWith" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>inner<wbr/>With</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="Call.html#return" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>return</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="Call.html#unwind" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>unwind</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="Call.html#with" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>with</a></li></ul></li></ul></nav></div></div>
 <div class="overlay"></div><script src="../assets/main.js"></script></body></html>
