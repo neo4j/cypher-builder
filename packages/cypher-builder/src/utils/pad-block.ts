@@ -17,21 +17,8 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
-import { TestClause } from "../utils/TestClause";
-
-describe("RelationshipRef", () => {
-    it("Create relationship from node", () => {
-        const node1 = new Cypher.Node({
-            labels: ["Actor"],
-        });
-
-        const node2 = new Cypher.Node({ labels: ["Movie"] });
-
-        const actedIn = node1.relatedTo(node2).withType("ACTED_IN");
-        const testClause = new TestClause(actedIn.pattern());
-
-        const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"(this1:\`Actor\`)-[this0:ACTED_IN]->(this2:\`Movie\`)"`);
-    });
-});
+export function padBlock(block: string, spaces = 4): string {
+    const paddingStr = " ".repeat(spaces);
+    const paddedNewLines = block.replace(/\n/g, `\n${paddingStr}`);
+    return `${paddingStr}${paddedNewLines}`;
+}

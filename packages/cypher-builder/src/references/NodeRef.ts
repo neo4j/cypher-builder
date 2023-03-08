@@ -18,28 +18,24 @@
  */
 
 import { HasLabel } from "../expressions/HasLabel";
-import { MatchPatternOptions, Pattern } from "../Pattern";
+import type { Param } from "./Param";
 import { NamedReference, Reference } from "./Reference";
-import { RelationshipRef } from "./RelationshipRef";
+
+export type NodeProperties = Record<string, Param<any>>;
 
 type NodeRefOptions = {
     labels?: string[];
 };
 
-/** Represents a Node reference */
+/** Represents a node reference
+ * @group References
+ */
 export class NodeRef extends Reference {
     public labels: string[];
 
-    constructor(options: NodeRefOptions) {
+    constructor(options: NodeRefOptions = {}) {
         super("this");
         this.labels = options.labels || [];
-    }
-
-    public relatedTo(node: NodeRef): RelationshipRef {
-        return new RelationshipRef({
-            source: this,
-            target: node,
-        });
     }
 
     public hasLabels(...labels: string[]): HasLabel {
@@ -49,13 +45,11 @@ export class NodeRef extends Reference {
     public hasLabel(label: string): HasLabel {
         return new HasLabel(this, [label]);
     }
-
-    /** Creates a new Pattern from this node */
-    public pattern(options: Pick<MatchPatternOptions, "source"> = {}): Pattern<NodeRef> {
-        return new Pattern(this, options);
-    }
 }
 
+/** Represents a node reference with a given name
+ * @group References
+ */
 export class NamedNode extends NodeRef implements NamedReference {
     public readonly id: string;
 

@@ -17,16 +17,20 @@
  * limitations under the License.
  */
 
-import { convertFormat, ConvertFormat } from "./date";
-import type { RunFirstColumn } from "./RunFirstColumn";
-import type { ValidatePredicate } from "./ValidatePredicate";
+import { ClauseMixin } from "./ClauseMixin";
+import type { ProjectionColumn } from "../sub-clauses/Projection";
+import { Unwind } from "../Unwind";
 
-export type ApocPredicate = ValidatePredicate;
-export type ApocExpr = RunFirstColumn | ConvertFormat;
+export abstract class WithUnwind extends ClauseMixin {
+    protected unwindStatement: Unwind | undefined;
 
-export { RunFirstColumn } from "./RunFirstColumn";
-export { ValidatePredicate } from "./ValidatePredicate";
-
-export const date = {
-    convertFormat,
-};
+    public unwind(...columns: Array<"*" | ProjectionColumn>): Unwind {
+        if (this.unwindStatement) {
+            this.unwindStatement.addColumns(...columns);
+        } else {
+            this.unwindStatement = new Unwind(...columns);
+            this.addChildren(this.unwindStatement);
+        }
+        return this.unwindStatement;
+    }
+}
