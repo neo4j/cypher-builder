@@ -45,7 +45,7 @@ RETURN this0.title
 
 # Examples
 
-You can find usage examples in the [examples](https://github.com/neo4j/graphql/tree/dev/packages/cypher-builder/examples) folder and in [CodePen](https://codepen.io/collection/waPbzd).
+You can find usage examples in the [examples](https://github.com/neo4j/cypher-builder/tree/master/examples) folder and in [CodePen](https://codepen.io/collection/waPbzd).
 
 # Development
 
