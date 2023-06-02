@@ -22,7 +22,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/neo4j/graphql.git"
+        "url": "git+https://github.com/neo4j/cypher-builder.git"
     },
     "keywords": [
         "neo4j",
@@ -33,9 +33,9 @@
     "author": "Neo4j Inc.",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/neo4j/graphql/issues"
+        "url": "https://github.com/neo4j/cypher-builder/issues"
     },
-    "homepage": "https://github.com/neo4j/graphql/tree/dev/packages/cypher-builder#readme",
+    "homepage": "https://neo4j.github.io/cypher-builder/",
     "devDependencies": {
         "@tsconfig/node16": "^1.0.4",
         "@types/jest": "29.5.1",
