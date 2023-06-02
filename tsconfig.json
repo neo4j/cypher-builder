@@ -4,7 +4,7 @@
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "resolveJsonModule": true, // Required for package.json import
+        "resolveJsonModule": true,
         "experimentalDecorators": true,
         "noImplicitAny": true,
         "rootDir": ".",
