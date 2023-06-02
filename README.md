@@ -49,6 +49,6 @@ You can find usage examples in the [examples](https://github.com/neo4j/cypher-bu
 
 # Development
 
--   `yarn test` to run cypher builder tests
--   `yarn build` to compile cypher builder library
--   `yarn docs` to generate the API reference docs
+-   `npm run test` to run cypher builder tests
+-   `npm run build` to compile cypher builder library
+-   `npm run docs` to generate the API reference docs

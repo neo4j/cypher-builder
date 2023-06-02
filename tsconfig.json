@@ -1,16 +1,16 @@
 {
     "extends": "@tsconfig/node16/tsconfig.json",
     "compilerOptions": {
-        "composite": true,
+        "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "resolveJsonModule": true, // Required for package.json import in @neo4j/graphql
+        "resolveJsonModule": true, // Required for package.json import
         "experimentalDecorators": true,
-        "noImplicitAny": false, // TODO: Refactor so that this can be true for monorepo
+        "noImplicitAny": true,
         "rootDir": ".",
         "baseUrl": ".",
         "outDir": "dist",
-        // "stripInternal": true
+        "stripInternal": true,
         "noUncheckedIndexedAccess": true
     },
     "include": ["src/**/*", "tests/**/*", "global.d.ts"]
