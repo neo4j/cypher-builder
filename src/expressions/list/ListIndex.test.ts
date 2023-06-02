@@ -28,6 +28,6 @@ describe("ListIndex", () => {
         const queryResult = new TestClause(listIndex).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[ \\"1\\", \\"2\\", \\"3\\" ][0]"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

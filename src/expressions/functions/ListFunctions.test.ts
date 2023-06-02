@@ -27,7 +27,7 @@ describe("List Functions", () => {
         const queryResult = new TestClause(existsFn).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"size([ 2 ])"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("reduce", () => {
@@ -44,11 +44,11 @@ describe("List Functions", () => {
             `"reduce(var0 = $param0, var1 IN [ $param1, $param2 ] | var0 + var1)"`
         );
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": 0,
-              "param1": 2,
-              "param2": 3,
-            }
-        `);
+{
+  "param0": 0,
+  "param1": 2,
+  "param2": 3,
+}
+`);
     });
 });

@@ -43,6 +43,6 @@ describe("CypherBuilder OrderBy", () => {
             LIMIT 5"
         `);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

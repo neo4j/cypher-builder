@@ -48,7 +48,7 @@ describe("apoc.util", () => {
                 WHERE apoc.util.validatePredicate(1 = 2, \\"That's not how math works\\", [0])
                 RETURN this0"
             `);
-            expect(params).toMatchInlineSnapshot(`Object {}`);
+            expect(params).toMatchInlineSnapshot(`{}`);
         });
     });
 });

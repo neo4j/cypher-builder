@@ -28,7 +28,7 @@ describe("Functions", () => {
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`"date()"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("date with timezone string parameter", () => {
@@ -38,10 +38,10 @@ describe("Functions", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"date($param0)"`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "9999-01-01",
-                }
-            `);
+{
+  "param0": "9999-01-01",
+}
+`);
         });
 
         test("date with timezone string literal", () => {
@@ -50,7 +50,7 @@ describe("Functions", () => {
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`"date(\\"9999-01-01\\")"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("date with timezone object", () => {
@@ -59,7 +59,7 @@ describe("Functions", () => {
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`"date({ timezone: \\"America/Los Angeles\\" })"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 
@@ -70,7 +70,7 @@ describe("Functions", () => {
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`"datetime()"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("datetime with params", () => {
@@ -80,10 +80,10 @@ describe("Functions", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"datetime($param0)"`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "9999-01-10",
-                }
-            `);
+{
+  "param0": "9999-01-10",
+}
+`);
         });
     });
 });

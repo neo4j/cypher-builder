@@ -29,10 +29,10 @@ describe("Aggregation Functions", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"count($param0)"`);
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "Hello",
-            }
-        `);
+{
+  "param0": "Hello",
+}
+`);
     });
 
     test("count with distinct", () => {
@@ -43,9 +43,9 @@ describe("Aggregation Functions", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"count(DISTINCT $param0)"`);
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "Hello",
-            }
-        `);
+{
+  "param0": "Hello",
+}
+`);
     });
 });

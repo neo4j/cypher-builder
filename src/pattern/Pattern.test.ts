@@ -28,7 +28,7 @@ describe("Patterns", () => {
             const pattern = new Cypher.Pattern(node).withoutLabels();
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)"`);
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("Simple node with default values", () => {
@@ -37,7 +37,7 @@ describe("Patterns", () => {
             const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`TestLabel\`)"`);
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("Node with parameters and labels", () => {
@@ -47,10 +47,10 @@ describe("Patterns", () => {
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`TestLabel\` { name: $param0 })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "test",
-                }
-            `);
+{
+  "param0": "test",
+}
+`);
         });
     });
 
@@ -66,7 +66,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTED_IN]->(this2)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("Simple relationship Pattern without parameters", () => {
@@ -76,7 +76,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1]->(this2)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("Simple Pattern with properties", () => {
@@ -106,14 +106,14 @@ describe("Patterns", () => {
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "Arthur",
-                  "param1": "Dent",
-                  "param2": Array [
-                    "neo",
-                  ],
-                }
-            `);
+{
+  "param0": "Arthur",
+  "param1": "Dent",
+  "param2": [
+    "neo",
+  ],
+}
+`);
         });
 
         test("Long relationship Pattern", () => {
@@ -134,7 +134,7 @@ describe("Patterns", () => {
                 `"(this0)-[this1:ACTED_IN]->(this2)-[this3:ACTED_IN]->(this4:\`TestLabel\`)"`
             );
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("Escape relationship type if needed", () => {
@@ -148,7 +148,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTE\`D_IN]->(this2)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 
@@ -162,7 +162,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTED_IN*2]->(this2)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("variable length with *", () => {
@@ -170,7 +170,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTED_IN*]->(this2)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("variable length with max only", () => {
@@ -180,7 +180,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTED_IN*..2]->(this2)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("variable length with min only", () => {
@@ -190,7 +190,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTED_IN*2..]->(this2)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("variable length with min and max", () => {
@@ -200,7 +200,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTED_IN*2..4]->(this2)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("variable length with exact value and properties", () => {
@@ -219,10 +219,10 @@ describe("Patterns", () => {
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": 100,
-                }
-            `);
+{
+  "param0": 100,
+}
+`);
         });
 
         test("variable length with empty relationship", () => {
@@ -230,7 +230,7 @@ describe("Patterns", () => {
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[*2]->(this1)"`);
 
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 });

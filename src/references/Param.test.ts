@@ -37,10 +37,10 @@ describe("Params", () => {
         const { params } = query.build();
 
         expect(params).toMatchInlineSnapshot(`
-            Object {
-              "param0": 1999,
-            }
-        `);
+{
+  "param0": 1999,
+}
+`);
     });
 
     test("use named param twice", () => {
@@ -56,6 +56,6 @@ describe("Params", () => {
             "$authvar0
             $authvar1"
         `);
-        expect(params).toMatchInlineSnapshot(`Object {}`);
+        expect(params).toMatchInlineSnapshot(`{}`);
     });
 });

@@ -37,10 +37,10 @@ describe("CypherBuilder Call", () => {
             }"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "my-id",
-                }
-            `);
+{
+  "param0": "my-id",
+}
+`);
     });
 
     test("Nested Call", () => {
@@ -65,10 +65,10 @@ describe("CypherBuilder Call", () => {
             }"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "my-id",
-                }
-            `);
+{
+  "param0": "my-id",
+}
+`);
     });
 
     it("CALL with inner with", () => {
@@ -90,11 +90,11 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
+{
+  "param0": "aa",
+  "param1": "bb",
+}
+`);
     });
 
     it("CALL with external with", () => {
@@ -116,11 +116,11 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
+{
+  "param0": "aa",
+  "param1": "bb",
+}
+`);
     });
     it("CALL with external with clause", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
@@ -141,11 +141,11 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
+{
+  "param0": "aa",
+  "param1": "bb",
+}
+`);
     });
 
     it("CALL with unwind", () => {
@@ -169,11 +169,11 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
+{
+  "param0": "aa",
+  "param1": "bb",
+}
+`);
     });
 
     it("CALL with unwind passed as a clause", () => {
@@ -199,10 +199,10 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
+{
+  "param0": "aa",
+  "param1": "bb",
+}
+`);
     });
 });

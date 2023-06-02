@@ -31,7 +31,7 @@ describe("CypherBuilder USE", () => {
             MATCH (this0:\`Movie\`)
             RETURN this0"
         `);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("USE in CALL", () => {
@@ -47,7 +47,7 @@ describe("CypherBuilder USE", () => {
                 RETURN this0
             }"
         `);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("USE in UNION", () => {
@@ -66,6 +66,6 @@ describe("CypherBuilder USE", () => {
             MATCH (this1:\`Movie\`)
             RETURN this1"
         `);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

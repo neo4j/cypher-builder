@@ -27,7 +27,7 @@ describe("List", () => {
         const queryResult = new TestClause(cypherList).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[ \\"1\\", \\"2\\", \\"3\\" ]"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("access list index", () => {
@@ -36,6 +36,6 @@ describe("List", () => {
         const queryResult = new TestClause(listIndex).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[ \\"1\\", \\"2\\", \\"3\\" ][0]"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

@@ -38,10 +38,10 @@ describe("Case", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "Hello",
-            }
-        `);
+{
+  "param0": "Hello",
+}
+`);
     });
 
     test("generic case ... then ... else without comparator", () => {
@@ -63,9 +63,9 @@ describe("Case", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "Hello",
-            }
-        `);
+{
+  "param0": "Hello",
+}
+`);
     });
 });

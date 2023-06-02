@@ -33,10 +33,10 @@ describe("Map Expression", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"{ foo: \\"barr\\", var: var0, param: $param0 }"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "test",
-            }
-        `);
+{
+  "param0": "test",
+}
+`);
     });
 
     test("Set key-value and object", () => {
@@ -57,10 +57,10 @@ describe("Map Expression", () => {
         );
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "value",
-            }
-        `);
+{
+  "param0": "value",
+}
+`);
     });
 
     test("size", () => {

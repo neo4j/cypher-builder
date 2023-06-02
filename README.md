@@ -45,10 +45,10 @@ RETURN this0.title
 
 # Examples
 
-You can find usage examples in the [examples](https://github.com/neo4j/graphql/tree/dev/packages/cypher-builder/examples) folder and in [CodePen](https://codepen.io/collection/waPbzd).
+You can find usage examples in the [examples](https://github.com/neo4j/cypher-builder/tree/master/examples) folder and in [CodePen](https://codepen.io/collection/waPbzd).
 
 # Development
 
--   `yarn test` to run cypher builder tests
--   `yarn build` to compile cypher builder library
--   `yarn docs` to generate the API reference docs
+-   `npm test` to run cypher builder tests
+-   `npm run build` to compile cypher builder library
+-   `npm run docs` to generate the API reference docs

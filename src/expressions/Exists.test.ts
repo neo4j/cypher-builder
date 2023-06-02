@@ -35,6 +35,6 @@ describe("Exists", () => {
             }"
         `);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

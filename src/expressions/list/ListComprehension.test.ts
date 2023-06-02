@@ -32,14 +32,14 @@ describe("List comprehension", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[var0 IN $param0]"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": Array [
-                1,
-                2,
-                5,
-              ],
-            }
-        `);
+{
+  "param0": [
+    1,
+    2,
+    5,
+  ],
+}
+`);
     });
 
     test("comprehension with filter", () => {
@@ -54,14 +54,14 @@ describe("List comprehension", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[var0 IN $param1 WHERE var0 = $param0]"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": 5,
-              "param1": Array [
-                1,
-                2,
-                5,
-              ],
-            }
-        `);
+{
+  "param0": 5,
+  "param1": [
+    1,
+    2,
+    5,
+  ],
+}
+`);
     });
 });

@@ -35,10 +35,10 @@ describe("RawCypher", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN $myParam as title"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param": "My Title",
-            }
-        `);
+{
+  "param": "My Title",
+}
+`);
     });
 
     test("Create a custom query with RawCypher callback", () => {
@@ -62,10 +62,10 @@ describe("RawCypher", () => {
         );
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": 1999,
-              "title_param": "The Matrix",
-            }
-        `);
+{
+  "param0": 1999,
+  "title_param": "The Matrix",
+}
+`);
     });
 });

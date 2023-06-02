@@ -27,7 +27,7 @@ describe("Path Functions", () => {
         const queryResult = new TestClause(nodesFn).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"nodes(p0)"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("relationships", () => {
@@ -36,7 +36,7 @@ describe("Path Functions", () => {
         const queryResult = new TestClause(nodesFn).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"relationships(p0)"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("NamedPath", () => {
@@ -45,6 +45,6 @@ describe("Path Functions", () => {
         const queryResult = new TestClause(nodesFn).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"nodes(my_path)"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

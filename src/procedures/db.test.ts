@@ -34,10 +34,10 @@ describe("db procedures", () => {
                 `"CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0) YIELD node AS this0"`
             );
             expect(params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "This is a lovely phrase",
-                }
-            `);
+{
+  "param0": "This is a lovely phrase",
+}
+`);
         });
 
         test("Fulltext with where and return", () => {
@@ -56,11 +56,11 @@ describe("db procedures", () => {
                 RETURN this0"
             `);
             expect(params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "This is a lovely phrase",
-                  "param1": "The Matrix",
-                }
-            `);
+{
+  "param0": "This is a lovely phrase",
+  "param1": "The Matrix",
+}
+`);
         });
     });
 });
