@@ -47,7 +47,7 @@ describe("Console.log", () => {
                     this0.released = $param0
             \\"\\"\\""
         `);
-        expect(query[customInspectSymbol]()).toMatchInlineSnapshot(`
+        expect((query as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
             "<Clause Create> \\"\\"\\"
                 CREATE (this0:\`Movie\`)
                 SET
