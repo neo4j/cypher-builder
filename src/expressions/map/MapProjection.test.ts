@@ -28,7 +28,7 @@ describe("Map Projection", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 {  }"`);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Project map with extra values only", () => {
@@ -44,7 +44,7 @@ describe("Map Projection", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { myValue: var1, namedValue: NamedVar }"`);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Project map with properties in projection and extra values", () => {
@@ -57,7 +57,7 @@ describe("Map Projection", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .title, .name, namedValue: count(this1) }"`);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Map Projection in return", () => {
@@ -74,7 +74,7 @@ describe("Map Projection", () => {
             `"RETURN var0 { .title, .name, namedValue: count(this1) } AS var0"`
         );
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Convert to map with properties in projection and extra values", () => {
@@ -89,6 +89,6 @@ describe("Map Projection", () => {
             `"{ title: var0.title, name: var0.name, namedValue: count(this1) }"`
         );
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

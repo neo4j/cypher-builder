@@ -32,10 +32,10 @@ describe("Pattern comprehension", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[(this0:\`Movie\`) | this0.released = $param0]"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": 1999,
-            }
-        `);
+{
+  "param0": 1999,
+}
+`);
     });
 
     test("comprehension without filter", () => {
@@ -47,6 +47,6 @@ describe("Pattern comprehension", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[(this0:\`Movie\`)]"`);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

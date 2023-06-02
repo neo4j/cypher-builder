@@ -34,7 +34,7 @@ describe("apoc.date", () => {
             `"apoc.date.convertFormat(toString(var0), \\"iso_zoned_date_time\\", \\"iso_offset_date_time\\")"`
         );
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
     test("convertFormat with default convertTo", () => {
         const convertFormat = Cypher.apoc.date.convertFormat(new Cypher.Variable(), "iso_zoned_date_time");
@@ -45,6 +45,6 @@ describe("apoc.date", () => {
             `"apoc.date.convertFormat(toString(var0), \\"iso_zoned_date_time\\", \\"yyyy-MM-dd\\")"`
         );
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

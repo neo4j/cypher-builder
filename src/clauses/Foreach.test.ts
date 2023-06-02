@@ -39,6 +39,6 @@ describe("Foreach", () => {
             WITH *"
         `);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

@@ -29,7 +29,7 @@ describe("CypherBuilder Unwind", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(
             `"UNWIND [ { title: \\"Matrix\\" }, { title: \\"Matrix 2\\" } ] AS batch"`
         );
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Unwind and delete", () => {
@@ -40,6 +40,6 @@ describe("CypherBuilder Unwind", () => {
             "UNWIND var0 AS var1
             DELETE var1"
         `);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

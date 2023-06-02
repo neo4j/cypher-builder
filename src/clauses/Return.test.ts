@@ -28,7 +28,7 @@ describe("CypherBuilder Return", () => {
 
         const queryResult = returnQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN this0, 10"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Return *", () => {
@@ -36,7 +36,7 @@ describe("CypherBuilder Return", () => {
 
         const queryResult = returnQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN *"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Alias with a variable", () => {
@@ -47,7 +47,7 @@ describe("CypherBuilder Return", () => {
 
         const queryResult = returnQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN this0 AS var1"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Return with order", () => {
@@ -63,6 +63,6 @@ describe("CypherBuilder Return", () => {
             ORDER BY this0.age DESC"
         `);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

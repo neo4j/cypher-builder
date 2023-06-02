@@ -40,6 +40,6 @@ describe("CypherBuilder UNION", () => {
             MATCH (this2:\`Movie\`)
             RETURN this2"
         `);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

@@ -38,10 +38,10 @@ describe("math operators", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-                  Object {
-                    "param0": 2000,
-                  }
-              `);
+{
+  "param0": 2000,
+}
+`);
     });
 
     test("plus", () => {

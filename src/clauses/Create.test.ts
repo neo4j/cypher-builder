@@ -48,13 +48,13 @@ describe("CypherBuilder Create", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "test-value",
-              "param1": "my-id",
-              "param2": "The Matrix",
-              "param3": 120,
-            }
-        `);
+{
+  "param0": "test-value",
+  "param1": "my-id",
+  "param2": "The Matrix",
+  "param3": 120,
+}
+`);
     });
 
     test("Create Node with null property", () => {
@@ -84,10 +84,10 @@ describe("CypherBuilder Create", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "null",
-                }
-            `);
+{
+  "param0": "null",
+}
+`);
     });
 
     test("Create Node with null property and assign path variable", () => {
@@ -118,9 +118,9 @@ describe("CypherBuilder Create", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "null",
-                }
-            `);
+{
+  "param0": "null",
+}
+`);
     });
 });

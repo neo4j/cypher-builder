@@ -36,11 +36,11 @@ describe("CypherBuilder concat", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
+{
+  "param0": "aa",
+  "param1": "bb",
+}
+`);
     });
 
     test("Create two nodes by concatenating clauses", () => {
@@ -70,9 +70,9 @@ describe("CypherBuilder concat", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "The Matrix",
-            }
-        `);
+{
+  "param0": "The Matrix",
+}
+`);
     });
 });

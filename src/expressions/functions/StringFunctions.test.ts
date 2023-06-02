@@ -28,9 +28,9 @@ describe("String Functions", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"toLower($param0)"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "Hello",
-            }
-        `);
+{
+  "param0": "Hello",
+}
+`);
     });
 });

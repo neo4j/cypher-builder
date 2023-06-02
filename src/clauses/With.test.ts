@@ -25,7 +25,7 @@ describe("CypherBuilder With", () => {
 
         const queryResult = withQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH *"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("With nodes", () => {
@@ -36,7 +36,7 @@ describe("CypherBuilder With", () => {
 
         const queryResult = withQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH this0"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("With multiple variables", () => {
@@ -51,10 +51,10 @@ describe("CypherBuilder With", () => {
         const queryResult = withQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH this0, var1, $param0"`);
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "Matrix",
-            }
-        `);
+{
+  "param0": "Matrix",
+}
+`);
     });
 
     describe("With alias", () => {
@@ -67,7 +67,7 @@ describe("CypherBuilder With", () => {
 
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH this0 AS var1"`);
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("With expression aliased", () => {
@@ -78,11 +78,11 @@ describe("CypherBuilder With", () => {
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH $param0 + $param1 AS var0"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "The ",
-                  "param1": "Matrix",
-                }
-            `);
+{
+  "param0": "The ",
+  "param1": "Matrix",
+}
+`);
         });
 
         test("With alias and delete", () => {
@@ -97,7 +97,7 @@ describe("CypherBuilder With", () => {
                 "WITH this0 AS var1
                 DETACH DELETE var1"
             `);
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 });

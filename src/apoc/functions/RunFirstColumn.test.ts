@@ -69,11 +69,11 @@ describe("RunFirstColumn", () => {
             RETURN this0\\", { this0: this0, param1: $param1 }) }"
         `);
         expect(cypherResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": "The Matrix",
-              "param1": 1999,
-            }
-        `);
+{
+  "param0": "The Matrix",
+  "param1": 1999,
+}
+`);
     });
 
     test("String subquery with mapExpr for params", () => {
@@ -97,9 +97,9 @@ describe("RunFirstColumn", () => {
             `"apoc.cypher.runFirstColumnMany(\\"MATCH (n) RETURN n\\", { releasedParam: $param0, n: this0 })"`
         );
         expect(cypherResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": 1999,
-            }
-        `);
+{
+  "param0": 1999,
+}
+`);
     });
 });

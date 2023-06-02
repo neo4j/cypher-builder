@@ -34,10 +34,10 @@ describe("CypherBuilder Merge", () => {
                 this0.age = $param0"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": 23,
-                }
-            `);
+{
+  "param0": 23,
+}
+`);
     });
 
     test("Merge node with parameters", () => {
@@ -61,11 +61,11 @@ describe("CypherBuilder Merge", () => {
                 this0.age = $param1"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": "test",
-                  "param1": 23,
-                }
-            `);
+{
+  "param0": "test",
+  "param1": 23,
+}
+`);
     });
 
     test("Merge relationship", () => {
@@ -94,12 +94,12 @@ describe("CypherBuilder Merge", () => {
             RETURN this0.title AS movie"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-                Object {
-                  "param0": 23,
-                  "param1": "Keanu",
-                  "param2": 10,
-                }
-            `);
+{
+  "param0": 23,
+  "param1": "Keanu",
+  "param2": 10,
+}
+`);
     });
 
     test("Merge relationship with path assign", () => {
@@ -130,12 +130,12 @@ describe("CypherBuilder Merge", () => {
             RETURN this1.title AS movie"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-            Object {
-              "param0": 23,
-              "param1": "Keanu",
-              "param2": 10,
-            }
-        `);
+{
+  "param0": 23,
+  "param1": "Keanu",
+  "param2": 10,
+}
+`);
     });
 
     test("Merge node and delete", () => {
@@ -150,6 +150,6 @@ describe("CypherBuilder Merge", () => {
             "MERGE (this0:\`MyLabel\`)
             DELETE this0"
         `);
-        expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });
