@@ -17,6 +17,4 @@
  * limitations under the License.
  */
 
-export * as date from "./date";
-export * as util from "./util";
-export * as cypher from "./cypher/cypher";
+export { runFirstColumnMany, runFirstColumnSingle } from "./run-first-column";

@@ -17,28 +17,23 @@
  * limitations under the License.
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
 import type { Clause } from "../../clauses/Clause";
 import type { Variable } from "../../references/Variable";
 import type { CypherEnvironment } from "../../Environment";
 import type { MapExpr } from "../../expressions/map/MapExpr";
+import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 
-// TODO: convert into proper function
-
-/**
- * @group Expressions
- * @category Cypher Functions
- */
-export class RunFirstColumn extends CypherASTNode {
+class RunFirstColumnFunction extends CypherFunction {
     private innerClause: Clause | string;
     private variables: Variable[] | MapExpr;
-    private expectMultipleValues: boolean;
+    private many: boolean;
 
-    constructor(clause: Clause | string, variables: Variable[] | MapExpr = [], expectMultipleValues = true) {
-        super();
+    constructor(clause: Clause | string, variables: Variable[] | MapExpr = [], many = true) {
+        super(`apoc.cypher.runFirstColumn${many ? "Many" : "Single"}`);
+
         this.innerClause = clause;
-        this.expectMultipleValues = expectMultipleValues;
         this.variables = variables;
+        this.many = many;
     }
 
     /** @internal */
@@ -57,7 +52,7 @@ export class RunFirstColumn extends CypherASTNode {
             paramsStr = this.variables.getCypher(env);
         }
 
-        if (this.expectMultipleValues) {
+        if (this.many) {
             return `apoc.cypher.runFirstColumnMany("${this.escapeQuery(clauseStr)}", ${paramsStr})`;
         }
 
@@ -85,4 +80,12 @@ export class RunFirstColumn extends CypherASTNode {
             .join(", ");
         return `{ ${paramsStr} }`;
     }
+}
+
+export function runFirstColumnMany(clause: Clause | string, params: Variable[] | MapExpr = []): CypherFunction {
+    return new RunFirstColumnFunction(clause, params, true);
+}
+
+export function runFirstColumnSingle(clause: Clause | string, params: Variable[] | MapExpr = []): CypherFunction {
+    return new RunFirstColumnFunction(clause, params, false);
 }
