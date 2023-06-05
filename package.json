@@ -19,6 +19,7 @@
         "build": "tsc --build tsconfig.production.json",
         "docs": "typedoc src/Cypher.ts",
         "lint": "eslint .",
+        "changeset": "changeset",
         "release": "yarn build && changeset publish"
     },
     "repository": {
