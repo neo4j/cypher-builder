@@ -20,8 +20,6 @@
 import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
-// TODO: pass string
-// Pass map
 describe("apoc.cypher", () => {
     test("runFirstColumnSingle", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
@@ -51,65 +49,95 @@ describe("apoc.cypher", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    //     test("Complex subQuery with scoped env and params", () => {
-    //         const node = new Cypher.Node({ labels: ["Movie"] });
-    //         const param1 = new Cypher.Param("The Matrix");
+    it("runFirstColumn with string", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const subquery = "MATCH (n:Film) RETURN n";
 
-    //         const topQuery = new Cypher.Match(node).where(Cypher.eq(node.property("title"), param1));
+        const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery, [node]);
+        const queryResult = new TestClause(apocRunFirstColum).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(
+            `"apoc.cypher.runFirstColumnSingle(\\"MATCH (n:Film) RETURN n\\", { this0: this0 })"`
+        );
 
-    //         const nestedPattern = new Cypher.Pattern(node).withoutLabels();
-    //         const releasedParam = new Cypher.Param(1999);
-    //         const subQuery = new Cypher.Match(nestedPattern).set([node.property("released"), releasedParam]).return(node);
-    //         const apocCall = new Cypher.apoc.RunFirstColumn(subQuery, [node, releasedParam]);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 
-    //         topQuery.return(
-    //             new Cypher.Map({
-    //                 result: apocCall,
-    //             })
-    //         );
+    it("runFirstColumn with a map for parameters", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const subquery = "MATCH (n) RETURN n";
 
-    //         const cypherResult = topQuery.build();
+        const params = new Cypher.Map({
+            n: node,
+            param: new Cypher.Param("Test param"),
+        });
 
-    //         expect(cypherResult.cypher).toMatchInlineSnapshot(`
-    //             "MATCH (this0:\`Movie\`)
-    //             WHERE this0.title = $param0
-    //             RETURN { result: apoc.cypher.runFirstColumnMany(\\"MATCH (this0)
-    //             SET
-    //                 this0.released = $param1
-    //             RETURN this0\\", { this0: this0, param1: $param1 }) }"
-    //         `);
-    //         expect(cypherResult.params).toMatchInlineSnapshot(`
-    // {
-    //   "param0": "The Matrix",
-    //   "param1": 1999,
-    // }
-    // `);
-    //     });
+        const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery, params);
+        const queryResult = new TestClause(apocRunFirstColum).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(
+            `"apoc.cypher.runFirstColumnSingle(\\"MATCH (n) RETURN n\\", { n: this0, param: $param0 })"`
+        );
 
-    //     test("String subquery with mapExpr for params", () => {
-    //         const node = new Cypher.Node({ labels: ["Movie"] });
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "Test param",
+            }
+        `);
+    });
 
-    //         const releasedParam = new Cypher.Param(1999);
+    test("Complex subQuery with scoped env and params", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const param1 = new Cypher.Param("The Matrix");
 
-    //         const apocCall = new Cypher.apoc.RunFirstColumn(
-    //             "MATCH (n) RETURN n",
-    //             new MapExpr({
-    //                 releasedParam,
-    //                 n: node,
-    //             })
-    //         );
+        const topQuery = new Cypher.Match(node).where(Cypher.eq(node.property("title"), param1));
 
-    //         const testQuery = new TestClause(apocCall);
+        const nestedPattern = new Cypher.Pattern(node).withoutLabels();
+        const releasedParam = new Cypher.Param(1999);
+        const subQuery = new Cypher.Match(nestedPattern).set([node.property("released"), releasedParam]).return(node);
+        const apocCall = Cypher.apoc.cypher.runFirstColumnMany(subQuery, [node, releasedParam]);
 
-    //         const cypherResult = testQuery.build();
+        topQuery.return(
+            new Cypher.Map({
+                result: apocCall,
+            })
+        );
 
-    //         expect(cypherResult.cypher).toMatchInlineSnapshot(
-    //             `"apoc.cypher.runFirstColumnMany(\\"MATCH (n) RETURN n\\", { releasedParam: $param0, n: this0 })"`
-    //         );
-    //         expect(cypherResult.params).toMatchInlineSnapshot(`
-    // {
-    //   "param0": 1999,
-    // }
-    // `);
-    //     });
+        const cypherResult = topQuery.build();
+
+        expect(cypherResult.cypher).toMatchInlineSnapshot(`
+                "MATCH (this0:\`Movie\`)
+                WHERE this0.title = $param0
+                RETURN { result: apoc.cypher.runFirstColumnMany(\\"MATCH (this0)
+                SET
+                    this0.released = $param1
+                RETURN this0\\", { this0: this0, param1: $param1 }) }"
+            `);
+        expect(cypherResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "The Matrix",
+              "param1": 1999,
+            }
+        `);
+    });
+
+    it("runFirstColumn with an object for parameters", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const subquery = "MATCH (n) RETURN n";
+
+        const params = {
+            n: node,
+            param: new Cypher.Param("Test param"),
+        };
+
+        const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery, params);
+        const queryResult = new TestClause(apocRunFirstColum).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(
+            `"apoc.cypher.runFirstColumnSingle(\\"MATCH (n) RETURN n\\", { n: this0, param: $param0 })"`
+        );
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "Test param",
+            }
+        `);
+    });
 });

@@ -20,19 +20,20 @@
 import type { Clause } from "../../clauses/Clause";
 import type { Variable } from "../../references/Variable";
 import type { CypherEnvironment } from "../../Environment";
-import type { MapExpr } from "../../expressions/map/MapExpr";
+import { MapExpr } from "../../expressions/map/MapExpr";
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
+import { Expr } from "../../types";
 
 class RunFirstColumnFunction extends CypherFunction {
     private innerClause: Clause | string;
     private variables: Variable[] | MapExpr;
     private many: boolean;
 
-    constructor(clause: Clause | string, variables: Variable[] | MapExpr = [], many = true) {
+    constructor(clause: Clause | string, variables: Variable[] | MapExpr | Record<string, Expr>, many: boolean) {
         super(`apoc.cypher.runFirstColumn${many ? "Many" : "Single"}`);
 
         this.innerClause = clause;
-        this.variables = variables;
+        this.variables = this.parseVariablesInput(variables);
         this.many = many;
     }
 
@@ -60,9 +61,12 @@ class RunFirstColumnFunction extends CypherFunction {
     }
 
     private escapeQuery(query: string): string {
-        // TODO: Should single quotes be escaped?
-        // return query.replace(/("|')/g, "\\$1");
         return query.replace(/("|\\)/g, "\\$1");
+    }
+
+    private parseVariablesInput(variables: Variable[] | MapExpr | Record<string, Expr> = []): Variable[] | MapExpr {
+        if (Array.isArray(variables) || variables instanceof MapExpr) return variables;
+        return new MapExpr(variables);
     }
 
     private convertArrayToParams(env: CypherEnvironment, variables: Variable[]): string {
@@ -82,10 +86,24 @@ class RunFirstColumnFunction extends CypherFunction {
     }
 }
 
-export function runFirstColumnMany(clause: Clause | string, params: Variable[] | MapExpr = []): CypherFunction {
+/**
+ * @group Expressions
+ * @category Cypher Functions
+ */
+export function runFirstColumnMany(
+    clause: Clause | string,
+    params: Variable[] | MapExpr | Record<string, Expr> = []
+): CypherFunction {
     return new RunFirstColumnFunction(clause, params, true);
 }
 
-export function runFirstColumnSingle(clause: Clause | string, params: Variable[] | MapExpr = []): CypherFunction {
+/**
+ * @group Expressions
+ * @category Cypher Functions
+ */
+export function runFirstColumnSingle(
+    clause: Clause | string,
+    params: Variable[] | MapExpr | Record<string, Expr> = []
+): CypherFunction {
     return new RunFirstColumnFunction(clause, params, false);
 }
