@@ -35,7 +35,6 @@ import type { ListExpr } from "./expressions/list/ListExpr";
 import type { MapProjection } from "./expressions/map/MapProjection";
 import type { HasLabel } from "./expressions/HasLabel";
 import type { Reference } from "./references/Reference";
-import type { ApocFunction } from "./apoc/types";
 import type { ListIndex } from "./expressions/list/ListIndex";
 import type { Path } from "./references/Path";
 
@@ -57,7 +56,6 @@ export type Expr =
     | MapProjection // NOTE this cannot be set as a property in a node
     | ListExpr
     | ListIndex
-    | ApocFunction
     | Case<ComparisonOp>
     | Path;
 

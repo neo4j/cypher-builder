@@ -74,10 +74,6 @@ tmp/
 # Oclif generated file
 oclif.manifest.json
 
-# E2E generated dirs
-e2e/fixtures/data/
-e2e/fixtures/cache/
-
 package-lock.json
 yarn.lock
 
@@ -89,9 +85,5 @@ tsconfig.*.tsbuildinfo
 tsconfig.*.tsbuildinfo.gz
 
 .history
-
-packages/graphql-toolbox/tests/artifacts
-package-lock.json
-
 
 docs/

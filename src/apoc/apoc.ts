@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-export { RunFirstColumn } from "./functions/RunFirstColumn";
-
 export * as date from "./date";
 export * as util from "./util";
+export * as cypher from "./cypher/cypher";

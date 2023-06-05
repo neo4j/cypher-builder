@@ -17,6 +17,4 @@
  * limitations under the License.
  */
 
-import type { RunFirstColumn } from "./functions/RunFirstColumn";
-
-export type ApocFunction = RunFirstColumn;
+export { runFirstColumnMany, runFirstColumnSingle } from "./run-first-column";
