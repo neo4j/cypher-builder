@@ -51,10 +51,10 @@ describe("CypherBuilder With", () => {
         const queryResult = withQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH this0, var1, $param0"`);
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Matrix",
-}
-`);
+            {
+              "param0": "Matrix",
+            }
+        `);
     });
 
     describe("With alias", () => {
@@ -76,13 +76,13 @@ describe("CypherBuilder With", () => {
             const withQuery = new Cypher.With([expr, alias]);
 
             const queryResult = withQuery.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH $param0 + $param1 AS var0"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH ($param0 + $param1) AS var0"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "The ",
-  "param1": "Matrix",
-}
-`);
+                {
+                  "param0": "The ",
+                  "param1": "Matrix",
+                }
+            `);
         });
 
         test("With alias and delete", () => {
