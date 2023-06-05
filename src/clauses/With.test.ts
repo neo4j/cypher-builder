@@ -111,7 +111,7 @@ describe("CypherBuilder With", () => {
                 "WITH this0
                 DELETE this0"
             `);
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("With detach delete", () => {
@@ -123,7 +123,7 @@ describe("CypherBuilder With", () => {
                 "WITH this0
                 DETACH DELETE this0"
             `);
-            expect(queryResult.params).toMatchInlineSnapshot(`Object {}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 });
