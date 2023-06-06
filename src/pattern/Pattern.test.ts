@@ -52,6 +52,15 @@ describe("Patterns", () => {
                 }
             `);
         });
+
+        test("Simple node with label that needs normalize", () => {
+            const node = new Cypher.Node({ labels: ["Test&Label"] });
+
+            const pattern = new Cypher.Pattern(node);
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`Test&Label\`)"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
     });
 
     describe("relationships", () => {
