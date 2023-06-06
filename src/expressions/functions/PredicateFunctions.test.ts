@@ -27,7 +27,7 @@ describe("Predicate Functions", () => {
 
         const queryResult = new TestClause(existsFn).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"exists((this0:\`Movie\`))"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"exists((this0:Movie))"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
@@ -42,14 +42,14 @@ describe("Predicate Functions", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"all(var0 IN $param0 WHERE var0 = 5)"`);
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": [
-    1,
-    2,
-    5,
-  ],
-}
-`);
+            {
+              "param0": [
+                1,
+                2,
+                5,
+              ],
+            }
+        `);
     });
 
     test("Using functions as predicates", () => {
@@ -65,15 +65,15 @@ describe("Predicate Functions", () => {
 
         const queryResult = new TestClause(andExpr).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"(all(var0 IN $param0) AND exists((this1:\`Movie\`)))"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"(all(var0 IN $param0) AND exists((this1:Movie)))"`);
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": [
-    1,
-    2,
-    5,
-  ],
-}
-`);
+            {
+              "param0": [
+                1,
+                2,
+                5,
+              ],
+            }
+        `);
     });
 });

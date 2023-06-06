@@ -32,13 +32,13 @@ describe("CypherBuilder Match", () => {
         );
 
         const queryResult = matchQuery.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"MATCH (this0:\`Movie\` { test: $param0 })"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"MATCH (this0:Movie { test: $param0 })"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-}
-`);
+            {
+              "param0": "test-value",
+            }
+        `);
     });
 
     test("Match node with return passing a Clause", () => {
@@ -52,7 +52,7 @@ describe("CypherBuilder Match", () => {
 
         const queryResult = matchQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:\`Movie\`)
+            "MATCH (this0:Movie)
             RETURN this0"
         `);
 
@@ -74,18 +74,18 @@ describe("CypherBuilder Match", () => {
 
         const queryResult = matchQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:\`Movie\`)
+            "MATCH (this0:Movie)
             WHERE (this0.id = $param0 AND this0.name = $param1)
             REMOVE this0.name
             RETURN this0.id"
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-  "param1": "my-name",
-}
-`);
+            {
+              "param0": "my-id",
+              "param1": "my-name",
+            }
+        `);
     });
 
     test("Optional Match", () => {
@@ -100,15 +100,15 @@ describe("CypherBuilder Match", () => {
 
         const queryResult = matchQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "OPTIONAL MATCH (this0:\`Movie\` { test: $param0 })
+            "OPTIONAL MATCH (this0:Movie { test: $param0 })
             RETURN this0"
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-}
-`);
+            {
+              "param0": "test-value",
+            }
+        `);
     });
 
     describe("Assign to path variable", () => {
@@ -167,19 +167,19 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\` { test: $param0 })
+                "MATCH (this0:Movie { test: $param0 })
                 WHERE ((this0.id = $param1 AND this0.name = $param2) AND this0.age = $param3)
                 RETURN this0"
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-  "param1": "my-id",
-  "param2": "my-name",
-  "param3": 5,
-}
-`);
+                {
+                  "param0": "test-value",
+                  "param1": "my-id",
+                  "param2": "my-name",
+                  "param3": 5,
+                }
+            `);
         });
 
         test("Match named node with alias and where", () => {
@@ -200,18 +200,18 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\` { test: $param0 })
+                "MATCH (this0:Movie { test: $param0 })
                 WHERE (this0.id = $param1 AND this0.name = $param2)
                 RETURN this0.name AS myAlias"
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-  "param1": "my-id",
-  "param2": "my-name",
-}
-`);
+                {
+                  "param0": "test-value",
+                  "param1": "my-id",
+                  "param2": "my-name",
+                }
+            `);
         });
 
         test("Match with null values", () => {
@@ -231,7 +231,7 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\` { test: NULL })
+                "MATCH (this0:Movie { test: NULL })
                 WHERE this0.name IS NULL
                 RETURN this0"
             `);
@@ -254,20 +254,20 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = clause.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\`)
+                "MATCH (this0:Movie)
                 WHERE (($param0 > $param1 OR $param0 < $param2) AND $param3 = $param4)
                 RETURN this0.title AS movie"
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 1,
-  "param1": 2,
-  "param2": 4,
-  "param3": "aa",
-  "param4": "bb",
-}
-`);
+                {
+                  "param0": 1,
+                  "param1": 2,
+                  "param2": 4,
+                  "param3": "aa",
+                  "param4": "bb",
+                }
+            `);
         });
 
         test("Match where with property and not", () => {
@@ -279,15 +279,15 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = queryMatch.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\`)
+                "MATCH (this0:Movie)
                 WHERE NOT (this0.title = $param0)"
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Matrix",
-}
-`);
+                {
+                  "param0": "Matrix",
+                }
+            `);
         });
 
         test("Match node with simple NOT", () => {
@@ -303,16 +303,16 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\`)
+                "MATCH (this0:Movie)
                 WHERE NOT (this0.name = $param0)
                 RETURN this0"
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-name",
-}
-`);
+                {
+                  "param0": "my-name",
+                }
+            `);
         });
 
         test("Match node with NOT and OR operator", () => {
@@ -336,17 +336,17 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\`)
+                "MATCH (this0:Movie)
                 WHERE NOT (this0.age = $param0 OR this0.name = $param1)
                 RETURN this0"
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 5,
-  "param1": "my-name",
-}
-`);
+                {
+                  "param0": 5,
+                  "param1": "my-name",
+                }
+            `);
         });
     });
 
@@ -366,7 +366,7 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Person\`)
+                "MATCH (this0:Person)
                 WHERE this0.name = $param0
                 SET
                     this0.name = $param1
@@ -374,11 +374,11 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Keanu Reeves",
-  "param1": "Seveer unaeK",
-}
-`);
+                {
+                  "param0": "Keanu Reeves",
+                  "param1": "Seveer unaeK",
+                }
+            `);
         });
     });
 
@@ -398,18 +398,18 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\`)
+                "MATCH (this0:Movie)
                 WHERE (this0.id = $param0 AND this0.name = $param1)
                 DELETE this0
                 RETURN 5"
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-  "param1": "my-name",
-}
-`);
+                {
+                  "param0": "my-id",
+                  "param1": "my-name",
+                }
+            `);
         });
 
         test("Match and detach delete", () => {
@@ -426,17 +426,17 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\`)
+                "MATCH (this0:Movie)
                 WHERE (this0.id = $param0 AND this0.name = $param1)
                 DETACH DELETE this0"
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-  "param1": "my-name",
-}
-`);
+                {
+                  "param0": "my-id",
+                  "param1": "my-name",
+                }
+            `);
         });
     });
 });

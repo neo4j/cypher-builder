@@ -30,17 +30,17 @@ describe("CypherBuilder concat", () => {
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:\`Movie\`)
+            "MATCH (this0:Movie)
             WHERE $param0 = $param1
             RETURN this0.title AS movie"
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 
     test("Create two nodes by concatenating clauses", () => {
@@ -61,18 +61,18 @@ describe("CypherBuilder concat", () => {
         const queryResult = Cypher.concat(create1, create2).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE (this0:\`Movie\`)
+            "CREATE (this0:Movie)
             SET
                 this0.title = $param0
-            CREATE (this1:\`Movie\`)
+            CREATE (this1:Movie)
             SET
                 this1.title = $param0"
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "The Matrix",
-}
-`);
+            {
+              "param0": "The Matrix",
+            }
+        `);
     });
 });

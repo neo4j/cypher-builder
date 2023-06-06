@@ -32,7 +32,7 @@ describe("Foreach", () => {
         const queryResult = foreachClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "FOREACH (var0 IN [1, 2, 3] |
-                CREATE (this1:\`Movie\`)
+                CREATE (this1:Movie)
                 SET
                     this1.id = var0
             )

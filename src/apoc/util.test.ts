@@ -44,7 +44,7 @@ describe("apoc.util", () => {
 
             const { cypher, params } = query.build();
             expect(cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\`)
+                "MATCH (this0:Movie)
                 WHERE apoc.util.validatePredicate(1 = 2, \\"That's not how math works\\", [0])
                 RETURN this0"
             `);

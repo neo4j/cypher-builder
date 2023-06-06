@@ -30,17 +30,17 @@ describe("CypherBuilder Call", () => {
         const queryResult = new Cypher.Call(createQuery).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                CREATE (this0:\`Movie\`)
+                CREATE (this0:Movie)
                 SET
                     this0.id = $param0
                 RETURN this0
             }"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-}
-`);
+            {
+              "param0": "my-id",
+            }
+        `);
     });
 
     test("Nested Call", () => {
@@ -57,7 +57,7 @@ describe("CypherBuilder Call", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
                 CALL {
-                    CREATE (this0:\`Movie\`)
+                    CREATE (this0:Movie)
                     SET
                         this0.id = $param0
                     RETURN this0
@@ -65,10 +65,10 @@ describe("CypherBuilder Call", () => {
             }"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-}
-`);
+            {
+              "param0": "my-id",
+            }
+        `);
     });
 
     it("CALL with inner with", () => {
@@ -83,18 +83,18 @@ describe("CypherBuilder Call", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
                 WITH this0
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS movie
             }"
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 
     it("CALL with external with", () => {
@@ -108,7 +108,7 @@ describe("CypherBuilder Call", () => {
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS movie
             }
@@ -116,11 +116,11 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
     it("CALL with external with clause", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
@@ -133,7 +133,7 @@ describe("CypherBuilder Call", () => {
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS movie
             }
@@ -141,11 +141,11 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 
     it("CALL with unwind", () => {
@@ -161,7 +161,7 @@ describe("CypherBuilder Call", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS var1
             }
@@ -169,11 +169,11 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 
     it("CALL with unwind passed as a clause", () => {
@@ -191,7 +191,7 @@ describe("CypherBuilder Call", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS var1
             }
@@ -199,10 +199,10 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 });

@@ -30,7 +30,7 @@ describe("Exists", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "EXISTS {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 RETURN *
             }"
         `);

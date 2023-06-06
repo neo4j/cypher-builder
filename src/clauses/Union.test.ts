@@ -31,13 +31,13 @@ describe("CypherBuilder UNION", () => {
         const unionQuery = new Cypher.Union(query1, query2, query3);
         const queryResult = unionQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:\`Movie\`)
+            "MATCH (this0:Movie)
             RETURN this0
             UNION
-            MATCH (this1:\`Movie\`)
+            MATCH (this1:Movie)
             RETURN this1
             UNION
-            MATCH (this2:\`Movie\`)
+            MATCH (this2:Movie)
             RETURN this2"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);

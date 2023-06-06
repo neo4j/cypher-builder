@@ -20,8 +20,11 @@
 const ESCAPE_SYMBOL_REGEX = /`/g;
 
 export function escapeLabel(label: string): string {
-    // TODO: only escape when needed
-    return escapeString(label);
+    const normalizedStr = normalizeString(label);
+    if (needsEscape(normalizedStr)) {
+        return escapeString(normalizedStr);
+    }
+    return label;
 }
 
 export function escapeType(type: string): string {

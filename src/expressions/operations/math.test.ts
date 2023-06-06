@@ -32,16 +32,16 @@ describe("math operators", () => {
 
         const queryResult = matchQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:\`Movie\`)
+            "MATCH (this0:Movie)
             WHERE this0.released = 10 + $param0
             RETURN this0"
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 2000,
-}
-`);
+            {
+              "param0": 2000,
+            }
+        `);
     });
 
     test("plus", () => {

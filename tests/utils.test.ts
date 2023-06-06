@@ -22,7 +22,7 @@ import Cypher from "../src";
 describe("Cypher.utils", () => {
     test("escapeLabel ignored if not needed", () => {
         const label = Cypher.utils.escapeLabel("TestLabel");
-        expect(label).toBe("`TestLabel`");
+        expect(label).toBe("TestLabel");
     });
     test("escapeLabel", () => {
         const label = Cypher.utils.escapeLabel("Test Label");
