@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher, { Param } from "..";
+import Cypher from "..";
 import { TestClause } from "../utils/TestClause";
 
 describe("Patterns", () => {
@@ -47,10 +47,10 @@ describe("Patterns", () => {
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`TestLabel\` { name: $param0 })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test",
-}
-`);
+                {
+                  "param0": "test",
+                }
+            `);
         });
     });
 
@@ -106,14 +106,14 @@ describe("Patterns", () => {
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Arthur",
-  "param1": "Dent",
-  "param2": [
-    "neo",
-  ],
-}
-`);
+                {
+                  "param0": "Arthur",
+                  "param1": "Dent",
+                  "param2": [
+                    "neo",
+                  ],
+                }
+            `);
         });
 
         test("Long relationship Pattern", () => {
@@ -208,7 +208,7 @@ describe("Patterns", () => {
                 new Cypher.Pattern(a)
                     .related(actedInRelationship)
                     .withProperties({
-                        value: new Param(100),
+                        value: new Cypher.Param(100),
                     })
                     .withLength(2)
                     .to(b)
@@ -219,10 +219,10 @@ describe("Patterns", () => {
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 100,
-}
-`);
+                {
+                  "param0": 100,
+                }
+            `);
         });
 
         test("variable length with empty relationship", () => {
