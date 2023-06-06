@@ -38,7 +38,7 @@ export { labelExpr } from "./expressions/labels/label-expressions";
 
 // Variables and references
 export { NodeRef as Node, NamedNode } from "./references/NodeRef";
-export { RelationshipRef as Relationship } from "./references/RelationshipRef";
+export { RelationshipRef as Relationship, NamedRelationship } from "./references/RelationshipRef";
 export { Param, NamedParam } from "./references/Param";
 export { NamedVariable, Variable } from "./references/Variable";
 export { Literal, CypherNull as Null } from "./references/Literal";

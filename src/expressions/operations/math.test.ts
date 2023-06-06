@@ -33,7 +33,7 @@ describe("math operators", () => {
         const queryResult = matchQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "MATCH (this0:Movie)
-            WHERE this0.released = 10 + $param0
+            WHERE this0.released = (10 + $param0)
             RETURN this0"
         `);
 
@@ -47,37 +47,37 @@ describe("math operators", () => {
     test("plus", () => {
         const add = Cypher.plus(new Cypher.Literal(10), new Cypher.Literal(3));
         const { cypher } = new TestClause(add).build();
-        expect(cypher).toMatchInlineSnapshot(`"10 + 3"`);
+        expect(cypher).toMatchInlineSnapshot(`"(10 + 3)"`);
     });
 
     test("minus", () => {
         const subtract = Cypher.minus(new Cypher.Literal(10), new Cypher.Literal(3));
         const { cypher } = new TestClause(subtract).build();
-        expect(cypher).toMatchInlineSnapshot(`"10 - 3"`);
+        expect(cypher).toMatchInlineSnapshot(`"(10 - 3)"`);
     });
 
     test("divide", () => {
         const divide = Cypher.divide(new Cypher.Literal(10), new Cypher.Literal(3));
         const { cypher } = new TestClause(divide).build();
-        expect(cypher).toMatchInlineSnapshot(`"10 / 3"`);
+        expect(cypher).toMatchInlineSnapshot(`"(10 / 3)"`);
     });
 
     test("multiply", () => {
         const multiply = Cypher.multiply(new Cypher.Literal(10), new Cypher.Literal(3));
         const { cypher } = new TestClause(multiply).build();
-        expect(cypher).toMatchInlineSnapshot(`"10 * 3"`);
+        expect(cypher).toMatchInlineSnapshot(`"(10 * 3)"`);
     });
 
     test("mod", () => {
         const mod = Cypher.mod(new Cypher.Literal(10), new Cypher.Literal(3));
         const { cypher } = new TestClause(mod).build();
-        expect(cypher).toMatchInlineSnapshot(`"10 % 3"`);
+        expect(cypher).toMatchInlineSnapshot(`"(10 % 3)"`);
     });
 
     test("pow", () => {
         const pow = Cypher.pow(new Cypher.Literal(10), new Cypher.Literal(3));
         const { cypher } = new TestClause(pow).build();
-        expect(cypher).toMatchInlineSnapshot(`"10 ^ 3"`);
+        expect(cypher).toMatchInlineSnapshot(`"(10 ^ 3)"`);
     });
 
     test("complex expression", () => {
@@ -87,6 +87,6 @@ describe("math operators", () => {
         const multiply = Cypher.multiply(divide, new Cypher.Literal(3));
         const pow = Cypher.pow(multiply, new Cypher.Literal(3));
         const { cypher } = new TestClause(pow).build();
-        expect(cypher).toMatchInlineSnapshot(`"10 + 3 + 5 - 3 / 2 * 3 ^ 3"`);
+        expect(cypher).toMatchInlineSnapshot(`"(((((10 + 3 + 5) - 3) / 2) * 3) ^ 3)"`);
     });
 });

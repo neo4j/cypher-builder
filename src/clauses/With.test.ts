@@ -51,10 +51,10 @@ describe("CypherBuilder With", () => {
         const queryResult = withQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH this0, var1, $param0"`);
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Matrix",
-}
-`);
+            {
+              "param0": "Matrix",
+            }
+        `);
     });
 
     describe("With alias", () => {
@@ -76,13 +76,13 @@ describe("CypherBuilder With", () => {
             const withQuery = new Cypher.With([expr, alias]);
 
             const queryResult = withQuery.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH $param0 + $param1 AS var0"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH ($param0 + $param1) AS var0"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "The ",
-  "param1": "Matrix",
-}
-`);
+                {
+                  "param0": "The ",
+                  "param1": "Matrix",
+                }
+            `);
         });
 
         test("With alias and delete", () => {
@@ -96,6 +96,32 @@ describe("CypherBuilder With", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`
                 "WITH this0 AS var1
                 DETACH DELETE var1"
+            `);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+    });
+
+    describe("With delete", () => {
+        test("With delete", () => {
+            const node = new Cypher.Node();
+            const withQuery = new Cypher.With(node).delete(node);
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "WITH this0
+                DELETE this0"
+            `);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("With detach delete", () => {
+            const node = new Cypher.Node();
+            const withQuery = new Cypher.With(node).detachDelete(node);
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "WITH this0
+                DETACH DELETE this0"
             `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });

@@ -41,14 +41,14 @@ describe("List Functions", () => {
 
         const queryResult = new TestClause(reduceFn).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(
-            `"reduce(var0 = $param0, var1 IN [ $param1, $param2 ] | var0 + var1)"`
+            `"reduce(var0 = $param0, var1 IN [ $param1, $param2 ] | (var0 + var1))"`
         );
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 0,
-  "param1": 2,
-  "param2": 3,
-}
-`);
+            {
+              "param0": 0,
+              "param1": 2,
+              "param2": 3,
+            }
+        `);
     });
 });
