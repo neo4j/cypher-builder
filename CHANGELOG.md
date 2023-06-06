@@ -1,5 +1,17 @@
 # @neo4j/cypher-builder
 
+## 0.5.0
+
+### Minor Changes
+
+-   [#2](https://github.com/neo4j/cypher-builder/pull/2) [`c2f4af7`](https://github.com/neo4j/cypher-builder/commit/c2f4af72c10e685e19dcae74ac05cc6e3080478d) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates runFirstColumn clause in favor of apoc.cypher.runFirstColumnSingle and runFirstColumnMany function to better reflect Cypher behaviour
+
+### Patch Changes
+
+-   [`19892cb`](https://github.com/neo4j/cypher-builder/commit/19892cb8a2fdcd3b3532d8aaef0c66b46f54571c) Thanks [@angrykoala](https://github.com/angrykoala)! - Update repository to https://github.com/neo4j/cypher-builder
+
+-   [#3](https://github.com/neo4j/cypher-builder/pull/3) [`1c1bd0c`](https://github.com/neo4j/cypher-builder/commit/1c1bd0c26426d926a89620edb83b722c9a9392ef) Thanks [@angrykoala](https://github.com/angrykoala)! - Groups mathematical operators with parenthesis
+
 ## 0.4.3
 
 ### Patch Changes
