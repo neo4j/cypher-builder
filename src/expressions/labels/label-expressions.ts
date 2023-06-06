@@ -9,6 +9,10 @@ export type LabelOperator = "&" | "|" | "!" | "%";
 
 type Label = string | LabelExpr;
 
+/**
+ * Label Expression
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ */
 export abstract class LabelExpr implements CypherCompilable {
     protected operator: LabelOperator;
 
@@ -78,18 +82,38 @@ class WildcardLabelExpr extends LabelExpr {
     }
 }
 
+/** Generates an `&` operator between labels or types
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @group Expressions
+ * @category Operators
+ */
 function labelAnd(left: Label, right: Label, ...extra: Label[]): LabelExpr {
     return new BinaryLabelExpr("&", [left, right, ...extra]);
 }
 
+/** Generates an `|` operator between labels or types
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @group Expressions
+ * @category Operators
+ */
 function labelOr(left: Label, right: Label, ...extra: Label[]): LabelExpr {
     return new BinaryLabelExpr("|", [left, right, ...extra]);
 }
 
+/** Generates an `!` operator for a label or type
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @group Expressions
+ * @category Operators
+ */
 function labelNot(label: Label): LabelExpr {
     return new NotLabelExpr(label);
 }
 
+/** Generates an wildcard (`%`) operator to substitute a label or type
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @group Expressions
+ * @category Operators
+ */
 const wildcard = new WildcardLabelExpr();
 
 export const labelExpr = {
