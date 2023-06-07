@@ -19,25 +19,28 @@
 
 const ESCAPE_SYMBOL_REGEX = /`/g;
 
+/** Escapes a Node label string */
 export function escapeLabel(label: string): string {
     // TODO: only escape when needed
     return escapeString(label);
 }
 
+/** Escapes a Relationship type string */
 export function escapeType(type: string): string {
-    const normalizedStr = normalizeString(type);
-    if (needsEscape(normalizedStr)) {
-        return escapeString(normalizedStr);
-    }
-    return type;
+    return escapeIfNeeded(type);
 }
 
+/** Escapes a property name string */
 export function escapeProperty(propName: string): string {
-    const normalizedStr = normalizeString(propName);
+    return escapeIfNeeded(propName);
+}
+
+function escapeIfNeeded(str: string): string {
+    const normalizedStr = normalizeString(str);
     if (needsEscape(normalizedStr)) {
         return escapeString(normalizedStr);
     }
-    return propName;
+    return normalizedStr;
 }
 
 function normalizeString(str: string): string {
