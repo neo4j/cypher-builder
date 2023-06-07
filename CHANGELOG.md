@@ -1,5 +1,15 @@
 # @neo4j/cypher-builder
 
+## 0.5.1
+
+### Patch Changes
+
+-   [`708d9de`](https://github.com/neo4j/cypher-builder/commit/708d9de5391ea0877d6775389ddd721782f832b8) Thanks [@angrykoala](https://github.com/angrykoala)! - Adds NamedRelationship
+
+-   [#8](https://github.com/neo4j/cypher-builder/pull/8) [`b77f6b0`](https://github.com/neo4j/cypher-builder/commit/b77f6b05e72701b8a606ce5ea093bf46c7ac86a4) Thanks [@angrykoala](https://github.com/angrykoala)! - Add Cypher.utils.compileCypher method
+
+-   [#8](https://github.com/neo4j/cypher-builder/pull/8) [`b77f6b0`](https://github.com/neo4j/cypher-builder/commit/b77f6b05e72701b8a606ce5ea093bf46c7ac86a4) Thanks [@angrykoala](https://github.com/angrykoala)! - Add escapeType and escapeProperty utils
+
 ## 0.5.0
 
 ### Minor Changes
