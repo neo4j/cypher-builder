@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { escapeLabel } from "./escape";
+import Cypher from "..";
 
 describe("CypherBuilder Utils", () => {
     describe("escapeLabel", () => {
@@ -58,8 +58,28 @@ describe("CypherBuilder Utils", () => {
             ["\u005cu005cu0060", "`\\u005cu0060`"],
         ];
         test.each(cases)('Parse "%s"', (value, expected) => {
-            const escapedLabel = escapeLabel(value);
+            const escapedLabel = Cypher.utils.escapeLabel(value);
             expect(escapedLabel).toBe(expected);
+        });
+
+        test("escapeLabel", () => {
+            const label = Cypher.utils.escapeLabel("Test Label");
+            expect(label).toBe("`Test Label`");
+        });
+
+        test("escapeLabel ignored if not needed", () => {
+            const label = Cypher.utils.escapeLabel("TestLabel");
+            expect(label).toBe("`TestLabel`");
+        });
+
+        test("escapeType", () => {
+            const label = Cypher.utils.escapeType("Test Label");
+            expect(label).toBe("`Test Label`");
+        });
+
+        test("escapeLabel ignored if not needed", () => {
+            const label = Cypher.utils.escapeType("TestLabel");
+            expect(label).toBe("TestLabel");
         });
     });
 });
