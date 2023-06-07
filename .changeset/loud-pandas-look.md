@@ -2,4 +2,4 @@
 "@neo4j/cypher-builder": patch
 ---
 
-add compileCypher util method
+Add Cypher.utils.compileCypher method
