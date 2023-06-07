@@ -39,7 +39,9 @@ export abstract class CypherASTNode implements CypherCompilable {
         return this;
     }
 
-    /** Concrete tree traversal pattern to generate the Cypher on nested nodes */
+    /** Concrete tree traversal pattern to generate the Cypher on nested nodes
+     * @internal
+     */
     public abstract getCypher(env: CypherEnvironment): string;
 
     /** Sets the parent-child relationship for build traversal */
