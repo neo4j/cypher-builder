@@ -19,14 +19,20 @@
 
 import type { CypherEnvironment } from "../Environment";
 import type { CypherCompilable } from "../types";
-import { compileCypher } from "./compile-cypher";
+import { isCypherCompilable } from "./is-cypher-compilable";
 
-/** Compiles the cypher of an element, if the resulting cypher is not empty adds a prefix */
-export function compileCypherIfExists(
-    element: CypherCompilable | undefined,
+/** Compiles a clause or expression to a Cypher string, adding optional prefix or suffix. To be used in a RawCypher callback
+ *
+ *  The prefix and suffix will only be added if the resulting Cypher is **not** an empty string
+ */
+export function compileCypher(
+    element: CypherCompilable,
     env: CypherEnvironment,
-    options: { prefix?: string; suffix?: string } = {}
+    { prefix = "", suffix = "" }: { prefix?: string; suffix?: string } = {}
 ): string {
-    if (!element) return "";
-    return compileCypher(element, env, options);
+    if (!isCypherCompilable(element)) throw new Error("Invalid element, missing `getCypher` method");
+    if (!env) throw new Error("Missing env when compiling Cypher");
+    const cypher = element.getCypher(env);
+    if (!cypher) return "";
+    return `${prefix}${cypher}${suffix}`;
 }

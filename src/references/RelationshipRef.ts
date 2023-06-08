@@ -28,7 +28,7 @@ export type RelationshipInput = {
     type?: string;
 };
 
-export type RelationshipProperties = Record<string, Param<any>>;
+export type RelationshipProperties = Record<string, Param<unknown>>;
 
 type RelationshipRefOptions = {
     type?: string;

@@ -45,7 +45,7 @@ describe("RawCypher", () => {
         const releasedParam = new Cypher.Param(1999);
 
         const rawCypher = new Cypher.RawCypher((env: Cypher.Environment) => {
-            const releasedParamId = releasedParam.getCypher(env); // Gets the raw Cypher for the param
+            const releasedParamId = Cypher.utils.compileCypher(releasedParam, env); // Gets the raw Cypher for the param
 
             const customCypher = `MATCH(n) WHERE n.title=$title_param AND n.released=${releasedParamId}`;
 
