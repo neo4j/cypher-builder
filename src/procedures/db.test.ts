@@ -86,6 +86,48 @@ describe("db procedures", () => {
             `);
         });
     });
+    describe("db.index.fulltext.queryRelationships", () => {
+        test("Simple fulltext", () => {
+            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const fulltextProcedure = Cypher.db.index.fulltext
+                .queryRelationships("my-text-index", new Param("This is a lovely phrase"))
+                .yield(["relationship", targetNode]);
+
+            const { cypher, params } = fulltextProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL db.index.fulltext.queryRelationships(\\"my-text-index\\", $param0) YIELD relationship AS this0"`
+            );
+            expect(params).toMatchInlineSnapshot(`
+                {
+                  "param0": "This is a lovely phrase",
+                }
+            `);
+        });
+
+        test("Fulltext with options", () => {
+            const fulltextProcedure = Cypher.db.index.fulltext.queryRelationships(
+                "my-text-index",
+                new Param("This is a lovely phrase"),
+                {
+                    skip: 5,
+                    analyser: new Param("whitespace"),
+                }
+            );
+
+            const { cypher, params } = fulltextProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL db.index.fulltext.queryRelationships(\\"my-text-index\\", $param0, { skip: 5, analyser: $param1 })"`
+            );
+            expect(params).toMatchInlineSnapshot(`
+                {
+                  "param0": "This is a lovely phrase",
+                  "param1": "whitespace",
+                }
+            `);
+        });
+    });
 
     describe("db.labels", () => {
         it("dbLabels", () => {
