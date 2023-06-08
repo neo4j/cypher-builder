@@ -18,12 +18,13 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import type { CypherCompilable } from "../types";
+import { Clause } from "../clauses/Clause";
+import { Expr } from "../types";
 import { compileCypher } from "./compile-cypher";
 
 /** Compiles the cypher of an element, if the resulting cypher is not empty adds a prefix */
 export function compileCypherIfExists(
-    element: CypherCompilable | undefined,
+    element: Expr | Clause | undefined,
     env: CypherEnvironment,
     options: { prefix?: string; suffix?: string } = {}
 ): string {
