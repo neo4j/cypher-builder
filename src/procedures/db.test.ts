@@ -34,10 +34,10 @@ describe("db procedures", () => {
                 `"CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0) YIELD node AS this0"`
             );
             expect(params).toMatchInlineSnapshot(`
-{
-  "param0": "This is a lovely phrase",
-}
-`);
+                {
+                  "param0": "This is a lovely phrase",
+                }
+            `);
         });
 
         test("Fulltext with where and return", () => {
@@ -56,11 +56,60 @@ describe("db procedures", () => {
                 RETURN this0"
             `);
             expect(params).toMatchInlineSnapshot(`
-{
-  "param0": "This is a lovely phrase",
-  "param1": "The Matrix",
-}
-`);
+                {
+                  "param0": "This is a lovely phrase",
+                  "param1": "The Matrix",
+                }
+            `);
+        });
+
+        test("Fulltext with options", () => {
+            const fulltextProcedure = Cypher.db.index.fulltext.queryNodes(
+                "my-text-index",
+                new Param("This is a lovely phrase"),
+                {
+                    skip: 5,
+                    analyser: new Param("whitespace"),
+                }
+            );
+
+            const { cypher, params } = fulltextProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0, { skip: 5, analyser: $param1 })"`
+            );
+            expect(params).toMatchInlineSnapshot(`
+                {
+                  "param0": "This is a lovely phrase",
+                  "param1": "whitespace",
+                }
+            `);
+        });
+    });
+
+    describe("db.labels", () => {
+        it("dbLabels", () => {
+            const dbLabels = Cypher.db.labels();
+            const { cypher, params } = dbLabels.build();
+
+            expect(cypher).toMatchInlineSnapshot(`"CALL db.labels()"`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("dbLabels with yield *", () => {
+            const dbLabels = Cypher.db.labels().yield("*");
+            const { cypher, params } = dbLabels.build();
+
+            expect(cypher).toMatchInlineSnapshot(`"CALL db.labels() YIELD *"`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("dbLabels with yield ", () => {
+            const dbLabels = Cypher.db.labels().yield("label");
+            const { cypher, params } = dbLabels.build();
+
+            expect(cypher).toMatchInlineSnapshot(`"CALL db.labels() YIELD label"`);
+            expect(params).toMatchInlineSnapshot(`{}`);
         });
     });
 });

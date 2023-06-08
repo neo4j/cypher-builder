@@ -18,10 +18,11 @@
  */
 
 import { CypherProcedure } from "./CypherProcedure";
-import type { Literal } from "../references/Literal";
+import { Literal } from "../references/Literal";
 import type { Param } from "../references/Param";
 import type { Variable } from "../references/Variable";
-import { normalizeVariable } from "../utils/normalize-variable";
+import { InputArgument, normalizeMap, normalizeVariable } from "../utils/normalize-variable";
+import { Expr } from "../types";
 
 type FulltextPhrase = string | Literal<string> | Param | Variable;
 
@@ -32,13 +33,23 @@ type FulltextPhrase = string | Literal<string> | Param | Variable;
  */
 export const index = {
     fulltext: {
-        queryNodes(indexName: string | Literal<string>, phrase: FulltextPhrase): CypherProcedure<"node" | "score"> {
-            // TODO: add options, skip limit, analyzer
+        queryNodes(
+            indexName: string | Literal<string>,
+            phrase: FulltextPhrase,
+            options?: { skip?: InputArgument<number>; limit?: InputArgument<number>; analyser?: InputArgument<string> }
+        ): CypherProcedure<"node" | "score"> {
             const phraseVar = normalizeVariable(phrase);
             const indexNameVar = normalizeVariable(indexName);
 
-            return new CypherProcedure("db.index.fulltext.queryNodes", [indexNameVar, phraseVar]);
+            const procedureArgs: Expr[] = [indexNameVar, phraseVar];
+            if (options) {
+                const optionsMap = normalizeMap(options);
+                procedureArgs.push(optionsMap);
+            }
+
+            return new CypherProcedure("db.index.fulltext.queryNodes", procedureArgs);
         },
+        // queryRelationships(indexName: string | Literal<string>)
     },
 };
 
