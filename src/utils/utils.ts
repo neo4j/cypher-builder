@@ -21,3 +21,4 @@
 
 export { escapeLabel, escapeType, escapeProperty } from "./escape";
 export { toCypherParams } from "./to-cypher-params";
+export { compileCypher } from "./compile-cypher";

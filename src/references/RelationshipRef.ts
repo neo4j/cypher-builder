@@ -31,6 +31,10 @@ export type RelationshipInput = {
 
 export type RelationshipProperties = Record<string, Param<unknown>>;
 
+type RelationshipRefOptions = {
+    type?: string;
+};
+
 /** Reference to a relationship property
  * @group References
  */
