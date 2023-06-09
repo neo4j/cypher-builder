@@ -129,6 +129,7 @@ export type { PredicateFunction } from "./expressions/functions/PredicateFunctio
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { CompositeClause } from "./clauses/utils/concat";
 export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/AggregationFunctions";
+export { InputArgument } from "./utils/normalize-variable";
 
 // utils
 export * as utils from "./utils/utils";
