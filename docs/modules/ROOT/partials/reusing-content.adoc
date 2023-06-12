@@ -1,0 +1,1 @@
+This paragraph can be used anywhere with the syntax shown in xref:content-types.adoc#_partials[].

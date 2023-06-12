@@ -1,0 +1,74 @@
+= Content types
+
+== Pages
+
+To add a page, create a new asciidoc file in _modules/ROOT/pages_.
+Then add a link to the new file in _modules/ROOT/content-nav.adoc_.
+
+For example:
+
+----
+* xref:index.adoc[]
+* xref:getting-started.adoc[]
+* xref:content-types.adoc[]
+----
+
+For more information about pages, see link:https://docs.antora.org/antora/latest/page/[Antora Docs -> Pages].
+
+== Partials
+
+Partials are reusable asciidoc fragments that can be included in a page, or in another partial.
+Partials are stored in _modules/ROOT/partials.
+
+.Including asciidoc content from a partial:
+====
+
+Asciidoc:
+
+----
+\include::partial$reusing-content.adoc[]
+----
+
+Output:
+
+--
+include::partial$reusing-content.adoc[]
+--
+====
+
+For more information about partials, see link:https://docs.antora.org/antora/latest/page/partials/[Antora Docs -> Partials].
+
+== Examples
+
+Examples are stored in _modules/ROOT/examples.
+
+.Including a CSV file:
+====
+
+Asciidoc:
+
+----
+\include::example$example.csv[]
+----
+
+Output:
+
+----
+include::example$example.csv[CSV Example]
+----
+====
+
+
+== Images
+
+Images are stored in _modules/ROOT/images.
+
+.Including an image:
+====
+
+Asciidoc:
+
+----
+image::image.svg[]
+----
+====

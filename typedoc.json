@@ -9,5 +9,6 @@
     "name": "Cypher Builder",
     "visibilityFilters": {},
     "sidebarLinks": {},
-    "gitRemote": "origin"
+    "gitRemote": "origin",
+    "out": "./docs/reference"
 }

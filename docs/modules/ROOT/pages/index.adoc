@@ -1,0 +1,20 @@
+= Cypher Builder Manual
+
+Cypher Builder is a programmatic API for building link:https://neo4j.com/developer/cypher/[Cypher] queries for Neo4j.
+
+
+== Start page
+
+When you build your content locally, this page should be specified as the start page in _preview.yml_.
+
+[source, yaml, role=noheader]
+----
+start_page: docs-template:ROOT:index.adoc
+----
+
+[TIP]
+====
+This repo contains example content such as asciidoc pages, re-usable fragments, and examples, to show where different types of files should be stored in an Antora project.
+====
+
+

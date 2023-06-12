@@ -1,0 +1,5 @@
+* xref:index.adoc[]
+* Getting Started
+** xref:getting-started/installation.adoc[]
+** xref:getting-started/your-first-query.adoc[]
+* xref:content-types.adoc[]
