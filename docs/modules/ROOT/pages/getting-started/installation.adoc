@@ -2,14 +2,6 @@
 
 In this guide, you'll set up a Node.js project with Cypher Builder, after this, you'll be ready to start using `@neo4j/cypher-builder`.
 
-
-1. Provide complete picture
-2. Give things to do
-3. Immediate results
-4. Concrete steps
-5. Minimum explanation
-6. Ignore options
-
 == Requirements
 You'll need link:https://nodejs.org/[Node.js] 16.0.0 or greater and link:https://docs.npmjs.com/downloading-and-installing-node-js-and-npm[npm] installed.
 

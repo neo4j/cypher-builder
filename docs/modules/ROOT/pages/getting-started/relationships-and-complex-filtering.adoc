@@ -1,0 +1,101 @@
+= Relationships And Complex Filtering
+
+In a Graph database such as Neo4j, Relationships are as, if not more important than Nodes. In this tutorial, you'll learn how to add relationships to the query from the xref:getting-started/filters-and-projections.adoc[previous tutorial]. With relationships, often you'll need more complex filters such as the ones you'll add here, finally, aliasing the results on the projection will make the results much easier to read and understand.
+
+Your goal is now to add **Actors** into the query, which are related to **Movies**, and filter movies based on these:
+
+```cypher
+MATCH(m:Movie)<-[r:ACTED_IN]-(a:Person)
+WHERE (
+    a.name="Keanu Reeves" AND
+    (
+        NOT(m.title CONTAINS "Matrix")
+        OR m.released < 2000)
+    )
+RETURN m.title, m.tagline, m.released, r.roles[0] AS role
+```
+
+The previous queries were somewhat trivial, this one may deserve a bit more explanation. In this case, the query matches a Movie along with its actors, filtering on movies with the actor `Keanu Reeves`. It also filters on either movies **not** containing `Matrix` or released before 2000. This query, using the default example Neo4j database, will effectively return the movies in which `Keanu Reeves` acted, except any Matrix movie after the first one, released in 1999.
+
+Finally, the projection also includes the first element of the relationship property `roles` (which is an array of the relationship). Because the column for this field will return `r.roles[0]` as a name, an alias on this field to rename it to `role` (singular) will make the results much easier to read.
+
+== Relationship patterns
+So far, the `Cypher.Match` statement has always accepted a `Cypher.Node` variable, this is a shorthand for very simple queries involving a single node, however, for more complex `MATCH` statements, like the one in this tutorial, you'll have to define a Pattern.
+
+=== Relationship variables
+
+Relationships, just like Nodes, are variables that can be created and reused across your query. Just like Nodes, Cypher Builder will take care of the names. You'll need to add a new Node and Relationship to the script:
+
+```javascript
+const actedIn = new Cypher.Relationship({
+    type: "ACTED_IN",
+});
+
+const people = new Cypher.Node({
+    labels: ["Person"],
+});
+```
+
+Note how, so far the relationship is not connected to the Nodes, this is because what this is creating here is a variable to hold the relationship matched by the pattern.
+
+TIP: Note how in `Cypher.Relationship` instead of `labels` a `type` is passed, which is not an array. This is because Cypher Relationships can only hold a single type. Because Cypher **Types** and **Labels** are very similar, it is easy to mix the two. Thankfully, the JavaScript API (and typings, if you use TypeScript) will help you spot these kind of mistakes quicker.
+
+=== Creating the pattern
+
+You now can define an arbitrarily complex pattern with `new Cypher.Pattern` by using the variables already declared:
+
+```javascript
+const pattern = new Cypher.Pattern(movieNode).related(actedIn).to(people);
+```
+
+The patterns in Cypher Builder work similarly to Cypher, each element of the chain is either a relationship or a node, and you can define other aspects of the pattern in each element of the chain.
+
+Now, you can simply swap the `movieNode` variable for the `pattern` in the Match clause:
+
+```javascript
+const clause = new Cypher.Match(pattern)
+```
+
+Executing now should yield the following Cypher:
+
+```cypher
+MATCH (this0:Movie)-[this1:ACTED_IN]->(this2:Person)
+WHERE (this0.title = $param0 AND this0.released < $param1)
+RETURN this0.title, this0.tagline, this0.released
+```
+
+```javascript
+{ param0: 'The Matrix', param1: 2000 }
+```
+
+TIP: Note how, despite changing the Match target, all the filters and relationships are still pointing towards the correct variable `this0`
+
+This is looking good, however, the pattern is slightly off. Instead of a **Person** acting in a **Movie** there is a **Movie** acting on a **Person**!
+
+Just a small tweak in the pattern should fix this:
+
+```javascript
+const pattern = new Cypher.Pattern(movieNode).related(actedIn).withDirection("left").to(people);
+```
+
+TIP: Any aspect of the Pattern itself (cardinality, direction and properties) can be changed in the pattern itself with the methods of each element in the "chain".
+
+Executing the script again:
+
+```cypher
+MATCH (this0:Movie)<-[this1:ACTED_IN]-(this2:Person)
+WHERE (this0.title = $param0 AND this0.released < $param1)
+RETURN this0.title, this0.tagline, this0.released
+```
+
+
+// You can begin your pattern starting from the `movieNode` that you'll created, similar to clauses, patterns can be made by concatenating methods:
+
+// ```javascript
+// const pattern = new Cypher.Pattern(movieNode)
+// ```
+
+== Boolean operations
+
+
+== Projection ALiases

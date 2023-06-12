@@ -7,9 +7,11 @@ The resulting query will look like this:
 
 ```cypher
 MATCH(m:Movie)
-WHERE m.title = "The Matrix" AND m.year<2000
-RETURN m.id, m.title, m.year
+WHERE (m.title = "The Matrix" AND m.released < 2000)
+RETURN m.title, m.tagline, m.released
 ```
+
+NOTE: This query will return all movies with the name `"The Matrix"` released before `2000`. This query is based on the default example database in Neo4j, and will return the classic 1999 film **The Matrix**. 
 
 
 == Filtering
@@ -41,7 +43,7 @@ Cypher Functions and Procedures, however, are intended to be used a single time,
 You can run your script again (`node main.js`), and should get the following Cypher:
 
 ```cypher
-MATCH (this0:`Movie`)
+MATCH (this0:Movie)
 WHERE this0.title = $param0
 RETURN this0
 ```
@@ -57,7 +59,7 @@ console.log(params);
 Now, executing again, we get all we need to run this query in Neo4j:
 
 ```cypher
-MATCH (this0:`Movie`)
+MATCH (this0:Movie)
 WHERE this0.title = $param0
 RETURN this0
 ```
@@ -75,7 +77,7 @@ The query still lacks the second filter, which needs to be concatenated with `AN
 
 ```javascript
     .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
-    .and(Cypher.lt(movieNode.property("year"), new Cypher.Param(2000)))
+    .and(Cypher.lt(movieNode.property("released"), new Cypher.Param(2000)))
 ```
 
 This takes the same parameters as `.where`, and makes sure to properly concatenate the filters with `AND`. In this case, the function `Cypher.lt` will add the operator `<` (**l**ower **t**han). Same as before, the comparison happens between a property of `movieNode` and a param. This time the param is a number. Cypher Builder will take care of correctly passing it to the `params` object.
@@ -83,8 +85,8 @@ This takes the same parameters as `.where`, and makes sure to properly concatena
 Running the script again:
 
 ```cypher
-MATCH (this0:`Movie`)
-WHERE (this0.title = $param0 AND this0.year < $param1)
+MATCH (this0:Movie)
+WHERE (this0.title = $param0 AND this0.released < $param1)
 RETURN this0
 ```
 
@@ -105,15 +107,15 @@ You can define multiple columns to return in the projection by passing them into
 Let's update the return subclause:
 
 ```javascript
-    .return(movieNode.property("id"), movieNode.property("title"), movieNode.property("year"));
+    .return(movieNode.property("title"), movieNode.property("tagline"), movieNode.property("year"));
 ```
 
 The returned Cypher now should be:
 
 ```cypher
-MATCH (this0:`Movie`)
-WHERE (this0.title = $param0 AND this0.year < $param1)
-RETURN this0.id, this0.title, this0.year
+MATCH (this0:Movie)
+WHERE (this0.title = $param0 AND this0.released < $param1)
+RETURN this0.title, this0.tagline, this0.released
 ```
 
 Success! You have now a query with filters and projections.
@@ -127,14 +129,14 @@ Right now, this query is filtering and returning the properties `id` and `title`
 To fix this, you'll make a small adjustment to the script, so that both the filters and the projection use the same property variable:
 
 ```javascript
-const idProp = movieNode.property("id");
 const titleProp = movieNode.property("title");
-const yearProp = movieNode.property("year");
+const yearProp = movieNode.property("released");
+const taglineProp = movieNode.property("tagline");
 
 const clause = new Cypher.Match(movieNode)
     .where(Cypher.eq(titleProp, new Cypher.Param("The Matrix")))
     .and(Cypher.lt(yearProp, new Cypher.Param(2000)))
-    .return(idProp, titleProp, yearProp);
+    .return(titleProp, taglineProp, yearProp);
 ```
 
 This change, not only ensures that different parts of the query are always in sync but also makes the clause itself shorter and easier to read.
@@ -152,14 +154,14 @@ const movieNode = new Cypher.Node({
     labels: ["Movie"],
 });
 
-const idProp = movieNode.property("id");
 const titleProp = movieNode.property("title");
-const yearProp = movieNode.property("year");
+const yearProp = movieNode.property("released");
+const taglineProp = movieNode.property("tagline");
 
 const clause = new Cypher.Match(movieNode)
     .where(Cypher.eq(titleProp, new Cypher.Param("The Matrix")))
-    .and(Cypher.lt(yearProp, new Cypher.Param(2000)));
-    .return(idProp, titleProp, yearProp);
+    .and(Cypher.lt(yearProp, new Cypher.Param(2000)))
+    .return(titleProp, taglineProp, yearProp);
 
 const { cypher, params } = clause.build();
 console.log(cypher);
@@ -169,13 +171,15 @@ console.log(params);
 And its execution should show the following query:
 
 ```cypher
-MATCH (this0:`Movie`)
-WHERE (this0.title = $param0 AND this0.year < $param1)
-RETURN this0.id, this0.title, this0.year
+MATCH (this0:Movie)
+WHERE (this0.title = $param0 AND this0.released < $param1)
+RETURN this0.title, this0.tagline, this0.released
 ```
 
 ```javascript
 { param0: 'The Matrix', param1: 2000 }
 ```
 
-With this, you already have the tools to make useful queries, feel free to try other filters operations (TODO: add link )
+With this, you already have the tools to make useful (albeit simple) queries and have also learnt how to deal with parameters. Feel free to try other filters operations (TODO: add link )
+
+In the next tutorial, you'll add relationships and more complex filtering to this query.
