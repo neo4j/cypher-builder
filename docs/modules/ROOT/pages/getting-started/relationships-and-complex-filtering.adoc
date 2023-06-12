@@ -6,12 +6,7 @@ Your goal is now to add **Actors** into the query, which are related to **Movies
 
 ```cypher
 MATCH(m:Movie)<-[r:ACTED_IN]-(a:Person)
-WHERE (
-    a.name="Keanu Reeves" AND
-    (
-        NOT(m.title CONTAINS "Matrix")
-        OR m.released < 2000)
-    )
+WHERE (a.name="Keanu Reeves" AND (NOT(m.title CONTAINS "Matrix") OR m.released < 2000))
 RETURN m.title, m.tagline, m.released, r.roles[0] AS role
 ```
 
@@ -31,7 +26,7 @@ const actedIn = new Cypher.Relationship({
     type: "ACTED_IN",
 });
 
-const people = new Cypher.Node({
+const personNode = new Cypher.Node({
     labels: ["Person"],
 });
 ```
@@ -45,7 +40,7 @@ TIP: Note how in `Cypher.Relationship` instead of `labels` a `type` is passed, w
 You now can define an arbitrarily complex pattern with `new Cypher.Pattern` by using the variables already declared:
 
 ```javascript
-const pattern = new Cypher.Pattern(movieNode).related(actedIn).to(people);
+const pattern = new Cypher.Pattern(movieNode).related(actedIn).to(personNode);
 ```
 
 The patterns in Cypher Builder work similarly to Cypher, each element of the chain is either a relationship or a node, and you can define other aspects of the pattern in each element of the chain.
@@ -88,14 +83,65 @@ WHERE (this0.title = $param0 AND this0.released < $param1)
 RETURN this0.title, this0.tagline, this0.released
 ```
 
-
-// You can begin your pattern starting from the `movieNode` that you'll created, similar to clauses, patterns can be made by concatenating methods:
-
-// ```javascript
-// const pattern = new Cypher.Pattern(movieNode)
-// ```
-
 == Boolean operations
 
+So far, all of the filters you've made have been `AND` filters. For this the Cypher Builder provides the shorthand method `.and` in the `where` subclause. Filters, however, can be much more complex, with nested operations.
 
-== Projection ALiases
+Let's refresh the filters we want to add to the query:
+
+```cypher
+WHERE (
+    a.name="Keanu Reeves" AND
+    (
+        NOT(m.title CONTAINS "Matrix")
+        OR m.released < 2000)
+    )
+```
+
+This complex filter is composed of 3 basic operations:
+
+* `a.name = "Keanu Reeves"`
+* `m.title CONTAINS "Matrix"`
+* `m.released < 2000`
+
+Then, these are composed of the logic operations `AND`, `NOT` and `OR`.
+
+To deal with these complex queries, that can easily grow until they are hard to maintain, it is a good idea to split the parts and compose the afterwards. Just like the Nodes or Patterns, the basic operations can be created separately:
+
+```javascript
+const isKeanu = Cypher.eq(personNode.property("name"), new Cypher.Param("Keanu Reeves"));
+const titleContainsMatrix = Cypher.contains(titleProp, new Cypher.Param("The Matrix"));
+const releasedBefore2000 = Cypher.lt(yearProp, new Cypher.Param(2000));
+```
+
+Here you can use the `titleProp` and `yearProp` that we already had. You can also make a `personName` variable for the first operation.
+
+Composing these operations should feel less daunting now, as we have the building blocks, but it will require a different strategy than the `where().and()` shorthand, as we have nested operations (`NOT` and `OR`). To achieve this, you can use the methods `Cypher.and`, `Cypher.or` and `Cypher.not` inside the `.where()` method:
+
+```javascript
+const clause = new Cypher.Match(pattern)
+    .where(Cypher.and(isKeanu, Cypher.or(Cypher.not(releasedBefore2000), titleContainsMatrix)))
+    .return(titleProp, taglineProp, yearProp);
+```
+
+TIP: Building queries in separate variables and composing them is a good opportunity of adding context to what each part means, note how the complex filtering at the beginning is much easier to read and understand now that the code leverages the basic operations with clearer names. 
+
+Now, the resulting Cypher should look like this:
+
+```cypher
+MATCH (this0:`Movie`)<-[this1:ACTED_IN]-(this2:`Person`)
+WHERE (this2.name = $param0 AND (NOT (this0.title CONTAINS $param1) OR this0.released < $param2))
+RETURN this0.title, this0.tagline, this0.released
+```
+
+```javascript
+{ param0: 'Keanu Reeves', param1: 'The Matrix', param2: 2000 }
+```
+
+You can double-check, that every variable refers to the correct param and node/relationship. 
+
+
+
+== Projection Aliases
+
+== Conclusion
