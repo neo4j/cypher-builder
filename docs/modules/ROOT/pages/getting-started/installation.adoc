@@ -19,10 +19,8 @@ If you want to test the Cypher queries, you'll also need a link:https://neo4j.co
 
 
 == Installing Cypher Builder
-[TIP]
-====
-If using CodePen, you can skip this bit
-====
+
+TIP: If using CodePen, you can skip this bit
 
 1. In a folder of your choice, run the following command to create a Node.js project and a `package.json` file
 +

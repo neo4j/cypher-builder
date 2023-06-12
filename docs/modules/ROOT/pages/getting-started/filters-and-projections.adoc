@@ -1,0 +1,181 @@
+= Filters And Projections
+
+After making our basic match & return query in xref:getting-started/your-first-query.adoc[Your First Query], in this guide you'll add some filters to your MATCH query and change the projection so only some fields are returned.
+
+The resulting query will look like this:
+
+
+```cypher
+MATCH(m:Movie)
+WHERE m.title = "The Matrix" AND m.year<2000
+RETURN m.id, m.title, m.year
+```
+
+
+== Filtering
+
+When creating a `MATCH` clause, it is possible to add subclauses to it in a similar way to how the `RETURN` statement was added. Change the `Cypher.Match` method to add the `.where` statement:
+
+```javascript
+const clause = new Cypher.Match(movieNode)
+    .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
+    .return(movieNode);
+```
+
+There is quite a bit to unwrap here. First, you'll notice that the `.where` method takes the result of the function `Cypher.eq`. This function is the equality (`=`) operator that compares the property `title` and the string `The Matrix`.
+
+`Cypher.eq` takes two arguments to compare. Our first argument will be the property `title`. However, our title is a property of our movieNode variable, so the `.property` method of that node will ensure that the property correctly references the movieNode variable.
+
+The second parameter is `"The Matrix"`, but instead of using a plain string, the object `Cypher.Param` class will take care of turning that into a parameter so we can safely put user input here.
+
+
+.Why `Cypher.eq` doesn't need `new`?
+[NOTE]
+====
+Cypher Builder treats Variables (like nodes and relationships) and Clauses as classes, as these are intended to be assigned to a js variable to be reused, composed and built.
+Cypher Functions and Procedures, however, are intended to be used a single time, as part of a larger query, so Cypher Builder treats these as simple functions, making it closer to how these work in Cypher.
+====
+
+=== Cypher and params
+
+You can run your script again (`node main.js`), and should get the following Cypher:
+
+```cypher
+MATCH (this0:`Movie`)
+WHERE this0.title = $param0
+RETURN this0
+```
+
+Success! The movie is now filtered by its title to a param. The param, however, is missing. You need to tweak the build process at the end of the script to get the parameters as well:
+
+```javascript
+const { cypher, params } = match.build();
+console.log(cypher);
+console.log(params);
+```
+
+Now, executing again, we get all we need to run this query in Neo4j:
+
+```cypher
+MATCH (this0:`Movie`)
+WHERE this0.title = $param0
+RETURN this0
+```
+
+```javascript
+{ param0: 'The Matrix' }
+```
+
+TIP: Note that `new Param` already takes care of assigning a param name and correctly matching the value to that parameter in the Cypher query. If a `Param` instance is used multiple times, it will always reference the same parameter (`$param0` in this case).
+
+
+=== `AND` filtering
+
+The query still lacks the second filter, which needs to be concatenated with `AND`. Simply use the method `.and` after the `where` with a new `Cypher.eq` predicate:
+
+```javascript
+    .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
+    .and(Cypher.lt(movieNode.property("year"), new Cypher.Param(2000)))
+```
+
+This takes the same parameters as `.where`, and makes sure to properly concatenate the filters with `AND`. In this case, the function `Cypher.lt` will add the operator `<` (**l**ower **t**han). Same as before, the comparison happens between a property of `movieNode` and a param. This time the param is a number. Cypher Builder will take care of correctly passing it to the `params` object.
+
+Running the script again:
+
+```cypher
+MATCH (this0:`Movie`)
+WHERE (this0.title = $param0 AND this0.year < $param1)
+RETURN this0
+```
+
+```javascript
+{ param0: 'The Matrix', param1: 1999 }
+```
+
+This should look closer to the target query, note that now there are two parameters, each one correctly associated to the correct filter.
+
+NOTE: Adding the `AND` operation automatically adds parenthesis to ensure operation precedence, this will be important when dealing with complex and nested filters 
+
+== Projection
+
+Usually, returning the full node is not desirable, for these cases, you can explicitly set a projection in the `RETURN` clause.
+
+You can define multiple columns to return in the projection by passing them into the `.return` method. This method not only accepts Nodes, but any kind of variables, such as properties or params.
+
+Let's update the return subclause:
+
+```javascript
+    .return(movieNode.property("id"), movieNode.property("title"), movieNode.property("year"));
+```
+
+The returned Cypher now should be:
+
+```cypher
+MATCH (this0:`Movie`)
+WHERE (this0.title = $param0 AND this0.year < $param1)
+RETURN this0.id, this0.title, this0.year
+```
+
+Success! You have now a query with filters and projections.
+
+TIP: You can also alias the returned records, Check TODO: Add link here
+
+=== Reusing variables
+
+Right now, this query is filtering and returning the properties `id` and `title` of the Movie nodes. However, the query relies on the name of these properties to remain the same. This, particularly with more complex queries, can lead to flaky queries, as it is hard to keep track of strings identifying values.
+
+To fix this, you'll make a small adjustment to the script, so that both the filters and the projection use the same property variable:
+
+```javascript
+const idProp = movieNode.property("id");
+const titleProp = movieNode.property("title");
+const yearProp = movieNode.property("year");
+
+const clause = new Cypher.Match(movieNode)
+    .where(Cypher.eq(titleProp, new Cypher.Param("The Matrix")))
+    .and(Cypher.lt(yearProp, new Cypher.Param(2000)))
+    .return(idProp, titleProp, yearProp);
+```
+
+This change, not only ensures that different parts of the query are always in sync but also makes the clause itself shorter and easier to read.
+
+TIP: Params can also be assigned to a variable and reused, this can be particularly useful when having multiple filters over the same parameter.
+
+== Conclusion
+
+Your script should now look similar to this:
+
+```javascript
+import Cypher from "@neo4j/cypher-builder";
+
+const movieNode = new Cypher.Node({
+    labels: ["Movie"],
+});
+
+const idProp = movieNode.property("id");
+const titleProp = movieNode.property("title");
+const yearProp = movieNode.property("year");
+
+const clause = new Cypher.Match(movieNode)
+    .where(Cypher.eq(titleProp, new Cypher.Param("The Matrix")))
+    .and(Cypher.lt(yearProp, new Cypher.Param(2000)));
+    .return(idProp, titleProp, yearProp);
+
+const { cypher, params } = clause.build();
+console.log(cypher);
+console.log(params);
+```
+
+And its execution should show the following query:
+
+```cypher
+MATCH (this0:`Movie`)
+WHERE (this0.title = $param0 AND this0.year < $param1)
+RETURN this0.id, this0.title, this0.year
+```
+
+```javascript
+{ param0: 'The Matrix', param1: 2000 }
+```
+
+With this, you already have the tools to make useful queries, feel free to try other filters operations (TODO: add link )

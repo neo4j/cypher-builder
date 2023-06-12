@@ -2,4 +2,5 @@
 * Getting Started
 ** xref:getting-started/installation.adoc[]
 ** xref:getting-started/your-first-query.adoc[]
+** xref:getting-started/filters-and-projections.adoc[]
 * xref:content-types.adoc[]
