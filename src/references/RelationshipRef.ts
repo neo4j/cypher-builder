@@ -21,6 +21,7 @@ import type { NodeRef } from "./NodeRef";
 import type { NamedReference } from "./Reference";
 import { Reference } from "./Reference";
 import type { Param } from "./Param";
+import { LabelExpr } from "../expressions/labels/label-expressions";
 
 export type RelationshipInput = {
     source: NodeRef;
@@ -38,14 +39,14 @@ type RelationshipRefOptions = {
  * @group References
  */
 export class RelationshipRef extends Reference {
-    private _type: string | undefined;
+    private _type: string | LabelExpr | undefined;
 
-    constructor(input: RelationshipRefOptions = {}) {
+    constructor(input: { type?: string | LabelExpr } = {}) {
         super("this");
         this._type = input.type || undefined;
     }
 
-    public get type(): string | undefined {
+    public get type(): string | LabelExpr | undefined {
         return this._type;
     }
 }

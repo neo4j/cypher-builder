@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { LabelExpr } from "../expressions/labels/label-expressions";
 import type { CypherEnvironment } from "../Environment";
 import type { NodeRef } from "../references/NodeRef";
 import type { Param } from "../references/Param";
@@ -71,14 +72,19 @@ export class Pattern extends PatternElement<NodeRef> {
         const nodeRefId = this.withVariable ? `${this.element.getCypher(env)}` : "";
 
         const propertiesStr = this.properties ? this.serializeParameters(this.properties || {}, env) : "";
-        const nodeLabelStr = this.withLabels ? this.getNodeLabelsString(this.element) : "";
+        const nodeLabelStr = this.withLabels ? this.getNodeLabelsString(this.element, env) : "";
 
         return `${prevStr}(${nodeRefId}${nodeLabelStr}${propertiesStr})`;
     }
 
-    private getNodeLabelsString(node: NodeRef): string {
-        const escapedLabels = node.labels.map(escapeLabel);
-        if (escapedLabels.length === 0) return "";
-        return `:${escapedLabels.join(":")}`;
+    private getNodeLabelsString(node: NodeRef, env: CypherEnvironment): string {
+        const labels = node.labels;
+        if (labels instanceof LabelExpr) {
+            return `:${labels.getCypher(env)}`;
+        } else {
+            const escapedLabels = labels.map(escapeLabel);
+            if (escapedLabels.length === 0) return "";
+            return `:${escapedLabels.join(":")}`;
+        }
     }
 }
