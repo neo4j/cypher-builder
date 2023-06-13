@@ -18,7 +18,8 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import type { CypherCompilable } from "../types";
+import { Clause } from "../clauses/Clause";
+import type { Expr } from "../types";
 import { isCypherCompilable } from "./is-cypher-compilable";
 
 /** Compiles a clause or expression to a Cypher string, adding optional prefix or suffix. To be used in a RawCypher callback
@@ -26,7 +27,7 @@ import { isCypherCompilable } from "./is-cypher-compilable";
  *  The prefix and suffix will only be added if the resulting Cypher is **not** an empty string
  */
 export function compileCypher(
-    element: CypherCompilable,
+    element: Expr | Clause,
     env: CypherEnvironment,
     { prefix = "", suffix = "" }: { prefix?: string; suffix?: string } = {}
 ): string {
