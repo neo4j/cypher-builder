@@ -21,8 +21,20 @@ import { Literal } from "../references/Literal";
 import { isCypherCompilable } from "./is-cypher-compilable";
 import type { Param } from "../references/Param";
 import type { Variable } from "../references/Variable";
+import { MapExpr } from "../expressions/map/MapExpr";
 
-export function normalizeVariable(value: string | number | Variable | Literal | Param): Variable | Literal | Param {
+type VariableInput = string | number | Variable | Literal | Param;
+
+export type InputArgument<T extends string | number> = T | Variable | Literal<T> | Param<T>;
+
+export function normalizeVariable(value: VariableInput): Variable | Literal | Param {
     if (isCypherCompilable(value)) return value;
     return new Literal(value);
+}
+
+export function normalizeMap(map: Record<string, VariableInput>): MapExpr {
+    return Object.entries(map).reduce((mapExpr, [key, value]) => {
+        mapExpr.set(key, normalizeVariable(value));
+        return mapExpr;
+    }, new MapExpr());
 }

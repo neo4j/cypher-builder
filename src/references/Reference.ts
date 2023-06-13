@@ -36,9 +36,9 @@ export abstract class Reference implements CypherCompilable {
         return `${id}`;
     }
 
-    /** Access individual property via the PropertyRef class, using the dot notation */
-    public property(path: string | Expr): PropertyRef {
-        return new PropertyRef(this, path);
+    /** Access individual property via the PropertyRef class */
+    public property(...path: Array<string | Expr>): PropertyRef {
+        return new PropertyRef(this, ...path);
     }
 
     /* Access individual elements via the ListIndex class, using the square bracket notation */
