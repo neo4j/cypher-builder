@@ -34,6 +34,7 @@ export { concat } from "./clauses/utils/concat";
 
 // Patterns
 export { Pattern } from "./pattern/Pattern";
+export { labelExpr } from "./expressions/labels/label-expressions";
 
 // Variables and references
 export { NodeRef as Node, NamedNode } from "./references/NodeRef";
@@ -129,6 +130,7 @@ export type { PredicateFunction } from "./expressions/functions/PredicateFunctio
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { CompositeClause } from "./clauses/utils/concat";
 export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/AggregationFunctions";
+export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
 
 // utils
 export * as utils from "./utils/utils";

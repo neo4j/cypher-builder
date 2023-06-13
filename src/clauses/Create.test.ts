@@ -40,7 +40,7 @@ describe("CypherBuilder Create", () => {
 
         const queryResult = createQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE (this0:\`Movie\` { test: $param0, id: $param1 })
+            "CREATE (this0:Movie { test: $param0, id: $param1 })
             SET
                 this0.title = $param2,
                 this0.runtime = $param3
@@ -48,13 +48,13 @@ describe("CypherBuilder Create", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-  "param1": "my-id",
-  "param2": "The Matrix",
-  "param3": 120,
-}
-`);
+            {
+              "param0": "test-value",
+              "param1": "my-id",
+              "param2": "The Matrix",
+              "param3": 120,
+            }
+        `);
     });
 
     test("Create Node with null property", () => {
@@ -76,7 +76,7 @@ describe("CypherBuilder Create", () => {
 
         const queryResult = createQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE (this0:\`Movie\` { id: NULL })
+            "CREATE (this0:Movie { id: NULL })
             SET
                 this0.test = NULL,
                 this0.nullStr = $param0
@@ -84,10 +84,10 @@ describe("CypherBuilder Create", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "null",
-}
-`);
+            {
+              "param0": "null",
+            }
+        `);
     });
 
     test("Create Node with null property and assign path variable", () => {
@@ -110,7 +110,7 @@ describe("CypherBuilder Create", () => {
 
         const queryResult = createQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE p0 = (this1:\`Movie\` { id: NULL })
+            "CREATE p0 = (this1:Movie { id: NULL })
             SET
                 this1.test = NULL,
                 this1.nullStr = $param0
@@ -118,9 +118,9 @@ describe("CypherBuilder Create", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "null",
-}
-`);
+            {
+              "param0": "null",
+            }
+        `);
     });
 });

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher, { Param } from "..";
+import Cypher from "..";
 import { TestClause } from "../utils/TestClause";
 
 describe("Patterns", () => {
@@ -36,7 +36,7 @@ describe("Patterns", () => {
 
             const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`TestLabel\`)"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel)"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
@@ -45,12 +45,21 @@ describe("Patterns", () => {
 
             const pattern = new Cypher.Pattern(node).withProperties({ name: new Cypher.Param("test") });
             const queryResult = new TestClause(pattern).build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`TestLabel\` { name: $param0 })"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel { name: $param0 })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test",
-}
-`);
+                {
+                  "param0": "test",
+                }
+            `);
+        });
+
+        test("Simple node with label that needs normalize", () => {
+            const node = new Cypher.Node({ labels: ["Test&Label"] });
+
+            const pattern = new Cypher.Pattern(node);
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`Test&Label\`)"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 
@@ -102,18 +111,18 @@ describe("Patterns", () => {
             );
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:\`Person\`:\`Actor\` { name: $param0, surname: $param1 })-[this1:ACTED_IN { roles: $param2 }]->(this2)"`
+                `"(this0:Person:Actor { name: $param0, surname: $param1 })-[this1:ACTED_IN { roles: $param2 }]->(this2)"`
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Arthur",
-  "param1": "Dent",
-  "param2": [
-    "neo",
-  ],
-}
-`);
+                {
+                  "param0": "Arthur",
+                  "param1": "Dent",
+                  "param2": [
+                    "neo",
+                  ],
+                }
+            `);
         });
 
         test("Long relationship Pattern", () => {
@@ -131,7 +140,7 @@ describe("Patterns", () => {
             const query = new TestClause(new Cypher.Pattern(a).related(rel1).to(b).related(rel2).to(c));
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0)-[this1:ACTED_IN]->(this2)-[this3:ACTED_IN]->(this4:\`TestLabel\`)"`
+                `"(this0)-[this1:ACTED_IN]->(this2)-[this3:ACTED_IN]->(this4:TestLabel)"`
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -146,7 +155,7 @@ describe("Patterns", () => {
 
             const query = new TestClause(new Cypher.Pattern(a).related(rel).to(b));
             const queryResult = query.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTE\`D_IN]->(this2)"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:\`ACTE\`\`D_IN\`]->(this2)"`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
@@ -208,7 +217,7 @@ describe("Patterns", () => {
                 new Cypher.Pattern(a)
                     .related(actedInRelationship)
                     .withProperties({
-                        value: new Param(100),
+                        value: new Cypher.Param(100),
                     })
                     .withLength(2)
                     .to(b)
@@ -219,10 +228,10 @@ describe("Patterns", () => {
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 100,
-}
-`);
+                {
+                  "param0": 100,
+                }
+            `);
         });
 
         test("variable length with empty relationship", () => {
