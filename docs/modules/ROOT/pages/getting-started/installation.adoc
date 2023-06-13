@@ -1,52 +1,52 @@
 = Installation
 
-In this guide, you'll set up a Node.js project with Cypher Builder, after this, you'll be ready to start using `@neo4j/cypher-builder`.
+In this guide, you'll set up a Node.js project with `@neo4j/cypher-builder`, after this, you'll be ready to start using Cypher Builder.
 
 == Requirements
-You'll need link:https://nodejs.org/[Node.js] 16.0.0 or greater and link:https://docs.npmjs.com/downloading-and-installing-node-js-and-npm[npm] installed.
 
-Alternatively, you can try it live at link:https://codepen.io/angrykoala/pen/PoxqVvM?editors=1112[CodePen] 
+* link:https://nodejs.org/[Node.js] 16.0.0 or greater
+* link:https://docs.npmjs.com/downloading-and-installing-node-js-and-npm[npm]
+* **[Optional]** A link:https://neo4j.com/cloud/platform/aura-graph-database/?ref=nav-get-started-cta[Neo4j] database to try Cypher queries.
 
-If you want to test the Cypher queries, you'll also need a link:https://neo4j.com/cloud/platform/aura-graph-database/?ref=nav-get-started-cta[Neo4j] database. 
-
+[NOTE]
+====
+Alternatively, you can try it live at link:https://codepen.io/angrykoala/pen/PoxqVvM?editors=1112[CodePen]
+====
 
 == Installing Cypher Builder
 
-TIP: If using CodePen, you can skip this bit
+[TIP]
+====
+If using CodePen, you can skip this bit
+====
 
-1. In a folder of your choice, run the following command to create a Node.js project and a `package.json` file
-+
+In a folder of your choice, run the following command to create a Node.js project and a `package.json` file
+
 ```bash
 npm init es6 -y
 ``` 
-+
+
 Note that these examples use es6 modules, but CommonJS can be used as well.
-2. Install link:https://www.npmjs.com/package/@neo4j/cypher-builder[`@neo4j/cypher-builder`] and add it to the dependencies list with the following command: 
-+
+
+
+Next, install link:https://www.npmjs.com/package/@neo4j/cypher-builder[`@neo4j/cypher-builder`] and add it to the dependencies list with the following command: 
+
 ```
 npm install --save @neo4j/cypher-builder
 ```
-3. Create a new file `main.js` with the following content:
-+
+
+Create a new file `main.js` with the following content:
+
 ```javascript
 import Cypher from "@neo4j/cypher-builder";
 ```
-4. Execute the script:
-+
+
+Execute the script:
+
 ```bash
 node main.js
 ```
-+
+
 At this moment, the script should not do anything, but if it doesn't show an error it means Cypher Builder has been correctly installed.
 
-
-== Live Playground
-
-++++
-<p class="codepen" data-height="300" data-default-tab="js,result" data-slug-hash="PoxqVvM" data-editable="true" data-user="angrykoala" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-  <span>See the Pen <a href="https://codepen.io/angrykoala/pen/PoxqVvM?editors=1112">
-  Getting Started With Cypher Builder</a> by angrykoala (<a href="https://codepen.io/angrykoala">@angrykoala</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
-<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
-++++
+// TODO: add a "connect to the database" optional section

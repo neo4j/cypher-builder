@@ -6,6 +6,7 @@ The Cypher builder is a library for building [Cypher](https://neo4j.com/docs/cyp
 
 Try it live on [CodePen](https://codepen.io/angrykoala/pen/dyKmpzP).
 
+
 # Getting Started
 
 ```typescript
@@ -52,3 +53,7 @@ You can find usage examples in the [examples](https://github.com/neo4j/cypher-bu
 -   `npm test` to run cypher builder tests
 -   `npm run build` to compile cypher builder library
 -   `npm run docs` to generate the API reference docs
+
+
+
+> This library is for JavaScript and TypeScript only. If you are using Java, check [Neo4j Cypher DSL](https://neo4j-contrib.github.io/cypher-dsl).

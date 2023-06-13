@@ -1,8 +1,8 @@
 = Relationships and complex filtering
 
-In a Graph database such as Neo4j, Relationships are as, if not more important than Nodes. In this tutorial, you'll learn how to add relationships to the query from the xref:getting-started/filters-and-projections.adoc[previous tutorial]. With relationships, often you'll need more complex filters such as the ones you'll add here, finally, aliasing the results on the projection will make the results much easier to read and understand.
+In a Graph database such as Neo4j, Relationships are as, if not more, important than Nodes. In this tutorial, you'll learn how to add relationships to the Cypher query from the xref:getting-started/filters-and-projections.adoc[previous tutorial]. 
 
-Your goal is now to add **Actors** into the query, which are related to **Movies**, and filter movies based on these:
+With relationships, often you'll need more complex filters such as the ones you'll add here. Finally, aliasing the results on the projection will make the results much easier to read and understand:
 
 ```cypher
 MATCH(m:Movie)<-[r:ACTED_IN]-(a:Person)
@@ -10,16 +10,18 @@ WHERE (a.name="Keanu Reeves" AND (NOT(m.title CONTAINS "Matrix") OR m.released <
 RETURN m.title, m.tagline, m.released, r.roles AS actingRoles
 ```
 
-The previous queries were somewhat trivial, this one may deserve a bit more explanation. In this case, the query matches a Movie along with its actors, filtering on movies with the actor `Keanu Reeves`. It also filters on either movies **not** containing `Matrix` or released before 2000. This query, using the default example Neo4j database, will effectively return the movies in which `Keanu Reeves` acted, except any Matrix movie after the first one, released in 1999.
+Previous queries were somewhat trivial, this one may deserve a bit more explanation. This query matches a Movie along with its actors, filtering movies with the actor `Keanu Reeves`. It also filters on either movies **not** containing `Matrix` or released before 2000. This query, using the default example Neo4j database, will effectively return the movies in which `Keanu Reeves` acted, except any Matrix movie after the first one, released in 1999.
 
-Finally, the projection also includes the first element of the relationship property `roles` (which is an array of the relationship). Because the column for this field will return `r.roles[0]` as a name, an alias on this field to rename it to `role` (singular) will make the results much easier to read.
+Finally, the projection also includes the first element of the relationship property `roles` (which is an array of the relationship). Because the column for this field will return `r.roles` as a name, an alias on this field to rename it to `actingRoles` will make the results more meaningful.
 
 == Relationship patterns
-So far, the `Cypher.Match` statement has always accepted a `Cypher.Node` variable, this is a shorthand for very simple queries involving a single node, however, for more complex `MATCH` statements, like the one in this tutorial, you'll have to define a Pattern.
+So far, the `Cypher.Match` statement has always accepted a `Cypher.Node` variable, this is a shorthand for very simple queries involving a single node, however, for more complex `MATCH` statements, like the one in this tutorial, you'll have to define a **Pattern**.
+
+// TODO: link to patterns
 
 === Relationship variables
 
-Relationships, just like Nodes, are variables that can be created and reused across your query. Just like Nodes, Cypher Builder will take care of the names. You'll need to add a new Node and Relationship to the script:
+Relationships, just like Nodes, are variables that can be created and reused across your query, and just like Nodes, Cypher Builder will take care of the names. You'll need to add a new Node and Relationship to the script:
 
 ```javascript
 const actedIn = new Cypher.Relationship({
@@ -31,21 +33,26 @@ const personNode = new Cypher.Node({
 });
 ```
 
-Note how, so far the relationship is not connected to the Nodes, this is because what this is creating here is a variable to hold the relationship matched by the pattern.
+Note how, so far the relationship is not connected to the Nodes, this is because what you are creating here is actually a variable to hold the relationship matched by the pattern, not the relationship itself.
 
-TIP: Note how in `Cypher.Relationship` instead of `labels` a `type` is passed, which is not an array. This is because Cypher Relationships can only hold a single type. Because Cypher **Types** and **Labels** are very similar, it is easy to mix the two. Thankfully, the JavaScript API (and typings, if you use TypeScript) will help you spot these kind of mistakes quicker.
+[TIP]
+====
+Note how, in `Cypher.Relationship`, instead of `labels` we use a `type`, which is not an array. This is because Cypher Relationships can only hold a single type. 
+
+Cypher **Types** and **Labels** are very similar, which makes them easy to mix and try to pass multiple types to a Relationship, which is incorrect. The JavaScript API (and typings, if you use TypeScript) will help you spot these kinds of mistakes quicker.
+====
 
 === Creating the pattern
 
-You now can define an arbitrarily complex pattern with `new Cypher.Pattern` by using the variables already declared:
+You now can define an arbitrarily complex pattern with `new Cypher.Pattern` using the variables already declared:
 
 ```javascript
 const pattern = new Cypher.Pattern(movieNode).related(actedIn).to(personNode);
 ```
 
-The patterns in Cypher Builder work similarly to Cypher, each element of the chain is either a relationship or a node, and you can define other aspects of the pattern in each element of the chain.
+The patterns in Cypher Builder work similarly to Cypher, with each element of the chain being either a relationship or a node.
 
-Now, you can simply swap the `movieNode` variable for the `pattern` in the Match clause:
+Now, you can swap the `movieNode` variable for the `pattern` in the Match clause:
 
 ```javascript
 const clause = new Cypher.Match(pattern)
@@ -63,17 +70,23 @@ RETURN this0.title, this0.tagline, this0.released
 { param0: 'The Matrix', param1: 2000 }
 ```
 
-TIP: Note how, despite changing the Match target, all the filters and relationships are still pointing towards the correct variable `this0`
+[TIP]
+====
+Note how, despite changing the Match target, all the filters and relationships are still pointing towards the correct variable: `this0`
+====
 
 This is looking good, however, the pattern is slightly off. Instead of a **Person** acting in a **Movie** there is a **Movie** acting on a **Person**!
 
-Just a small tweak in the pattern should fix this:
+Just a small tweak in the pattern direction should fix this:
 
 ```javascript
 const pattern = new Cypher.Pattern(movieNode).related(actedIn).withDirection("left").to(people);
 ```
 
-TIP: Any aspect of the Pattern itself (cardinality, direction and properties) can be changed in the pattern itself with the methods of each element in the "chain".
+[TIP]
+====
+Any aspect of the Pattern itself (cardinality, direction and properties) can be changed in the pattern declaration with the methods of each element in the "chain".
+====
 
 Executing the script again:
 
@@ -85,7 +98,7 @@ RETURN this0.title, this0.tagline, this0.released
 
 == Boolean operations
 
-So far, all of the filters you've made have been `AND` filters. For this the Cypher Builder provides the shorthand method `.and` in the `where` subclause. Filters, however, can be much more complex, with nested operations.
+So far, all of the filters you've made have been `AND` filters. For this, the Cypher Builder provides the shorthand method `.and` in the `where` subclause. Filters, however, can be much more complex, with nested operations, for example.
 
 Let's refresh the filters we want to add to the query:
 
@@ -98,15 +111,15 @@ WHERE (
     )
 ```
 
-This complex filter is composed of 3 basic operations:
+This complex filter is actually composed of 3 basic comparisons:
 
 * `a.name = "Keanu Reeves"`
 * `m.title CONTAINS "Matrix"`
 * `m.released < 2000`
 
-Then, these are composed of the logic operations `AND`, `NOT` and `OR`.
+Then, these are composed with the logic operations `AND`, `NOT` and `OR`.
 
-To deal with these complex queries, that can easily grow until they are hard to maintain, it is a good idea to split the parts and compose the afterwards. Just like the Nodes or Patterns, the basic operations can be created separately:
+To deal with these complex queries, that can easily grow until they are hard to maintain, it is a good idea to split the parts and compose the afterwards. Just like the Nodes or Patterns, the basic comparisons can be created separately:
 
 ```javascript
 const isKeanu = Cypher.eq(personNode.property("name"), new Cypher.Param("Keanu Reeves"));
@@ -114,7 +127,7 @@ const titleContainsMatrix = Cypher.contains(titleProp, new Cypher.Param("The Mat
 const releasedBefore2000 = Cypher.lt(yearProp, new Cypher.Param(2000));
 ```
 
-Here you can use the `titleProp` and `yearProp` that we already had. You can also make a `personName` variable for the first operation.
+Here you can use the `titleProp` and `yearProp` that we already had. You can also make a `personName` variable for the first operation instead of passing the property directly.
 
 Composing these operations should feel less daunting now, as we have the building blocks, but it will require a different strategy than the `where().and()` shorthand, as we have nested operations (`NOT` and `OR`). To achieve this, you can use the methods `Cypher.and`, `Cypher.or` and `Cypher.not` inside the `.where()` method:
 
@@ -124,12 +137,15 @@ const clause = new Cypher.Match(pattern)
     .return(titleProp, taglineProp, yearProp);
 ```
 
-TIP: Building queries in separate variables and composing them is a good opportunity of adding context to what each part means, note how the complex filtering at the beginning is much easier to read and understand now that the code leverages the basic operations with clearer names. 
+[TIP]
+====
+Building queries in separate variables and composing them is a good opportunity of adding context to what each part means, note how the complex filtering at the beginning is much easier to read and understand now that the code leverages the basic operations with clearer names. 
+====
 
 Now, the resulting Cypher should look like this:
 
 ```cypher
-MATCH (this0:`Movie`)<-[this1:ACTED_IN]-(this2:`Person`)
+MATCH (this0:Movie)<-[this1:ACTED_IN]-(this2:Person)
 WHERE (this2.name = $param0 AND (NOT (this0.title CONTAINS $param1) OR this0.released < $param2))
 RETURN this0.title, this0.tagline, this0.released
 ```
@@ -149,10 +165,16 @@ First, add `roles` to the list of properties:
 const rolesProperty = actedIn.property("roles");
 ```
 
-Then, like before, return the property in the `.return` statement. But in this case, passing a tuple with the aliased value:
+Then, like before, add the property to the `.return` statement. But in this case, passing a tuple with the aliased value:
 
 ```javascript
     .return(titleProp, taglineProp, yearProp, [rolesProperty, "actingRoles"]);
+```
+
+With this, the query return should look like this:
+
+```cypher
+RETURN this0.title, this0.tagline, this0.released, this1.roles AS actingRoles
 ```
 
 == Conclusion
@@ -199,7 +221,7 @@ console.log(params);
 The result of executing this script should be:
 
 ```cypher
-MATCH (this0:`Movie`)<-[this1:ACTED_IN]-(this2:`Person`)
+MATCH (this0:Movie)<-[this1:ACTED_IN]-(this2:Person)
 WHERE (this2.name = $param0 AND (NOT (this0.title CONTAINS $param1) OR this0.released < $param2))
 RETURN this0.title, this0.tagline, this0.released, this1.roles AS actingRoles
 ```
@@ -207,3 +229,7 @@ RETURN this0.title, this0.tagline, this0.released, this1.roles AS actingRoles
 ```javascript
 { param0: 'Keanu Reeves', param1: 'The Matrix', param2: 2000 }
 ```
+
+---
+
+This is the end of the Getting Started guide. You should now be able to create complex Cypher queries and follow the examples provided in this Manual.
