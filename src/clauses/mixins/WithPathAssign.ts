@@ -25,6 +25,9 @@ import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 export abstract class WithPathAssign extends ClauseMixin {
     private pathVariable: Path | undefined;
 
+    /** Add a path assignment to the pattern
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns/#cypher-pattern-path-variables)
+     */
     public assignToPath(path: Path): this {
         this.pathVariable = path;
         return this;

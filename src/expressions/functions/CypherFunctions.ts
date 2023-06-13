@@ -22,10 +22,16 @@ import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import type { Expr } from "../../types";
 
-/** Represents a Cypher Function
+/** Represents a Cypher Function, all Cypher functions provided by the library extend from this class, and it can be used to use custom functions
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/)
- * @group Expressions
- * @category Cypher Functions
+ * @example
+ * ```ts
+ * const myFunction = new Cypher.Function("myFunction", [new Cypher.Literal("test"), new Cypher.Param("test2")]);
+ * ```
+ * _Cypher:_
+ * ```cypher
+ * myFunction("test", $param0)
+ * ```
  */
 export class CypherFunction extends CypherASTNode {
     protected name: string;
@@ -56,17 +62,17 @@ export class CypherFunction extends CypherASTNode {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-coalesce)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function coalesce(expr: Expr, ...optionalExpr: Expr[]): CypherFunction {
     return new CypherFunction("coalesce", [expr, ...optionalExpr]);
 }
 
+// TODO: move point, distance and pointDistance to SpacialFunctions.ts
+
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function point(variable: Expr): CypherFunction {
     return new CypherFunction("point", [variable]);
@@ -74,8 +80,7 @@ export function point(variable: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/4.3/functions/spatial/#functions-distance)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  * @deprecated No longer supported in Neo4j 5. Use {@link pointDistance} instead.
  */
 export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
@@ -84,8 +89,7 @@ export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  * @example Generated Cypher: `point.distance(point1, point2)`
  */
 export function pointDistance(lexpr: Expr, rexpr: Expr): CypherFunction {
@@ -94,8 +98,7 @@ export function pointDistance(lexpr: Expr, rexpr: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-labels)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function labels(nodeRef: Variable): CypherFunction {
     return new CypherFunction("labels", [nodeRef]);
@@ -103,8 +106,7 @@ export function labels(nodeRef: Variable): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-randomuuid)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function randomUUID(): CypherFunction {
     return new CypherFunction("randomUUID");
@@ -112,8 +114,7 @@ export function randomUUID(): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-id)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function id(variable: Expr): CypherFunction {
     return new CypherFunction("id", [variable]);
@@ -121,8 +122,7 @@ export function id(variable: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function elementId(variable: Expr): CypherFunction {
     return new CypherFunction("elementId", [variable]);

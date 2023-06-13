@@ -24,7 +24,7 @@ import { DeleteClause } from "../sub-clauses/Delete";
 export abstract class WithDelete extends ClauseMixin {
     protected deleteClause: DeleteClause | undefined;
 
-    /** Attach a DELETE subclause
+    /** Add a `DELETE` subclause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/delete/)
      */
     public delete(...deleteInput: DeleteInput): this {
@@ -32,7 +32,7 @@ export abstract class WithDelete extends ClauseMixin {
         return this;
     }
 
-    /** Attach a DETACH DELETE subclause
+    /** Add a `DETACH DELETE` subclause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/delete/)
      */
     public detachDelete(...deleteInput: DeleteInput): this {

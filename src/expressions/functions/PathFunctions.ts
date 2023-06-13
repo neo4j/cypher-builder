@@ -22,27 +22,24 @@ import { CypherFunction } from "./CypherFunctions";
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
-export function nodes(expr: Path): CypherFunction {
-    return new CypherFunction("nodes", [expr]);
+export function nodes(path: Path): CypherFunction {
+    return new CypherFunction("nodes", [path]);
 }
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
-export function relationships(expr: Path): CypherFunction {
-    return new CypherFunction("relationships", [expr]);
+export function relationships(path: Path): CypherFunction {
+    return new CypherFunction("relationships", [path]);
 }
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
-export function length(expr: Path): CypherFunction {
-    return new CypherFunction("length", [expr]);
+export function length(path: Path): CypherFunction {
+    return new CypherFunction("length", [path]);
 }

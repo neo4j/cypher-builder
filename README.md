@@ -48,12 +48,6 @@ RETURN this0.title
 
 You can find usage examples in the [examples](https://github.com/neo4j/cypher-builder/tree/main/examples) folder and in [CodePen](https://codepen.io/collection/waPbzd).
 
-# Development
-
--   `npm test` to run cypher builder tests
--   `npm run build` to compile cypher builder library
--   `npm run docs` to generate the API reference docs
-
 
 
 > This library is for JavaScript and TypeScript only. If you are using Java, check [Neo4j Cypher DSL](https://neo4j-contrib.github.io/cypher-dsl).

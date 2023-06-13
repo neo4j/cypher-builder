@@ -35,7 +35,7 @@ export class CypherEnvironment {
     private params: Param[] = [];
 
     /**
-     *  @hidden
+     *  @internal
      */
     constructor(prefix?: string | EnvPrefix) {
         if (!prefix || typeof prefix === "string") {

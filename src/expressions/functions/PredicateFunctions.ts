@@ -27,9 +27,56 @@ import { CypherFunction } from "./CypherFunctions";
 
 /** Represents a predicate function that can be used in a WHERE statement
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/)
- * @group Internal
+ * @group Cypher Functions
  */
 export class PredicateFunction extends CypherFunction {}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-any)
+ * @group Cypher Functions
+ */
+export function any(variable: Variable, listExpr: Expr, whereFilter?: Predicate): PredicateFunction {
+    return new ListPredicateFunction("any", variable, listExpr, whereFilter);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-all)
+ * @group Cypher Functions
+ */
+export function all(variable: Variable, listExpr: Expr, whereFilter?: Predicate): PredicateFunction {
+    return new ListPredicateFunction("all", variable, listExpr, whereFilter);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-single)
+ * @group Cypher Functions
+ */
+export function single(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
+    return new ListPredicateFunction("single", variable, listExpr, whereFilter);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-exists)
+ * @group Cypher Functions
+ */
+export function exists(pattern: Pattern): PredicateFunction {
+    return new ExistsFunction(pattern);
+}
+
+class ExistsFunction extends PredicateFunction {
+    private pattern: Pattern;
+
+    constructor(pattern: Pattern) {
+        super("exists");
+        this.pattern = pattern;
+    }
+
+    getCypher(env: CypherEnvironment): string {
+        const patternStr = this.pattern.getCypher(env);
+
+        return `exists(${patternStr})`;
+    }
+}
 
 /** Predicate function that uses a list comprehension "var IN list WHERE .." */
 class ListPredicateFunction extends PredicateFunction {
@@ -54,55 +101,4 @@ class ListPredicateFunction extends PredicateFunction {
 
         return `${this.name}(${varCypher} IN ${listExprStr}${whereStr})`;
     }
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-any)
- * @group Expressions
- * @category Cypher Functions
- */
-export function any(variable: Variable, listExpr: Expr, whereFilter?: Predicate): PredicateFunction {
-    return new ListPredicateFunction("any", variable, listExpr, whereFilter);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-all)
- * @group Expressions
- * @category Cypher Functions
- */
-export function all(variable: Variable, listExpr: Expr, whereFilter?: Predicate): PredicateFunction {
-    return new ListPredicateFunction("all", variable, listExpr, whereFilter);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-single)
- * @group Expressions
- * @category Cypher Functions
- */
-export function single(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
-    return new ListPredicateFunction("single", variable, listExpr, whereFilter);
-}
-
-class ExistsFunction extends PredicateFunction {
-    private pattern: Pattern;
-
-    constructor(pattern: Pattern) {
-        super("exists");
-        this.pattern = pattern;
-    }
-
-    getCypher(env: CypherEnvironment): string {
-        const patternStr = this.pattern.getCypher(env);
-
-        return `exists(${patternStr})`;
-    }
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-exists)
- * @group Expressions
- * @category Cypher Functions
- */
-export function exists(pattern: Pattern): PredicateFunction {
-    return new ExistsFunction(pattern);
 }

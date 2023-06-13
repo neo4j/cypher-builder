@@ -20,14 +20,9 @@
 import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
-function dateFunction(name: string, timezone?: Expr): CypherFunction {
-    return new CypherFunction(name, timezone ? [timezone] : undefined);
-}
-
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function cypherDatetime(timezone?: Expr): CypherFunction {
     return dateFunction("datetime", timezone);
@@ -35,14 +30,13 @@ export function cypherDatetime(timezone?: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  * @example
  *
- * Using date without parameters:
+ * Date without parameters:
  *
  * ```ts
- * Cypher.Date()
+ * Cypher.date()
  * ```
  *
  * _Cypher:_
@@ -50,27 +44,17 @@ export function cypherDatetime(timezone?: Expr): CypherFunction {
  * date()
  * ```
  *
- * ---
- *
+ * @example
  * Date with parameters:
  *
  * ```ts
- * Cypher.Date(new Cypher.param('9999-01-01'))
+ * Cypher.date(new Cypher.param('9999-01-01'))
  * ```
  *
  * _Cypher:_
  * ```cypher
  * date($param1)
  * ```
- *
- * _Params:_
- * ```json
- * {
- *   param1: "9999-01-01"
- * }
- * ```
- *
- *
  */
 export function cypherDate(timezone?: Expr): CypherFunction {
     return dateFunction("date", timezone);
@@ -78,8 +62,7 @@ export function cypherDate(timezone?: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function cypherLocalDatetime(timezone?: Expr): CypherFunction {
     return dateFunction("localdatetime", timezone);
@@ -87,8 +70,7 @@ export function cypherLocalDatetime(timezone?: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function cypherLocalTime(timezone?: Expr): CypherFunction {
     return dateFunction("localtime", timezone);
@@ -96,9 +78,12 @@ export function cypherLocalTime(timezone?: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-time)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
  */
 export function cypherTime(timezone?: Expr): CypherFunction {
     return dateFunction("time", timezone);
+}
+
+function dateFunction(name: string, timezone?: Expr): CypherFunction {
+    return new CypherFunction(name, timezone ? [timezone] : undefined);
 }
