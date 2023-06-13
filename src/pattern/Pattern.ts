@@ -82,7 +82,7 @@ export class Pattern extends PatternElement<NodeRef> {
         if (labels instanceof LabelExpr) {
             return `:${labels.getCypher(env)}`;
         } else {
-            const escapedLabels = labels.map(escapeLabel); //dsa
+            const escapedLabels = labels.map(escapeLabel);
             if (escapedLabels.length === 0) return "";
             return `:${escapedLabels.join(":")}`;
         }
