@@ -21,9 +21,6 @@
         "lint": "eslint .",
         "changeset": "changeset",
         "release": "yarn build && changeset publish",
-        "docs": "antora docs/antora-playbook.yml",
-        "build-docs": "antora docs/preview.yml --stacktrace --log-format=pretty",
-        "docs-watch": "nodemon -e adoc --exec \"npm run docs && http-server -c-1 docs/build/site\""
     },
     "repository": {
         "type": "git",

@@ -1,4 +1,4 @@
-= Filters And Projections
+= Filters and projections
 
 After making our basic match & return query in xref:getting-started/your-first-query.adoc[Your First Query], in this guide you'll add some filters to your MATCH query and change the projection so only some fields are returned.
 

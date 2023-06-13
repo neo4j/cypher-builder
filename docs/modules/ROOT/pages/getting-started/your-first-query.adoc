@@ -1,4 +1,4 @@
-= Your First Query
+= Your first query
 
 In this guide, you'll be using Cypher Builder to create a simple Cypher query to match and return Movies:
 

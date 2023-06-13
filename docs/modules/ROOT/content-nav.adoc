@@ -4,4 +4,3 @@
 ** xref:getting-started/your-first-query.adoc[]
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-complex-filtering.adoc[]
-* xref:content-types.adoc[]
