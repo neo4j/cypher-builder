@@ -131,6 +131,7 @@ export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { CompositeClause } from "./clauses/utils/concat";
 export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/AggregationFunctions";
 export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
+export { InputArgument } from "./utils/normalize-variable";
 
 // utils
 export * as utils from "./utils/utils";
