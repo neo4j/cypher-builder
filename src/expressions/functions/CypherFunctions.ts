@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
-import type { Variable } from "../../references/Variable";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import type { Expr } from "../../types";
 
 /** Represents a Cypher Function, all Cypher functions provided by the library extend from this class, and it can be used to use custom functions
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/)
+ * @group Cypher Functions
  * @example
  * ```ts
  * const myFunction = new Cypher.Function("myFunction", [new Cypher.Literal("test"), new Cypher.Param("test2")]);
@@ -66,37 +66,6 @@ export class CypherFunction extends CypherASTNode {
  */
 export function coalesce(expr: Expr, ...optionalExpr: Expr[]): CypherFunction {
     return new CypherFunction("coalesce", [expr, ...optionalExpr]);
-}
-
-// TODO: move point, distance and pointDistance to SpacialFunctions.ts
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/)
- * @group Cypher Functions
- * @category Spatial
- */
-export function point(variable: Expr): CypherFunction {
-    return new CypherFunction("point", [variable]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/4.3/functions/spatial/#functions-distance)
- * @group Cypher Functions
- * @category Spatial
- * @deprecated No longer supported in Neo4j 5. Use {@link pointDistance} instead.
- */
-export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
-    return new CypherFunction("distance", [lexpr, rexpr]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance)
- * @group Cypher Functions
- * @category Spatial
- * @example Generated Cypher: `point.distance(point1, point2)`
- */
-export function pointDistance(lexpr: Expr, rexpr: Expr): CypherFunction {
-    return new CypherFunction("point.distance", [lexpr, rexpr]);
 }
 
 /**
