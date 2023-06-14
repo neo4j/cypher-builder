@@ -87,7 +87,6 @@ export {
     point,
     distance,
     pointDistance,
-    labels,
     randomUUID,
     id,
     elementId,

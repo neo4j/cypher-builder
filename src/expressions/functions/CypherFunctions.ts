@@ -73,6 +73,7 @@ export function coalesce(expr: Expr, ...optionalExpr: Expr[]): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/)
  * @group Cypher Functions
+ * @category Spatial
  */
 export function point(variable: Expr): CypherFunction {
     return new CypherFunction("point", [variable]);
@@ -81,6 +82,7 @@ export function point(variable: Expr): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/4.3/functions/spatial/#functions-distance)
  * @group Cypher Functions
+ * @category Spatial
  * @deprecated No longer supported in Neo4j 5. Use {@link pointDistance} instead.
  */
 export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
@@ -90,18 +92,11 @@ export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance)
  * @group Cypher Functions
+ * @category Spatial
  * @example Generated Cypher: `point.distance(point1, point2)`
  */
 export function pointDistance(lexpr: Expr, rexpr: Expr): CypherFunction {
     return new CypherFunction("point.distance", [lexpr, rexpr]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-labels)
- * @group Cypher Functions
- */
-export function labels(nodeRef: Variable): CypherFunction {
-    return new CypherFunction("labels", [nodeRef]);
 }
 
 /**

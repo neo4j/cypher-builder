@@ -49,6 +49,15 @@ export function last(expr: Expr): CypherFunction {
     return new CypherFunction("last", [expr]);
 }
 
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-labels)
+ * @group Cypher Functions
+ * @category List
+ */
+export function labels(nodeRef: Variable): CypherFunction {
+    return new CypherFunction("labels", [nodeRef]);
+}
+
 /** Reduce a list by executing given expression.
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reduce)
  * @group Cypher Functions
