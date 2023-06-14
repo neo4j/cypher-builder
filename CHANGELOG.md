@@ -1,5 +1,13 @@
 # @neo4j/cypher-builder
 
+## 0.5.2
+
+### Patch Changes
+
+-   [#11](https://github.com/neo4j/cypher-builder/pull/11) [`63ffbbf`](https://github.com/neo4j/cypher-builder/commit/63ffbbf34ec003247aebfbf8754bafe216d42ef1) Thanks [@angrykoala](https://github.com/angrykoala)! - Adds db.index.fulltext.queryRelationships
+
+-   [#13](https://github.com/neo4j/cypher-builder/pull/13) [`41a15dd`](https://github.com/neo4j/cypher-builder/commit/41a15dd5f6725dd74cf8da08ce0eb91909ff142f) Thanks [@darrellwarde](https://github.com/darrellwarde)! - Change the abstract class Reference to accept nested properties
+
 ## 0.5.1
 
 ### Patch Changes
