@@ -23,7 +23,7 @@ import { ListIndex } from "./ListIndex";
 
 /** Represents a List
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/lists/)
- * @group Expressions
+ * @group Lists
  * @example
  * ```ts
  * new Cypher.List([new Cypher.Literal("1"), new Cypher.Literal("2"), new Cypher.Literal("3")])
@@ -54,7 +54,7 @@ export class ListExpr implements CypherCompilable {
         return this.serializeList(env, this.value);
     }
 
-    /** Access individual elements in the list via the ListIndex class*/
+    /** Access individual elements in the list */
     public index(index: number): ListIndex {
         return new ListIndex(this, index);
     }

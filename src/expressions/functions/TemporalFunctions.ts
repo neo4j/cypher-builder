@@ -23,6 +23,7 @@ import { CypherFunction } from "./CypherFunctions";
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime)
  * @group Cypher Functions
+ * @category Temporal
  */
 export function cypherDatetime(timezone?: Expr): CypherFunction {
     return dateFunction("datetime", timezone);
@@ -31,6 +32,7 @@ export function cypherDatetime(timezone?: Expr): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date)
  * @group Cypher Functions
+ * @category Temporal
  * @example
  *
  * Date without parameters:
@@ -63,6 +65,7 @@ export function cypherDate(timezone?: Expr): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
  * @group Cypher Functions
+ * @category Temporal
  */
 export function cypherLocalDatetime(timezone?: Expr): CypherFunction {
     return dateFunction("localdatetime", timezone);
@@ -71,6 +74,7 @@ export function cypherLocalDatetime(timezone?: Expr): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
  * @group Cypher Functions
+ * @category Temporal
  */
 export function cypherLocalTime(timezone?: Expr): CypherFunction {
     return dateFunction("localtime", timezone);
@@ -79,6 +83,7 @@ export function cypherLocalTime(timezone?: Expr): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-time)
  * @group Cypher Functions
+ * @category Temporal
  */
 export function cypherTime(timezone?: Expr): CypherFunction {
     return dateFunction("time", timezone);

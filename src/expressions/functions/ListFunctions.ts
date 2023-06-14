@@ -25,6 +25,7 @@ import { CypherFunction } from "./CypherFunctions";
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size)
  * @group Cypher Functions
+ * @category List
  */
 export function size(expr: Expr): CypherFunction {
     return new CypherFunction("size", [expr]);
@@ -33,6 +34,7 @@ export function size(expr: Expr): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-head)
  * @group Cypher Functions
+ * @category List
  */
 export function head(expr: Expr): CypherFunction {
     return new CypherFunction("head", [expr]);
@@ -41,6 +43,7 @@ export function head(expr: Expr): CypherFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-last)
  * @group Cypher Functions
+ * @category List
  */
 export function last(expr: Expr): CypherFunction {
     return new CypherFunction("last", [expr]);
@@ -49,6 +52,7 @@ export function last(expr: Expr): CypherFunction {
 /** Reduce a list by executing given expression.
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reduce)
  * @group Cypher Functions
+ * @category List
  * @example
  * ```ts
  * Cypher.reduce(totalAge, new Cypher.Literal(0), n, Cypher.nodes(p), Cypher.plus(totalAge, n.property("age")));

@@ -28,12 +28,14 @@ import { CypherFunction } from "./CypherFunctions";
 /** Represents a predicate function that can be used in a WHERE statement
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/)
  * @group Cypher Functions
+ * @category Predicate
  */
 export class PredicateFunction extends CypherFunction {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-any)
  * @group Cypher Functions
+ * @category Predicate
  */
 export function any(variable: Variable, listExpr: Expr, whereFilter?: Predicate): PredicateFunction {
     return new ListPredicateFunction("any", variable, listExpr, whereFilter);
@@ -42,6 +44,7 @@ export function any(variable: Variable, listExpr: Expr, whereFilter?: Predicate)
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-all)
  * @group Cypher Functions
+ * @category Predicate
  */
 export function all(variable: Variable, listExpr: Expr, whereFilter?: Predicate): PredicateFunction {
     return new ListPredicateFunction("all", variable, listExpr, whereFilter);
@@ -50,6 +53,7 @@ export function all(variable: Variable, listExpr: Expr, whereFilter?: Predicate)
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-single)
  * @group Cypher Functions
+ * @category Predicate
  */
 export function single(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
     return new ListPredicateFunction("single", variable, listExpr, whereFilter);
@@ -58,6 +62,7 @@ export function single(variable: Variable, listExpr: Expr, whereFilter: Predicat
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-exists)
  * @group Cypher Functions
+ * @category Predicate
  */
 export function exists(pattern: Pattern): PredicateFunction {
     return new ExistsFunction(pattern);

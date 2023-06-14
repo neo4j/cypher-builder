@@ -24,6 +24,7 @@ import { CypherFunction } from "./CypherFunctions";
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-count)
  * @group Cypher Functions
+ * @category Aggregations
  */
 export function count(expr: Expr): CypherAggregationFunction {
     return new CypherAggregationFunction("count", expr);
@@ -32,6 +33,7 @@ export function count(expr: Expr): CypherAggregationFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-min)
  * @group Cypher Functions
+ * @category Aggregations
  */
 export function min(expr: Expr): CypherAggregationFunction {
     return new CypherAggregationFunction("min", expr);
@@ -40,6 +42,7 @@ export function min(expr: Expr): CypherAggregationFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-max)
  * @group Cypher Functions
+ * @category Aggregations
  */
 export function max(expr: Expr): CypherAggregationFunction {
     return new CypherAggregationFunction("max", expr);
@@ -48,6 +51,7 @@ export function max(expr: Expr): CypherAggregationFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-avg)
  * @group Cypher Functions
+ * @category Aggregations
  */
 export function avg(expr: Expr): CypherAggregationFunction {
     return new CypherAggregationFunction("avg", expr);
@@ -56,6 +60,7 @@ export function avg(expr: Expr): CypherAggregationFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-sum)
  * @group Cypher Functions
+ * @category Aggregations
  */
 export function sum(expr: Expr): CypherAggregationFunction {
     return new CypherAggregationFunction("sum", expr);
@@ -64,11 +69,17 @@ export function sum(expr: Expr): CypherAggregationFunction {
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-collect)
  * @group Cypher Functions
+ * @category Aggregations
  */
 export function collect(expr: Expr): CypherAggregationFunction {
     return new CypherAggregationFunction("collect", expr);
 }
 
+/** Represents a Cypher Aggregation function
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating)
+ * @group Cypher Functions
+ * @category Aggregations
+ */
 export class CypherAggregationFunction extends CypherFunction {
     private hasDistinct = false;
 

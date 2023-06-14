@@ -25,7 +25,7 @@ import type { Expr, Predicate } from "../types";
 
 /** Case statement
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#query-syntax-case)
- * @group Expressions
+ * @group Other
  */
 export class Case<C extends Expr | undefined = undefined> extends CypherASTNode {
     private comparator: Expr | undefined;

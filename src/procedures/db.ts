@@ -27,8 +27,7 @@ type FulltextPhrase = string | Literal<string> | Param | Variable;
 
 /**
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/5/reference/procedures/)
- * @group Expressions
- * @category Procedures
+ * @group Procedures
  */
 export const index = {
     fulltext: {
@@ -42,10 +41,9 @@ export const index = {
     },
 };
 
-/** Returns all labels in database
+/** Returns all labels in the database
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/5/reference/procedures/#procedure_db_labels)
- * @group Expressions
- * @category Procedures
+ * @group Procedures
  */
 export function labels(): CypherProcedure<"label"> {
     return new CypherProcedure("db.labels");
