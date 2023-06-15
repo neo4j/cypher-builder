@@ -1,5 +1,17 @@
 # @neo4j/cypher-builder
 
+## 0.5.3
+
+### Patch Changes
+
+-   [#17](https://github.com/neo4j/cypher-builder/pull/17) [`1089034`](https://github.com/neo4j/cypher-builder/commit/10890341974429a552433caecf63cba500960891) Thanks [@angrykoala](https://github.com/angrykoala)! - Escapes properties in patterns.
+
+    e.g.
+
+    ```
+    MATCH (m:Movie { `$myProp`: "Text" })
+    ```
+
 ## 0.5.2
 
 ### Patch Changes
