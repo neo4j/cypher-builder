@@ -8,17 +8,7 @@ In this guide, you'll set up a Node.js project with `@neo4j/cypher-builder`, aft
 * link:https://docs.npmjs.com/downloading-and-installing-node-js-and-npm[npm]
 * **[Optional]** A link:https://neo4j.com/cloud/platform/aura-graph-database/?ref=nav-get-started-cta[Neo4j] database to try Cypher queries.
 
-[NOTE]
-====
-Alternatively, you can try it live at link:https://codepen.io/angrykoala/pen/PoxqVvM?editors=1112[CodePen]
-====
-
 == Installing Cypher Builder
-
-[TIP]
-====
-If using CodePen, you can skip this bit
-====
 
 In a folder of your choice, run the following command to create a Node.js project and a `package.json` file
 
