@@ -47,10 +47,23 @@ describe("Patterns", () => {
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`TestLabel\` { name: $param0 })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test",
-}
-`);
+                {
+                  "param0": "test",
+                }
+            `);
+        });
+
+        test("Node with escaped parameters and labels", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node).withProperties({ $_name: new Cypher.Param("test") });
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`TestLabel\` { \`$_name\`: $param0 })"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": "test",
+                }
+            `);
         });
     });
 
@@ -106,14 +119,14 @@ describe("Patterns", () => {
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Arthur",
-  "param1": "Dent",
-  "param2": [
-    "neo",
-  ],
-}
-`);
+                {
+                  "param0": "Arthur",
+                  "param1": "Dent",
+                  "param2": [
+                    "neo",
+                  ],
+                }
+            `);
         });
 
         test("Long relationship Pattern", () => {
@@ -219,10 +232,10 @@ describe("Patterns", () => {
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 100,
-}
-`);
+                {
+                  "param0": 100,
+                }
+            `);
         });
 
         test("variable length with empty relationship", () => {
