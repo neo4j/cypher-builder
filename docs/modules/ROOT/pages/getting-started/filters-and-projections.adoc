@@ -1,6 +1,6 @@
 = Filters and projections
 
-After making a basic `MATCH` & `RETURN` Cypher query in xref:getting-started/your-first-query.adoc[Your First Query], in this guide you'll add some filters and change the projection to only return some fields.
+After making a basic `MATCH` & `RETURN` Cypher query in xref:getting-started/querying.adoc[Querying], in this guide you'll add some filters and change the projection to only return some fields.
 
 The resulting query will look like this:
 
