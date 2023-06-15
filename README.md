@@ -6,7 +6,6 @@ The Cypher builder is a library for building [Cypher](https://neo4j.com/docs/cyp
 
 Try it live on [CodePen](https://codepen.io/angrykoala/pen/dyKmpzP).
 
-
 # Getting Started
 
 ```typescript

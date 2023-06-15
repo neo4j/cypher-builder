@@ -40,7 +40,7 @@ Cypher Functions and Procedures, however, are intended to be used a single time,
 
 === Cypher and params
 
-You can run your script again (`node main.js`), and should get the following Cypher:
+By running the script again (`node main.js`), you should get the following Cypher:
 
 ```cypher
 MATCH (this0:Movie)
@@ -48,7 +48,8 @@ WHERE this0.title = $param0
 RETURN this0
 ```
 
-Success! The movie is now filtered by its title to a param. The param, however, is missing from the output. You'll need to tweak the build process at the end of the script to get the parameters as well:
+That means `Movie` is now filtered by its title to a param, but the param itself is missing from the output.
+To fix that, you need to modify the build process at the end of the script:
 
 ```javascript
 const { cypher, params } = match.build();
@@ -56,7 +57,7 @@ console.log(cypher);
 console.log(params);
 ```
 
-Now, executing again, we get all we need to run this query in Neo4j:
+After executing it, you can run the following query in Neo4j:
 
 ```cypher
 MATCH (this0:Movie)
@@ -151,7 +152,7 @@ Params can also be assigned to a variable and reused, this can be particularly u
 
 == Conclusion
 
-Your script should now look similar to this:
+After going through all the steps previously described, your script should now look similar to this:
 
 ```javascript
 import Cypher from "@neo4j/cypher-builder";

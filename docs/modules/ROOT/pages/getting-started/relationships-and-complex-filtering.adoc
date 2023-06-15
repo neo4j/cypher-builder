@@ -157,21 +157,21 @@ RETURN this0.title, this0.tagline, this0.released
 You can double-check, that every variable refers to the correct param and node/relationship. 
 
 == Projection Aliases
-The last part is to return `r.roles`, but aliased as `actingRoles`.
+The last thing to do is to return `r.roles`, but aliased as `actingRoles`.
+For that, first add `roles` to the list of properties:
 
-First, add `roles` to the list of properties:
 
 ```javascript
 const rolesProperty = actedIn.property("roles");
 ```
 
-Then, like before, add the property to the `.return` statement. But in this case, passing a tuple with the aliased value:
+Then, like before, add the property to the `.return` statement but, in this case, passing a tuple with the aliased value:
 
 ```javascript
     .return(titleProp, taglineProp, yearProp, [rolesProperty, "actingRoles"]);
 ```
 
-With this, the query return should look like this:
+Now the query return should look like this:
 
 ```cypher
 RETURN this0.title, this0.tagline, this0.released, this1.roles AS actingRoles

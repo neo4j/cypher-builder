@@ -26,7 +26,7 @@ In a folder of your choice, run the following command to create a Node.js projec
 npm init es6 -y
 ``` 
 
-Note that these examples use es6 modules, but CommonJS can be used as well.
+Note that these examples use ES6 modules, but CommonJS modules can be used as well.
 
 
 Next, install link:https://www.npmjs.com/package/@neo4j/cypher-builder[`@neo4j/cypher-builder`] and add it to the dependencies list with the following command: 
