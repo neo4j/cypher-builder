@@ -23,7 +23,7 @@ import { serializeMap } from "../../utils/serialize-map";
 
 /** Represents a Map
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/maps/)
- * @group Expressions
+ * @group Maps
  */
 export class MapExpr implements CypherCompilable {
     private map = new Map<string, Expr>();
@@ -53,7 +53,9 @@ export class MapExpr implements CypherCompilable {
         this.map.set(key, value);
     }
 
-    /** @internal */
+    /**
+     *  @internal
+     */
     public getCypher(env: CypherEnvironment): string {
         return serializeMap(env, this.map);
     }

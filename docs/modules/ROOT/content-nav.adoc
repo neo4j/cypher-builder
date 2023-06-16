@@ -1,0 +1,6 @@
+* xref:index.adoc[]
+* Getting Started
+** xref:getting-started/installation.adoc[]
+** xref:getting-started/querying.adoc[]
+** xref:getting-started/filters-and-projections.adoc[]
+** xref:getting-started/relationships-and-complex-filtering.adoc[]

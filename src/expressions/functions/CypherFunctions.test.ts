@@ -32,10 +32,10 @@ describe("Functions", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"coalesce(NULL, $param0, \\"arthur\\")"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Hello",
-}
-`);
+            {
+              "param0": "Hello",
+            }
+        `);
     });
 
     test("custom function", () => {
@@ -45,9 +45,9 @@ describe("Functions", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"myFunction(\\"test\\", $param0)"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test2",
-}
-`);
+            {
+              "param0": "test2",
+            }
+        `);
     });
 });

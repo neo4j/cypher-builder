@@ -24,8 +24,8 @@ import { CypherFunction } from "./CypherFunctions";
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
+ * @category List
  */
 export function size(expr: Expr): CypherFunction {
     return new CypherFunction("size", [expr]);
@@ -33,8 +33,8 @@ export function size(expr: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-head)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
+ * @category List
  */
 export function head(expr: Expr): CypherFunction {
     return new CypherFunction("head", [expr]);
@@ -42,11 +42,49 @@ export function head(expr: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-last)
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
+ * @category List
  */
 export function last(expr: Expr): CypherFunction {
     return new CypherFunction("last", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-labels)
+ * @group Cypher Functions
+ * @category List
+ */
+export function labels(nodeRef: Variable): CypherFunction {
+    return new CypherFunction("labels", [nodeRef]);
+}
+
+/** Reduce a list by executing given expression.
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reduce)
+ * @group Cypher Functions
+ * @category List
+ * @example
+ * ```ts
+ * Cypher.reduce(totalAge, new Cypher.Literal(0), n, Cypher.nodes(p), Cypher.plus(totalAge, n.property("age")));
+ * ```
+ * _Cypher:_
+ * ```cypher
+ * reduce(totalAge = 0, n IN nodes(p) | totalAge + n.age)
+ * ```
+ */
+export function reduce(
+    accVariable: Variable,
+    defaultValue: Expr,
+    variable: Variable,
+    listExpr: Expr,
+    mapExpr: Expr
+): CypherFunction {
+    return new ReducerFunction({
+        accVariable,
+        defaultValue,
+        variable,
+        listExpr,
+        mapExpr,
+    });
 }
 
 class ReducerFunction extends CypherFunction {
@@ -86,28 +124,4 @@ class ReducerFunction extends CypherFunction {
 
         return `${this.name}(${accStr}, ${variableStr} IN ${listExprStr} | ${mapExprStr})`;
     }
-}
-
-/** Reduce a list by executing given expression.
- * ```cypher
- * reduce(totalAge = 0, n IN nodes(p) | totalAge + n.age)
- * ```
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reduce)
- * @group Expressions
- * @category Cypher Functions
- */
-export function reduce(
-    accVariable: Variable,
-    defaultValue: Expr,
-    variable: Variable,
-    listExpr: Expr,
-    mapExpr: Expr
-): CypherFunction {
-    return new ReducerFunction({
-        accVariable,
-        defaultValue,
-        variable,
-        listExpr,
-        mapExpr,
-    });
 }

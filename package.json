@@ -42,18 +42,18 @@
         "@changesets/changelog-github": "^0.4.8",
         "@changesets/cli": "^2.26.1",
         "@tsconfig/node16": "^1.0.4",
-        "@types/jest": "29.5.1",
-        "@types/node": "18.15.1",
-        "@typescript-eslint/eslint-plugin": "^5.59.8",
-        "@typescript-eslint/parser": "^5.59.8",
-        "eslint": "^8.41.0",
+        "@types/jest": "29.5.2",
+        "@types/node": "20.2.5",
+        "@typescript-eslint/eslint-plugin": "^5.59.9",
+        "@typescript-eslint/parser": "^5.59.9",
+        "eslint": "^8.42.0",
         "eslint-config-prettier": "^8.8.0",
         "expect-type": "0.16.0",
         "jest": "29.5.0",
-        "jest-extended": "3.2.4",
+        "jest-extended": "4.0.0",
         "neo4j-driver": "^5.9.0",
         "ts-jest": "29.1.0",
-        "typedoc": "0.24.7",
-        "typescript": "^5.0.4"
+        "typedoc": "0.24.8",
+        "typescript": "^5.1.3"
     }
 }

@@ -26,7 +26,7 @@ import { isString } from "../../utils/is-string";
 
 /** Represents a Map projection
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/maps/#cypher-map-projection)
- * @group Expressions
+ * @group Maps
  * @example
  * ```cypher
  * this { .title }
