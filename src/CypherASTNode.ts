@@ -21,7 +21,7 @@ import type { CypherEnvironment } from "./Environment";
 import type { CypherCompilable } from "./types";
 
 /** Abstract class representing a Cypher Statement in the AST
- * @hidden
+ * @internal
  */
 export abstract class CypherASTNode implements CypherCompilable {
     protected parent?: CypherASTNode;

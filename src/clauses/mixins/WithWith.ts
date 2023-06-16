@@ -25,6 +25,9 @@ import { With } from "../With";
 export abstract class WithWith extends ClauseMixin {
     protected withStatement: With | undefined;
 
+    /** Add a {@link With} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
+     */
     public with(clause: With): With;
     public with(...columns: Array<"*" | WithProjection>): With;
     public with(clauseOrColumn: With | "*" | WithProjection, ...columns: Array<"*" | WithProjection>): With {

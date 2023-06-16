@@ -24,6 +24,9 @@ import { Unwind } from "../Unwind";
 export abstract class WithUnwind extends ClauseMixin {
     protected unwindStatement: Unwind | undefined;
 
+    /** Append an {@link Unwind} clause.
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
+     */
     public unwind(clause: Unwind): Unwind;
     public unwind(...columns: Array<ProjectionColumn>): Unwind;
     public unwind(clauseOrColumn: Unwind | ProjectionColumn, ...columns: Array<ProjectionColumn>): Unwind {

@@ -29,7 +29,7 @@ export class CompositeClause extends Clause {
     private _children: CypherASTNode[];
 
     /**
-     * @hidden
+     * @internal
      */
     constructor(children: Array<Clause | undefined>, private separator: string) {
         super();

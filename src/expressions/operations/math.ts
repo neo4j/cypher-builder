@@ -46,11 +46,11 @@ function createOp(op: MathOperator, exprs: Expr[]): MathOp {
     return new MathOp(op, exprs);
 }
 
-/**
+/** Plus (+) operator. This operator may be used for addition operations between numbers or for string concatenation.
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
  * @see [String Concatenation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#syntax-concatenating-two-strings)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Math
  */
 export function plus(leftExpr: Expr, rightExpr: Expr): MathOp;
 export function plus(...exprs: Expr[]): MathOp;
@@ -60,8 +60,8 @@ export function plus(...exprs: Expr[]): MathOp {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Math
  */
 export function minus(leftExpr: Expr, rightExpr: Expr): MathOp {
     return createOp("-", [leftExpr, rightExpr]);
@@ -69,8 +69,8 @@ export function minus(leftExpr: Expr, rightExpr: Expr): MathOp {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Math
  */
 export function multiply(leftExpr: Expr, rightExpr: Expr): MathOp {
     return createOp("*", [leftExpr, rightExpr]);
@@ -78,26 +78,26 @@ export function multiply(leftExpr: Expr, rightExpr: Expr): MathOp {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Math
  */
 export function divide(leftExpr: Expr, rightExpr: Expr): MathOp {
     return createOp("/", [leftExpr, rightExpr]);
 }
 
-/**
+/** Modulus (%) operator
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Math
  */
 export function mod(leftExpr: Expr, rightExpr: Expr): MathOp {
     return createOp("%", [leftExpr, rightExpr]);
 }
 
-/**
+/** Power (^) operator
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Math
  */
 export function pow(leftExpr: Expr, rightExpr: Expr): MathOp {
     return createOp("^", [leftExpr, rightExpr]);

@@ -38,8 +38,7 @@ export interface Yield extends WithReturn, WithWhere, WithWith {}
 
 /** Yield statement after a Procedure CALL
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/#call-call-a-procedure-call-yield-star)
- * @group Expressions
- * @category Procedures
+ * @group Procedures
  */
 @mixin(WithReturn, WithWhere, WithWith)
 export class Yield extends Clause {

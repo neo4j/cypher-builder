@@ -31,7 +31,7 @@ export interface PatternComprehension extends WithWhere {}
 
 /** Represents a Pattern comprehension
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/lists/#cypher-pattern-comprehension)
- * @group Expressions
+ * @group Patterns
  */
 @mixin(WithWhere)
 export class PatternComprehension extends CypherASTNode {
@@ -48,6 +48,9 @@ export class PatternComprehension extends CypherASTNode {
         this.mapExpr = mapExpr;
     }
 
+    /**
+     * @internal
+     */
     getCypher(env: CypherEnvironment): string {
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: " " });
         const mapStr = compileCypherIfExists(this.mapExpr, env, { prefix: " | " });

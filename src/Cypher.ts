@@ -82,16 +82,7 @@ export { plus, minus, divide, multiply, mod, pow } from "./expressions/operation
 // --Functions
 export { CypherFunction as Function } from "./expressions/functions/CypherFunctions";
 
-export {
-    coalesce,
-    point,
-    distance,
-    pointDistance,
-    labels,
-    randomUUID,
-    id,
-    elementId,
-} from "./expressions/functions/CypherFunctions";
+export { coalesce, randomUUID, id, elementId } from "./expressions/functions/CypherFunctions";
 
 export { count, min, max, avg, sum, collect } from "./expressions/functions/AggregationFunctions";
 
@@ -105,7 +96,7 @@ export {
 
 export * from "./expressions/functions/StringFunctions";
 export * from "./expressions/functions/ListFunctions";
-
+export * from "./expressions/functions/SpatialFunctions";
 export * from "./expressions/functions/PathFunctions";
 
 export { any, all, exists, single } from "./expressions/functions/PredicateFunctions";
@@ -129,7 +120,7 @@ export type { PredicateFunction } from "./expressions/functions/PredicateFunctio
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { CompositeClause } from "./clauses/utils/concat";
 export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/AggregationFunctions";
-export { InputArgument } from "./utils/normalize-variable";
+export type { HasLabel } from "./expressions/HasLabel";
 
 // utils
 export * as utils from "./utils/utils";

@@ -26,8 +26,8 @@ import { CypherFunction } from "../expressions/functions/CypherFunctions";
 import type { Predicate } from "../types";
 
 /**
- * @group Expressions
- * @category Procedures
+ * @group Procedures
+ * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.util/apoc.util.validate/)
  */
 export function validate(
     predicate: Predicate,
@@ -39,8 +39,8 @@ export function validate(
 }
 
 /**
- * @group Expressions
- * @category Functions
+ * @group Cypher Functions
+ * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.util/apoc.util.validatePredicate/)
  */
 export function validatePredicate(predicate: Predicate, message: string): CypherFunction {
     const defaultParam = new Literal([0]);

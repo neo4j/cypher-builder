@@ -10,5 +10,6 @@
     "visibilityFilters": {},
     "sidebarLinks": {},
     "gitRemote": "origin",
-    "out": "./docs/reference"
+    "out": "./docs/reference",
+    "readme": "none"
 }
