@@ -11,32 +11,49 @@ WHERE (m.title = "The Matrix" AND m.released < 2000)
 RETURN m.title, m.tagline, m.released
 ```
 
-NOTE: This query will return all movies with the name `"The Matrix"` released before `2000`. This query is based on the default example database in Neo4j, and will return the classic 1999 film **The Matrix**. 
-
+[NOTE]
+====
+This query will return all movies with the name `"The Matrix"` released before `2000`. This query is based on the default example database in Neo4j, and will return the classic 1999 film **The Matrix**. 
+====
 
 == Filtering
 
-When creating a `MATCH` clause, it is possible to add subclauses to it in a similar way to how you added the `RETURN` statement. Change the `Cypher.Match` instance to add a `WHERE` subclause with the method `.where`:
+When creating a `MATCH` clause, it is possible to add subclauses to it in a similar way to how you add the `RETURN` statement by using the method `.where`:
+
+```javascript
+const clause = new Cypher.Match(movieNode)
+    .where()
+    .return(movieNode);
+```
+
+The first step is to add the first condition of the filter:
+
+```cypher
+m.title = "The Matrix"
+```
+
+You'll use the function `Cypher.eq()`. This function takes 2 arguments and compares them with an **eq**uality operator (`=`):
+
+* The property `title` of the `movieNode` variable:
++
+```javascript
+movieNode.property("title") 
+```
+* The value `"The Matrix`. It is possible to simply inject the string value into the query, however, it is good practice to use link:https://neo4j.com/docs/cypher-manual/current/syntax/parameters/[Parameters]. To add a parameter with Cypher Builder you'll need to use the `Cypher.Param` class:
++
+```javascript
+new Cypher.Param("The Matrix")
+```
++
+`Cypher.Param` will take care of replacing the value with a suitable placeholder.
+
+Your match clause should now look like this:
 
 ```javascript
 const clause = new Cypher.Match(movieNode)
     .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
     .return(movieNode);
 ```
-
-There is quite a bit to unwrap here. First, you'll notice that the `.where` method takes the result of the function `Cypher.eq`. This function is the **eq**uality (`=`) operator that compares the property `title` and the string `The Matrix`.
-
-`Cypher.eq` takes two arguments to compare. Our first argument will be the property `title`. Because our title is a property of our movieNode variable, the `.property` method of that node will ensure that the property correctly references the movieNode variable.
-
-The second parameter is `"The Matrix"`, but instead of using a plain string, the object `Cypher.Param` class will take care of turning that into a parameter so we can safely put user input here.
-
-
-.Why `Cypher.eq` doesn't need `new`?
-[NOTE]
-====
-Cypher Builder treats Variables (like nodes and relationships) and Clauses as classes, as these are intended to be assigned to a JavaScript variable to be reused, composed and built.
-Cypher Functions and Procedures, however, are intended to be used a single time, as part of a larger query, so Cypher Builder treats these as simple functions, making it closer to how these work in Cypher.
-====
 
 === Cypher and params
 
@@ -57,7 +74,7 @@ console.log(cypher);
 console.log(params);
 ```
 
-After executing it, you can run the following query in Neo4j:
+After executing it, you'll get both, the Cypher query and its parameters:
 
 ```cypher
 MATCH (this0:Movie)
@@ -68,11 +85,6 @@ RETURN this0
 ```javascript
 { param0: 'The Matrix' }
 ```
-
-[TIP]
-====
-Note that `new Param` already takes care of assigning a param name and correctly matching the value to that parameter in the Cypher query. If a `Param` instance is used multiple times within a query, it will always reference the same parameter (`$param0` in this case).
-====
 
 === `AND` filtering
 
