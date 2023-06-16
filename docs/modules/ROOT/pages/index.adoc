@@ -1,6 +1,6 @@
 = Cypher Builder Manual
 
-Cypher Builder is a programmatic API for building link:https://neo4j.com/developer/cypher/[Cypher] queries for Neo4j in JavaScript and TypeScript.
+Cypher Builder is a programmatic API for building link:https://neo4j.com/docs/cypher-manual/[Cypher] queries for Neo4j in JavaScript and TypeScript.
 
 
 
