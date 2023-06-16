@@ -1,6 +1,6 @@
 = Filters and projections
 
-After making a basic `MATCH` & `RETURN` Cypher query in xref:getting-started/querying.adoc[Querying], in this guide you'll add some filters and change the projection to only return some fields.
+After making a basic `MATCH` & `RETURN` Cypher query in xref:getting-started/querying.adoc[Querying], in this guide you'll add some filters and change the projection to only return some fields, you'll also learn how to deal with parameters.
 
 The resulting query will look like this:
 
@@ -88,14 +88,14 @@ RETURN this0
 
 === `AND` filtering
 
-The query still lacks the second filter, which needs to be concatenated with `AND`. Simply use the method `.and` after the `where` with a new `Cypher.eq` predicate:
+To add the second filter, which needs to be concatenated with `AND`, use the method `.and` after the `where` with a new `Cypher.eq` predicate:
 
 ```javascript
     .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
     .and(Cypher.lt(movieNode.property("released"), new Cypher.Param(2000)))
 ```
 
-This takes the same parameters as `.where`, and makes sure to properly concatenate the filters with `AND`. In this case, the function `Cypher.lt` will add the operator `<` (**l**ower **t**han). Same as before, the comparison happens between a property of `movieNode` and a param. This time the param is a number. Cypher Builder will take care of correctly passing it to the `params` object.
+This takes the same parameters as `.where`, and makes sure to properly concatenate the filters with `AND`. In this case, the function `Cypher.lt` will add the operator `<` (**l**ower **t**han). Same as before, the comparison happens between a property of `movieNode` and a param.
 
 Running the script again:
 
@@ -109,8 +109,6 @@ RETURN this0
 { param0: 'The Matrix', param1: 1999 }
 ```
 
-This should look closer to the target query, note that now there are two parameters, each one correctly associated to the correct filter.
-
 [NOTE]
 ====
 Adding the `AND` operation automatically adds parenthesis to ensure operation precedence, this will be important when dealing with complex and nested filters 
@@ -118,17 +116,21 @@ Adding the `AND` operation automatically adds parenthesis to ensure operation pr
 
 == Projection
 
-Usually, returning the full node is not desirable, for these cases, you can explicitly set a projection in the `RETURN` clause.
+Usually, returning the full node is not necessary.
 
-You can define multiple columns to return in the projection by passing them into the `.return` method. This method not only accepts Nodes, but any kind of variables, such as properties or params.
+In cases like this, you can explicitly set a projection in the `RETURN`. For example:
 
-Let's update the return subclause:
-
-```javascript
-    .return(movieNode.property("title"), movieNode.property("tagline"), movieNode.property("year"));
+```cypher
+RETURN m.title, m.tagline, m.released
 ```
 
-The returned Cypher now should be:
+To define these columns, you can pass the variables into the `.return` method.
+
+```javascript
+.return(movieNode.property("title"), movieNode.property("tagline"), movieNode.property("year"));
+```
+
+The returned Cypher now should have the explicit projection:
 
 ```cypher
 MATCH (this0:Movie)
@@ -136,13 +138,12 @@ WHERE (this0.title = $param0 AND this0.released < $param1)
 RETURN this0.title, this0.tagline, this0.released
 ```
 
-Success! You have now a query with filters and projections.
-
 === Reusing variables
 
-Right now, this query is filtering and returning the properties `id` and `title` of the Movie nodes. However, the query relies on the name of these properties to remain the same. This, particularly with more complex queries, can lead to flaky queries, as it is hard to keep track of strings identifying values.
+The current query is filtering and returning the properties `id` and `title` of the `Movie` nodes.  
+However, the query relies on the name of these properties to remain consistent, which could lead to flaky queries, as it is hard to keep track of strings identifying values.
 
-To fix this, you'll make a small adjustment to the script, so that both the filters and the projection use the same property variable:
+To fix that, you need to ensure both filters and projections use the same property variable:
 
 ```javascript
 const titleProp = movieNode.property("title");
@@ -155,11 +156,11 @@ const clause = new Cypher.Match(movieNode)
     .return(titleProp, taglineProp, yearProp);
 ```
 
-This change, not only ensures that different parts of the query are always in sync but also makes the clause itself shorter and easier to read.
+That should keep different parts of the query in sync and also make the clause itself shorter and easier to read.
 
 [TIP]
 ====
-Params can also be assigned to a variable and reused, this can be particularly useful when having multiple filters over the same parameter.
+Params can also be assigned to a variable and be reused. This can be particularly useful when having multiple filters over the same parameter.
 ====
 
 == Conclusion
@@ -199,6 +200,6 @@ RETURN this0.title, this0.tagline, this0.released
 { param0: 'The Matrix', param1: 2000 }
 ```
 
-With this, you already have the tools to make useful (albeit simple) queries and have also learnt how to deal with parameters. Feel free to try other filters operations (TODO: add link )
+With this, you already have the tools to make useful (albeit simple) queries and have also learnt how to deal with parameters.
 
-In the next tutorial, you'll add relationships and more complex filtering to this query.
+In the xref:/getting-started/filters-and-projections.adoc[next tutorial], you'll add relationships and more complex filters to this query.
