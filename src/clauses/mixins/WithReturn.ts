@@ -24,6 +24,9 @@ import { ClauseMixin } from "./ClauseMixin";
 export abstract class WithReturn extends ClauseMixin {
     protected returnStatement: Return | undefined;
 
+    /** Append a {@link Return} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/return/)
+     */
     public return(clause: Return): Return;
     public return(...columns: Array<"*" | ProjectionColumn>): Return;
     public return(clauseOrColumn: Return | "*" | ProjectionColumn, ...columns: Array<"*" | ProjectionColumn>): Return {

@@ -24,6 +24,28 @@ import { MapExpr } from "../../expressions/map/MapExpr";
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 import { Expr } from "../../types";
 
+/**
+ * @group Cypher Functions
+ * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.cypher/apoc.cypher.runFirstColumnMany/)
+ */
+export function runFirstColumnMany(
+    clause: Clause | string,
+    params: Variable[] | MapExpr | Record<string, Expr> = []
+): CypherFunction {
+    return new RunFirstColumnFunction(clause, params, true);
+}
+
+/**
+ * @group Cypher Functions
+ * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.cypher/apoc.cypher.runFirstColumnSingle/)
+ */
+export function runFirstColumnSingle(
+    clause: Clause | string,
+    params: Variable[] | MapExpr | Record<string, Expr> = []
+): CypherFunction {
+    return new RunFirstColumnFunction(clause, params, false);
+}
+
 class RunFirstColumnFunction extends CypherFunction {
     private innerClause: Clause | string;
     private variables: Variable[] | MapExpr;
@@ -84,26 +106,4 @@ class RunFirstColumnFunction extends CypherFunction {
             .join(", ");
         return `{ ${paramsStr} }`;
     }
-}
-
-/**
- * @group Expressions
- * @category Cypher Functions
- */
-export function runFirstColumnMany(
-    clause: Clause | string,
-    params: Variable[] | MapExpr | Record<string, Expr> = []
-): CypherFunction {
-    return new RunFirstColumnFunction(clause, params, true);
-}
-
-/**
- * @group Expressions
- * @category Cypher Functions
- */
-export function runFirstColumnSingle(
-    clause: Clause | string,
-    params: Variable[] | MapExpr | Record<string, Expr> = []
-): CypherFunction {
-    return new RunFirstColumnFunction(clause, params, false);
 }

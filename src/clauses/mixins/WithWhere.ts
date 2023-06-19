@@ -37,6 +37,9 @@ type VariableWithProperties = Variable | NodeRef | RelationshipRef | PropertyRef
 export abstract class WithWhere extends ClauseMixin {
     protected whereSubClause: Where | undefined;
 
+    /** Add a `WHERE` subclause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/where/)
+     */
     public where(input: Predicate): this;
     public where(target: VariableWithProperties, params: Record<string, VariableLike>): this;
     public where(input: Predicate | VariableWithProperties, params?: Record<string, VariableLike>): this {
@@ -44,6 +47,8 @@ export abstract class WithWhere extends ClauseMixin {
         return this;
     }
 
+    /** Shorthand for `AND` operation after a `WHERE` subclause
+     */
     public and(input: Predicate): this;
     public and(target: VariableWithProperties, params: Record<string, VariableLike>): this;
     public and(input: Predicate | VariableWithProperties, params?: Record<string, VariableLike>): this {

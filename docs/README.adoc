@@ -1,0 +1,36 @@
+= Cypher Builder Documentation
+
+
+== Prereqs
+
+- link:https://nodejs.org/en/download/[Node.js]
+- npm
+
+== Installation
+
+To install the required packages:
+
+----
+npm i
+----
+
+== Generating HTML output
+
+To convert asciidoc source to HTML:
+
+----
+npm run build
+----
+
+== Viewing HTML output
+
+To view the built site, launch a local server:
+
+1. `npm start`
+2. In a browser tab, go to `localhost:8000`
+
+== Live preview
+
+When you run `npm start`, the project is monitored for updates to asciidoc files.
+
+If a change to an asciidoc file is detected the site is automatically rebuilt.

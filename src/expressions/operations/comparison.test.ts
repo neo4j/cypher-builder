@@ -52,5 +52,5 @@ describe("comparison operations", () => {
             const { cypher } = new TestClause(op).build();
             expect(cypher).toMatchInlineSnapshot(`"this0.title IS NOT NULL"`);
         });
-    });
+    }); // TODO: test IN, CONTAINS, ENDS WITH, =~ operator
 });

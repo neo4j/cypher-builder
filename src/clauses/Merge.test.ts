@@ -20,7 +20,7 @@
 import Cypher from "..";
 
 describe("CypherBuilder Merge", () => {
-    test("Merge node", () => {
+    test("Merge node onCreate", () => {
         const node = new Cypher.Node({
             labels: ["MyLabel"],
         });
@@ -32,6 +32,26 @@ describe("CypherBuilder Merge", () => {
             "MERGE (this0:MyLabel)
             ON CREATE SET
                 this0.age = $param0"
+        `);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": 23,
+            }
+        `);
+    });
+
+    test("Merge node onCreate with escaped property", () => {
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+
+        const query = new Cypher.Merge(node).onCreate([node.property("$age"), new Cypher.Param(23)]);
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "MERGE (this0:MyLabel)
+            ON CREATE SET
+                this0.\`$age\` = $param0"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
             {

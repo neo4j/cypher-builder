@@ -36,6 +36,7 @@ describe("apoc.date", () => {
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
     test("convertFormat with default convertTo", () => {
         const convertFormat = Cypher.apoc.date.convertFormat(new Cypher.Variable(), "iso_zoned_date_time");
 

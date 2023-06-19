@@ -61,6 +61,19 @@ describe("Patterns", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`Test&Label\`)"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
+
+        test("Node with escaped parameters and labels", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node).withProperties({ $_name: new Cypher.Param("test") });
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel { \`$_name\`: $param0 })"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": "test",
+                }
+            `);
+        });
     });
 
     describe("relationships", () => {

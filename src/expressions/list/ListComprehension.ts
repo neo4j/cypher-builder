@@ -30,7 +30,7 @@ export interface ListComprehension extends WithWhere {}
 
 /** Represents a List comprehension
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/lists/#cypher-list-comprehension)
- * @group Expressions
+ * @group Lists
  */
 @mixin(WithWhere)
 export class ListComprehension extends CypherASTNode {
@@ -55,6 +55,9 @@ export class ListComprehension extends CypherASTNode {
         return this;
     }
 
+    /**
+     * @internal
+     */
     public getCypher(env: CypherEnvironment): string {
         if (!this.listExpr) throw new Error("List Comprehension needs a source list after IN");
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: " " });

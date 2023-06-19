@@ -84,8 +84,8 @@ class NotOp extends BooleanOp {
 
 /** Generates an `AND` operator between the given predicates
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Boolean
  * @example
  * ```ts
  * console.log("Test", Cypher.and(
@@ -115,8 +115,8 @@ export function and(...ops: Array<Predicate | undefined>): Predicate | undefined
 
 /** Generates an `NOT` operator before the given predicate
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Boolean
  * @example
  * ```ts
  * console.log("Test", Cypher.not(
@@ -135,8 +135,8 @@ export function not(child: Predicate): BooleanOp {
 
 /** Generates an `OR` operator between the given predicates
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Boolean
  * @example
  * ```ts
  * console.log("Test", Cypher.or(
@@ -150,7 +150,6 @@ export function not(child: Predicate): BooleanOp {
  * ```
  *
  */
-
 export function or(): undefined;
 export function or(left: Predicate, right: Predicate, ...extra: Array<Predicate | undefined>): BooleanOp;
 export function or(...ops: Array<Predicate>): Predicate;
@@ -167,8 +166,8 @@ export function or(...ops: Array<Predicate | undefined>): Predicate | undefined 
 
 /** Generates an `XOR` operator between the given predicates
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
- * @group Expressions
- * @category Operators
+ * @group Operators
+ * @category Boolean
  * @example
  * ```ts
  * console.log("Test", Cypher.xor(
@@ -182,7 +181,6 @@ export function or(...ops: Array<Predicate | undefined>): Predicate | undefined 
  * ```
  *
  */
-
 export function xor(): undefined;
 export function xor(left: Predicate, right: Predicate, ...extra: Array<Predicate | undefined>): BooleanOp;
 export function xor(...ops: Array<Predicate>): Predicate;

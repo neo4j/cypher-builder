@@ -24,7 +24,7 @@ import { padBlock } from "../utils/pad-block";
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#existential-subqueries)
- * @group Expressions
+ * @group Other
  */
 export class Exists extends CypherASTNode {
     private subQuery: CypherASTNode;

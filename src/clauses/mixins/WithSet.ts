@@ -24,6 +24,9 @@ import { ClauseMixin } from "./ClauseMixin";
 export abstract class WithSet extends ClauseMixin {
     protected setSubClause: SetClause | undefined;
 
+    /** Append a `SET` clause. Allowing to assign variable properties to values.
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/set/)
+     */
     public set(...params: SetParam[]): this {
         if (!this.setSubClause) {
             this.setSubClause = new SetClause(this, params);

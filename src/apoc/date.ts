@@ -23,8 +23,16 @@ import type { PropertyRef } from "../references/PropertyRef";
 import type { Variable } from "../references/Variable";
 
 /**
- * @group Expressions
- * @category Cypher Functions
+ * @group Cypher Functions
+ * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.date/apoc.date.convertFormat/)
+ * @example
+ * ```ts
+ * Cypher.apoc.date.convertFormat(
+ *  new Cypher.Param("2020-11-04"),
+ *  "date",
+ *  "basic_date"
+ * )
+ *```
  */
 export function convertFormat(
     temporalParam: Variable | PropertyRef,

@@ -25,10 +25,9 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { YieldProjectionColumn } from "./Yield";
 import { Yield } from "./Yield";
 
-/** Represents a Cypher Procedure that does not yield columns
+/** Cypher Procedure that does not yield columns
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/)
- * @group Expressions
- * @category Procedures
+ * @group Procedures
  */
 export class VoidCypherProcedure extends Clause {
     protected name: string;
@@ -58,10 +57,9 @@ export class VoidCypherProcedure extends Clause {
     }
 }
 
-/** Represents a Cypher Procedure
+/** Cypher Procedure
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/)
- * @group Expressions
- * @category Procedures
+ * @group Procedures
  */
 export class CypherProcedure<T extends string = string> extends VoidCypherProcedure {
     private yieldStatement: Yield | undefined;
