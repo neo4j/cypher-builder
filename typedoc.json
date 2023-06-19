@@ -8,8 +8,10 @@
     "hideGenerator": true,
     "name": "Cypher Builder",
     "visibilityFilters": {},
-    "sidebarLinks": {},
+    "sidebarLinks": {
+        "Cypher Builder Manual": "/"
+    },
     "gitRemote": "origin",
-    "out": "./docs/reference",
+    "out": "./docs/build/site/cypher-builder/reference",
     "readme": "none"
 }
