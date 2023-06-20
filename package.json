@@ -22,7 +22,7 @@
         "docs-ref": "typedoc src/Cypher.ts",
         "lint": "eslint .",
         "changeset": "changeset",
-        "release": "yarn build && changeset publish"
+        "release": "npm run build && changeset publish"
     },
     "repository": {
         "type": "git",
