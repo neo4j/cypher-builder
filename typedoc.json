@@ -9,7 +9,7 @@
     "name": "Cypher Builder",
     "visibilityFilters": {},
     "sidebarLinks": {
-        "Cypher Builder Manual": "/cypher-builder/current"
+        "Cypher Builder Manual": "https://neo4j.github.io/cypher-builder"
     },
     "gitRemote": "origin",
     "out": "./docs/build/site/cypher-builder/reference",
