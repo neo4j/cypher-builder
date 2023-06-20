@@ -64,4 +64,48 @@ describe("List comprehension", () => {
             }
         `);
     });
+
+    test("comprehension with expression and map using building methods", () => {
+        const variable = new Cypher.Variable();
+        const exprVariable = new Cypher.Param([1, 2, 5]);
+        const andExpr = Cypher.eq(variable, new Cypher.Param(5));
+
+        const listComprehension = new Cypher.ListComprehension(variable)
+            .in(exprVariable)
+            .where(andExpr)
+            .map(Cypher.plus(variable, new Cypher.Literal(1)));
+
+        const queryResult = new TestClause(listComprehension).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"[var0 IN $param1 WHERE var0 = $param0 | (var0 + 1)]"`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": 5,
+              "param1": [
+                1,
+                2,
+                5,
+              ],
+            }
+        `);
+    });
+
+    it("Fails to set a expression twice", () => {
+        const variable = new Cypher.Variable();
+        const exprVariable = new Cypher.Param([1, 2, 5]);
+
+        expect(() => {
+            new Cypher.ListComprehension(variable, exprVariable).in(exprVariable);
+        }).toThrowError("Cannot set 2 lists in list comprehension IN");
+    });
+
+    it("Fails to build if no expression is set", () => {
+        const variable = new Cypher.Variable();
+
+        const listComprehension = new Cypher.ListComprehension(variable);
+        expect(() => {
+            new TestClause(listComprehension).build();
+        }).toThrowError("List Comprehension needs a source list after IN");
+    });
 });
