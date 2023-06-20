@@ -21,31 +21,26 @@ import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
 describe("Aggregation Functions", () => {
-    test("count", () => {
-        const testParam = new Cypher.Param("Hello");
+    const testParam = new Cypher.Param("Hello");
 
-        const coalesceFunction = Cypher.count(testParam);
-        const queryResult = new TestClause(coalesceFunction).build();
+    describe.each(["count", "min", "max", "avg", "sum", "collect"] as const)("%s", (value) => {
+        test(value, () => {
+            const aggregationFunction = Cypher[value](testParam);
+            const queryResult = new TestClause(aggregationFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"count($param0)"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Hello",
-}
-`);
-    });
+            expect(queryResult.cypher).toBe(`${value}($param0)`);
+            expect(queryResult.params).toEqual({
+                param0: "Hello",
+            });
+        });
+        test(`${value} with DISTINCT`, () => {
+            const aggregationFunction = Cypher[value](testParam).distinct();
+            const queryResult = new TestClause(aggregationFunction).build();
 
-    test("count with distinct", () => {
-        const testParam = new Cypher.Param("Hello");
-
-        const coalesceFunction = Cypher.count(testParam).distinct();
-        const queryResult = new TestClause(coalesceFunction).build();
-
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"count(DISTINCT $param0)"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Hello",
-}
-`);
+            expect(queryResult.cypher).toBe(`${value}(DISTINCT $param0)`);
+            expect(queryResult.params).toEqual({
+                param0: "Hello",
+            });
+        });
     });
 });

@@ -82,7 +82,7 @@ export { plus, minus, divide, multiply, mod, pow } from "./expressions/operation
 // --Functions
 export { CypherFunction as Function } from "./expressions/functions/CypherFunctions";
 
-export { coalesce, randomUUID, id, elementId } from "./expressions/functions/CypherFunctions";
+export { coalesce, randomUUID, id, elementId } from "./expressions/functions/ScalarFunctions";
 
 export { count, min, max, avg, sum, collect } from "./expressions/functions/AggregationFunctions";
 
