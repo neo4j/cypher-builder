@@ -1,6 +1,6 @@
 # Cypher Builder
 
-[![npm version](https://badge.fury.io/js/@neo4j%2Fcypher-builder.svg)](https://badge.fury.io/js/@neo4j%2Fcypher-builder)
+[![npm version](https://badge.fury.io/js/@neo4j%2Fcypher-builder.svg)](https://www.npmjs.com/package/@neo4j/cypher-builder)
 [![Test](https://github.com/neo4j/cypher-builder/actions/workflows/test.yml/badge.svg)](https://github.com/neo4j/cypher-builder/actions/workflows/test.yml)
 [![Lint](https://github.com/neo4j/cypher-builder/actions/workflows/lint.yml/badge.svg)](https://github.com/neo4j/cypher-builder/actions/workflows/lint.yml)
 
