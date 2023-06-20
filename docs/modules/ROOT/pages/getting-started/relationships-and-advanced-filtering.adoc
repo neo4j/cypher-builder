@@ -1,7 +1,7 @@
 = Relationships and advanced filtering
 
 This tutorial shows how to add relationships and more advanced filters, as well as alias the results of the projection.
-It uses the Cypher query example from the xref:getting-started/filters-and-projections.adoc[Filters and projections] tutorial and the link:https://neo4j.com/docs/getting-started/appendix/example-data/#built-in-examples[Movies Dataset].
+It extends the Cypher query example from the xref:getting-started/filters-and-projections.adoc[Filters and projections] tutorial and the link:https://neo4j.com/docs/getting-started/appendix/example-data/#built-in-examples[Movies Dataset].
 
 ```cypher
 MATCH(m:Movie)<-[r:ACTED_IN]-(a:Person)
