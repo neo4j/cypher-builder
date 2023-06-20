@@ -1,12 +1,12 @@
-# Cypher Builder - Beta
+# Cypher Builder
 
-The Cypher builder is a library for building [Cypher](https://neo4j.com/docs/cypher-manual/current/) for [Neo4j](https://neo4j.com/) queries with a programmatic API.
+![npm](https://img.shields.io/npm/v/%40neo4j%2Fcypher-builder)
+[![Test](https://github.com/neo4j/cypher-builder/actions/workflows/test.yml/badge.svg)](https://github.com/neo4j/cypher-builder/actions/workflows/test.yml)
+[![Lint](https://github.com/neo4j/cypher-builder/actions/workflows/lint.yml/badge.svg)](https://github.com/neo4j/cypher-builder/actions/workflows/lint.yml)
 
-> Note that this library is still under development.
+Cypher Builder is a JavaScript programmatic API to create [Cypher](https://neo4j.com/docs/cypher-manual/current/) queries for [Neo4j](https://neo4j.com/).
 
-Try it live on [CodePen](https://codepen.io/angrykoala/pen/dyKmpzP).
-
-# Getting Started
+-   [Documentation](https://neo4j.com/docs/graphql-manual/current/)
 
 ```typescript
 import Cypher from "@neo4j/cypher-builder";
@@ -27,7 +27,7 @@ console.log(cypher);
 console.log(params);
 ```
 
-In this example, `cypher` will be a string containing the following:
+_Cypher_
 
 ```cypher
 MATCH (this0:`Movie`)
@@ -35,7 +35,7 @@ WHERE this0.title = $param0
 RETURN this0.title
 ```
 
-`params` will contain the parameters used in that query as an object:
+_Params_
 
 ```typescript
 {
@@ -45,8 +45,6 @@ RETURN this0.title
 
 # Examples
 
-You can find usage examples in the [examples](https://github.com/neo4j/cypher-builder/tree/main/examples) folder and in [CodePen](https://codepen.io/collection/waPbzd).
-
-
+You can find usage examples in the [examples](https://github.com/neo4j/cypher-builder/tree/main/examples) folder.
 
 > This library is for JavaScript and TypeScript only. If you are using Java, check [Neo4j Cypher DSL](https://neo4j-contrib.github.io/cypher-dsl).
