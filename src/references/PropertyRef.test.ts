@@ -21,7 +21,7 @@ import Cypher from "..";
 import { TestClause } from "../utils/TestClause";
 
 describe("Property", () => {
-    it("Serialize string property", () => {
+    test("Serialize string property", () => {
         const variable = new Cypher.Variable();
         const property = variable.property("myProperty");
 
@@ -31,7 +31,7 @@ describe("Property", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.myProperty"`);
     });
 
-    it("Escape string property if needed", () => {
+    test("Escape string property if needed", () => {
         const variable = new Cypher.Variable();
         const property = variable.property("myPro`perty");
 
@@ -41,7 +41,7 @@ describe("Property", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.\`myPro\`\`perty\`"`);
     });
 
-    it("Serialize nested string property", () => {
+    test("Serialize nested string property", () => {
         const variable = new Cypher.Variable();
         const property = variable.property("myProperty").property("myNestedValue");
 
@@ -51,7 +51,7 @@ describe("Property", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.myProperty.myNestedValue"`);
     });
 
-    it("Nested properties should not modify parent prop", () => {
+    test("Nested properties should not modify parent prop", () => {
         const variable = new Cypher.Variable();
         const property = variable.property("myProperty");
         const nestedProp = property.property("myNestedValue");
@@ -67,7 +67,7 @@ describe("Property", () => {
     });
 
     describe("Expression", () => {
-        it("Serialize expression with []", () => {
+        test("Serialize expression with []", () => {
             const variable = new Cypher.Variable();
 
             const expr = Cypher.date();
@@ -79,7 +79,7 @@ describe("Property", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()]"`);
         });
 
-        it("Serialize nested expression with []", () => {
+        test("Serialize nested expression with []", () => {
             const variable = new Cypher.Variable();
 
             const expr = Cypher.date();
@@ -92,7 +92,7 @@ describe("Property", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()][\\"Hello\\"]"`);
         });
 
-        it("Serialize nested string after expression", () => {
+        test("Serialize nested string after expression", () => {
             const variable = new Cypher.Variable();
 
             const expr = Cypher.date();
@@ -104,7 +104,7 @@ describe("Property", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()]"`);
         });
 
-        it("Serialize nested expression after string expression", () => {
+        test("Serialize nested expression after string expression", () => {
             const variable = new Cypher.Variable();
 
             const expr = Cypher.date();

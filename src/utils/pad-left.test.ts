@@ -17,21 +17,16 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
-import { TestClause } from "../utils/TestClause";
+import { padLeft } from "./pad-left";
 
-describe("RelationshipRef", () => {
-    test("Create relationship from node", () => {
-        const node1 = new Cypher.Node({
-            labels: ["Actor"],
-        });
+describe("padLeft", () => {
+    test("pads string", () => {
+        expect(padLeft("my string")).toBe(" my string");
+        expect(padLeft(" my string")).toBe("  my string");
+    });
 
-        const node2 = new Cypher.Node({ labels: ["Movie"] });
-
-        const actedIn = new Cypher.Pattern(node1).related(new Cypher.Relationship({ type: "ACTED_IN" })).to(node2);
-        const testClause = new TestClause(actedIn);
-
-        const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`Actor\`)-[this1:ACTED_IN]->(this2:\`Movie\`)"`);
+    test("returns empty string if input is undefined or empty string", () => {
+        expect(padLeft(undefined)).toBe("");
+        expect(padLeft("")).toBe("");
     });
 });

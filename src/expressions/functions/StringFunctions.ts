@@ -81,7 +81,7 @@ export function rTrim(original: Expr): CypherFunction {
  * @group Cypher Functions
  * @category String
  */
-export function split(original: Expr, delimiter: Expr): CypherFunction {
+export function spltest(original: Expr, delimiter: Expr): CypherFunction {
     return new CypherFunction("split", [original, delimiter]);
 }
 

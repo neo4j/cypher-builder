@@ -20,7 +20,7 @@
 import Cypher from "../..";
 
 describe("CypherBuilder concat", () => {
-    it("concatenates Match and Return", () => {
+    test("concatenates Match and Return", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const clause = new Cypher.Match(node).where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")));

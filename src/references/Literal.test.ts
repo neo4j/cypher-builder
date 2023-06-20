@@ -21,7 +21,7 @@ import Cypher from "..";
 import { TestClause } from "../utils/TestClause";
 
 describe("Literal", () => {
-    it("Serialize string value", () => {
+    test("Serialize string value", () => {
         const stringLiteral = new Cypher.Literal("hello");
 
         const testClause = new TestClause(stringLiteral);
@@ -30,7 +30,7 @@ describe("Literal", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"\\"hello\\""`);
     });
 
-    it("Serialize boolean value", () => {
+    test("Serialize boolean value", () => {
         const booleanLiteral = new Cypher.Literal(true);
 
         const testClause = new TestClause(booleanLiteral);
@@ -39,7 +39,7 @@ describe("Literal", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"true"`);
     });
 
-    it("Serialize number value", () => {
+    test("Serialize number value", () => {
         const numberLiteral = new Cypher.Literal(5);
 
         const testClause = new TestClause(numberLiteral);
@@ -48,7 +48,7 @@ describe("Literal", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"5"`);
     });
 
-    it("Serialize array", () => {
+    test("Serialize array", () => {
         const literal = new Cypher.Literal(["hello", 5, "hello"]);
 
         const testClause = new TestClause(literal);
@@ -57,7 +57,7 @@ describe("Literal", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"hello\\", 5, \\"hello\\"]"`);
     });
 
-    it("Serialize null", () => {
+    test("Serialize null", () => {
         const literal = new Cypher.Literal(null);
 
         const testClause = new TestClause(literal);
@@ -66,7 +66,7 @@ describe("Literal", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"NULL"`);
     });
 
-    it("Null constant literal", () => {
+    test("Null constant literal", () => {
         const testClause = new TestClause(Cypher.Null);
 
         const queryResult = testClause.build();
