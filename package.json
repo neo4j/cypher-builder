@@ -1,6 +1,6 @@
 {
     "name": "@neo4j/cypher-builder",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "description": "A programmatic API for building Cypher queries for Neo4j",
     "exports": "./dist/index.js",
     "main": "./dist/index.js",
@@ -22,7 +22,7 @@
         "docs-ref": "typedoc src/Cypher.ts",
         "lint": "eslint .",
         "changeset": "changeset",
-        "release": "yarn build && changeset publish"
+        "release": "npm run build && changeset publish"
     },
     "repository": {
         "type": "git",
