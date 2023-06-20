@@ -11,6 +11,14 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+
+    environment:
+      name: npm
+
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+      published-packages: ${{ steps.changesets.outputs.publishedPackages }}
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -49,3 +57,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.NEO4J_TEAM_GRAPHQL_PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  slack-notify:
+    needs:
+      - release
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.release.outputs.published-packages) }}
+
+    steps:
+      - name: Send Slack announcement of release
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: '{"version":"${{ matrix.package.version }}"}'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASE_ANNOUNCEMENT_WEBHOOK_URL }}
