@@ -12,6 +12,6 @@
         "Cypher Builder Manual": "https://neo4j.github.io/cypher-builder"
     },
     "gitRemote": "origin",
-    "out": "./docs/build/site/cypher-builder/reference",
+    "out": "./docs/build/site/reference",
     "readme": "none"
 }
