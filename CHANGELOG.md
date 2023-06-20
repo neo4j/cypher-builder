@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 0.5.4
+
+### Patch Changes
+
+-   [#22](https://github.com/neo4j/cypher-builder/pull/22) [`9aadbad`](https://github.com/neo4j/cypher-builder/commit/9aadbad3a32b0dfa1cc8132f5113f646c0de3e0c) Thanks [@angrykoala](https://github.com/angrykoala)! - Adds `@internal` methods to the output .d.ts to avoid errors in client builds
+
 ## 0.5.3
 
 ### Patch Changes
