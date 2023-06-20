@@ -20,7 +20,7 @@
 import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
-describe("Functions", () => {
+describe("Temporal Functions", () => {
     describe("date()", () => {
         test("date without parameters", () => {
             const dateFunction = Cypher.date();
@@ -38,10 +38,10 @@ describe("Functions", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"date($param0)"`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "9999-01-01",
-}
-`);
+                {
+                  "param0": "9999-01-01",
+                }
+            `);
         });
 
         test("date with timezone string literal", () => {
@@ -80,10 +80,10 @@ describe("Functions", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"datetime($param0)"`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "9999-01-10",
-}
-`);
+                {
+                  "param0": "9999-01-10",
+                }
+            `);
         });
     });
 });
