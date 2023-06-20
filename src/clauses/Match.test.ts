@@ -35,10 +35,10 @@ describe("CypherBuilder Match", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"MATCH (this0:\`Movie\` { test: $param0 })"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-}
-`);
+            {
+              "param0": "test-value",
+            }
+        `);
     });
 
     test("Match node with return passing a Clause", () => {
@@ -81,11 +81,11 @@ describe("CypherBuilder Match", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-  "param1": "my-name",
-}
-`);
+            {
+              "param0": "my-id",
+              "param1": "my-name",
+            }
+        `);
     });
 
     test("Optional Match", () => {
@@ -105,10 +105,10 @@ describe("CypherBuilder Match", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-}
-`);
+            {
+              "param0": "test-value",
+            }
+        `);
     });
 
     describe("Assign to path variable", () => {
@@ -173,13 +173,13 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-  "param1": "my-id",
-  "param2": "my-name",
-  "param3": 5,
-}
-`);
+                {
+                  "param0": "test-value",
+                  "param1": "my-id",
+                  "param2": "my-name",
+                  "param3": 5,
+                }
+            `);
         });
 
         test("Match named node with alias and where", () => {
@@ -206,12 +206,12 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test-value",
-  "param1": "my-id",
-  "param2": "my-name",
-}
-`);
+                {
+                  "param0": "test-value",
+                  "param1": "my-id",
+                  "param2": "my-name",
+                }
+            `);
         });
 
         test("Match with null values", () => {
@@ -260,14 +260,14 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 1,
-  "param1": 2,
-  "param2": 4,
-  "param3": "aa",
-  "param4": "bb",
-}
-`);
+                {
+                  "param0": 1,
+                  "param1": 2,
+                  "param2": 4,
+                  "param3": "aa",
+                  "param4": "bb",
+                }
+            `);
         });
 
         test("Match where with property and not", () => {
@@ -284,10 +284,10 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Matrix",
-}
-`);
+                {
+                  "param0": "Matrix",
+                }
+            `);
         });
 
         test("Match node with simple NOT", () => {
@@ -309,10 +309,10 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-name",
-}
-`);
+                {
+                  "param0": "my-name",
+                }
+            `);
         });
 
         test("Match node with NOT and OR operator", () => {
@@ -342,11 +342,11 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": 5,
-  "param1": "my-name",
-}
-`);
+                {
+                  "param0": 5,
+                  "param1": "my-name",
+                }
+            `);
         });
     });
 
@@ -374,11 +374,11 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Keanu Reeves",
-  "param1": "Seveer unaeK",
-}
-`);
+                {
+                  "param0": "Keanu Reeves",
+                  "param1": "Seveer unaeK",
+                }
+            `);
         });
     });
 
@@ -405,11 +405,11 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-  "param1": "my-name",
-}
-`);
+                {
+                  "param0": "my-id",
+                  "param1": "my-name",
+                }
+            `);
         });
 
         test("Match and detach delete", () => {
@@ -432,11 +432,11 @@ describe("CypherBuilder Match", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-  "param1": "my-name",
-}
-`);
+                {
+                  "param0": "my-id",
+                  "param1": "my-name",
+                }
+            `);
         });
     });
 });

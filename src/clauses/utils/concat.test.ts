@@ -36,11 +36,12 @@ describe("CypherBuilder concat", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
+        expect(query.children).toHaveLength(2);
     });
 
     test("Create two nodes by concatenating clauses", () => {
@@ -70,9 +71,52 @@ describe("CypherBuilder concat", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "The Matrix",
-}
-`);
+            {
+              "param0": "The Matrix",
+            }
+        `);
+    });
+
+    test("Empty composite clause", () => {
+        const compositeClause = Cypher.concat(undefined);
+        expect(compositeClause.empty).toBeTrue();
+        expect(compositeClause.children).toHaveLength(0);
+    });
+
+    test("Non-Empty composite clause", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const clause = new Cypher.Match(node).where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")));
+        const compositeClause = Cypher.concat(clause);
+        expect(compositeClause.empty).toBeFalse();
+        expect(compositeClause.children).toHaveLength(1);
+    });
+
+    test("Nested concatenation flattens the tree if composite clause has 1 element", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const clause = new Cypher.Match(node).where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")));
+        const returnClause = new Cypher.Return([node.property("title"), "movie"]);
+
+        const nestedConcat = Cypher.concat(clause);
+
+        const topLevelConcat = Cypher.concat(nestedConcat, returnClause);
+
+        const queryResult = topLevelConcat.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "MATCH (this0:\`Movie\`)
+            WHERE $param0 = $param1
+            RETURN this0.title AS movie"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
+
+        // Three children as nested concat was flattened
+        expect(topLevelConcat.children).toHaveLength(2);
     });
 });

@@ -35,4 +35,15 @@ describe("NodeRef", () => {
 
         expect(node.labels).toIncludeSameMembers(["Movie", "Film"]);
     });
+
+    describe("NamedNode", () => {
+        it("Generates named node with labels", () => {
+            const node = new Cypher.NamedNode("myNode", {
+                labels: ["Movie", "Film"],
+            });
+
+            expect(node.labels).toIncludeSameMembers(["Movie", "Film"]);
+            expect(node.name).toBe("myNode");
+        });
+    });
 });
