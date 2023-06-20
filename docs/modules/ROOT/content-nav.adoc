@@ -4,4 +4,4 @@
 ** xref:getting-started/querying.adoc[]
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
-* link:/reference[Reference]
+* link:/cypher-builder/reference[Reference]
