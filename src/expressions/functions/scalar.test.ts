@@ -37,4 +37,28 @@ describe("Scalar Functions", () => {
             }
         `);
     });
+
+    test("randomUUID", () => {
+        const randomUUID = Cypher.randomUUID();
+
+        const { cypher, params } = new TestClause(randomUUID).build();
+        expect(cypher).toMatchInlineSnapshot(`"randomUUID()"`);
+        expect(params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("id", () => {
+        const randomUUID = Cypher.id(new Cypher.Variable());
+
+        const { cypher, params } = new TestClause(randomUUID).build();
+        expect(cypher).toMatchInlineSnapshot(`"id(var0)"`);
+        expect(params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("elementId", () => {
+        const randomUUID = Cypher.elementId(new Cypher.Variable());
+
+        const { cypher, params } = new TestClause(randomUUID).build();
+        expect(cypher).toMatchInlineSnapshot(`"elementId(var0)"`);
+        expect(params).toMatchInlineSnapshot(`{}`);
+    });
 });

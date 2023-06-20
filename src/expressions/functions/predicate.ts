@@ -37,7 +37,7 @@ export class PredicateFunction extends CypherFunction {}
  * @group Cypher Functions
  * @category Predicate
  */
-export function any(variable: Variable, listExpr: Expr, whereFilter?: Predicate): PredicateFunction {
+export function any(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
     return new ListPredicateFunction("any", variable, listExpr, whereFilter);
 }
 
@@ -46,7 +46,7 @@ export function any(variable: Variable, listExpr: Expr, whereFilter?: Predicate)
  * @group Cypher Functions
  * @category Predicate
  */
-export function all(variable: Variable, listExpr: Expr, whereFilter?: Predicate): PredicateFunction {
+export function all(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
     return new ListPredicateFunction("all", variable, listExpr, whereFilter);
 }
 
@@ -87,16 +87,14 @@ class ExistsFunction extends PredicateFunction {
 class ListPredicateFunction extends PredicateFunction {
     private variable: Variable;
     private listExpr: Expr;
-    private whereSubClause: Where | undefined;
+    private whereSubClause: Where;
 
-    constructor(name: string, variable: Variable, listExpr: Expr, whereFilter?: Predicate) {
+    constructor(name: string, variable: Variable, listExpr: Expr, whereFilter: Predicate) {
         super(name);
         this.variable = variable;
         this.listExpr = listExpr;
 
-        if (whereFilter) {
-            this.whereSubClause = new Where(this, whereFilter);
-        }
+        this.whereSubClause = new Where(this, whereFilter);
     }
 
     getCypher(env: CypherEnvironment): string {

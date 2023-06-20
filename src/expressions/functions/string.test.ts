@@ -21,16 +21,77 @@ import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
 describe("String Functions", () => {
-    test("toLower", () => {
-        const toLowerFunction = Cypher.toLower(new Cypher.Param("Hello"));
-        const queryResult = new TestClause(toLowerFunction).build();
+    // Functions with 1 argument
+    test.each(["lTrim", "reverse", "rTrim", "toLower", "toString", "toStringOrNull", "toUpper", "trim"] as const)(
+        "%s",
+        (value) => {
+            const toLowerFunction = Cypher[value](new Cypher.Param("Hello"));
+            const { cypher, params } = new TestClause(toLowerFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"toLower($param0)"`);
+            expect(cypher).toBe(`${value}($param0)`);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Hello",
-}
-`);
+            expect(params).toEqual({
+                param0: "Hello",
+            });
+        }
+    );
+
+    // Functions with 2 arguments
+    test.each(["left", "right", "split"] as const)("%s", (value) => {
+        const toLowerFunction = Cypher[value](new Cypher.Param("Hello"), new Cypher.Literal("Hello"));
+        const { cypher, params } = new TestClause(toLowerFunction).build();
+
+        expect(cypher).toBe(`${value}($param0, "Hello")`);
+
+        expect(params).toEqual({
+            param0: "Hello",
+        });
+    });
+
+    test("replace", () => {
+        const toLowerFunction = Cypher.replace(
+            new Cypher.Param("Helo"),
+            new Cypher.Literal("lo"),
+            new Cypher.Literal("llo")
+        );
+        const { cypher, params } = new TestClause(toLowerFunction).build();
+
+        expect(cypher).toMatchInlineSnapshot(`"replace($param0, \\"lo\\", \\"llo\\")"`);
+
+        expect(params).toMatchInlineSnapshot(`
+            {
+              "param0": "Helo",
+            }
+        `);
+    });
+
+    test("substring with 2 arguments", () => {
+        const toLowerFunction = Cypher.substring(new Cypher.Param("Hello"), new Cypher.Literal("lo"));
+        const { cypher, params } = new TestClause(toLowerFunction).build();
+
+        expect(cypher).toMatchInlineSnapshot(`"substring($param0, \\"lo\\")"`);
+
+        expect(params).toMatchInlineSnapshot(`
+            {
+              "param0": "Hello",
+            }
+        `);
+    });
+
+    test("substring with 3 arguments", () => {
+        const toLowerFunction = Cypher.substring(
+            new Cypher.Param("Hello"),
+            new Cypher.Literal("lo"),
+            new Cypher.Literal(2)
+        );
+        const { cypher, params } = new TestClause(toLowerFunction).build();
+
+        expect(cypher).toMatchInlineSnapshot(`"substring($param0, \\"lo\\", 2)"`);
+
+        expect(params).toMatchInlineSnapshot(`
+            {
+              "param0": "Hello",
+            }
+        `);
     });
 });

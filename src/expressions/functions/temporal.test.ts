@@ -21,7 +21,7 @@ import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
 describe("Temporal Functions", () => {
-    describe("date()", () => {
+    describe("date", () => {
         test("date without parameters", () => {
             const dateFunction = Cypher.date();
             const queryResult = new TestClause(dateFunction).build();
@@ -63,7 +63,7 @@ describe("Temporal Functions", () => {
         });
     });
 
-    describe("datetime()", () => {
+    describe("datetime", () => {
         test("datetime without params", () => {
             const datetimeFn = Cypher.datetime();
             const queryResult = new TestClause(datetimeFn).build();
