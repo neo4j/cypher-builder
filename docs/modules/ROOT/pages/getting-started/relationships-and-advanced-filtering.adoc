@@ -15,21 +15,16 @@ It also adds the property `roles` from the relationship to the projection, alias
 
 Querying it on the Movies Dataset should prompt this result:
 
-```
-╒════════════════════════╤════════════════════════════════════════════════════════╤══════════╤
-│m.title                 │m.tagline                                               │m.released│actingRoles        │
-╞════════════════════════╪════════════════════════════════════════════════════════╪══════════╪
-│"The Matrix"            │"Welcome to the Real World"                             │1999      │["Neo"]            │
-├────────────────────────┼────────────────────────────────────────────────────────┼──────────┼
-│"Johnny Mnemonic"       │"The hottest data on earth. In the coolest head in town"│1995      │["Johnny Mnemonic"]│
-├────────────────────────┼────────────────────────────────────────────────────────┼──────────┼
-│"Something's Gotta Give"│null                                                    │2003      │["Julian Mercer"]  │
-├────────────────────────┼────────────────────────────────────────────────────────┼──────────┼
-│"The Devil's Advocate"  │"Evil has its winning ways"                             │1997      │["Kevin Lomax"]    │
-├────────────────────────┼────────────────────────────────────────────────────────┼──────────┼
-│"The Replacements"      │"Pain heals, Chicks dig scars... Glory lasts forever"   │2000      │["Shane Falco"]    │
-└────────────────────────┴────────────────────────────────────────────────────────┴──────────┴
-```
+.Result
+[role="queryresult",options="header,footer",cols="4*<m"]
+|===
+| m.title | m.tagline | m.released | actingRoles
+| "The Matrix" | "Welcome to the Real World" | 1999 | ["Neo"] 
+| "Johnny Mnemonic" | "The hottest data on earth. In the coolest head in town" | 1995 | ["Johnny Mnemonic"] 
+| "Something's Gotta Give" | null | 2003 | ["Julian Mercer"] 
+| "The Devil's Advocate" | "Evil has its winning ways" | 1997 | ["Kevin Lomax"] 
+| "The Replacements" | "Pain heals, Chicks dig scars... Glory lasts forever" | 2000 | ["Shane Falco"]
+|===
 
 Though the `Cypher.Match` statement accepts a `Cypher.Node` variable, this is a shorthand for very simple queries involving a single node. 
 For more complex `MATCH` statements, like the one in this tutorial, you should define a *Pattern* when establishing relationships.
@@ -85,7 +80,8 @@ RETURN this0.title, this0.tagline, this0.released
 
 Despite changing the `MATCH` target in the previous steps, all the filters and relationships featured in the query are still pointing towards the correct variable: `this0`. 
 However, the pattern is incorrect -- instead of returning a `Person` acting in a `Movie`, there is a `Movie` acting on a `Person`.
-This is how you fix that:
+
+To change that, add `.withDirection("left")` to the pattern:
 
 ```javascript
 const pattern = new Cypher.Pattern(movieNode).related(actedIn).withDirection("left").to(people);
@@ -121,7 +117,7 @@ This advanced filter is composed of 3 basic comparisons:
 * `m.title CONTAINS "Matrix"`
 * `m.released < 2000`
 
-These comparisons are built around the logic operations `AND`, `NOT`, and `OR`, respectivelly.
+These comparisons use the logic operations `AND`, `NOT`, and `OR`, respectivelly.
 
 Still, as advanced queries grow, they can start to hinder maintenance.
 To avoid this scenario, it is advisable to split the query into more basic comparisons and compose it afterwards.
@@ -137,7 +133,9 @@ const releasedBefore2000 = Cypher.lt(yearProp, new Cypher.Param(2000));
 Here you can use `titleProp` and `yearProp` to xref:getting-started/filters-and-projections.adoc#_reusing_variables[reuse variables].
 Alternatively, you can also make a `personName` variable for the first operation instead of passing the property directly.
 
-However, in this case, a different strategy is required than the `where().and()` shorthand, as there are nested operations (`NOT` and `OR`). To achieve this: 
+To compose the comparisons with boolean operators, you need a different strategy than the `where().and()` shorthand used before.
+That is because now there are nested operations (`NOT` and `OR`). 
+To achieve this: 
 
 . Use the methods `Cypher.and`, `Cypher.or`, and `Cypher.not` inside the `.where()` method:
 +

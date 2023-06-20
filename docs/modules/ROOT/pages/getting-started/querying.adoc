@@ -1,6 +1,6 @@
 = Querying
 
-This tutorial shows how to create a simple Cypher query to `MATCH` and `RETURN` Movies using the Cypher Builder:
+This guide shows how to create a simple Cypher query to `MATCH` and `RETURN` Movies using the Cypher Builder:
 
 ```cypher
 MATCH(m:Movie)
