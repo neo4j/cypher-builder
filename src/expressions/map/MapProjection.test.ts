@@ -91,4 +91,29 @@ describe("Map Projection", () => {
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Set values on map projection", () => {
+        const var1 = new Cypher.Variable();
+
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), []);
+        mapProjection.set("NamedVar");
+        mapProjection.set({
+            myValue: var1,
+        });
+        const queryResult = new TestClause(mapProjection).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .NamedVar, myValue: var1 }"`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Fails setting nullable values", () => {
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), []);
+        expect(() => {
+            mapProjection.set({
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                myValue: "" as any,
+            });
+        }).toThrowError("Missing value on map key myValue");
+    });
 });
