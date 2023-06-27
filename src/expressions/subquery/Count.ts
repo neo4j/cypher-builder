@@ -17,20 +17,20 @@
  * limitations under the License.
  */
 
-import type { CypherEnvironment } from "../Environment";
-import type { Clause } from "../clauses/Clause";
-import { CypherASTNode } from "../CypherASTNode";
-import { padBlock } from "../utils/pad-block";
+import type { CypherEnvironment } from "../../Environment";
+import type { Clause } from "../../clauses/Clause";
+import { CypherASTNode } from "../../CypherASTNode";
+import { padBlock } from "../../utils/pad-block";
 
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#existential-subqueries)
+/** COUNT subquery expression
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#count-subqueries)
  * @group Other
  */
-export class Exists extends CypherASTNode {
+export class Count extends CypherASTNode {
     private subQuery: CypherASTNode;
 
-    constructor(subQuery: Clause, parent?: CypherASTNode) {
-        super(parent);
+    constructor(subQuery: Clause) {
+        super();
         const rootQuery = subQuery.getRoot();
         this.addChildren(rootQuery);
         this.subQuery = rootQuery;
@@ -42,6 +42,6 @@ export class Exists extends CypherASTNode {
     public getCypher(env: CypherEnvironment): string {
         const subQueryStr = this.subQuery.getCypher(env);
         const paddedSubQuery = padBlock(subQueryStr);
-        return `EXISTS {\n${paddedSubQuery}\n}`;
+        return `COUNT {\n${paddedSubQuery}\n}`;
     }
 }

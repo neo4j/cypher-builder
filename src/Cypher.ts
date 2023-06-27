@@ -45,7 +45,8 @@ export { Path, NamedPath } from "./references/Path";
 export { PropertyRef as Property } from "./references/PropertyRef";
 
 // Expressions
-export { Exists } from "./expressions/Exists";
+export { Exists } from "./expressions/subquery/Exists";
+export { Count } from "./expressions/subquery/Count";
 export { Case } from "./expressions/Case";
 
 // --Apoc
