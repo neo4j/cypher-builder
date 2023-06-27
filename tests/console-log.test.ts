@@ -55,4 +55,26 @@ describe("Console.log", () => {
             \\"\\"\\""
         `);
     });
+
+    test("console.log on a pattern", () => {
+        const a = new Cypher.Node();
+
+        const pattern = new Cypher.Pattern(a).related().to();
+
+        expect(`${pattern}`).toMatchInlineSnapshot(`
+            "<Pattern> \\"\\"\\"
+                (this0)-[this1]->(this2)
+            \\"\\"\\""
+        `);
+        expect(pattern.toString()).toMatchInlineSnapshot(`
+            "<Pattern> \\"\\"\\"
+                (this0)-[this1]->(this2)
+            \\"\\"\\""
+        `);
+        expect((pattern as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
+            "<Pattern> \\"\\"\\"
+                (this0)-[this1]->(this2)
+            \\"\\"\\""
+        `);
+    });
 });
