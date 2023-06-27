@@ -72,7 +72,7 @@ export type Predicate =
 
 export type CypherResult = {
     cypher: string;
-    params: Record<string, string>;
+    params: Record<string, unknown>;
 };
 
 /** Defines the interface for a class that can be compiled into Cypher */
