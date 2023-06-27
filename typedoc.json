@@ -8,8 +8,10 @@
     "hideGenerator": true,
     "name": "Cypher Builder",
     "visibilityFilters": {},
-    "sidebarLinks": {},
+    "sidebarLinks": {
+        "Cypher Builder Manual": "https://neo4j.github.io/cypher-builder"
+    },
     "gitRemote": "origin",
-    "out": "./docs/reference",
+    "out": "./docs/build/site/reference",
     "readme": "none"
 }

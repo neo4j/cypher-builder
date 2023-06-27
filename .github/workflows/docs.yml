@@ -32,16 +32,20 @@ jobs:
         with:
           node-version: lts/*
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          cd docs && npm install
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Build Docs
-        run: npm run docs
+        run: |
+          npm run docs
+          touch ./docs/build/site/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload docs
-          path: "./docs"
+          path: "./docs/build/site"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2

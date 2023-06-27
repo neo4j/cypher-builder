@@ -1,6 +1,6 @@
 site:
-  title: Neo4j Docs Template
-  url: https://neo4j.com/docs
+  title: Cypher Builder docs
+  url: https://neo4j.github.io/cypher-builder/
   start_page: cypher-builder:ROOT:index.adoc
 
 content:
@@ -15,9 +15,7 @@ content:
 
 ui:
   bundle:
-    url: https://s3-eu-west-1.amazonaws.com/static-content.neo4j.com/build/ui-bundle-latest.zip
-    snapshot: true
-  output_dir: /assets
+    url: https://s3-eu-west-1.amazonaws.com/static-content.neo4j.com/build/ui-bundle.zip
 
 urls:
   html_extension_style: indexify
@@ -25,7 +23,7 @@ urls:
 antora:
   extensions:
     - require: "@neo4j-antora/antora-modify-sitemaps"
-      sitemap_version: "1.0"
+      sitemap_version: "current"
       sitemap_loc_version: "current"
       move_sitemaps_to_components: true
 
