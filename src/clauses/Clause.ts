@@ -31,7 +31,7 @@ const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
  */
 export abstract class Clause extends CypherASTNode {
     /** Compiles a clause into Cypher and params */
-    public build(prefix?: string | EnvPrefix | undefined, extraParams: Record<string, any> = {}): CypherResult {
+    public build(prefix?: string | EnvPrefix | undefined, extraParams: Record<string, unknown> = {}): CypherResult {
         if (this.isRoot) {
             const env = this.getEnv(prefix);
             const cypher = this.getCypher(env);

@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ClauseMixin } from "../mixins/ClauseMixin";
 
 type ConstructorType<T> = new (...args: any[]) => T;
