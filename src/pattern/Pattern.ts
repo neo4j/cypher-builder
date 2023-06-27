@@ -20,7 +20,6 @@
 import type { CypherEnvironment } from "../Environment";
 import type { NodeRef } from "../references/NodeRef";
 import type { Param } from "../references/Param";
-import type { Path } from "../references/Path";
 import { RelationshipRef } from "../references/RelationshipRef";
 import { escapeLabel } from "../utils/escape";
 import { PartialPattern } from "./PartialPattern";
@@ -35,7 +34,6 @@ export class Pattern extends PatternElement<NodeRef> {
     private withVariable = true;
     private previous: PartialPattern | undefined;
     private properties: Record<string, Param> | undefined;
-    private pathVariable: Path | undefined;
 
     constructor(node: NodeRef, previous?: PartialPattern) {
         super(node);

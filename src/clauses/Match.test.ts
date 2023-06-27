@@ -41,7 +41,7 @@ describe("CypherBuilder Match", () => {
         `);
     });
 
-    test("Match node with return passing a Clause", () => {
+    test("Match node with return passing a clause", () => {
         const movieNode = new Cypher.Node({
             labels: ["Movie"],
         });
@@ -88,7 +88,7 @@ describe("CypherBuilder Match", () => {
         `);
     });
 
-    test("Optional Match", () => {
+    test("Optional match", () => {
         const movieNode = new Cypher.Node({
             labels: ["Movie"],
         });
