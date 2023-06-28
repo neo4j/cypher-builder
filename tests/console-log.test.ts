@@ -47,6 +47,7 @@ describe("Console.log", () => {
                     this0.released = $param0
             \\"\\"\\""
         `);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((query as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
             "<Clause Create> \\"\\"\\"
                 CREATE (this0:\`Movie\`)
@@ -71,6 +72,7 @@ describe("Console.log", () => {
                 (this0)-[this1]->(this2)
             \\"\\"\\""
         `);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((pattern as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
             "<Pattern> \\"\\"\\"
                 (this0)-[this1]->(this2)
