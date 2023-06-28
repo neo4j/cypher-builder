@@ -98,13 +98,12 @@ export * from "./expressions/functions/StringFunctions";
 export * from "./expressions/functions/ListFunctions";
 export * from "./expressions/functions/SpatialFunctions";
 export * from "./expressions/functions/PathFunctions";
-
 export { any, all, exists, single } from "./expressions/functions/PredicateFunctions";
 
 // Procedures
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
 
-export * as db from "./procedures/db";
+export * as db from "./procedures/db/db";
 
 // Types
 export type { CypherResult } from "./types";

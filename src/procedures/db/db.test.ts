@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import Cypher from "../index";
-import { Param } from "../references/Param";
+import Cypher from "../../index";
+import { Param } from "../../references/Param";
 
 describe("db procedures", () => {
     describe("db.index.fulltext.queryNodes", () => {
