@@ -21,17 +21,36 @@ import Cypher from "..";
 import { TestClause } from "../utils/TestClause";
 
 describe("RelationshipRef", () => {
-    test("Create relationship from node", () => {
-        const node1 = new Cypher.Node({
-            labels: ["Actor"],
-        });
+    test("Create relationships", () => {
+        const rel1 = new Cypher.Relationship({ type: "ACTED_IN" });
+        const rel2 = new Cypher.Relationship();
 
-        const node2 = new Cypher.Node({ labels: ["Movie"] });
-
-        const actedIn = new Cypher.Pattern(node1).related(new Cypher.Relationship({ type: "ACTED_IN" })).to(node2);
-        const testClause = new TestClause(actedIn);
+        const testClause = new TestClause(rel1, rel2);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`Actor\`)-[this1:ACTED_IN]->(this2:\`Movie\`)"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"this0this1"`);
+        expect(rel1.type).toBe("ACTED_IN");
+        expect(rel1.type).toBeUndefined;
+    });
+
+    test("Create named relationship", () => {
+        const rel1 = new Cypher.NamedRelationship("myRel", { type: "ACTED_IN" });
+
+        const testClause = new TestClause(rel1);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"myRel"`);
+        expect(rel1.type).toBe("ACTED_IN");
+        expect(rel1.name).toBe("myRel");
+    });
+
+    test("Create named relationship without type", () => {
+        const rel1 = new Cypher.NamedRelationship("myRel");
+
+        const testClause = new TestClause(rel1);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"myRel"`);
+        expect(rel1.type).toBeUndefined();
     });
 });

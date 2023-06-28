@@ -39,6 +39,45 @@ describe("CypherBuilder With", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
+    test("With distinct", () => {
+        const node = new Cypher.Node({
+            labels: ["Movie"],
+        });
+        const withQuery = new Cypher.With(node).distinct();
+
+        const queryResult = withQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH DISTINCT this0"`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("With clause after with", () => {
+        const node = new Cypher.Node({
+            labels: ["Movie"],
+        });
+        const withQuery = new Cypher.With(node);
+
+        withQuery.with(node);
+        withQuery.with("*");
+
+        const queryResult = withQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "WITH this0
+            WITH *, this0"
+        `);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("With clause ignores multiple *", () => {
+        const node = new Cypher.Node({
+            labels: ["Movie"],
+        });
+        const withQuery = new Cypher.With(node, "*", "*");
+
+        const queryResult = withQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH *, this0"`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
     test("With multiple variables", () => {
         const node = new Cypher.Node({
             labels: ["Movie"],
