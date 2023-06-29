@@ -76,6 +76,8 @@ RETURN this0.title, this0.tagline, this0.released
 { param0: 'The Matrix', param1: 2000 }
 ```
 
+You can learn more about creating patterns xref:patterns.adoc[here].
+
 === Cardinality, direction, and properties
 
 Despite changing the `MATCH` target in the previous steps, all the filters and relationships featured in the query are still pointing towards the correct variable: `this0`. 

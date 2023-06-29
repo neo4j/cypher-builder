@@ -38,5 +38,3 @@ node main.js
 ```
 +
 At this point, the script should not do anything, but if it doesn't show an error it means Cypher Builder has been correctly installed.
-
-// TODO: add a "connect to the database" optional section
