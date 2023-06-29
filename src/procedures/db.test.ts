@@ -130,7 +130,7 @@ describe("db procedures", () => {
     });
 
     describe("db.labels", () => {
-        it("dbLabels", () => {
+        test("dbLabels", () => {
             const dbLabels = Cypher.db.labels();
             const { cypher, params } = dbLabels.build();
 
@@ -138,7 +138,7 @@ describe("db procedures", () => {
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("dbLabels with yield *", () => {
+        test("dbLabels with yield *", () => {
             const dbLabels = Cypher.db.labels().yield("*");
             const { cypher, params } = dbLabels.build();
 
@@ -146,7 +146,7 @@ describe("db procedures", () => {
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("dbLabels with yield ", () => {
+        test("dbLabels with yield ", () => {
             const dbLabels = Cypher.db.labels().yield("label");
             const { cypher, params } = dbLabels.build();
 

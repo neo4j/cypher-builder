@@ -26,14 +26,8 @@ import type { CypherEnvironment } from "../Environment";
 export abstract class Reference implements CypherCompilable {
     public prefix: string;
 
-    constructor(prefix = "") {
+    constructor(prefix: string) {
         this.prefix = prefix;
-    }
-
-    /** @internal */
-    public getCypher(env: CypherEnvironment): string {
-        const id = env.getReferenceId(this);
-        return `${id}`;
     }
 
     /** Access individual property via the PropertyRef class */
@@ -44,6 +38,12 @@ export abstract class Reference implements CypherCompilable {
     /* Access individual elements via the ListIndex class, using the square bracket notation */
     public index(index: number): ListIndex {
         return new ListIndex(this, index);
+    }
+
+    /** @internal */
+    public getCypher(env: CypherEnvironment): string {
+        const id = env.getReferenceId(this);
+        return `${id}`;
     }
 }
 

@@ -59,35 +59,3 @@ export class CypherFunction extends CypherASTNode {
         return this.params.map((expr) => expr.getCypher(env)).join(", ");
     }
 }
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-coalesce)
- * @group Cypher Functions
- */
-export function coalesce(expr: Expr, ...optionalExpr: Expr[]): CypherFunction {
-    return new CypherFunction("coalesce", [expr, ...optionalExpr]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-randomuuid)
- * @group Cypher Functions
- */
-export function randomUUID(): CypherFunction {
-    return new CypherFunction("randomUUID");
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-id)
- * @group Cypher Functions
- */
-export function id(variable: Expr): CypherFunction {
-    return new CypherFunction("id", [variable]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid)
- * @group Cypher Functions
- */
-export function elementId(variable: Expr): CypherFunction {
-    return new CypherFunction("elementId", [variable]);
-}

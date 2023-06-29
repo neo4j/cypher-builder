@@ -37,10 +37,10 @@ describe("CypherBuilder Call", () => {
             }"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-}
-`);
+            {
+              "param0": "my-id",
+            }
+        `);
     });
 
     test("Nested Call", () => {
@@ -65,13 +65,13 @@ describe("CypherBuilder Call", () => {
             }"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "my-id",
-}
-`);
+            {
+              "param0": "my-id",
+            }
+        `);
     });
 
-    it("CALL with inner with", () => {
+    test("CALL with inner with", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)
@@ -90,14 +90,27 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 
-    it("CALL with external with", () => {
+    test("CALL with inner with fails if inner with is already set", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const matchClause = new Cypher.Match(node)
+            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
+            .return([node.property("title"), "movie"]);
+
+        const clause = new Cypher.Call(matchClause).innerWith(node);
+        expect(() => {
+            clause.innerWith(node);
+        }).toThrowError("Call import already set");
+    });
+
+    test("CALL with external with", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)
@@ -116,13 +129,13 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
-    it("CALL with external with clause", () => {
+    test("CALL with external with clause", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)
@@ -141,14 +154,14 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 
-    it("CALL with unwind", () => {
+    test("CALL with unwind", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const movie = new Cypher.Variable();
 
@@ -169,14 +182,14 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 
-    it("CALL with unwind passed as a clause", () => {
+    test("CALL with unwind passed as a clause", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const movie = new Cypher.Variable();
 
@@ -199,10 +212,10 @@ describe("CypherBuilder Call", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "aa",
-  "param1": "bb",
-}
-`);
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
     });
 });

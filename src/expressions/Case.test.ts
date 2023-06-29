@@ -38,10 +38,10 @@ describe("Case", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Hello",
-}
-`);
+            {
+              "param0": "Hello",
+            }
+        `);
     });
 
     test("generic case ... then ... else without comparator", () => {
@@ -63,9 +63,19 @@ describe("Case", () => {
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Hello",
-}
-`);
+            {
+              "param0": "Hello",
+            }
+        `);
+    });
+
+    test("case with missing then fails", () => {
+        const testParam = new Cypher.Param("Hello");
+
+        const caseClause = new Cypher.Case().when(Cypher.eq(new Cypher.Literal("Hello"), testParam));
+
+        expect(() => {
+            new TestClause(caseClause).build();
+        }).toThrowError("Cannot generate CASE ... WHEN statement without THEN");
     });
 });

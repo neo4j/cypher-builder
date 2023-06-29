@@ -20,7 +20,7 @@
 import Cypher from "..";
 
 describe("RawCypher", () => {
-    it("Return a simple string as a clause", () => {
+    test("Return a simple string as a clause", () => {
         const rawQuery = new Cypher.RawCypher(() => {
             const cypherStr = "RETURN $myParam as title";
             return [

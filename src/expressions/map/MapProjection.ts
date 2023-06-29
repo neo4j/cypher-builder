@@ -52,13 +52,6 @@ export class MapProjection implements CypherCompilable {
         }
     }
 
-    private setExtraValues(values: Record<string, Expr>): void {
-        Object.entries(values).forEach(([key, value]) => {
-            if (!value) throw new Error(`Missing value on map key ${key}`);
-            this.extraValues.set(key, value);
-        });
-    }
-
     /** Converts the Map projection expression into a normal Map expression
      * @example
      * Converts
@@ -92,5 +85,12 @@ export class MapProjection implements CypherCompilable {
         const commaStr = extraValuesStr && projectionStr ? ", " : "";
 
         return `${variableStr} { ${projectionStr}${commaStr}${extraValuesStr} }`;
+    }
+
+    private setExtraValues(values: Record<string, Expr>): void {
+        Object.entries(values).forEach(([key, value]) => {
+            if (!value) throw new Error(`Missing value on map key ${key}`);
+            this.extraValues.set(key, value);
+        });
     }
 }
