@@ -20,7 +20,7 @@ const movie = new Cypher.Node({labels: ["Movie"]});
 const actedIn = new Cypher.Relationship({type: "ACTED_IN"});
 ```
 
-== Basic Patterns
+== Basic patterns
 
 All patterns begin and end with a Node. 
 By using the variables defined previously, the Pattern can be defined as follows:
@@ -123,9 +123,12 @@ const pattern = new Cypher.Pattern(person)
 The `withProperties` method takes an object with the properties to match and the Param objects to be used as the expected values of the pattern. 
 It can be used in both Node and Relationship elements.
 
+== Advanced patterns
+This section shows how to define more complex patterns.
+
 === Longer patterns
 
-Patterns are not limited to a node or a relationship. Patterns can be arbitrarily long. For example:
+Patterns can be arbitrarily long. For example:
 
 ```javascript
 const user = new Cypher.Node({labels: ["User"]});
@@ -136,8 +139,6 @@ const pattern = new Cypher.Pattern(person).related(actedIn).to(movie).related().
 ```cypher
 (this0:Person)-[this1:ACTED_IN]->(this2:Movie)<-[this3]-(this4:User)
 ```
-
-== Advanced patterns
 
 === Cycles
 
