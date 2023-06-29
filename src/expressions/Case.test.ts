@@ -76,6 +76,6 @@ describe("Case", () => {
 
         expect(() => {
             new TestClause(caseClause).build();
-        }).toThrowError();
+        }).toThrowError("Cannot generate CASE ... WHEN statement without THEN");
     });
 });
