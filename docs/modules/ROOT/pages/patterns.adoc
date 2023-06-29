@@ -1,17 +1,18 @@
 = Patterns
 
-Cypher relies on link:https://neo4j.com/docs/cypher-manual/current/patterns/[pattern matching] to find data. Patterns are usually used in `MATCH` statements such as:
+Cypher relies on link:https://neo4j.com/docs/cypher-manual/current/patterns/[pattern matching] to find data. 
+Patterns are often used in `MATCH` statements such as:
 
-.JavaScript
 ```cypher
 MATCH (m:Movie)<-[:ACTED_IN]-(a:Actor)
 ```
 
-Patterns can be arbitrarily complex and `@neo4j/cypher-builder` provides the necessary tools to define such patterns.
+Patterns can be arbitrarily complex and `@neo4j/cypher-builder` provides the necessary tools to define them.
 
 == Nodes & Relationship
 
-A pattern is formed by Nodes and Relationships. The first step is to define the variables that will be referenced in the Pattern:
+A pattern is formed by Nodes and Relationships. 
+The first step is to define the variables that will be referenced in the Pattern:
 
 ```javascript
 const person = new Cypher.Node({labels: ["Person"]});
@@ -21,13 +22,14 @@ const actedIn = new Cypher.Relationship({type: "ACTED_IN"});
 
 == Basic Patterns
 
-All patterns begin and end with a Node. Using the variables defined previously the Pattern can be defined as follows:
+All patterns begin and end with a Node. 
+By using the variables defined previously, the Pattern can be defined as follows:
 
 ```javascript
 const pattern = new Cypher.Pattern(person).related(actedIn).to(movie);
 ```
 
-This pattern can now be used anywhere where a pattern can be used, for example, a `MATCH` clause:
+This pattern can now be used anywhere where a pattern can be used, for example, in a `MATCH` clause:
 
 ```javascript
 new Cypher.Match(pattern);
@@ -75,7 +77,6 @@ This translates to:
 
 Labels can be hidden from nodes with the method `withoutLabels`:
 
-
 ```javascript
 const pattern = new Cypher.Pattern(person).withoutLabels().related(actedIn).to(movie);
 ```
@@ -103,7 +104,8 @@ Alternatively, labels and types are optional when defining a Node or a Relations
 
 === Properties
 
-Patterns may contain properties to match, both on the node and relationships. These can be added using the `withProperties` method:
+Patterns may contain properties to match both on the Node and Relationships. 
+These can be added using the `withProperties` method:
 
 ```javascript
 const pattern = new Cypher.Pattern(person)
@@ -118,7 +120,8 @@ const pattern = new Cypher.Pattern(person)
 (this0:Person { name: $param0 })-[this1:ACTED_IN]->(this2:Movie)
 ```
 
-`withProperties` takes an object with the properties to match and the Param objects to be used as the expected values of the pattern. `withProperties` can be used in both nodes and relationship elements.
+The `withProperties` method takes an object with the properties to match and the Param objects to be used as the expected values of the pattern. 
+It can be used in both Node and Relationship elements.
 
 === Longer patterns
 
@@ -138,7 +141,8 @@ const pattern = new Cypher.Pattern(person).related(actedIn).to(movie).related().
 
 === Cycles
 
-A pattern may have cycles, to achieve this, we can reuse the same variables:
+A pattern may have cycles.
+To achieve this, you can reuse the same variables:
 
 ```javascript
 const actor = new Cypher.Node({labels: ["Actor"]});
@@ -156,7 +160,8 @@ This translates to:
 (this0:Person)-[this1:ACTED_IN]->(this2:Movie)-[this3:DIRECTED]-(this0)
 ```
 
-Note how the initial node in the pattern (`this0`) is the same as the one referenced in the last element. This will match actors that also directed the same movie.
+Note how the initial node in the pattern (`this0`) is the same as the one referenced in the last element. 
+This matches actors that also directed the same movie.
 
 === Length
 
@@ -178,9 +183,10 @@ MATCH (this0:Person)-[this1:ACTED_IN*3]->(this2:Movie)
 
 Bounds can be added by passing an object with the following options:
 
-* `min` (optional): Define the minimum length of the relationship.
-* `max` (optional): Define the maximum length of the relationship.
+* `min` (optional): Defines the minimum length of the relationship.
+* `max` (optional): Defines the maximum length of the relationship.
 
+For example:
 ```javascript
 const pattern = new Cypher.Pattern(person).related(actedIn).withLength({min: 2, max: 10}).to(movie);
 ```
@@ -203,7 +209,8 @@ MATCH (this0:Person)-[this1:ACTED_IN*]->(this2:Movie)
 
 == Partial patterns
 
-As mentioned, all patterns begin and end with a Node, however, it is possible to define a _Partial Pattern_ by using `.related` without `.to` afterwards:
+As mentioned, all patterns begin and end with a Node. 
+However, it is possible to define a _Partial Pattern_ by using `.related` without `.to` afterwards:
 
 ```javascript
 const partialPattern = new Cypher.Pattern(person).related(actedIn);

@@ -76,7 +76,7 @@ RETURN this0.title, this0.tagline, this0.released
 { param0: 'The Matrix', param1: 2000 }
 ```
 
-You can learn more about creating patterns xref:patterns.adoc[here].
+For more information about creating patterns, refer to xref:patterns.adoc[Patterns].
 
 === Cardinality, direction, and properties
 
