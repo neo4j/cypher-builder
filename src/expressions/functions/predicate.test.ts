@@ -31,25 +31,20 @@ describe("Predicate Functions", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    test("all with filter", () => {
+    describe.each(["all", "any", "single"] as const)("%s", (value) => {
         const variable = new Cypher.Variable();
         const exprVariable = new Cypher.Param([1, 2, 5]);
-
         const filter = Cypher.eq(variable, new Cypher.Literal(5));
 
-        const allFn = Cypher.all(variable, exprVariable, filter);
-        const queryResult = new TestClause(allFn).build();
+        test(value, () => {
+            const predicateFn = Cypher[value](variable, exprVariable, filter);
+            const queryResult = new TestClause(predicateFn).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"all(var0 IN $param0 WHERE var0 = 5)"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": [
-    1,
-    2,
-    5,
-  ],
-}
-`);
+            expect(queryResult.cypher).toBe(`${value}(var0 IN $param0 WHERE var0 = 5)`);
+            expect(queryResult.params).toEqual({
+                param0: [1, 2, 5],
+            });
+        });
     });
 
     test("Using functions as predicates", () => {
@@ -57,23 +52,26 @@ describe("Predicate Functions", () => {
 
         const variable = new Cypher.Variable();
         const exprVariable = new Cypher.Param([1, 2, 5]);
+        const filter = Cypher.eq(variable, new Cypher.Literal(5));
 
-        const anyFn = Cypher.all(variable, exprVariable);
+        const anyFn = Cypher.all(variable, exprVariable, filter);
         const existsFn = Cypher.exists(new Cypher.Pattern(node));
 
         const andExpr = Cypher.and(anyFn, existsFn);
 
         const queryResult = new TestClause(andExpr).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"(all(var0 IN $param0) AND exists((this1:\`Movie\`)))"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(
+            `"(all(var0 IN $param0 WHERE var0 = 5) AND exists((this1:\`Movie\`)))"`
+        );
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": [
-    1,
-    2,
-    5,
-  ],
-}
-`);
+            {
+              "param0": [
+                1,
+                2,
+                5,
+              ],
+            }
+        `);
     });
 });

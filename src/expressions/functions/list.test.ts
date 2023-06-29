@@ -21,12 +21,22 @@ import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
 describe("List Functions", () => {
-    test("size", () => {
-        const existsFn = Cypher.size(new Cypher.List([new Cypher.Literal(2)]));
+    test.each(["size", "head", "last"] as const)("%s", (value) => {
+        const testList = new Cypher.List([new Cypher.Literal(2)]);
+        const listFn = Cypher[value](testList);
 
-        const queryResult = new TestClause(existsFn).build();
+        const queryResult = new TestClause(listFn).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"size([ 2 ])"`);
+        expect(queryResult.cypher).toBe(`${value}([ 2 ])`);
+        expect(queryResult.params).toEqual({});
+    });
+
+    test("labels", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const labelsFn = Cypher.labels(node);
+
+        const queryResult = new TestClause(labelsFn).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"labels(this0)"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 

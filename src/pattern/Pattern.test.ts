@@ -40,7 +40,7 @@ describe("Patterns", () => {
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
-        test("Node with parameters and labels", () => {
+        test("Node with properties and labels", () => {
             const node = new Cypher.Node({ labels: ["TestLabel"] });
 
             const pattern = new Cypher.Pattern(node).withProperties({ name: new Cypher.Param("test") });
@@ -53,7 +53,7 @@ describe("Patterns", () => {
             `);
         });
 
-        test("Node with escaped parameters and labels", () => {
+        test("Node with escaped properties and labels", () => {
             const node = new Cypher.Node({ labels: ["TestLabel"] });
 
             const pattern = new Cypher.Pattern(node).withProperties({ $_name: new Cypher.Param("test") });
@@ -64,6 +64,15 @@ describe("Patterns", () => {
                   "param0": "test",
                 }
             `);
+        });
+
+        test("Node with empty properties and labels", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node).withProperties({});
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`TestLabel\`)"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 
@@ -162,6 +171,32 @@ describe("Patterns", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1:ACTE\`D_IN]->(this2)"`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Relationship Pattern without type", () => {
+            const a = new Cypher.Node();
+            const rel = new Cypher.Relationship({ type: "REL" });
+
+            const query = new TestClause(new Cypher.Pattern(a).related(rel).withoutType().to());
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1]->(this2)"`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Relationship Pattern with different directions", () => {
+            const a = new Cypher.Node();
+            const rel = new Cypher.Relationship({ type: "REL" });
+
+            const leftPattern = new Cypher.Pattern(a).related(rel).withDirection("left").to();
+            const rightPattern = new Cypher.Pattern(a).related(rel).withDirection("right").to();
+            const undirectedPattern = new Cypher.Pattern(a).related(rel).withDirection("undirected").to();
+
+            expect(new TestClause(leftPattern).build().cypher).toMatchInlineSnapshot(`"(this0)<-[this1:REL]-(this2)"`);
+            expect(new TestClause(rightPattern).build().cypher).toMatchInlineSnapshot(`"(this0)-[this1:REL]->(this2)"`);
+            expect(new TestClause(undirectedPattern).build().cypher).toMatchInlineSnapshot(
+                `"(this0)-[this1:REL]-(this2)"`
+            );
         });
     });
 

@@ -27,7 +27,8 @@ import type { NodeRef } from "../references/NodeRef";
  * @group Other
  * @example
  * ```cypher
- * MATCH(this) WHERE this:MyNode
+ * MATCH(this)
+ * WHERE this:MyNode
  * ```
  */
 export class HasLabel extends CypherASTNode {

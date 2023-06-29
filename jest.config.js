@@ -2,7 +2,7 @@ module.exports = {
     displayName: "@neo4j/cypher-builder",
     setupFilesAfterEnv: ["jest-extended/all"],
     roots: ["<rootDir>/src/", "<rootDir>/tests/"],
-    coverageDirectory: "<rootDir>/packages/cypher-builder/coverage/",
+    coverageDirectory: "<rootDir>/coverage/",
     snapshotFormat: {
         escapeString: true,
     },

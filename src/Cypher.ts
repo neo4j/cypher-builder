@@ -45,7 +45,8 @@ export { Path, NamedPath } from "./references/Path";
 export { PropertyRef as Property } from "./references/PropertyRef";
 
 // Expressions
-export { Exists } from "./expressions/Exists";
+export { Exists } from "./expressions/subquery/Exists";
+export { Count } from "./expressions/subquery/Count";
 export { Case } from "./expressions/Case";
 
 // --Apoc
@@ -82,23 +83,21 @@ export { plus, minus, divide, multiply, mod, pow } from "./expressions/operation
 // --Functions
 export { CypherFunction as Function } from "./expressions/functions/CypherFunctions";
 
-export { coalesce, randomUUID, id, elementId } from "./expressions/functions/CypherFunctions";
-
-export { count, min, max, avg, sum, collect } from "./expressions/functions/AggregationFunctions";
-
 export {
     cypherDatetime as datetime,
     cypherDate as date,
     cypherLocalTime as localtime,
     cypherLocalDatetime as localdatetime,
     cypherTime as time,
-} from "./expressions/functions/TemporalFunctions";
+} from "./expressions/functions/temporal";
+export * from "./expressions/functions/scalar";
+export { count, min, max, avg, sum, collect } from "./expressions/functions/aggregation";
+export * from "./expressions/functions/string";
+export * from "./expressions/functions/list";
+export * from "./expressions/functions/spatial";
+export * from "./expressions/functions/path";
 
-export * from "./expressions/functions/StringFunctions";
-export * from "./expressions/functions/ListFunctions";
-export * from "./expressions/functions/SpatialFunctions";
-export * from "./expressions/functions/PathFunctions";
-export { any, all, exists, single } from "./expressions/functions/PredicateFunctions";
+export { any, all, exists, single } from "./expressions/functions/predicate";
 
 // Procedures
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
@@ -115,10 +114,10 @@ export type { Expr, Predicate, Operation } from "./types";
 export type { Yield } from "./procedures/Yield";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
-export type { PredicateFunction } from "./expressions/functions/PredicateFunctions";
+export type { PredicateFunction } from "./expressions/functions/predicate";
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { CompositeClause } from "./clauses/utils/concat";
-export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/AggregationFunctions";
+export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation";
 export type { HasLabel } from "./expressions/HasLabel";
 
 // utils
