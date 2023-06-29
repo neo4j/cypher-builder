@@ -17,22 +17,26 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../utils/TestClause";
-import Cypher from "..";
+import Cypher from "../..";
 
-describe("Exists", () => {
-    test("wraps clause within exists", () => {
+describe("Count Subquery", () => {
+    test("Count predicate with subclause", () => {
         const subquery = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).return("*");
 
-        const existsExpression = new Cypher.Exists(subquery);
+        const countExpr = new Cypher.Count(subquery);
+        const match = new Cypher.Match(new Cypher.Node())
+            .where(Cypher.gt(countExpr, new Cypher.Literal(10)))
+            .return("*");
 
-        const queryResult = new TestClause(existsExpression).build();
+        const queryResult = match.build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "EXISTS {
-                MATCH (this0:Movie)
+            "MATCH (this0)
+            WHERE COUNT {
+                MATCH (this1:Movie)
                 RETURN *
-            }"
+            } > 10
+            RETURN *"
         `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);

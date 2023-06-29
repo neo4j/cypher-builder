@@ -47,11 +47,35 @@ describe("Console.log", () => {
                     this0.released = $param0
             \\"\\"\\""
         `);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((query as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
             "<Clause Create> \\"\\"\\"
                 CREATE (this0:Movie)
                 SET
                     this0.released = $param0
+            \\"\\"\\""
+        `);
+    });
+
+    test("console.log on a pattern", () => {
+        const a = new Cypher.Node();
+
+        const pattern = new Cypher.Pattern(a).related().to();
+
+        expect(`${pattern}`).toMatchInlineSnapshot(`
+            "<Pattern> \\"\\"\\"
+                (this0)-[this1]->(this2)
+            \\"\\"\\""
+        `);
+        expect(pattern.toString()).toMatchInlineSnapshot(`
+            "<Pattern> \\"\\"\\"
+                (this0)-[this1]->(this2)
+            \\"\\"\\""
+        `);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((pattern as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
+            "<Pattern> \\"\\"\\"
+                (this0)-[this1]->(this2)
             \\"\\"\\""
         `);
     });

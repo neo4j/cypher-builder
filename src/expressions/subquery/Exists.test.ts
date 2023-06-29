@@ -17,20 +17,26 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
-describe("Cypher Functions", () => {
-    test("custom function", () => {
-        const myFunction = new Cypher.Function("myFunction", [new Cypher.Literal("test"), new Cypher.Param("test2")]);
-        const queryResult = new TestClause(myFunction).build();
+describe("Exists subquery", () => {
+    test("Exists predicate with subclause", () => {
+        const subquery = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).return("*");
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"myFunction(\\"test\\", $param0)"`);
+        const existsExpression = new Cypher.Exists(subquery);
+        const match = new Cypher.Match(new Cypher.Node()).where(existsExpression).return("*");
 
-        expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": "test2",
+        const queryResult = match.build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "MATCH (this0)
+            WHERE EXISTS {
+                MATCH (this1:Movie)
+                RETURN *
             }
+            RETURN *"
         `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

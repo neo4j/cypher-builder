@@ -50,19 +50,71 @@ describe("CypherBuilder Return", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    test("Return with order", () => {
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
+    describe("With order", () => {
+        test("Return with order", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age"), "DESC"]);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "RETURN this0
+                ORDER BY this0.age DESC"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
-        const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age"), "DESC"]);
+        test("Return with order with default sorting order", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
 
-        const queryResult = matchQuery.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "RETURN this0
-            ORDER BY this0.age DESC"
-        `);
+            const matchQuery = new Cypher.Return(movieNode).orderBy(movieNode.property("age"));
 
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "RETURN this0
+                ORDER BY this0.age ASC"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Return with order and skip", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age")]).skip(10);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "RETURN this0
+                ORDER BY this0.age ASC
+                SKIP 10"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Return with order and limit", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age")]).limit(5);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "RETURN this0
+                ORDER BY this0.age ASC
+                LIMIT 5"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
     });
 });

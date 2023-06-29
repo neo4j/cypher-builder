@@ -25,7 +25,7 @@ describe("Pattern comprehension", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const andExpr = Cypher.eq(node.property("released"), new Cypher.Param(1999));
 
-        const comprehension = new Cypher.PatternComprehension(new Cypher.Pattern(node), andExpr);
+        const comprehension = new Cypher.PatternComprehension(node, andExpr);
 
         const queryResult = new TestClause(comprehension).build();
 
@@ -41,12 +41,38 @@ describe("Pattern comprehension", () => {
     test("comprehension without filter", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
-        const comprehension = new Cypher.PatternComprehension(new Cypher.Pattern(node));
+        const comprehension = new Cypher.PatternComprehension(node);
 
         const queryResult = new TestClause(comprehension).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[(this0:Movie)]"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("comprehension from relationship pattern", () => {
+        const a = new Cypher.Node();
+        const b = new Cypher.Node();
+        const rel = new Cypher.Relationship({
+            type: "ACTED_IN",
+        });
+
+        const pattern = new Cypher.Pattern(a).related(rel).to(b);
+
+        const andExpr = Cypher.eq(rel.property("released"), new Cypher.Param(1999));
+
+        const comprehension = new Cypher.PatternComprehension(pattern, andExpr);
+
+        const queryResult = new TestClause(comprehension).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(
+            `"[(this1)-[this0:ACTED_IN]->(this2) | this0.released = $param0]"`
+        );
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": 1999,
+            }
+        `);
     });
 });

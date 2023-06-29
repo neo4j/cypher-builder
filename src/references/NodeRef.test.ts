@@ -20,7 +20,7 @@
 import Cypher from "..";
 
 describe("NodeRef", () => {
-    it("Generates node with labels", () => {
+    test("Generates node with labels", () => {
         const node = new Cypher.Node({
             labels: ["Movie", "Film"],
         });
@@ -28,11 +28,22 @@ describe("NodeRef", () => {
         expect(node.labels).toIncludeSameMembers(["Movie", "Film"]);
     });
 
-    it("Generates node with labels from Set", () => {
+    test("Generates node with labels from Set", () => {
         const node = new Cypher.Node({
             labels: new Set(["Movie", "Film", "Movie"]),
         });
 
         expect(node.labels).toIncludeSameMembers(["Movie", "Film"]);
+    });
+
+    describe("NamedNode", () => {
+        test("Generates named node with labels", () => {
+            const node = new Cypher.NamedNode("myNode", {
+                labels: ["Movie", "Film"],
+            });
+
+            expect(node.labels).toIncludeSameMembers(["Movie", "Film"]);
+            expect(node.name).toBe("myNode");
+        });
     });
 });

@@ -60,14 +60,14 @@ export class CypherEnvironment {
         return id;
     }
 
-    public getParams(): Record<string, any> {
-        return this.params.reduce((acc, param: Param) => {
+    public getParams(): Record<string, unknown> {
+        return this.params.reduce<Record<string, unknown>>((acc, param: Param) => {
             const key = this.getReferenceId(param);
             if (param.hasValue) {
                 acc[key] = param.value;
             }
             return acc;
-        }, {} as Record<string, any>);
+        }, {});
     }
 
     public addNamedParamReference(name: string, param: Param): void {
@@ -112,6 +112,7 @@ export class CypherEnvironment {
     }
 
     private isNamedReference(ref: Reference | NamedReference): ref is NamedReference {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return Boolean((ref as any).id);
     }
 }

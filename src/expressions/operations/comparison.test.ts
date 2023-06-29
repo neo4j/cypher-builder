@@ -24,33 +24,33 @@ describe("comparison operations", () => {
     const predicate1 = new Cypher.Node().property("title");
     const predicate2 = Cypher.coalesce(new Cypher.Variable());
 
-    describe("equality (=)", () => {
-        test("eq operation with 2 predicates", () => {
-            const op = Cypher.eq(predicate1, predicate2);
-            const { cypher } = new TestClause(op).build();
-            expect(cypher).toMatchInlineSnapshot(`"this0.title = coalesce(var1)"`);
-        });
+    test.each([
+        ["eq", "="],
+        ["neq", "<>"],
+        ["gt", ">"],
+        ["gte", ">="],
+        ["lt", "<"],
+        ["lte", "<="],
+        ["in", "IN"],
+        ["contains", "CONTAINS"],
+        ["startsWith", "STARTS WITH"],
+        ["endsWith", "ENDS WITH"],
+        ["matches", "=~"],
+    ] as const)("%s (%s) operator with 2 predicates", (func, operator) => {
+        const op = Cypher[func](predicate1, predicate2);
+        const { cypher } = new TestClause(op).build();
+        expect(cypher).toEqual(`this0.title ${operator} coalesce(var1)`);
     });
 
-    describe("inequality (<>)", () => {
-        test("neq operation with 2 predicates", () => {
-            const op = Cypher.neq(predicate1, predicate2);
-            const { cypher } = new TestClause(op).build();
-            expect(cypher).toMatchInlineSnapshot(`"this0.title <> coalesce(var1)"`);
-        });
+    test("isNull (IS NULL) operator with 1 predicate", () => {
+        const op = Cypher.isNull(predicate1);
+        const { cypher } = new TestClause(op).build();
+        expect(cypher).toMatchInlineSnapshot(`"this0.title IS NULL"`);
     });
 
-    describe("IS NULL", () => {
-        test("isNull operation", () => {
-            const op = Cypher.isNull(predicate1);
-            const { cypher } = new TestClause(op).build();
-            expect(cypher).toMatchInlineSnapshot(`"this0.title IS NULL"`);
-        });
-
-        test("isNotNull operation", () => {
-            const op = Cypher.isNotNull(predicate1);
-            const { cypher } = new TestClause(op).build();
-            expect(cypher).toMatchInlineSnapshot(`"this0.title IS NOT NULL"`);
-        });
-    }); // TODO: test IN, CONTAINS, ENDS WITH, =~ operator
+    test("isNotNull (IS NOT NULL) operator with 1 predicate", () => {
+        const op = Cypher.isNotNull(predicate1);
+        const { cypher } = new TestClause(op).build();
+        expect(cypher).toMatchInlineSnapshot(`"this0.title IS NOT NULL"`);
+    });
 });

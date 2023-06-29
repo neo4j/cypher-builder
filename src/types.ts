@@ -20,13 +20,13 @@
 import type { PropertyRef } from "./references/PropertyRef";
 import type { CypherFunction } from "./expressions/functions/CypherFunctions";
 import type { Literal } from "./references/Literal";
-import type { Exists } from "./expressions/Exists";
+import type { Exists } from "./expressions/subquery/Exists";
 import type { CypherEnvironment } from "./Environment";
 import type { MapExpr } from "./expressions/map/MapExpr";
 import type { BooleanOp } from "./expressions/operations/boolean";
 import type { ComparisonOp } from "./expressions/operations/comparison";
 import type { RawCypher } from "./clauses/RawCypher";
-import type { PredicateFunction } from "./expressions/functions/PredicateFunctions";
+import type { PredicateFunction } from "./expressions/functions/predicate";
 import type { Case } from "./expressions/Case";
 import type { MathOp } from "./expressions/operations/math";
 import type { ListComprehension } from "./expressions/list/ListComprehension";
@@ -37,6 +37,7 @@ import type { HasLabel } from "./expressions/HasLabel";
 import type { Reference } from "./references/Reference";
 import type { ListIndex } from "./expressions/list/ListIndex";
 import type { Path } from "./references/Path";
+import { Count } from "./expressions/subquery/Count";
 
 export type Operation = BooleanOp | ComparisonOp | MathOp;
 
@@ -65,6 +66,7 @@ export type Predicate =
     | ComparisonOp
     | RawCypher
     | Exists
+    | Count
     | PredicateFunction
     | Literal<boolean>
     | Case
@@ -72,7 +74,7 @@ export type Predicate =
 
 export type CypherResult = {
     cypher: string;
-    params: Record<string, string>;
+    params: Record<string, unknown>;
 };
 
 /** Defines the interface for a class that can be compiled into Cypher */

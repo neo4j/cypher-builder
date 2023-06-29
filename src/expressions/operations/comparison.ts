@@ -41,10 +41,10 @@ type ComparisonOperator =
  */
 export class ComparisonOp extends CypherASTNode {
     private operator: ComparisonOperator;
-    private leftExpr: Expr | undefined;
+    private leftExpr: Expr;
     private rightExpr: Expr | undefined;
 
-    constructor(operator: ComparisonOperator, left: Expr | undefined, right: Expr | undefined) {
+    constructor(operator: ComparisonOperator, left: Expr, right: Expr | undefined) {
         super();
         this.operator = operator;
         this.leftExpr = left;
@@ -55,14 +55,14 @@ export class ComparisonOp extends CypherASTNode {
      * @hidden
      */
     public getCypher(env: CypherEnvironment): string {
-        const leftStr = this.leftExpr ? `${this.leftExpr.getCypher(env)} ` : "";
+        const leftStr = `${this.leftExpr.getCypher(env)} `;
         const rightStr = this.rightExpr ? ` ${this.rightExpr.getCypher(env)}` : "";
 
         return `${leftStr}${this.operator}${rightStr}`;
     }
 }
 
-function createOp(op: ComparisonOperator, leftExpr: Expr | undefined, rightExpr?: Expr): ComparisonOp {
+function createOp(op: ComparisonOperator, leftExpr: Expr, rightExpr?: Expr): ComparisonOp {
     return new ComparisonOp(op, leftExpr, rightExpr);
 }
 

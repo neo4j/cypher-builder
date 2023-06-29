@@ -33,10 +33,10 @@ describe("Map Expression", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"{ foo: \\"barr\\", var: var0, param: $param0 }"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "test",
-}
-`);
+            {
+              "param0": "test",
+            }
+        `);
     });
 
     test("Set key-value and object", () => {
@@ -57,10 +57,10 @@ describe("Map Expression", () => {
         );
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "value",
-}
-`);
+            {
+              "param0": "value",
+            }
+        `);
     });
 
     test("size", () => {
@@ -73,5 +73,16 @@ describe("Map Expression", () => {
         map.set("another", new Cypher.Literal("another"));
 
         expect(map.size).toBe(4);
+    });
+
+    test("Fails setting nullable values", () => {
+        const map = new Cypher.Map();
+
+        expect(() => {
+            map.set({
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                myValue: "" as any,
+            });
+        }).toThrowError("Missing value on map key myValue");
     });
 });

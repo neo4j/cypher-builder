@@ -49,7 +49,7 @@ describe("apoc.cypher", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    it("runFirstColumn with string", () => {
+    test("runFirstColumn with string", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const subquery = "MATCH (n:Film) RETURN n";
 
@@ -62,7 +62,7 @@ describe("apoc.cypher", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    it("runFirstColumn with a map for parameters", () => {
+    test("runFirstColumn with a map for parameters", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const subquery = "MATCH (n) RETURN n";
 
@@ -119,7 +119,7 @@ describe("apoc.cypher", () => {
         `);
     });
 
-    it("runFirstColumn with an object for parameters", () => {
+    test("runFirstColumn with an object for parameters", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const subquery = "MATCH (n) RETURN n";
 

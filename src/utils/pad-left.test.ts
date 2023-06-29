@@ -17,20 +17,16 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
-import Cypher from "../..";
+import { padLeft } from "./pad-left";
 
-describe("String Functions", () => {
-    test("toLower", () => {
-        const toLowerFunction = Cypher.toLower(new Cypher.Param("Hello"));
-        const queryResult = new TestClause(toLowerFunction).build();
+describe("padLeft", () => {
+    test("pads string", () => {
+        expect(padLeft("my string")).toBe(" my string");
+        expect(padLeft(" my string")).toBe("  my string");
+    });
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"toLower($param0)"`);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "Hello",
-}
-`);
+    test("returns empty string if input is undefined or empty string", () => {
+        expect(padLeft(undefined)).toBe("");
+        expect(padLeft("")).toBe("");
     });
 });
