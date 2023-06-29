@@ -210,7 +210,7 @@ MATCH (this0:Person)-[this1:ACTED_IN*]->(this2:Movie)
 
 == Partial patterns
 
-As mentioned, all patterns begin and end with a Node. 
+All patterns begin and end with a Node. 
 However, it is possible to define a _Partial Pattern_ by using `.related` without `.to` afterwards:
 
 ```javascript
