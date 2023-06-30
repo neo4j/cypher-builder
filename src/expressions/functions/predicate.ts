@@ -51,6 +51,15 @@ export function all(variable: Variable, listExpr: Expr, whereFilter: Predicate):
 }
 
 /**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-none)
+ * @group Cypher Functions
+ * @category Predicate
+ */
+export function none(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
+    return new ListPredicateFunction("none", variable, listExpr, whereFilter);
+}
+
+/**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-single)
  * @group Cypher Functions
  * @category Predicate
@@ -66,6 +75,15 @@ export function single(variable: Variable, listExpr: Expr, whereFilter: Predicat
  */
 export function exists(pattern: Pattern): PredicateFunction {
     return new ExistsFunction(pattern);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-isempty)
+ * @group Cypher Functions
+ * @category Predicate
+ */
+export function isEmpty(list: Expr): PredicateFunction {
+    return new PredicateFunction("isEmpty", [list]);
 }
 
 class ExistsFunction extends PredicateFunction {
