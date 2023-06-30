@@ -23,33 +23,6 @@ import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size)
- * @group Cypher Functions
- * @category List
- */
-export function size(expr: Expr): CypherFunction {
-    return new CypherFunction("size", [expr]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-head)
- * @group Cypher Functions
- * @category List
- */
-export function head(expr: Expr): CypherFunction {
-    return new CypherFunction("head", [expr]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-last)
- * @group Cypher Functions
- * @category List
- */
-export function last(expr: Expr): CypherFunction {
-    return new CypherFunction("last", [expr]);
-}
-
-/**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-labels)
  * @group Cypher Functions
  * @category List
