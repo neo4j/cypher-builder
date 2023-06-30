@@ -1,0 +1,224 @@
+= Patterns
+
+Cypher relies on link:https://neo4j.com/docs/cypher-manual/current/patterns/[pattern matching] to find data. 
+Patterns are often used in `MATCH` statements such as:
+
+```cypher
+MATCH (m:Movie)<-[:ACTED_IN]-(a:Actor)
+```
+
+Patterns can be arbitrarily complex and `@neo4j/cypher-builder` provides the necessary tools to define them.
+
+== Nodes & Relationship
+
+A pattern is formed by Nodes and Relationships. 
+The first step is to define the variables that will be referenced in the Pattern:
+
+```javascript
+const person = new Cypher.Node({labels: ["Person"]});
+const movie = new Cypher.Node({labels: ["Movie"]});
+const actedIn = new Cypher.Relationship({type: "ACTED_IN"});
+```
+
+== Basic patterns
+
+All patterns begin and end with a Node. 
+By using the variables defined previously, the Pattern can be defined as follows:
+
+```javascript
+const pattern = new Cypher.Pattern(person).related(actedIn).to(movie);
+```
+
+This pattern can now be used anywhere where a pattern can be used, for example, in a `MATCH` clause:
+
+```javascript
+new Cypher.Match(pattern);
+```
+
+```cypher
+MATCH (this0:Person)-[this1:ACTED_IN]->(this2:Movie)
+```
+
+=== Relationship direction
+
+By default, a relationship in a pattern will be created as a left-to-right pattern. The direction can be changed when defining the relationship in the pattern using the method `withDirection`:
+
+```javascript
+const pattern = new Cypher.Pattern(person).related(actedIn).withDirection("left").to(movie);
+```
+
+This translates to the following Pattern:
+
+```cypher
+(this0:Person)<-[this1:ACTED_IN]-(this2:Movie)
+```
+
+The possible options for `withDirection` are:
+
+* `right` (default): A left-to-right (`()-[]->()`) pattern.
+* `left`: A right-to-left (`()<-[]-()`) pattern.
+* `undirected`: An undirected (`()-[]-()`) pattern.
+
+=== Remove variable names
+
+By default, a pattern will render all variable names of the Node and Relationship variables, but it is possible to hide them from particular elements of the pattern with the method `withoutVariable`:
+
+```javascript
+const pattern = new Cypher.Pattern(person).related(actedIn).withoutVariable().to(movie).withoutVariable();
+```
+
+This translates to:
+
+```cypher
+(this0:Person)-[:ACTED_IN]->(Movie)
+```
+
+=== Remove labels and types
+
+Labels can be hidden from nodes with the method `withoutLabels`:
+
+```javascript
+const pattern = new Cypher.Pattern(person).withoutLabels().related(actedIn).to(movie);
+```
+
+```cypher
+(this0)-[this1:ACTED_IN]->(this1:Movie)
+```
+
+For relationships, however, you must use `withoutType`:
+
+```javascript
+const pattern = new Cypher.Pattern(person).related(actedIn).withoutType().to(movie);
+```
+
+This translates to:
+
+```cypher
+(this0:Person)-[this1]->(this1:Movie)
+```
+
+[NOTE]
+====
+Alternatively, labels and types are optional when defining a Node or a Relationship. Unless you need to reuse the same variable, you can skip defining the labels altogether.
+====
+
+=== Properties
+
+Patterns may contain properties to match both on the Node and Relationships. 
+These can be added using the `withProperties` method:
+
+```javascript
+const pattern = new Cypher.Pattern(person)
+            .withProperties({
+                name: new Cypher.Param("Person")
+            })
+            .related(actedIn)
+            .to(movie);
+```
+
+```cypher
+(this0:Person { name: $param0 })-[this1:ACTED_IN]->(this2:Movie)
+```
+
+The `withProperties` method takes an object with the properties to match and the Param objects to be used as the expected values of the pattern. 
+It can be used in both Node and Relationship elements.
+
+== Advanced patterns
+This section shows how to define more complex patterns.
+
+=== Longer patterns
+
+Patterns can be arbitrarily long. For example:
+
+```javascript
+const user = new Cypher.Node({labels: ["User"]});
+
+const pattern = new Cypher.Pattern(person).related(actedIn).to(movie).related().withDirection("left").to(user);
+```
+
+```cypher
+(this0:Person)-[this1:ACTED_IN]->(this2:Movie)<-[this3]-(this4:User)
+```
+
+=== Cycles
+
+A pattern may have cycles.
+To achieve this, you can reuse the same variables:
+
+```javascript
+const actor = new Cypher.Node({labels: ["Actor"]});
+const movie = new Cypher.Node({labels: ["Movie"]});
+
+const actedIn = new Cypher.Relationship({type: "ACTED_IN"});
+const directed = new Cypher.Relationship({type: "DIRECTED"});
+
+const pattern = new Cypher.Pattern(person).related(actedIn).to(movie).related(directed).withDirection("undirected").to(actor).withoutLabels();
+```
+
+This translates to:
+
+```cypher
+(this0:Person)-[this1:ACTED_IN]->(this2:Movie)-[this3:DIRECTED]-(this0)
+```
+
+Note how the initial node in the pattern (`this0`) is the same as the one referenced in the last element. 
+This matches actors that also directed the same movie.
+
+=== Length
+
+The length (or hops) of a relationship can be defined with the `withLength` method.
+
+==== Exact length
+
+The exact length can be defined by passing a number:
+
+```javascript
+const pattern = new Cypher.Pattern(person).related(actedIn).withLength(3).to(movie);
+```
+
+```cypher
+MATCH (this0:Person)-[this1:ACTED_IN*3]->(this2:Movie)
+```
+
+==== Min and Max length
+
+Bounds can be added by passing an object with the following options:
+
+* `min` (optional): Defines the minimum length of the relationship.
+* `max` (optional): Defines the maximum length of the relationship.
+
+For example:
+```javascript
+const pattern = new Cypher.Pattern(person).related(actedIn).withLength({min: 2, max: 10}).to(movie);
+```
+
+```cypher
+MATCH (this0:Person)-[this1:ACTED_IN*2..10]->(this2:Movie)
+```
+
+==== Any length
+
+By using the string `"*"`, a relationship with any length will be matched:
+
+```javascript
+const pattern = new Cypher.Pattern(person).related(actedIn).withLength("*").to(movie);
+```
+
+```cypher
+MATCH (this0:Person)-[this1:ACTED_IN*]->(this2:Movie)
+```
+
+== Partial patterns
+
+All patterns begin and end with a Node. 
+However, it is possible to define a _Partial Pattern_ by using `.related` without `.to` afterwards:
+
+```javascript
+const partialPattern = new Cypher.Pattern(person).related(actedIn);
+```
+
+In this case, the partial pattern cannot be used in any clause until it is completed with the `.to` method:
+
+```javascript
+partialPattern.to(movie)
+```
