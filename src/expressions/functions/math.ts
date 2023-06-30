@@ -144,3 +144,112 @@ export function log10(expr: Expr): CypherFunction {
 export function sqrt(expr: Expr): CypherFunction {
     return new CypherFunction("sqrt", [expr]);
 }
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-acos)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function acos(expr: Expr): CypherFunction {
+    return new CypherFunction("acos", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-asin)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function asin(expr: Expr): CypherFunction {
+    return new CypherFunction("asin", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-atan)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function atan(expr: Expr): CypherFunction {
+    return new CypherFunction("atan", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-atan2)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function atan2(expr: Expr): CypherFunction {
+    return new CypherFunction("atan2", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-cos)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function cos(expr: Expr): CypherFunction {
+    return new CypherFunction("cos", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-cot)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function cot(expr: Expr): CypherFunction {
+    return new CypherFunction("cot", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-degrees)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function degrees(expr: Expr): CypherFunction {
+    return new CypherFunction("degrees", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-haversin)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function haversin(expr: Expr): CypherFunction {
+    return new CypherFunction("haversin", [expr]);
+}
+
+/** 3.141592653589793
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-pi)
+ * @see https://www.piday.org/
+ * @group Cypher Functions
+ * @category Math
+ */
+export function pi(): CypherFunction {
+    return new CypherFunction("pi");
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-radians)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function radians(expr: Expr): CypherFunction {
+    return new CypherFunction("radians", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-sin)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function sin(expr: Expr): CypherFunction {
+    return new CypherFunction("sin", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-tan)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function tan(expr: Expr): CypherFunction {
+    return new CypherFunction("tan", [expr]);
+}

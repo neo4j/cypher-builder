@@ -22,14 +22,35 @@ import Cypher from "../..";
 
 describe("Math Functions", () => {
     // Functions with no argument
-    test.each(["rand", "e"] as const)("%s()", (value) => {
+    test.each(["rand", "e", "pi"] as const)("%s()", (value) => {
         const mathFunc = Cypher[value]();
         const { cypher } = new TestClause(mathFunc).build();
 
         expect(cypher).toBe(`${value}()`);
     });
     // Functions with 1 argument
-    test.each(["abs", "ceil", "floor", "isNaN", "sign", "exp", "log", "log10", "sqrt"] as const)("%s()", (value) => {
+    test.each([
+        "abs",
+        "ceil",
+        "floor",
+        "isNaN",
+        "sign",
+        "exp",
+        "log",
+        "log10",
+        "sqrt",
+        "acos",
+        "asin",
+        "atan",
+        "atan2",
+        "cos",
+        "cot",
+        "degrees",
+        "haversin",
+        "radians",
+        "sin",
+        "tan",
+    ] as const)("%s()", (value) => {
         const mathFunc = Cypher[value](new Cypher.Literal(10));
         const { cypher } = new TestClause(mathFunc).build();
 
