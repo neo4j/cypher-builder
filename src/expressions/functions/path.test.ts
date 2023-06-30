@@ -47,13 +47,4 @@ describe("Path Functions", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"nodes(my_path)"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
-
-    test("length", () => {
-        const lengthFn = Cypher.length(new Cypher.Path());
-
-        const queryResult = new TestClause(lengthFn).build();
-
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"length(p0)"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
-    });
 });

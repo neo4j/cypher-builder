@@ -21,7 +21,42 @@ import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
 describe("Scalar Functions", () => {
-    test("coalesce", () => {
+    // no parameter functions
+    test.each(["randomUUID", "timestamp"] as const)("%s()", (func) => {
+        const cypherFunction = Cypher[func]();
+        const queryResult = new TestClause(cypherFunction).build();
+
+        expect(queryResult.cypher).toEqual(`${func}()`);
+    });
+
+    // 1 parameter functions
+    test.each([
+        "id",
+        "elementId",
+        "endNode",
+        "size",
+        "head",
+        "last",
+        "length",
+        "properties",
+        "startNode",
+        "toBoolean",
+        "toBooleanOrNull",
+        "toFloat",
+        "toFloatOrNull",
+        "toInteger",
+        "toIntegerOrNull",
+        "type",
+    ] as const)("%s()", (func) => {
+        const param = new Cypher.Variable();
+
+        const cypherFunction = Cypher[func](param);
+        const queryResult = new TestClause(cypherFunction).build();
+
+        expect(queryResult.cypher).toEqual(`${func}(var0)`);
+    });
+
+    test("coalesce()", () => {
         const testParam = new Cypher.Param("Hello");
         const nullParam = Cypher.Null;
         const literal = new Cypher.Literal("arthur");
@@ -36,39 +71,5 @@ describe("Scalar Functions", () => {
               "param0": "Hello",
             }
         `);
-    });
-
-    test("randomUUID", () => {
-        const randomUUID = Cypher.randomUUID();
-
-        const { cypher, params } = new TestClause(randomUUID).build();
-        expect(cypher).toMatchInlineSnapshot(`"randomUUID()"`);
-        expect(params).toMatchInlineSnapshot(`{}`);
-    });
-
-    test("id", () => {
-        const randomUUID = Cypher.id(new Cypher.Variable());
-
-        const { cypher, params } = new TestClause(randomUUID).build();
-        expect(cypher).toMatchInlineSnapshot(`"id(var0)"`);
-        expect(params).toMatchInlineSnapshot(`{}`);
-    });
-
-    test("elementId", () => {
-        const randomUUID = Cypher.elementId(new Cypher.Variable());
-
-        const { cypher, params } = new TestClause(randomUUID).build();
-        expect(cypher).toMatchInlineSnapshot(`"elementId(var0)"`);
-        expect(params).toMatchInlineSnapshot(`{}`);
-    });
-
-    test.each(["size", "head", "last"] as const)("%s", (value) => {
-        const testList = new Cypher.List([new Cypher.Literal(2)]);
-        const listFn = Cypher[value](testList);
-
-        const queryResult = new TestClause(listFn).build();
-
-        expect(queryResult.cypher).toBe(`${value}([ 2 ])`);
-        expect(queryResult.params).toEqual({});
     });
 });
