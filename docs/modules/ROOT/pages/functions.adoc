@@ -12,7 +12,7 @@ Cypher.coalesce(movie.property("title"), new Cypher.Param("The Matrix"));
 coalesce(this0.title, $param0)
 ```
 
-All the implemented functions will also have the correct signature for TypeScript.
+All the available functions will also have the correct signature for TypeScript.
 
 [NOTE]
 ====
@@ -20,7 +20,7 @@ By convention, all Cypher functions are available as JavaScript functions, with 
 For instance, the function link:https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-count[`count()`] and the link:https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#count-subqueries[`new Count()`] subquery.
 ====
 
-Exposed functions will have the closest possible name to its Cypher counterpart, and reside on the same namespace:
+Exposed functions will have the closest possible name to their Cypher counterpart, and reside in the same namespace, for example:
 
 ```javascript
 Cypher.apoc.cypher.runFirstColumnSingle()
