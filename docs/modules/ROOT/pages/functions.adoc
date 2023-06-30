@@ -1,6 +1,7 @@
 = Functions
 
-Cypher Builder implements the most common link:https://neo4j.com/docs/cypher-manual/current/functions/[Cypher Functions], such as `coalesce` or `count`. In these cases, you can directly call the provided functions to generate the equivalent Cypher:
+Cypher Builder implements the most common link:https://neo4j.com/docs/cypher-manual/current/functions/[Cypher Functions], such as `coalesce` or `count`. 
+In these cases, you can directly call the provided functions to generate the equivalent Cypher:
 
 ```javascript
 const movie = new Cypher.Node({labels: ["Movie"]});
@@ -16,11 +17,12 @@ All the available functions will also have the correct signature for TypeScript.
 
 [NOTE]
 ====
-By convention, all Cypher functions are available as JavaScript functions, with camelCase naming. This differentiates functions from clauses and other elements of the Cypher Builder.
+By convention, all Cypher functions are available as JavaScript functions, with _camelCase_ naming. 
+This differentiates functions from clauses and other elements of the Cypher Builder.
 For instance, the function link:https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-count[`count()`] and the link:https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#count-subqueries[`new Count()`] subquery.
 ====
 
-Exposed functions will have the closest possible name to their Cypher counterpart, and reside in the same namespace, for example:
+Exposed functions have the closest possible name to their Cypher counterpart, and reside in the same namespace, for example:
 
 ```javascript
 Cypher.apoc.cypher.runFirstColumnSingle()
@@ -32,11 +34,13 @@ Is equivalent to the Cypher function:
 apoc.cypher.runFirstColumnSingle()
 ```
 
-== Custom Functions
+== Custom functions
 
-In some cases, you may need to use functions that are not available in Cypher Builder, for instance, if you are using plugins or some of the newest features of Neo4j.
+In some cases, you may need to use functions that are not available in Cypher Builder.
+For instance, if you are using plugins or some of the newest features of Neo4j.
 
-For these cases, you can use the class `Function` to create custom functions. As an example, let's call the function link:https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-isnan[`isNan`] as a custom function.
+For these cases, you can use the class `Function` to create custom functions. 
+This example calls link:https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-isnan[`isNan`] as a custom function:
 
 
 ```javascript
@@ -52,7 +56,7 @@ The class `Function` takes 2 parameters:
 * **name**: The name of the function.
 * **arguments** (optional): An array with the arguments to pass to the function.
 
-The arguments array supports any kind of Cypher expression, so more complex arguments can be passed, such as:
+The arguments array supports any kind of Cypher expression, so that more complex arguments can be passed, such as:
 
 ```javascript
 const isNan = new Cypher.Function("isNan", [Cypher.divide(new Cypher.Literal(0), new Cypher.Param(0))]);
@@ -62,11 +66,15 @@ const isNan = new Cypher.Function("isNan", [Cypher.divide(new Cypher.Literal(0),
 isNan((0 / $param0))
 ```
 
-Note that an instance of a function, like clauses or procedures, should only be used once. If you need to call the same function twice, you need to create two separate instances.
+[NOTE]
+====
+An instance of a function, like clauses or procedures, should only be used once. 
+If you need to call the same function twice, you need to create two separate instances.
+====
 
 === Reusing Custom Functions
 
-If you want to use the same function multiple times, safely and easily, you can wrap the custom `Function` class creation into a JavaScript function:
+If you want to use the same function multiple times, you can wrap the custom `Function` class creation into a JavaScript function:
 
 ```javascript
 function isNan(value) {
@@ -80,7 +88,7 @@ This way, the function can now be used in the same fashion as the built-in funct
 isNan(new Cypher.Literal(0));
 ```
 
-If you are using TypeScript, this is a good opportunity to make your custom function type-safe:
+If you are using TypeScript, you can also make your custom function type-safe:
 
 ```typescript
 function isNan(value: Cypher.Expr): Cypher.Function {
@@ -91,7 +99,8 @@ function isNan(value: Cypher.Expr): Cypher.Function {
 
 === Namespaces
 
-Some functions in Cypher reside in namespaces, such as link:https://neo4j.com/docs/apoc/current/overview/[apoc] functions. In this case, simply set the name of the `Function` class to the full path of the function, for example:
+Some functions in Cypher reside in namespaces, such as link:https://neo4j.com/docs/apoc/current/overview/[apoc] functions. 
+In this case, simply set the name of the `Function` class to the full path of the function, for example:
 
 ```javascript
 new Cypher.Function("apoc.agg.first");
