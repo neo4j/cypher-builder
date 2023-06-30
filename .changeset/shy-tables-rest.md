@@ -2,4 +2,4 @@
 "@neo4j/cypher-builder": patch
 ---
 
-Add numeric mathematical functions
+Add mathematical functions

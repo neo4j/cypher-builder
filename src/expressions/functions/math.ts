@@ -99,3 +99,48 @@ export function round(expr: Expr, precision?: Expr | number, mode?: ROUND_PRECIS
 export function sign(expr: Expr): CypherFunction {
     return new CypherFunction("sign", [expr]);
 }
+
+/** Cypher function `e()` that returns the returns the base of the natural logarithm.
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-e)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function e(): CypherFunction {
+    return new CypherFunction("e");
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-exp)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function exp(expr: Expr): CypherFunction {
+    return new CypherFunction("exp", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-log)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function log(expr: Expr): CypherFunction {
+    return new CypherFunction("log", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-log10)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function log10(expr: Expr): CypherFunction {
+    return new CypherFunction("log10", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-sqrt)
+ * @group Cypher Functions
+ * @category Math
+ */
+export function sqrt(expr: Expr): CypherFunction {
+    return new CypherFunction("sqrt", [expr]);
+}
