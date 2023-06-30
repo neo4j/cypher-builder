@@ -72,4 +72,15 @@ describe("Scalar Functions", () => {
             }
         `);
     });
+
+    test("size() applied to pattern comprehension", () => {
+        const patternComprehension = new Cypher.PatternComprehension(
+            new Cypher.Pattern(new Cypher.Node()).related().to(),
+            new Cypher.Variable()
+        );
+        const cypherFunction = Cypher.size(patternComprehension);
+        const queryResult = new TestClause(cypherFunction).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"size([(this1)-[this2]->(this3) | var0])"`);
+    });
 });

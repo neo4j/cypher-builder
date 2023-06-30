@@ -108,7 +108,6 @@ export function randomUUID(): CypherFunction {
  * @category Scalar
  */
 export function size(expr: Expr): CypherFunction {
-    // TODO: pattern comprehension https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size-of-pattern-comprehension
     return new CypherFunction("size", [expr]);
 }
 
