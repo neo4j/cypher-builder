@@ -1,5 +1,5 @@
 * xref:index.adoc[]
-* Getting Started
+* Getting started
 ** xref:getting-started/installation.adoc[]
 ** xref:getting-started/querying.adoc[]
 ** xref:getting-started/filters-and-projections.adoc[]

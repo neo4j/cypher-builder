@@ -53,8 +53,8 @@ isNan(0);
 
 The class `Function` takes 2 parameters:
 
-* **name**: The name of the function.
-* **arguments** (optional): An array with the arguments to pass to the function.
+* `name`: The name of the function.
+* `arguments` (optional): An array with the arguments to pass to the function.
 
 The arguments array supports any kind of Cypher expression, so that more complex arguments can be passed, such as:
 
