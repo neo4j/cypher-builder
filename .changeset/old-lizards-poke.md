@@ -1,5 +1,5 @@
 ---
-"@neo4j/cypher-builder": minor
+"@neo4j/cypher-builder": patch
 ---
 
 Add missing scalar functions
