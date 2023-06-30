@@ -33,6 +33,7 @@ describe("Aggregation Functions", () => {
                 param0: "Hello",
             });
         });
+
         test(`${value} with DISTINCT`, () => {
             const aggregationFunction = Cypher[value](testParam).distinct();
             const queryResult = new TestClause(aggregationFunction).build();

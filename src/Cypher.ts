@@ -96,6 +96,7 @@ export * from "./expressions/functions/string";
 export * from "./expressions/functions/list";
 export * from "./expressions/functions/spatial";
 export * from "./expressions/functions/path";
+export * from "./expressions/functions/math";
 
 export { any, all, exists, single, none, isEmpty } from "./expressions/functions/predicate";
 
