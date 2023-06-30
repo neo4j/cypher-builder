@@ -5,4 +5,4 @@
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
 * xref:patterns.adoc[]
-* link:/cypher-builder/reference[Reference]
+// * link:/cypher-builder/reference[Reference]
