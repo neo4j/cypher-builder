@@ -29,6 +29,14 @@ export function coalesce(expr: Expr, ...optionalExpr: Expr[]): CypherFunction {
 }
 
 /**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid)
+ * @group Cypher Functions
+ */
+export function elementId(variable: Expr): CypherFunction {
+    return new CypherFunction("elementId", [variable]);
+}
+
+/**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-randomuuid)
  * @group Cypher Functions
  */
@@ -42,14 +50,6 @@ export function randomUUID(): CypherFunction {
  */
 export function id(variable: Expr): CypherFunction {
     return new CypherFunction("id", [variable]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid)
- * @group Cypher Functions
- */
-export function elementId(variable: Expr): CypherFunction {
-    return new CypherFunction("elementId", [variable]);
 }
 
 /**
