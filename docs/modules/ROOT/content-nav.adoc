@@ -1,7 +1,9 @@
 * xref:index.adoc[]
-* Getting Started
+* Getting started
 ** xref:getting-started/installation.adoc[]
 ** xref:getting-started/querying.adoc[]
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
+* xref:patterns.adoc[]
+* xref:functions.adoc[]
 * link:/cypher-builder/reference[Reference]
