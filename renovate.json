@@ -1,0 +1,20 @@
+{
+    "extends": ["config:base"],
+    "baseBranches": ["main"],
+    "rebaseWhen": "auto",
+    "automerge": true,
+    "major": {
+        "automerge": false
+    },
+    "timezone": "Europe/London",
+    "schedule": ["after 10pm every weekday", "before 5am every weekday", "every weekend"],
+    "ignorePaths": [
+        "**/node_modules/**",
+        "**/bower_components/**",
+        "**/vendor/**",
+        "**/__tests__/**",
+        "**/test/**",
+        "**/tests/**",
+        "**/__fixtures__/**"
+    ]
+}
