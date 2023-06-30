@@ -72,7 +72,7 @@ An instance of a function, like clauses or procedures, should only be used once.
 If you need to call the same function twice, you need to create two separate instances.
 ====
 
-=== Reusing Custom Functions
+=== Reusing custom functions
 
 If you want to use the same function multiple times, you can wrap the custom `Function` class creation into a JavaScript function:
 
