@@ -83,6 +83,15 @@ describe("Patterns", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel)"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
+
+        test("Simple node without variable", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node).withoutVariable();
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(:TestLabel)"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
     });
 
     describe("relationships", () => {

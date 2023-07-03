@@ -69,7 +69,7 @@ export class Pattern extends PatternElement<NodeRef> {
 
         const nodeRefId = this.withVariable ? `${this.element.getCypher(env)}` : "";
 
-        const propertiesStr = this.properties ? this.serializeParameters(this.properties || {}, env) : "";
+        const propertiesStr = this.properties ? this.serializeParameters(this.properties, env) : "";
         const nodeLabelStr = this.withLabels ? this.getNodeLabelsString(this.element, env) : "";
 
         return `${prevStr}(${nodeRefId}${nodeLabelStr}${propertiesStr})`;
