@@ -1,0 +1,64 @@
+= Variables and parameters
+
+This section how to effectively use variables and parameters with the Cypher Builder and how to avoid common pitfalls.
+
+== Variables
+Variables can be used in Cypher to reference parts of a pattern and hold values.
+For example:
+
+```Cypher
+MATCH (m:Movie)
+RETURN m
+```
+
+Here, the variable `m` refers to a node matched in the pattern `(:Movie)` that is returned afterward.
+
+One of the biggest challenges of writing dynamic Cypher queries is that the resulting variables in the query need to have unique names that correctly reference the values. To achieve this Cypher Builder provides an abstraction of variables in the form of JavaScript references, eliminating the need to track variable names.
+
+=== Types
+
+Cypher builder distinguishes three types of variables:
+
+* `Node`: Holds a reference to a Node matched in a pattern.
+* `Relationship`: Holds a reference to a Relationship in a pattern.
+* `Variable`: Generic variable reference. 
+
+All variables are just virtual references to a Cypher variable that, when the code is generated, will be translated to a unique name.
+
+=== Nodes and relationships
+
+Consider the following example:
+
+```javascript
+const movie = new Cypher.Movie({labels: ["Movie"]});
+const match = new Cypher.Match(movie).return(movie);
+```
+
+```Cypher
+MATCH (this0:Movie)
+RETURN this0
+```
+
+In this example, the node variable `movie` is created and then used in two different places:
+* `Match(movie)`
+* `.return(movie)`
+
+In the translated Cypher, you can see how this node variable is being translated to the Cypher variable `this0`. This name is not defined in your JavaScript code, but it is automatically generated when the query is built with `.build()`.
+
+
+
+
+=== Named Variables
+
+=== Path
+
+=== Literal
+
+==== NULL
+
+=== Property
+
+== Parameters
+
+
+== Environment
