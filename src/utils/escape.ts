@@ -34,6 +34,11 @@ export function escapeProperty(propName: string): string {
     return escapeIfNeeded(propName);
 }
 
+/** Escapes a variable name if needed */
+export function escapeVariable(varName: string): string {
+    return escapeIfNeeded(varName);
+}
+
 function escapeIfNeeded(str: string): string {
     const normalizedStr = normalizeString(str);
     if (needsEscape(normalizedStr)) {
@@ -47,8 +52,9 @@ function normalizeString(str: string): string {
 }
 
 function needsEscape(str: string): boolean {
-    const validCharacter = /^[a-z_]*$/i;
-    return !validCharacter.test(str);
+    if (!str) return false;
+    const validStr = /^[a-z_]+[0-9a-z_]*$/i;
+    return !validStr.test(str);
 }
 
 function escapeString(normalizedStr: string): string {

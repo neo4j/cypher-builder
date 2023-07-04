@@ -140,8 +140,8 @@ describe("CypherBuilder Match", () => {
 
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH my-path = (this0)-[this1:ACTED_IN]->(this2)
-                RETURN my-path"
+                "MATCH \`my-path\` = (this0)-[this1:ACTED_IN]->(this2)
+                RETURN \`my-path\`"
             `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
