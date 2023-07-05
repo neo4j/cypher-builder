@@ -86,7 +86,7 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
         const typeStr = this.withType ? this.getRelationshipTypesString(this.element) : "";
         const relStr = this.withVariable ? `${this.element.getCypher(env)}` : "";
 
-        const propertiesStr = this.properties ? this.serializeParameters(this.properties || {}, env) : "";
+        const propertiesStr = this.properties ? this.serializeParameters(this.properties, env) : "";
 
         const lengthStr = this.generateLengthStr();
 
