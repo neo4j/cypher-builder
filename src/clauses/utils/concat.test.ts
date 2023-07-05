@@ -81,6 +81,35 @@ describe("CypherBuilder concat", () => {
         const compositeClause = Cypher.concat(undefined);
         expect(compositeClause.empty).toBeTrue();
         expect(compositeClause.children).toHaveLength(0);
+
+        const queryResult = compositeClause.build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`""`);
+    });
+
+    test("Empty nested composite clause", () => {
+        const compositeClause = Cypher.concat(Cypher.concat());
+        expect(compositeClause.empty).toBeTrue();
+        expect(compositeClause.children).toHaveLength(0);
+
+        const queryResult = compositeClause.build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`""`);
+    });
+
+    test("Nested composite clause with multiple elements", () => {
+        const compositeClause = Cypher.concat(
+            Cypher.concat(new Cypher.Match(new Cypher.Node()), new Cypher.Match(new Cypher.Node()))
+        );
+        expect(compositeClause.empty).toBeFalse();
+        expect(compositeClause.children).toHaveLength(1);
+
+        const queryResult = compositeClause.build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "MATCH (this0)
+            MATCH (this1)"
+        `);
     });
 
     test("Non-Empty composite clause", () => {
