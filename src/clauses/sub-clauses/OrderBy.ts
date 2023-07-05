@@ -41,12 +41,12 @@ export class OrderBy extends CypherASTNode {
         this.exprs.push(...exprs);
     }
 
-    public skip(offset: number | Param<Integer> | Literal<number>): void {
+    public skip(offset: number | Param<Integer> | Param<number> | Literal<number>): void {
         const offsetVar = normalizeVariable(offset);
         this.skipClause = new Skip(offsetVar);
     }
 
-    public limit(limit: number | Param<Integer> | Literal<number>): void {
+    public limit(limit: number | Param<Integer> | Param<number> | Literal<number>): void {
         const limitVar = normalizeVariable(limit);
         this.limitClause = new Limit(limitVar);
     }
