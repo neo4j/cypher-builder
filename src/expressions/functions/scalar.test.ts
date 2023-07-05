@@ -83,4 +83,11 @@ describe("Scalar Functions", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"size([(this1)-[this2]->(this3) | var0])"`);
     });
+
+    test("size() applied to string", () => {
+        const cypherFunction = Cypher.size(new Cypher.Literal("Hello"));
+        const queryResult = new TestClause(cypherFunction).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"size(\\"Hello\\")"`);
+    });
 });
