@@ -45,4 +45,33 @@ describe("CypherBuilder OrderBy", () => {
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("OrderBy with skip and limit using params", () => {
+        const movieNode = new Cypher.Node({
+            labels: ["Movie"],
+        });
+
+        const orderBy = new OrderBy();
+        orderBy.addOrderElements([
+            [movieNode.property("name"), "DESC"],
+            [movieNode.property("age"), "ASC"],
+        ]);
+        orderBy.skip(new Cypher.Param(10));
+        orderBy.limit(new Cypher.Param(5));
+        const testClause = new TestClause(orderBy);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "ORDER BY this0.name DESC, this0.age ASC
+            SKIP $param0
+            LIMIT $param1"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": 10,
+              "param1": 5,
+            }
+        `);
+    });
 });

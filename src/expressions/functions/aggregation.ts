@@ -26,7 +26,7 @@ import { CypherFunction } from "./CypherFunctions";
  * @group Cypher Functions
  * @category Aggregations
  */
-export function count(expr: Expr): CypherAggregationFunction {
+export function count(expr: Expr | "*"): CypherAggregationFunction {
     return new CypherAggregationFunction("count", expr);
 }
 
@@ -82,12 +82,18 @@ export function collect(expr: Expr): CypherAggregationFunction {
  */
 export class CypherAggregationFunction extends CypherFunction {
     private hasDistinct = false;
+    private hasStar = false;
 
     /**
      * @internal
      */
-    constructor(name: string, param: Expr) {
-        super(name, [param]);
+    constructor(name: string, param: Expr | "*") {
+        super(name);
+        if (param === "*") {
+            this.hasStar = true;
+        } else {
+            this.addParam(param);
+        }
     }
 
     /**
@@ -95,13 +101,16 @@ export class CypherAggregationFunction extends CypherFunction {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#_counting_with_and_without_duplicates)
      */
     public distinct(): this {
+        if (this.hasStar) {
+            throw new Error("count(*) is not supported with DISTINCT");
+        }
         this.hasDistinct = true;
         return this;
     }
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const argsStr = this.serializeParams(env);
+        const argsStr = this.hasStar ? "*" : this.serializeParams(env);
         const distinctStr = this.hasDistinct ? "DISTINCT " : "";
 
         return `${this.name}(${distinctStr}${argsStr})`;

@@ -1,6 +1,6 @@
 {
     "name": "@neo4j/cypher-builder",
-    "version": "0.5.4",
+    "version": "0.6.0",
     "description": "A programmatic API for building Cypher queries for Neo4j",
     "exports": "./dist/index.js",
     "main": "./dist/index.js",
@@ -45,7 +45,7 @@
         "@changesets/cli": "^2.26.2",
         "@tsconfig/node16": "^16.1.0",
         "@types/jest": "29.5.2",
-        "@types/node": "20.3.3",
+        "@types/node": "20.4.0",
         "@typescript-eslint/eslint-plugin": "^5.60.1",
         "@typescript-eslint/parser": "^5.60.1",
         "eslint": "^8.43.0",
