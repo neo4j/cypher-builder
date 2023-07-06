@@ -86,10 +86,6 @@ export class CypherEnvironment {
         return this.params.length;
     }
 
-    public getReferences(): Map<Reference, string> {
-        return this.references;
-    }
-
     private addParam(id: string, param: Param): string {
         const paramId = id;
         this.references.set(param, paramId);

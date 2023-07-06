@@ -102,7 +102,7 @@ export { any, all, exists, single, none, isEmpty } from "./expressions/functions
 // Procedures
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
 
-export * as db from "./procedures/db";
+export * as db from "./procedures/db/db";
 
 // Types
 export type { CypherResult } from "./types";
