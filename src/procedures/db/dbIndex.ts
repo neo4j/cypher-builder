@@ -17,28 +17,4 @@
  * limitations under the License.
  */
 
-import { Reference } from "./Reference";
-import type { NamedReference } from "./Reference";
-
-/** Reference to a path
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns)
- * @group References
- */
-export class Path extends Reference {
-    constructor() {
-        super("p");
-    }
-}
-
-/** For compatibility reasons, represents a path as a variable with the given name
- * @hidden
- */
-export class NamedPath extends Path implements NamedReference {
-    public readonly id: string;
-
-    constructor(name: string) {
-        super();
-        this.id = name;
-        this.prefix = "";
-    }
-}
+export * as fulltext from "./fulltext";

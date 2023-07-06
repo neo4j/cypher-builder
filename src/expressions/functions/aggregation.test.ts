@@ -44,4 +44,17 @@ describe("Aggregation Functions", () => {
             });
         });
     });
+
+    test("count(*)", () => {
+        const aggregationFunction = Cypher.count("*");
+        const queryResult = new TestClause(aggregationFunction).build();
+
+        expect(queryResult.cypher).toBe("count(*)");
+    });
+
+    test("count(*) with distinct fails", () => {
+        expect(() => {
+            Cypher.count("*").distinct();
+        }).toThrowError("count(*) is not supported with DISTINCT");
+    });
 });
