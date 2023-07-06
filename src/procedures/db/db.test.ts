@@ -130,7 +130,7 @@ describe("db procedures", () => {
     });
 
     describe("db.labels", () => {
-        test("dbLabels", () => {
+        test("db.labels without yield", () => {
             const dbLabels = Cypher.db.labels();
             const { cypher, params } = dbLabels.build();
 
@@ -138,7 +138,7 @@ describe("db procedures", () => {
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        test("dbLabels with yield *", () => {
+        test("db.labels with yield *", () => {
             const dbLabels = Cypher.db.labels().yield("*");
             const { cypher, params } = dbLabels.build();
 
@@ -146,12 +146,18 @@ describe("db procedures", () => {
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        test("dbLabels with yield ", () => {
+        test("db.labels with yield", () => {
             const dbLabels = Cypher.db.labels().yield("label");
             const { cypher, params } = dbLabels.build();
 
             expect(cypher).toMatchInlineSnapshot(`"CALL db.labels() YIELD label"`);
             expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("db.labels with yield fails if projection is empty", () => {
+            expect(() => {
+                Cypher.db.labels().yield();
+            }).toThrowError("Empty projection in CALL ... YIELD");
         });
     });
 });
