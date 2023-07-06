@@ -1,5 +1,5 @@
 ---
-"@neo4j/cypher-builder": patch
+"@neo4j/cypher-builder": minor
 ---
 
 Support for label expressions for nodes and relationships
