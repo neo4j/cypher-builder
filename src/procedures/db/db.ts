@@ -17,28 +17,14 @@
  * limitations under the License.
  */
 
-import { Reference } from "./Reference";
-import type { NamedReference } from "./Reference";
+import { CypherProcedure } from "../CypherProcedure";
 
-/** Reference to a path
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns)
- * @group References
+export * as index from "./dbIndex";
+
+/** Returns all labels in the database
+ * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/5/reference/procedures/#procedure_db_labels)
+ * @group Procedures
  */
-export class Path extends Reference {
-    constructor() {
-        super("p");
-    }
-}
-
-/** For compatibility reasons, represents a path as a variable with the given name
- * @hidden
- */
-export class NamedPath extends Path implements NamedReference {
-    public readonly id: string;
-
-    constructor(name: string) {
-        super();
-        this.id = name;
-        this.prefix = "";
-    }
+export function labels(): CypherProcedure<"label"> {
+    return new CypherProcedure("db.labels");
 }

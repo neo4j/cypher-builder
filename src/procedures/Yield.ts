@@ -44,10 +44,10 @@ export interface Yield extends WithReturn, WithWhere, WithWith {}
 export class Yield extends Clause {
     private projection: YieldProjection;
 
-    constructor(yieldColumns: Array<"*" | YieldProjectionColumn<any>>) {
+    constructor(yieldColumns: Array<"*" | YieldProjectionColumn<string>>) {
         super();
 
-        const columns = asArray<YieldProjectionColumn<any> | "*">(yieldColumns);
+        const columns = asArray<YieldProjectionColumn<string> | "*">(yieldColumns);
         this.projection = new YieldProjection(columns);
     }
 

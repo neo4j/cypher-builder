@@ -35,16 +35,13 @@ import type { Expr } from "../../types";
  */
 export class CypherFunction extends CypherASTNode {
     protected name: string;
-    private params: Array<Expr>;
+    private params: Array<Expr> = [];
 
     constructor(name: string, params: Array<Expr> = []) {
         super();
         this.name = name;
-        this.params = params;
         for (const param of params) {
-            if (param instanceof CypherASTNode) {
-                this.addChildren(param);
-            }
+            this.addParam(param);
         }
     }
 
@@ -53,6 +50,13 @@ export class CypherFunction extends CypherASTNode {
         const argsStr = this.serializeParams(env);
 
         return `${this.name}(${argsStr})`;
+    }
+
+    protected addParam(param: Expr): void {
+        this.params.push(param);
+        if (param instanceof CypherASTNode) {
+            this.addChildren(param);
+        }
     }
 
     protected serializeParams(env: CypherEnvironment): string {
