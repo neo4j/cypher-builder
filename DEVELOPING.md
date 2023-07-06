@@ -4,6 +4,21 @@
 -   `npm run build` to compile cypher builder library
 -   `npm run docs` to generate the API reference docs
 
+## Link Cypher Builder locally with yarn
+
+In the Cypher Builder folder run:
+
+-   `yarn link`
+-   `yarn build`
+
+In the root of the package run:
+
+-   `yarn link -p [path-to-local-cypher-builder]
+
+To unlink, in the graphql project:
+
+-   `yarn unlink @neo4j/cypher-builder`
+
 # JSDoc references
 
 Each public element of the library should have a JSDoc comment compatible with [TypeDoc](https://typedoc.org/guides/overview).
