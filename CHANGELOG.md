@@ -1,5 +1,23 @@
 # @neo4j/cypher-builder
 
+## 0.6.0
+
+### Minor Changes
+
+-   [#53](https://github.com/neo4j/cypher-builder/pull/53) [`7623c25`](https://github.com/neo4j/cypher-builder/commit/7623c25e37d198d77ece05d39ffbad5269058c4a) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for number params in skip and limit
+
+-   [#34](https://github.com/neo4j/cypher-builder/pull/34) [`ee295d0`](https://github.com/neo4j/cypher-builder/commit/ee295d058be9e574ae7f53f69fec802958f72056) Thanks [@angrykoala](https://github.com/angrykoala)! - Removes `getReference` method from the Environment class
+
+-   [#27](https://github.com/neo4j/cypher-builder/pull/27) [`9d6cfe3`](https://github.com/neo4j/cypher-builder/commit/9d6cfe33e3c252e1336191bccfa9307b5be5e3de) Thanks [@angrykoala](https://github.com/angrykoala)! - Updates CypherResult type to Record<string, unknown>, better reflecting the results of the parameters
+
+### Patch Changes
+
+-   [#51](https://github.com/neo4j/cypher-builder/pull/51) [`f2394db`](https://github.com/neo4j/cypher-builder/commit/f2394db7bb50b365443236be65a8b88f7138ec7c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for count(\*)
+
+-   [#30](https://github.com/neo4j/cypher-builder/pull/30) [`c92b67a`](https://github.com/neo4j/cypher-builder/commit/c92b67a1b1ba21b245204e943b13bc8f3c15a19a) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for COUNT subqueries
+
+-   [#26](https://github.com/neo4j/cypher-builder/pull/26) [`9c46104`](https://github.com/neo4j/cypher-builder/commit/9c46104a9479f8ee17c23d69f29a11e71571e0f0) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix typings for predicate functions
+
 ## 0.5.4
 
 ### Patch Changes
