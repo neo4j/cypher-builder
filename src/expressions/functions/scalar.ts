@@ -56,6 +56,7 @@ export function id(variable: Expr): CypherFunction {
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size)
  * @group Cypher Functions
  * @category List
+ * @category String
  */
 export function size(expr: Expr): CypherFunction {
     return new CypherFunction("size", [expr]);
