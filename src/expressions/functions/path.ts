@@ -37,12 +37,3 @@ export function nodes(path: Path): CypherFunction {
 export function relationships(path: Path): CypherFunction {
     return new CypherFunction("relationships", [path]);
 }
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
- * @group Cypher Functions
- * @category Path
- */
-export function length(path: Path): CypherFunction {
-    return new CypherFunction("length", [path]);
-}
