@@ -54,15 +54,6 @@ export function replace(original: Expr, search: Expr, replace: Expr): CypherFunc
  * @group Cypher Functions
  * @category String
  */
-export function reverse(original: Expr): CypherFunction {
-    return new CypherFunction("reverse", [original]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
- * @group Cypher Functions
- * @category String
- */
 export function right(original: Expr, length: Expr): CypherFunction {
     return new CypherFunction("right", [original, length]);
 }
