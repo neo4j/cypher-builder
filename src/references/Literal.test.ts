@@ -27,7 +27,7 @@ describe("Literal", () => {
         const testClause = new TestClause(stringLiteral);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"\\"hello\\""`);
+        expect(queryResult.cypher).toBe(`"hello"`);
     });
 
     test("Serialize boolean value", () => {
@@ -36,7 +36,7 @@ describe("Literal", () => {
         const testClause = new TestClause(booleanLiteral);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"true"`);
+        expect(queryResult.cypher).toBe(`true`);
     });
 
     test("Serialize number value", () => {
@@ -45,7 +45,7 @@ describe("Literal", () => {
         const testClause = new TestClause(numberLiteral);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"5"`);
+        expect(queryResult.cypher).toBe(`5`);
     });
 
     test("Serialize array", () => {
@@ -54,7 +54,7 @@ describe("Literal", () => {
         const testClause = new TestClause(literal);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"hello\\", 5, \\"hello\\"]"`);
+        expect(queryResult.cypher).toBe(`["hello", 5, "hello"]`);
     });
 
     test("Serialize null", () => {
@@ -63,13 +63,13 @@ describe("Literal", () => {
         const testClause = new TestClause(literal);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"NULL"`);
+        expect(queryResult.cypher).toBe(`NULL`);
     });
 
     test("Null constant literal", () => {
         const testClause = new TestClause(Cypher.Null);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"NULL"`);
+        expect(queryResult.cypher).toBe(`NULL`);
     });
 });

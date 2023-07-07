@@ -206,13 +206,105 @@ var0[2]
 
 
 == Parameters
-Parameters can be created by using the class `Param`. Parameters behave similar to variables, however they contain a defined value, that will automatically be returned as part of the parameters when the `.build()` method is called
+Parameters can be created by using the class `Param`. Parameters behave similarly to variables, however, they contain a defined value, that will automatically be returned as part of the parameters when the `.build()` method is called.
 
-// TODO
+For example:
+
+```javascript
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const titleProp = movie.property(movie);
+
+const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, new Cypher.Param("The Matrix")));
+
+const {cypher, params} = query.build();
+```
+
+Returns the following Cypher:
+
+```cypher
+MATCH (this0:Movie)
+WHERE this0[this0] = $param0
+```
+
+And the following parameters object:
+
+```js
+{
+    param0: "The Matrix"
+}
+```
+
+Parameters can also be reused, like variables:
+
+```javascript
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const titleProp = movie.property(movie);
+const titleParam = new Cypher.Param("The Matrix")
+
+const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleParam)).return(titleParam);
+
+const {cypher, params} = query.build();
+```
+
+_Cypher_
+```cypher
+MATCH (this0:Movie)
+WHERE this0[this0] = $param0
+RETURN this0, $param0
+```
+
+_Params_
+```js
+{
+    param0: "The Matrix"
+}
+```
+
 
 == Literal
+Literal values can be defined with `Cypher.Literal`. Literals behave like Parameters, but it will inject the value provided directly into the Cypher, serializing it as needed.
+
+For instance:
+
+```javascript
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const titleProp = movie.property(movie);
+const titleLiteral = new Cypher.Literal("The Matrix")
+
+const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleParam)).return(titleParam);
+
+const {cypher, params} = query.build();
+```
+
+_Cypher_
+```cypher
+MATCH (this0:Movie)
+WHERE this0[this0] = "The Matrix"
+RETURN this0, "The Matrix"
+```
+
+_Params_
+```js
+{ }
+```
+
+Note how the value `The Matrix` is not injected directly, but correctly serialized to a string in Cypher. The following values are supported by `Literal`:
+
+* String: `Cypher.Literal("Hello")` -> `"Hello"`
+* Number: `Cypher.Literal(5)` -> `5`
+* Boolean: `Cypher.Literal(true)` -> `true`
+* Array: `Cypher.Literal([5, "Hello"])` -> `[5, "Hello"]`
+* Null: `Cypher.Literal(null)` -> `NULL`
+
+
+[NOTE]
+====
+Note that Literal does not escape the values and code injection is a risk. It is generally recommended to use `Cypher.Param` instead.
+====
 
 === NULL
+
+As a shortcut for `new Cypher.Literal(null)`, the constant `Cypher.Null` is available. This will be translated to `NULL`.
 
 
 == `WITH` and aliasing
