@@ -52,6 +52,7 @@ export function replace(original: Expr, search: Expr, replace: Expr): CypherFunc
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
  * @group Cypher Functions
+ * @category List
  * @category String
  */
 export function reverse(original: Expr): CypherFunction {

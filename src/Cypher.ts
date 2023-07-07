@@ -96,8 +96,9 @@ export * from "./expressions/functions/string";
 export * from "./expressions/functions/list";
 export * from "./expressions/functions/spatial";
 export * from "./expressions/functions/path";
+export * from "./expressions/functions/math";
 
-export { any, all, exists, single } from "./expressions/functions/predicate";
+export { any, all, exists, single, none, isEmpty } from "./expressions/functions/predicate";
 
 // Procedures
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
