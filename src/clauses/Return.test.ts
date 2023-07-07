@@ -100,6 +100,29 @@ describe("CypherBuilder Return", () => {
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
+        test("Return with order and skip param", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Return(movieNode)
+                .orderBy([movieNode.property("age")])
+                .skip(new Cypher.Param(10));
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "RETURN this0
+                ORDER BY this0.age ASC
+                SKIP $param0"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": 10,
+                }
+            `);
+        });
+
         test("Return with order and limit", () => {
             const movieNode = new Cypher.Node({
                 labels: ["Movie"],
@@ -115,6 +138,29 @@ describe("CypherBuilder Return", () => {
             `);
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Return with order and limit param", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Return(movieNode)
+                .orderBy([movieNode.property("age")])
+                .limit(new Cypher.Param(5));
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "RETURN this0
+                ORDER BY this0.age ASC
+                LIMIT $param0"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": 5,
+                }
+            `);
         });
     });
 });

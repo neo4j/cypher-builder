@@ -17,23 +17,4 @@
  * limitations under the License.
  */
 
-import type { Path } from "../../Cypher";
-import { CypherFunction } from "./CypherFunctions";
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
- * @group Cypher Functions
- * @category Path
- */
-export function nodes(path: Path): CypherFunction {
-    return new CypherFunction("nodes", [path]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
- * @group Cypher Functions
- * @category Path
- */
-export function relationships(path: Path): CypherFunction {
-    return new CypherFunction("relationships", [path]);
-}
+export * as fulltext from "./fulltext";

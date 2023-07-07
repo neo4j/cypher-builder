@@ -17,23 +17,14 @@
  * limitations under the License.
  */
 
-import type { Path } from "../../Cypher";
-import { CypherFunction } from "./CypherFunctions";
+import { CypherProcedure } from "../CypherProcedure";
 
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
- * @group Cypher Functions
- * @category Path
- */
-export function nodes(path: Path): CypherFunction {
-    return new CypherFunction("nodes", [path]);
-}
+export * as index from "./dbIndex";
 
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
- * @group Cypher Functions
- * @category Path
+/** Returns all labels in the database
+ * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/5/reference/procedures/#procedure_db_labels)
+ * @group Procedures
  */
-export function relationships(path: Path): CypherFunction {
-    return new CypherFunction("relationships", [path]);
+export function labels(): CypherProcedure<"label"> {
+    return new CypherProcedure("db.labels");
 }
