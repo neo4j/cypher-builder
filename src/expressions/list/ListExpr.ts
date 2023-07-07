@@ -46,7 +46,7 @@ export class ListExpr implements CypherCompilable {
         });
 
         const serializedContent = valuesList.join(", ");
-        return `[ ${serializedContent} ]`;
+        return `[${serializedContent}]`;
     }
 
     /** @internal */

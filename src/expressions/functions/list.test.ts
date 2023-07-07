@@ -27,7 +27,7 @@ describe("List Functions", () => {
 
         const queryResult = new TestClause(listFn).build();
 
-        expect(queryResult.cypher).toBe(`${value}([ 2 ])`);
+        expect(queryResult.cypher).toBe(`${value}([2])`);
         expect(queryResult.params).toEqual({});
     });
 
@@ -51,7 +51,7 @@ describe("List Functions", () => {
 
         const queryResult = new TestClause(reduceFn).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(
-            `"reduce(var0 = $param0, var1 IN [ $param1, $param2 ] | (var0 + var1))"`
+            `"reduce(var0 = $param0, var1 IN [$param1, $param2] | (var0 + var1))"`
         );
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
