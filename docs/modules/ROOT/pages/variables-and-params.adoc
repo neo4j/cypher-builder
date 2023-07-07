@@ -307,9 +307,40 @@ Note that Literal does not escape the values and code injection is a risk. It is
 As a shortcut for `new Cypher.Literal(null)`, the constant `Cypher.Null` is available. This will be translated to `NULL`.
 
 
-== `WITH` and aliasing
+== Aliasing
+// Maybe aliasing can be moved to a how-to guide
+Variables are commonly used for aliasing in a `WITH` or `RETURN` statement. To do that, simply pass a tuple of the value and its alias.
 
-¿?
+=== Aliasing to a string
 
+```javascript
+const node = new Cypher.Node({
+    labels: ["Movie"],
+});
+const withQuery = new Cypher.With([node, "my-alias"]);
+```
 
-== Environment
+```cypher
+WITH this0 AS my-alias
+```
+
+=== Aliasing to a variable
+
+Instead of an exact string, you can alias to a `Cypher.Variable` so it can be reused as any other variable:
+
+```javascript
+const movieNode = new Cypher.Node({ labels: ["Movie"] });
+const myVar = new Cypher.Variable();
+const match = new Cypher.Match(movieNode).with([movieNode, myVar]).return([myVar, "Film"]);
+```
+
+```
+MATCH (this0:`Movie`)
+WITH this0 AS var1
+RETURN var1 AS Film 
+```
+
+In the previous example, after a `MATCH` the node variable `this0` is aliased to a variable with an arbitrary name (`var1`) in a `WITH` statement. Finally, in the `RETURN` the variable is aliased to the specific name `Film` that will be returned.
+
+// TODO
+// == Environment
