@@ -2,7 +2,7 @@
     "excludeExternals": true,
     "excludePrivate": true,
     "excludeProtected": true,
-    "includeVersion": false,
+    "includeVersion": true,
     "excludeInternal": true,
     "excludeTags": [],
     "hideGenerator": true,

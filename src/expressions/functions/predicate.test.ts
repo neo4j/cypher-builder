@@ -31,7 +31,7 @@ describe("Predicate Functions", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    describe.each(["all", "any", "single"] as const)("%s", (value) => {
+    describe.each(["all", "any", "single", "none"] as const)("%s", (value) => {
         const variable = new Cypher.Variable();
         const exprVariable = new Cypher.Param([1, 2, 5]);
         const filter = Cypher.eq(variable, new Cypher.Literal(5));
@@ -45,6 +45,13 @@ describe("Predicate Functions", () => {
                 param0: [1, 2, 5],
             });
         });
+    });
+
+    test("isEmpty", () => {
+        const isEmpty = Cypher.isEmpty(new Cypher.Literal([]));
+        const queryResult = new TestClause(isEmpty).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"isEmpty([])"`);
     });
 
     test("Using functions as predicates", () => {
