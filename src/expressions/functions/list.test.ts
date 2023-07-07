@@ -21,23 +21,37 @@ import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
 describe("List Functions", () => {
-    test.each(["size", "head", "last"] as const)("%s", (value) => {
-        const testList = new Cypher.List([new Cypher.Literal(2)]);
-        const listFn = Cypher[value](testList);
-
-        const queryResult = new TestClause(listFn).build();
-
-        expect(queryResult.cypher).toBe(`${value}([2])`);
-        expect(queryResult.params).toEqual({});
-    });
-
-    test("labels", () => {
+    test.each(["keys", "labels"] as const)("%s()", (value) => {
         const node = new Cypher.Node({ labels: ["Movie"] });
-        const labelsFn = Cypher.labels(node);
+        const labelsFn = Cypher[value](node);
 
         const queryResult = new TestClause(labelsFn).build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"labels(this0)"`);
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        expect(queryResult.cypher).toBe(`${value}(this0)`);
+    });
+
+    test.each(["reverse", "tail", "toBooleanList", "toFloatList", "toIntegerList", "toStringList"] as const)(
+        "%s()",
+        (value) => {
+            const node = new Cypher.List([new Cypher.Literal(1), new Cypher.Literal(10)]);
+            const labelsFn = Cypher[value](node);
+
+            const queryResult = new TestClause(labelsFn).build();
+            expect(queryResult.cypher).toBe(`${value}([1, 10])`);
+        }
+    );
+
+    test("range() with 2 parameters", () => {
+        const labelsFn = Cypher.range(new Cypher.Literal(1), 2);
+
+        const queryResult = new TestClause(labelsFn).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"range(1, 2)"`);
+    });
+
+    test("range() with 3 parameters", () => {
+        const labelsFn = Cypher.range(new Cypher.Literal(1), 10, new Cypher.Literal(2));
+
+        const queryResult = new TestClause(labelsFn).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"range(1, 10, 2)"`);
     });
 
     test("reduce", () => {

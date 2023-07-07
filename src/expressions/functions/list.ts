@@ -20,33 +20,17 @@
 import type { Variable } from "../..";
 import type { CypherEnvironment } from "../../Environment";
 import type { Expr } from "../../types";
+import { filterTruthy } from "../../utils/filter-truthy";
+import { normalizeExpr } from "../../utils/normalize-variable";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size)
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-keys)
  * @group Cypher Functions
  * @category List
  */
-export function size(expr: Expr): CypherFunction {
-    return new CypherFunction("size", [expr]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-head)
- * @group Cypher Functions
- * @category List
- */
-export function head(expr: Expr): CypherFunction {
-    return new CypherFunction("head", [expr]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-last)
- * @group Cypher Functions
- * @category List
- */
-export function last(expr: Expr): CypherFunction {
-    return new CypherFunction("last", [expr]);
+export function keys(expr: Expr): CypherFunction {
+    return new CypherFunction("keys", [expr]);
 }
 
 /**
@@ -54,8 +38,72 @@ export function last(expr: Expr): CypherFunction {
  * @group Cypher Functions
  * @category List
  */
-export function labels(nodeRef: Variable): CypherFunction {
+export function labels(nodeRef: Expr): CypherFunction {
     return new CypherFunction("labels", [nodeRef]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-range)
+ * @group Cypher Functions
+ * @category List
+ */
+export function range(start: Expr | number, end: Expr | number, step?: Expr | number): CypherFunction {
+    const params = filterTruthy([start, end, step]).map(normalizeExpr);
+    return new CypherFunction("range", params);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reverse-list)
+ * @group Cypher Functions
+ * @category List
+ */
+export function reverse(list: Expr): CypherFunction {
+    return new CypherFunction("reverse", [list]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tail)
+ * @group Cypher Functions
+ * @category List
+ */
+export function tail(list: Expr): CypherFunction {
+    return new CypherFunction("tail", [list]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tobooleanlist)
+ * @group Cypher Functions
+ * @category List
+ */
+export function toBooleanList(list: Expr): CypherFunction {
+    return new CypherFunction("toBooleanList", [list]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tofloatlist)
+ * @group Cypher Functions
+ * @category List
+ */
+export function toFloatList(list: Expr): CypherFunction {
+    return new CypherFunction("toFloatList", [list]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tointegerlist)
+ * @group Cypher Functions
+ * @category List
+ */
+export function toIntegerList(list: Expr): CypherFunction {
+    return new CypherFunction("toIntegerList", [list]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tostringlist)
+ * @group Cypher Functions
+ * @category List
+ */
+export function toStringList(list: Expr): CypherFunction {
+    return new CypherFunction("toStringList", [list]);
 }
 
 /** Reduce a list by executing given expression.

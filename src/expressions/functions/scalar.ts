@@ -29,6 +29,14 @@ export function coalesce(expr: Expr, ...optionalExpr: Expr[]): CypherFunction {
 }
 
 /**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid)
+ * @group Cypher Functions
+ */
+export function elementId(variable: Expr): CypherFunction {
+    return new CypherFunction("elementId", [variable]);
+}
+
+/**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-randomuuid)
  * @group Cypher Functions
  */
@@ -45,9 +53,29 @@ export function id(variable: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid)
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size)
  * @group Cypher Functions
+ * @category List
+ * @category String
  */
-export function elementId(variable: Expr): CypherFunction {
-    return new CypherFunction("elementId", [variable]);
+export function size(expr: Expr): CypherFunction {
+    return new CypherFunction("size", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-head)
+ * @group Cypher Functions
+ * @category List
+ */
+export function head(expr: Expr): CypherFunction {
+    return new CypherFunction("head", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-last)
+ * @group Cypher Functions
+ * @category List
+ */
+export function last(expr: Expr): CypherFunction {
+    return new CypherFunction("last", [expr]);
 }

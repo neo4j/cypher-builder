@@ -61,4 +61,14 @@ describe("Scalar Functions", () => {
         expect(cypher).toMatchInlineSnapshot(`"elementId(var0)"`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
+
+    test.each(["size", "head", "last"] as const)("%s", (value) => {
+        const testList = new Cypher.List([new Cypher.Literal(2)]);
+        const listFn = Cypher[value](testList);
+
+        const queryResult = new TestClause(listFn).build();
+
+        expect(queryResult.cypher).toBe(`${value}([2])`);
+        expect(queryResult.params).toEqual({});
+    });
 });

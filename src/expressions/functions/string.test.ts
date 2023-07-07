@@ -22,7 +22,7 @@ import Cypher from "../..";
 
 describe("String Functions", () => {
     // Functions with 1 argument
-    test.each(["lTrim", "reverse", "rTrim", "toLower", "toString", "toStringOrNull", "toUpper", "trim"] as const)(
+    test.each(["lTrim", "rTrim", "toLower", "toString", "toStringOrNull", "toUpper", "trim"] as const)(
         "%s",
         (value) => {
             const toLowerFunction = Cypher[value](new Cypher.Param("Hello"));
