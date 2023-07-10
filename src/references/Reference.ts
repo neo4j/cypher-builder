@@ -21,6 +21,7 @@ import { PropertyRef } from "./PropertyRef";
 import { ListIndex } from "../expressions/list/ListIndex";
 import type { CypherCompilable, Expr } from "../types";
 import type { CypherEnvironment } from "../Environment";
+import { escapeVariable } from "../utils/escape";
 
 /** Represents a reference that will be kept in the environment */
 export abstract class Reference implements CypherCompilable {
@@ -43,7 +44,7 @@ export abstract class Reference implements CypherCompilable {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const id = env.getReferenceId(this);
-        return `${id}`;
+        return escapeVariable(id);
     }
 }
 

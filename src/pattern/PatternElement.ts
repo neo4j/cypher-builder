@@ -21,7 +21,6 @@ import { CypherEnvironment } from "../Environment";
 import type { NodeProperties, NodeRef } from "../references/NodeRef";
 import type { RelationshipProperties, RelationshipRef } from "../references/RelationshipRef";
 import type { CypherCompilable } from "../types";
-import { escapeProperty } from "../utils/escape";
 import { padBlock } from "../utils/pad-block";
 import { padLeft } from "../utils/pad-left";
 import { stringifyObject } from "../utils/stringify-object";
@@ -40,8 +39,7 @@ export abstract class PatternElement<T extends NodeRef | RelationshipRef> implem
     protected serializeParameters(parameters: NodeProperties | RelationshipProperties, env: CypherEnvironment): string {
         if (Object.keys(parameters).length === 0) return "";
         const paramValues = Object.entries(parameters).reduce((acc, [key, param]) => {
-            const escapedKey = escapeProperty(key);
-            acc[escapedKey] = param.getCypher(env);
+            acc[key] = param.getCypher(env);
             return acc;
         }, {} as Record<string, string>);
 

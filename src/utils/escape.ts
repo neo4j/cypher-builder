@@ -21,8 +21,7 @@ const ESCAPE_SYMBOL_REGEX = /`/g;
 
 /** Escapes a Node label string */
 export function escapeLabel(label: string): string {
-    // TODO: only escape when needed
-    return escapeString(label);
+    return escapeIfNeeded(label);
 }
 
 /** Escapes a Relationship type string */
@@ -33,6 +32,11 @@ export function escapeType(type: string): string {
 /** Escapes a property name string */
 export function escapeProperty(propName: string): string {
     return escapeIfNeeded(propName);
+}
+
+/** Escapes a variable name if needed */
+export function escapeVariable(varName: string): string {
+    return escapeIfNeeded(varName);
 }
 
 function escapeIfNeeded(str: string): string {
@@ -48,11 +52,12 @@ function normalizeString(str: string): string {
 }
 
 function needsEscape(str: string): boolean {
-    const validCharacter = /^[a-z_]*$/i;
-    return !validCharacter.test(str);
+    if (!str) return false;
+    const validStr = /^[a-z_]+[0-9a-z_]*$/i;
+    return !validStr.test(str);
 }
 
-function escapeString(str: string): string {
-    const escapedLabel = normalizeString(str).replace(ESCAPE_SYMBOL_REGEX, "``");
+function escapeString(normalizedStr: string): string {
+    const escapedLabel = normalizedStr.replace(ESCAPE_SYMBOL_REGEX, "``");
     return `\`${escapedLabel}\``;
 }
