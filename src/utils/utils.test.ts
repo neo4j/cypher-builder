@@ -35,11 +35,11 @@ describe("CypherBuilder Utils", () => {
             ["`a`b`c`", "```a``b``c```"],
             ["\u0060a`b`c\u0060d\u0060", "```a``b``c``d```"],
             ["\\u0060a`b`c\\u0060d\\u0060", "```a``b``c``d```"],
-            ["ABC", "`ABC`"],
+            ["ABC", "ABC"],
             ["A C", "`A C`"],
             ["A` C", "`A`` C`"],
             ["A`` C", "`A```` C`"],
-            ["ALabel", "`ALabel`"],
+            ["ALabel", "ALabel"],
             ["A Label", "`A Label`"],
             ["A `Label", "`A ``Label`"],
             ["`A `Label", "```A ``Label`"],
@@ -69,7 +69,7 @@ describe("CypherBuilder Utils", () => {
 
         test("escapeLabel ignored if not needed", () => {
             const label = Cypher.utils.escapeLabel("TestLabel");
-            expect(label).toBe("`TestLabel`");
+            expect(label).toBe("TestLabel");
         });
 
         test("escapeType", () => {

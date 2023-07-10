@@ -28,7 +28,7 @@ describe("apoc.cypher", () => {
         const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery, [node]);
         const queryResult = new TestClause(apocRunFirstColum).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "apoc.cypher.runFirstColumnSingle(\\"MATCH (this0:\`Movie\`)
+            "apoc.cypher.runFirstColumnSingle(\\"MATCH (this0:Movie)
             RETURN this0\\", { this0: this0 })"
         `);
 
@@ -42,7 +42,7 @@ describe("apoc.cypher", () => {
         const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnMany(subquery, [node]);
         const queryResult = new TestClause(apocRunFirstColum).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "apoc.cypher.runFirstColumnMany(\\"MATCH (this0:\`Movie\`)
+            "apoc.cypher.runFirstColumnMany(\\"MATCH (this0:Movie)
             RETURN this0\\", { this0: this0 })"
         `);
 
@@ -104,13 +104,13 @@ describe("apoc.cypher", () => {
         const cypherResult = topQuery.build();
 
         expect(cypherResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:\`Movie\`)
-                WHERE this0.title = $param0
-                RETURN { result: apoc.cypher.runFirstColumnMany(\\"MATCH (this0)
-                SET
-                    this0.released = $param1
-                RETURN this0\\", { this0: this0, param1: $param1 }) }"
-            `);
+            "MATCH (this0:Movie)
+            WHERE this0.title = $param0
+            RETURN { result: apoc.cypher.runFirstColumnMany(\\"MATCH (this0)
+            SET
+                this0.released = $param1
+            RETURN this0\\", { this0: this0, param1: $param1 }) }"
+        `);
         expect(cypherResult.params).toMatchInlineSnapshot(`
             {
               "param0": "The Matrix",

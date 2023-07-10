@@ -150,4 +150,30 @@ describe("CypherBuilder With", () => {
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
+
+    describe("With delete", () => {
+        test("With delete", () => {
+            const node = new Cypher.Node();
+            const withQuery = new Cypher.With(node).delete(node);
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "WITH this0
+                DELETE this0"
+            `);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("With detach delete", () => {
+            const node = new Cypher.Node();
+            const withQuery = new Cypher.With(node).detachDelete(node);
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "WITH this0
+                DETACH DELETE this0"
+            `);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+    });
 });
