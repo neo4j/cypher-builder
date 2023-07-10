@@ -23,6 +23,9 @@ import { NodeRef } from "../references/NodeRef";
 import { Pattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
 import type { Param } from "../references/Param";
+import { LabelExpr } from "../expressions/labels/label-expressions";
+import { Environment } from "..";
+import { escapeType } from "../utils/escape";
 
 type LengthOption =
     | number
@@ -78,12 +81,12 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
     }
 
     /**
-     * @hidden
+     * @internal
      */
     public getCypher(env: CypherEnvironment): string {
         const prevStr = this.previous.getCypher(env);
 
-        const typeStr = this.withType ? this.getRelationshipTypesString(this.element) : "";
+        const typeStr = this.withType ? this.getRelationshipTypesString(this.element, env) : "";
         const relStr = this.withVariable ? `${this.element.getCypher(env)}` : "";
 
         const propertiesStr = this.properties ? this.serializeParameters(this.properties, env) : "";
@@ -107,10 +110,14 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
         }
     }
 
-    private getRelationshipTypesString(relationship: RelationshipRef): string {
-        const type = relationship.type;
-        // TODO: escape label is breaking change
-        // const type = relationship.type ? escapeType(relationship.type) : undefined;
-        return relationship.type ? `:${type}` : "";
+    private getRelationshipTypesString(relationship: RelationshipRef, env: Environment): string {
+        const type = relationship.type || "";
+        if (type instanceof LabelExpr) {
+            return `:${type.getCypher(env)}`;
+        } else {
+            const escapedType = escapeType(type);
+            if (!escapedType) return "";
+            return `:${escapedType}`;
+        }
     }
 }
