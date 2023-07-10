@@ -28,7 +28,7 @@ describe("CypherBuilder USE", () => {
         const queryResult = useQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "USE mydb
-            MATCH (this0:\`Movie\`)
+            MATCH (this0:Movie)
             RETURN this0"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -43,7 +43,7 @@ describe("CypherBuilder USE", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
                 USE mydb
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 RETURN this0
             }"
         `);
@@ -60,10 +60,10 @@ describe("CypherBuilder USE", () => {
         const queryResult = callQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "USE mydb
-            MATCH (this0:\`Movie\`)
+            MATCH (this0:Movie)
             RETURN this0
             UNION
-            MATCH (this1:\`Movie\`)
+            MATCH (this1:Movie)
             RETURN this1"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);

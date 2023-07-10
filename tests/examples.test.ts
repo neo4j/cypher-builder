@@ -34,7 +34,7 @@ describe("Examples", () => {
         const { cypher, params } = matchQuery.build();
 
         expect(cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:\`Movie\`)
+            "MATCH (this0:Movie)
             WHERE this0.title = $param0
             RETURN this0.title"
         `);

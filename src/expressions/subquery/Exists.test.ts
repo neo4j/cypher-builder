@@ -31,7 +31,7 @@ describe("Exists subquery", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "MATCH (this0)
             WHERE EXISTS {
-                MATCH (this1:\`Movie\`)
+                MATCH (this1:Movie)
                 RETURN *
             }
             RETURN *"
