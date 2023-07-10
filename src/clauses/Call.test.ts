@@ -30,7 +30,7 @@ describe("CypherBuilder Call", () => {
         const queryResult = new Cypher.Call(createQuery).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                CREATE (this0:\`Movie\`)
+                CREATE (this0:Movie)
                 SET
                     this0.id = $param0
                 RETURN this0
@@ -57,7 +57,7 @@ describe("CypherBuilder Call", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
                 CALL {
-                    CREATE (this0:\`Movie\`)
+                    CREATE (this0:Movie)
                     SET
                         this0.id = $param0
                     RETURN this0
@@ -83,7 +83,7 @@ describe("CypherBuilder Call", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
                 WITH this0
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS movie
             }"
@@ -121,7 +121,7 @@ describe("CypherBuilder Call", () => {
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS movie
             }
@@ -146,7 +146,7 @@ describe("CypherBuilder Call", () => {
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS movie
             }
@@ -174,7 +174,7 @@ describe("CypherBuilder Call", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS var1
             }
@@ -204,7 +204,7 @@ describe("CypherBuilder Call", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
-                MATCH (this0:\`Movie\`)
+                MATCH (this0:Movie)
                 WHERE $param0 = $param1
                 RETURN this0.title AS var1
             }

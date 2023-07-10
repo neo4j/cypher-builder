@@ -33,7 +33,7 @@ describe("Count Subquery", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "MATCH (this0)
             WHERE COUNT {
-                MATCH (this1:\`Movie\`)
+                MATCH (this1:Movie)
                 RETURN *
             } > 10
             RETURN *"

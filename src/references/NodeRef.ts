@@ -18,25 +18,26 @@
  */
 
 import { HasLabel } from "../expressions/HasLabel";
+import { LabelExpr } from "../expressions/labels/label-expressions";
 import type { Param } from "./Param";
 import type { NamedReference } from "./Reference";
 import { Reference } from "./Reference";
 
-export type NodeProperties = Record<string, Param<any>>;
+export type NodeProperties = Record<string, Param<unknown>>;
 
 type NodeRefOptions = {
-    labels?: Set<string> | Array<string>;
+    labels?: Set<string> | Array<string> | LabelExpr;
 };
 
 /** Represents a node reference
  * @group References
  */
 export class NodeRef extends Reference {
-    public labels: string[];
+    public labels: string[] | LabelExpr;
 
     constructor(options: NodeRefOptions = {}) {
         super("this");
-        this.labels = Array.from(options.labels || []);
+        this.labels = this.parseLabels(options.labels);
     }
 
     public hasLabels(...labels: string[]): HasLabel {
@@ -45,6 +46,11 @@ export class NodeRef extends Reference {
 
     public hasLabel(label: string): HasLabel {
         return new HasLabel(this, [label]);
+    }
+
+    private parseLabels(labelsOption: NodeRefOptions["labels"]): string[] | LabelExpr {
+        if (labelsOption instanceof LabelExpr) return labelsOption;
+        return Array.from(labelsOption || []);
     }
 }
 

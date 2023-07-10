@@ -34,9 +34,9 @@ describe("utils.compileCypher", () => {
         const query = Cypher.concat(matchClause, raw);
         const { cypher, params } = query.build();
         expect(cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:\`Movie\`)
+            "MATCH (this0:Movie)
             WHERE \\"first\\" = $param0
-            MATCH (this1:\`Movie\`)
+            MATCH (this1:Movie)
             WHERE \\"Hello\\" = $param1"
         `);
 
