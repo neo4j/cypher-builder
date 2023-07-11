@@ -24,7 +24,7 @@ import type { Param } from "../../references/Param";
 import type { Variable } from "../../references/Variable";
 import { CypherASTNode } from "../../CypherASTNode";
 
-export type SetParam = [PropertyRef, Param<any>];
+export type SetParam = [PropertyRef, Param<unknown>];
 
 /** Represents a WITH statement to import variables into a CALL subquery */
 export class ImportWith extends CypherASTNode {

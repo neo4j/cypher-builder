@@ -4,6 +4,9 @@
     "plugins": ["@typescript-eslint"],
     "root": true,
     "ignorePatterns": ["dist", "docs"],
+    "rules": {
+        "@typescript-eslint/no-unsafe-declaration-merging": "off"
+    },
     "env": {
         "node": true
     }
