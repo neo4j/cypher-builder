@@ -24,7 +24,7 @@ type LiteralValue = string | number | boolean | null | Array<LiteralValue>;
 /** Represents a literal value
  * @group References
  */
-export class Literal<T extends LiteralValue = any> implements CypherCompilable {
+export class Literal<T extends LiteralValue = LiteralValue> implements CypherCompilable {
     public value: T;
 
     constructor(value: T) {

@@ -23,7 +23,7 @@ import { Reference } from "./Reference";
 /** Represents a parameter that will be passed as a separate object
  * @group References
  */
-export class Param<T = any> extends Reference {
+export class Param<T = unknown> extends Reference {
     public readonly value: T;
 
     constructor(value: T) {
@@ -52,10 +52,10 @@ export class Param<T = any> extends Reference {
 /** Represents a parameter with a given name
  * @group References
  */
-export class NamedParam extends Param<any> {
+export class NamedParam extends Param {
     public id: string;
 
-    constructor(name: string, value?: any) {
+    constructor(name: string, value?: unknown) {
         super(value);
         this.id = name;
     }
