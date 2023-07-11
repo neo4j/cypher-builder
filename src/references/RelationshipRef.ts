@@ -21,7 +21,7 @@ import type { NodeRef } from "./NodeRef";
 import type { NamedReference } from "./Reference";
 import { Reference } from "./Reference";
 import type { Param } from "./Param";
-import { LabelExpr } from "../expressions/labels/label-expressions";
+import type { LabelExpr } from "../expressions/labels/label-expressions";
 
 export type RelationshipInput = {
     source: NodeRef;
