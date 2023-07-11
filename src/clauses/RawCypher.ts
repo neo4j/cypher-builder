@@ -21,7 +21,7 @@ import type { CypherEnvironment } from "../Environment";
 import { toCypherParams } from "../utils/to-cypher-params";
 import { Clause } from "./Clause";
 
-type RawCypherCallback = (env: CypherEnvironment) => [string, Record<string, any>] | string | undefined;
+type RawCypherCallback = (env: CypherEnvironment) => [string, Record<string, unknown>] | string | undefined;
 
 /** For compatibility reasons, allows for a raw string to be used as a clause
  * @group Other
