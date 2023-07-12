@@ -18,6 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
+import { ListIndex } from "../expressions/list/ListIndex";
 import type { CypherCompilable, Expr } from "../types";
 import { escapeProperty } from "../utils/escape";
 import type { Reference } from "./Reference";
@@ -45,6 +46,11 @@ export class PropertyRef implements CypherCompilable {
     /** Access individual property via the PropertyRef class, using dot notation or square brackets notation if an expression is provided */
     public property(prop: string | Expr): PropertyRef {
         return new PropertyRef(this._variable, ...this.propertyPath, prop);
+    }
+
+    /* Access individual elements via the ListIndex class, using the square bracket notation */
+    public index(index: number): ListIndex {
+        return new ListIndex(this, index);
     }
 
     /** @internal */

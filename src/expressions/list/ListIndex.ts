@@ -18,18 +18,19 @@
  */
 
 import type { CypherEnvironment } from "../../Environment";
+import type { PropertyRef } from "../../references/PropertyRef";
 import type { Variable } from "../../references/Variable";
 import type { CypherCompilable } from "../../types";
 import type { ListExpr } from "./ListExpr";
 
 export class ListIndex implements CypherCompilable {
-    private value: Variable | ListExpr;
+    private value: Variable | ListExpr | PropertyRef;
     private index: number;
 
     /**
      * @hidden
      */
-    constructor(variable: Variable | ListExpr, index: number) {
+    constructor(variable: Variable | ListExpr | PropertyRef, index: number) {
         this.value = variable;
         this.index = index;
     }
