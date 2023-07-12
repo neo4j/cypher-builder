@@ -5,7 +5,13 @@
     "root": true,
     "ignorePatterns": ["dist", "docs"],
     "rules": {
-        "@typescript-eslint/no-unsafe-declaration-merging": "off"
+        "@typescript-eslint/no-unsafe-declaration-merging": "off",
+        "@typescript-eslint/consistent-type-imports": [
+            "error",
+            {
+                "prefer": "type-imports"
+            }
+        ]
     },
     "env": {
         "node": true

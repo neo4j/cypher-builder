@@ -1,7 +1,7 @@
 //neo4j.com/docs/cypher-manual/current/syntax/Exprs/#label-Exprs
 
-import { Environment } from "../..";
-import { CypherCompilable } from "../../types";
+import type { Environment } from "../..";
+import type { CypherCompilable } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 import { escapeLabel } from "../../utils/escape";
 

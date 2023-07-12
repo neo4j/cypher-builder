@@ -24,7 +24,7 @@ import { Pattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
 import type { Param } from "../references/Param";
 import { LabelExpr } from "../expressions/labels/label-expressions";
-import { Environment } from "..";
+import type { Environment } from "..";
 import { escapeType } from "../utils/escape";
 
 type LengthOption =
