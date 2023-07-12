@@ -1,5 +1,56 @@
 # @neo4j/cypher-builder
 
+## 1.0.0
+
+### Major Changes
+
+-   [#50](https://github.com/neo4j/cypher-builder/pull/50) [`91ee39c`](https://github.com/neo4j/cypher-builder/commit/91ee39c9e38ea1e7ba6bfe142c604694355ddca9) Thanks [@angrykoala](https://github.com/angrykoala)! - Escape variable names if needed
+
+-   [#7](https://github.com/neo4j/cypher-builder/pull/7) [`6f57eaf`](https://github.com/neo4j/cypher-builder/commit/6f57eafb635077a4ae77f767149bbdeaca60a1a4) Thanks [@angrykoala](https://github.com/angrykoala)! - Escape relationship types if needed
+
+-   [#72](https://github.com/neo4j/cypher-builder/pull/72) [`0777c76`](https://github.com/neo4j/cypher-builder/commit/0777c764be4a948904f03a9e01c520e85850d72e) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove Reference class. Node, Relationship, Path and Param now extend the class Variable
+
+-   [#1](https://github.com/neo4j/cypher-builder/pull/1) [`79f4834`](https://github.com/neo4j/cypher-builder/commit/79f4834cb7c24f31355c44bbfb81a3742954ed31) Thanks [@angrykoala](https://github.com/angrykoala)! - Escape properties in map projections
+
+### Minor Changes
+
+-   [#70](https://github.com/neo4j/cypher-builder/pull/70) [`e2339ff`](https://github.com/neo4j/cypher-builder/commit/e2339ff6f176944c1e04499968a110bdc07cf221) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for expressions on .skip and .limit subqueries
+
+-   [#7](https://github.com/neo4j/cypher-builder/pull/7) [`6f57eaf`](https://github.com/neo4j/cypher-builder/commit/6f57eafb635077a4ae77f767149bbdeaca60a1a4) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for label expressions for nodes and relationships
+
+    For example:
+
+    ```
+    (:A&(B|C))
+    ```
+
+-   [#41](https://github.com/neo4j/cypher-builder/pull/41) [`28e5b35`](https://github.com/neo4j/cypher-builder/commit/28e5b35c56019b7ac77336f1bce56e4ee6abe5b1) Thanks [@angrykoala](https://github.com/angrykoala)! - Add predicate functions
+
+-   [#63](https://github.com/neo4j/cypher-builder/pull/63) [`9c26ff2`](https://github.com/neo4j/cypher-builder/commit/9c26ff21f2896dc70e69a5cdffb3d6e22dbfda80) Thanks [@angrykoala](https://github.com/angrykoala)! - Add graph functions
+
+-   [#71](https://github.com/neo4j/cypher-builder/pull/71) [`01badcf`](https://github.com/neo4j/cypher-builder/commit/01badcffb63c48a09b46c6ebc50a12da5f47ca96) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for list index access in property references
+
+-   [#44](https://github.com/neo4j/cypher-builder/pull/44) [`9b4d351`](https://github.com/neo4j/cypher-builder/commit/9b4d3513bb4add5c5fb2823081161e52d150d10b) Thanks [@angrykoala](https://github.com/angrykoala)! - Add missing scalar functions
+
+-   [#45](https://github.com/neo4j/cypher-builder/pull/45) [`f483ab1`](https://github.com/neo4j/cypher-builder/commit/f483ab100ef9cb032ec1a70252d8bff1561f6ba6) Thanks [@angrykoala](https://github.com/angrykoala)! - Add mathematical functions
+
+-   [#57](https://github.com/neo4j/cypher-builder/pull/57) [`af799a4`](https://github.com/neo4j/cypher-builder/commit/af799a49d47e0bcb64b46cbbe00696c23bdc325d) Thanks [@angrykoala](https://github.com/angrykoala)! - Add missing list functions (https://neo4j.com/docs/cypher-manual/current/functions/list/)
+
+### Patch Changes
+
+-   [#50](https://github.com/neo4j/cypher-builder/pull/50) [`91ee39c`](https://github.com/neo4j/cypher-builder/commit/91ee39c9e38ea1e7ba6bfe142c604694355ddca9) Thanks [@angrykoala](https://github.com/angrykoala)! - Updates escape logic so names with numbers are not escaped unless they begin with a number:
+
+    -   `this0` OK
+    -   `0this` Should be escaped
+
+-   [#68](https://github.com/neo4j/cypher-builder/pull/68) [`d331655`](https://github.com/neo4j/cypher-builder/commit/d331655a80e8fa79c56ea6564c5a997cd89f3f7d) Thanks [@renovate](https://github.com/apps/renovate)! - Update types to remove usage of any
+
+-   [#58](https://github.com/neo4j/cypher-builder/pull/58) [`9c78c25`](https://github.com/neo4j/cypher-builder/commit/9c78c25e862c90d14ab30c8b81c110dc3d2735b4) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove spaces between list content: [ 1, 2 ] -> [1, 2]
+
+-   [#6](https://github.com/neo4j/cypher-builder/pull/6) [`554a58d`](https://github.com/neo4j/cypher-builder/commit/554a58da610bb9aea4507223bda82e1e00892182) Thanks [@angrykoala](https://github.com/angrykoala)! - Only escape labels if needed
+
+-   [#73](https://github.com/neo4j/cypher-builder/pull/73) [`2ed4de8`](https://github.com/neo4j/cypher-builder/commit/2ed4de8056ade39c219294ffc80bdb2afdf870c0) Thanks [@angrykoala](https://github.com/angrykoala)! - Add string as a possible type for alias in procedure yield
+
 ## 0.6.0
 
 ### Minor Changes
