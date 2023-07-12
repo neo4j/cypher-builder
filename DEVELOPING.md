@@ -15,7 +15,7 @@ In the root of the package run:
 
 -   `yarn link -p [path-to-local-cypher-builder]
 
-To unlink, in the graphql project:
+To unlink, in the project using cypher-builder:
 
 -   `yarn unlink @neo4j/cypher-builder`
 
