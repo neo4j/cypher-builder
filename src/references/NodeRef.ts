@@ -20,8 +20,8 @@
 import { HasLabel } from "../expressions/HasLabel";
 import { LabelExpr } from "../expressions/labels/label-expressions";
 import type { Param } from "./Param";
-import type { NamedReference } from "./Reference";
-import { Reference } from "./Reference";
+import type { NamedReference } from "./Variable";
+import { Variable } from "./Variable";
 
 export type NodeProperties = Record<string, Param<unknown>>;
 
@@ -30,13 +30,14 @@ type NodeRefOptions = {
 };
 
 /** Represents a node reference
- * @group References
+ * @group Variables
  */
-export class NodeRef extends Reference {
+export class NodeRef extends Variable {
     public labels: string[] | LabelExpr;
 
     constructor(options: NodeRefOptions = {}) {
-        super("this");
+        super();
+        this.prefix = "this";
         this.labels = this.parseLabels(options.labels);
     }
 
@@ -55,7 +56,7 @@ export class NodeRef extends Reference {
 }
 
 /** Represents a node reference with a given name
- * @group References
+ * @group Variables
  */
 export class NamedNode extends NodeRef implements NamedReference {
     public readonly id: string;

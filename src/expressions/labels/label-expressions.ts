@@ -12,6 +12,7 @@ type Label = string | LabelExpr;
 /**
  * Label Expression
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @group Patterns
  */
 export abstract class LabelExpr implements CypherCompilable {
     protected operator: LabelOperator;

@@ -25,14 +25,11 @@ import { PropertyRef } from "../../references/PropertyRef";
 import type { ComparisonOp } from "../../expressions/operations/comparison";
 import { eq } from "../../expressions/operations/comparison";
 import type { Predicate } from "../../types";
-import { Reference } from "../../references/Reference";
-import type { RelationshipRef } from "../../references/RelationshipRef";
-import type { NodeRef } from "../../references/NodeRef";
-import type { Variable } from "../../references/Variable";
+import { Variable } from "../../references/Variable";
 import type { Literal } from "../../references/Literal";
 
-export type VariableLike = Reference | Literal | PropertyRef;
-type VariableWithProperties = Variable | NodeRef | RelationshipRef | PropertyRef;
+export type VariableLike = Variable | Literal | PropertyRef;
+type VariableWithProperties = Variable | PropertyRef;
 
 export abstract class WithWhere extends ClauseMixin {
     protected whereSubClause: Where | undefined;
@@ -72,10 +69,10 @@ export abstract class WithWhere extends ClauseMixin {
     }
 
     private createWhereInput(
-        input: Predicate | Reference | PropertyRef,
+        input: Predicate | Variable | PropertyRef,
         params: Record<string, VariableLike> | undefined
     ): Predicate | undefined {
-        if (input instanceof Reference || input instanceof PropertyRef) {
+        if (input instanceof Variable || input instanceof PropertyRef) {
             const generatedOp = this.variableAndObjectToOperation(input, params || {});
             return generatedOp;
         }
@@ -84,7 +81,7 @@ export abstract class WithWhere extends ClauseMixin {
 
     /** Transforms a simple input into an operation sub tree */
     private variableAndObjectToOperation(
-        target: Reference | PropertyRef,
+        target: Variable | PropertyRef,
         params: Record<string, VariableLike>
     ): BooleanOp | ComparisonOp | undefined {
         let operation: BooleanOp | ComparisonOp | undefined;

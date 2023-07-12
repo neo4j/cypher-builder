@@ -18,16 +18,17 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { Reference } from "./Reference";
+import { Variable } from "./Variable";
 
 /** Represents a parameter that will be passed as a separate object
- * @group References
+ * @group Variables
  */
-export class Param<T = unknown> extends Reference {
+export class Param<T = unknown> extends Variable {
     public readonly value: T;
 
     constructor(value: T) {
-        super("param");
+        super();
+        this.prefix = "param";
         this.value = value;
     }
 
@@ -50,7 +51,7 @@ export class Param<T = unknown> extends Reference {
 }
 
 /** Represents a parameter with a given name
- * @group References
+ * @group Variables
  */
 export class NamedParam extends Param {
     public id: string;
