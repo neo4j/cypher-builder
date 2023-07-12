@@ -66,6 +66,16 @@ describe("Property", () => {
         expect(queryResult2.cypher).toMatchInlineSnapshot(`"var0.myProperty.myNestedValue"`);
     });
 
+    test("List index access on property", () => {
+        const variable = new Cypher.Variable();
+        const property = variable.property("myProperty").index(5);
+
+        const testClause = new TestClause(property);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.myProperty[5]"`);
+    });
+
     describe("Expression", () => {
         test("Serialize expression with []", () => {
             const variable = new Cypher.Variable();
@@ -114,6 +124,18 @@ describe("Property", () => {
 
             const queryResult = testClause.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()]"`);
+        });
+
+        test("List index access on property after expression", () => {
+            const variable = new Cypher.Variable();
+
+            const expr = Cypher.date();
+            const property = variable.property(expr).index(2);
+
+            const testClause = new TestClause(property);
+
+            const queryResult = testClause.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()][2]"`);
         });
     });
 });
