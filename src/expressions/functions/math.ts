@@ -17,7 +17,8 @@
  * limitations under the License.
  */
 
-import { Expr, Literal } from "../../Cypher";
+import type { Expr} from "../../Cypher";
+import { Literal } from "../../Cypher";
 import { filterTruthy } from "../../utils/filter-truthy";
 import { CypherFunction } from "./CypherFunctions";
 

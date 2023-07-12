@@ -18,7 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { CypherCompilable } from "../types";
+import type { CypherCompilable } from "../types";
 
 /** Compiles the cypher of an element, if the resulting cypher is not empty adds a prefix */
 export function compileCypherIfExists(

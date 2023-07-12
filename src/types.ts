@@ -37,7 +37,7 @@ import type { HasLabel } from "./expressions/HasLabel";
 import type { Reference } from "./references/Reference";
 import type { ListIndex } from "./expressions/list/ListIndex";
 import type { Path } from "./references/Path";
-import { Count } from "./expressions/subquery/Count";
+import type { Count } from "./expressions/subquery/Count";
 
 export type Operation = BooleanOp | ComparisonOp | MathOp;
 

@@ -98,6 +98,7 @@ export * from "./expressions/functions/list";
 export * from "./expressions/functions/spatial";
 export * from "./expressions/functions/path";
 export * from "./expressions/functions/math";
+export * as graph from "./expressions/functions/graph";
 
 export { any, all, exists, single, none, isEmpty } from "./expressions/functions/predicate";
 

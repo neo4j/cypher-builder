@@ -22,7 +22,7 @@ import type { Variable } from "../../references/Variable";
 import type { CypherEnvironment } from "../../Environment";
 import { MapExpr } from "../../expressions/map/MapExpr";
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
-import { Expr } from "../../types";
+import type { Expr } from "../../types";
 
 /**
  * @group Cypher Functions

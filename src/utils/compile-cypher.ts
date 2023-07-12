@@ -18,7 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { Clause } from "../clauses/Clause";
+import type { Clause } from "../clauses/Clause";
 import type { Expr } from "../types";
 import { isCypherCompilable } from "./is-cypher-compilable";
 
