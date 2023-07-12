@@ -22,12 +22,19 @@ import { isCypherCompilable } from "./is-cypher-compilable";
 import type { Param } from "../references/Param";
 import type { Variable } from "../references/Variable";
 import { MapExpr } from "../expressions/map/MapExpr";
+import { Expr } from "../types";
 
 type VariableInput = string | number | Variable | Literal | Param;
 
 export type InputArgument<T extends string | number> = T | Variable | Literal<T> | Param<T>;
 
 export function normalizeVariable(value: VariableInput): Variable | Literal | Param {
+    if (isCypherCompilable(value)) return value;
+    return new Literal(value);
+}
+
+// Same as normalizeVariable, just typings are different
+export function normalizeExpr(value: VariableInput | Expr): Variable | Literal | Param | Expr {
     if (isCypherCompilable(value)) return value;
     return new Literal(value);
 }
