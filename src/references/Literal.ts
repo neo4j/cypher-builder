@@ -22,7 +22,7 @@ import type { CypherCompilable } from "../types";
 type LiteralValue = string | number | boolean | null | Array<LiteralValue>;
 
 /** Represents a literal value
- * @group References
+ * @group Variables
  */
 export class Literal<T extends LiteralValue = LiteralValue> implements CypherCompilable {
     public value: T;
@@ -52,6 +52,6 @@ export class Literal<T extends LiteralValue = LiteralValue> implements CypherCom
 }
 
 /** Represents a `NULL` literal value
- * @group References
+ * @group Variables
  */
 export const CypherNull = new Literal(null);

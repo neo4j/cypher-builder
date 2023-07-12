@@ -21,25 +21,25 @@ import type { CypherEnvironment } from "../Environment";
 import { ListIndex } from "../expressions/list/ListIndex";
 import type { CypherCompilable, Expr } from "../types";
 import { escapeProperty } from "../utils/escape";
-import type { Reference } from "./Reference";
+import type { Variable } from "./Variable";
 
 /** Reference to a variable property
- * @group References
+ * @group Variables
  * @example new Node({labels: ["Movie"]}).property("title")
  */
 export class PropertyRef implements CypherCompilable {
-    private _variable: Reference;
+    private _variable: Variable;
     private propertyPath: Array<string | Expr>;
 
     /**
      * @internal
      */
-    constructor(variable: Reference, ...properties: Array<string | Expr>) {
+    constructor(variable: Variable, ...properties: Array<string | Expr>) {
         this._variable = variable;
         this.propertyPath = properties;
     }
 
-    public get variable(): Reference {
+    public get variable(): Variable {
         return this._variable;
     }
 

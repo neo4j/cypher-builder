@@ -18,10 +18,10 @@
  */
 
 import type { NodeRef } from "./NodeRef";
-import type { NamedReference } from "./Reference";
-import { Reference } from "./Reference";
 import type { Param } from "./Param";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
+import type { NamedReference } from "./Variable";
+import { Variable } from "./Variable";
 
 export type RelationshipInput = {
     source: NodeRef;
@@ -36,13 +36,14 @@ type RelationshipRefOptions = {
 };
 
 /** Reference to a relationship property
- * @group References
+ * @group Variables
  */
-export class RelationshipRef extends Reference {
+export class RelationshipRef extends Variable {
     private _type: string | LabelExpr | undefined;
 
     constructor(input: { type?: string | LabelExpr } = {}) {
-        super("this");
+        super();
+        this.prefix = "this";
         this._type = input.type || undefined;
     }
 
@@ -52,7 +53,7 @@ export class RelationshipRef extends Reference {
 }
 
 /** Represents a relationship reference with a given name
- * @group References
+ * @group Variables
  */
 export class NamedRelationship extends RelationshipRef implements NamedReference {
     public readonly id: string;

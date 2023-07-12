@@ -18,7 +18,7 @@
  */
 
 import { Param } from "./references/Param";
-import type { NamedReference, Reference } from "./references/Reference";
+import type { NamedReference, Variable } from "./references/Variable";
 
 export type EnvPrefix = {
     params?: string;
@@ -31,7 +31,7 @@ export type EnvPrefix = {
 export class CypherEnvironment {
     private readonly globalPrefix: EnvPrefix;
 
-    private references: Map<Reference, string> = new Map();
+    private references: Map<Variable, string> = new Map();
     private params: Param[] = [];
 
     /**
@@ -51,7 +51,7 @@ export class CypherEnvironment {
         }
     }
 
-    public getReferenceId(reference: Reference | NamedReference): string {
+    public getReferenceId(reference: Variable | NamedReference): string {
         if (this.isNamedReference(reference)) return reference.id; // Overrides ids for compatibility reasons
         const id = this.references.get(reference);
         if (!id) {
@@ -93,7 +93,7 @@ export class CypherEnvironment {
         return paramId;
     }
 
-    private addVariableReference(variable: Reference): string {
+    private addVariableReference(variable: Variable): string {
         const paramIndex = this.getParamsSize(); // Indexes are separate for readability reasons
 
         if (variable instanceof Param) {
@@ -107,7 +107,7 @@ export class CypherEnvironment {
         return varId;
     }
 
-    private isNamedReference(ref: Reference | NamedReference): ref is NamedReference {
+    private isNamedReference(ref: Variable | NamedReference): ref is NamedReference {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return Boolean((ref as any).id);
     }

@@ -17,20 +17,49 @@
  * limitations under the License.
  */
 
-import type { NamedReference } from "./Reference";
-import { Reference } from "./Reference";
+import { PropertyRef } from "./PropertyRef";
+import { ListIndex } from "../expressions/list/ListIndex";
+import type { Expr } from "../types";
+import type { CypherEnvironment } from "../Environment";
+import { escapeVariable } from "../utils/escape";
 
 /** Represents a variable
- * @group Internal
+ * @group Variables
  */
-export class Variable extends Reference {
+export class Variable {
+    /**
+     * @internal
+     */
+    public prefix: string;
+
     constructor() {
-        super("var");
+        this.prefix = "var";
+    }
+
+    /** Access individual property via the PropertyRef class */
+    public property(...path: Array<string | Expr>): PropertyRef {
+        return new PropertyRef(this, ...path);
+    }
+
+    /* Access individual elements via the ListIndex class, using the square bracket notation */
+    public index(index: number): ListIndex {
+        return new ListIndex(this, index);
+    }
+
+    /** @internal */
+    public getCypher(env: CypherEnvironment): string {
+        const id = env.getReferenceId(this);
+        return escapeVariable(id);
     }
 }
 
-/** For compatibility reasons, represents a plain string variable
- * @hidden
+export interface NamedReference extends Variable {
+    readonly id: string;
+}
+
+/**
+ * Represents a variable with a explicit name
+ * @group Variables
  */
 export class NamedVariable extends Variable implements NamedReference {
     public readonly id: string;

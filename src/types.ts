@@ -34,10 +34,9 @@ import type { PatternComprehension } from "./expressions/list/PatternComprehensi
 import type { ListExpr } from "./expressions/list/ListExpr";
 import type { MapProjection } from "./expressions/map/MapProjection";
 import type { HasLabel } from "./expressions/HasLabel";
-import type { Reference } from "./references/Reference";
 import type { ListIndex } from "./expressions/list/ListIndex";
-import type { Path } from "./references/Path";
 import type { Count } from "./expressions/subquery/Count";
+import type { Variable } from "./references/Variable";
 
 export type Operation = BooleanOp | ComparisonOp | MathOp;
 
@@ -46,7 +45,7 @@ export type Operation = BooleanOp | ComparisonOp | MathOp;
  */
 export type Expr =
     | Operation
-    | Reference
+    | Variable
     | Literal
     | PropertyRef
     | CypherFunction
@@ -57,8 +56,7 @@ export type Expr =
     | MapProjection // NOTE this cannot be set as a property in a node
     | ListExpr
     | ListIndex
-    | Case<ComparisonOp>
-    | Path;
+    | Case<ComparisonOp>;
 
 /** Represents a predicate statement (i.e returns a boolean). Note that RawCypher is only added for compatibility */
 export type Predicate =
