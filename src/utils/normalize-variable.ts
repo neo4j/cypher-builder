@@ -22,7 +22,7 @@ import { isCypherCompilable } from "./is-cypher-compilable";
 import type { Param } from "../references/Param";
 import type { Variable } from "../references/Variable";
 import { MapExpr } from "../expressions/map/MapExpr";
-import { Expr } from "../types";
+import type { Expr } from "../types";
 
 type VariableInput = string | number | Variable | Literal | Param;
 
