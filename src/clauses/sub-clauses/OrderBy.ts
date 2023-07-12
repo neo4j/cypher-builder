@@ -21,11 +21,7 @@ import type { CypherEnvironment } from "../../Environment";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { Expr } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
-import type { Param } from "../../references/Param";
-import type { Variable } from "../../references/Variable";
-import { normalizeVariable } from "../../utils/normalize-variable";
-import type { Literal } from "../../references/Literal";
-import type { Integer } from "neo4j-driver";
+import { normalizeExpr } from "../../utils/normalize-variable";
 
 export type Order = "ASC" | "DESC";
 
@@ -41,13 +37,13 @@ export class OrderBy extends CypherASTNode {
         this.exprs.push(...exprs);
     }
 
-    public skip(offset: number | Param<Integer> | Param<number> | Literal<number>): void {
-        const offsetVar = normalizeVariable(offset);
+    public skip(offset: number | Expr): void {
+        const offsetVar = normalizeExpr(offset);
         this.skipClause = new Skip(offsetVar);
     }
 
-    public limit(limit: number | Param<Integer> | Param<number> | Literal<number>): void {
-        const limitVar = normalizeVariable(limit);
+    public limit(limit: number | Expr): void {
+        const limitVar = normalizeExpr(limit);
         this.limitClause = new Limit(limitVar);
     }
 
@@ -76,9 +72,9 @@ export class OrderBy extends CypherASTNode {
 }
 
 class Skip extends CypherASTNode {
-    private value: Variable | Param | Literal;
+    private value: Expr;
 
-    constructor(value: Variable | Param | Literal) {
+    constructor(value: Expr) {
         super();
         this.value = value;
     }
@@ -90,9 +86,9 @@ class Skip extends CypherASTNode {
 }
 
 class Limit extends CypherASTNode {
-    private value: Variable | Param | Literal;
+    private value: Expr;
 
-    constructor(value: Variable | Param | Literal) {
+    constructor(value: Expr) {
         super();
         this.value = value;
     }
