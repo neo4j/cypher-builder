@@ -109,6 +109,17 @@ describe("CypherBuilder With", () => {
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
+        test("With a string alias", () => {
+            const node = new Cypher.Node({
+                labels: ["Movie"],
+            });
+            const withQuery = new Cypher.With([node, "my-alias"]);
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH this0 AS my-alias"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
         test("With expression aliased", () => {
             const expr = Cypher.plus(new Cypher.Param("The "), new Cypher.Param("Matrix"));
             const alias = new Cypher.Variable();

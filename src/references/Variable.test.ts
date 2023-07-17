@@ -40,6 +40,12 @@ describe("Variable", () => {
         expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"var0.title"`);
     });
 
+    test("access nested properties of a variable", () => {
+        const variableProp = new Cypher.Variable().property("title", "uppercase");
+
+        expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"var0.title.uppercase"`);
+    });
+
     test("access a property through an expression", () => {
         const variableProp = new Cypher.Variable().property(
             Cypher.plus(new Cypher.Param("foo"), new Cypher.Literal("bar"))
