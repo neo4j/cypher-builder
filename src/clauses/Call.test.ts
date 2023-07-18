@@ -97,6 +97,32 @@ describe("CypherBuilder Call", () => {
         `);
     });
 
+    test("CALL with inner with multiple parameters", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const matchClause = new Cypher.Match(node)
+            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
+            .return([node.property("title"), "movie"]);
+
+        const clause = new Cypher.Call(matchClause).innerWith(node, new Cypher.Variable());
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "CALL {
+                WITH this0, var1
+                MATCH (this0:Movie)
+                WHERE $param0 = $param1
+                RETURN this0.title AS movie
+            }"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
+    });
+
     test("CALL with inner with fails if inner with is already set", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
