@@ -32,7 +32,7 @@ describe("boolean operations", () => {
             expect(cypher).toMatchInlineSnapshot(`"(coalesce(var0) AND max(var1))"`);
         });
 
-        test("and operation with single predicates", () => {
+        test("and operation with single predicate", () => {
             const and = Cypher.and(predicate1);
             const { cypher } = new TestClause(and).build();
             expect(cypher).toMatchInlineSnapshot(`"coalesce(var0)"`);
