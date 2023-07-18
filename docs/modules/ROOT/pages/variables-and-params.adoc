@@ -3,6 +3,7 @@
 This page shows how to use variables and parameters with Cypher Builder.
 
 == Variables
+
 Variables can be used in Cypher to reference parts of a pattern and hold values.
 For example:
 
@@ -11,18 +12,22 @@ MATCH (m:Movie)
 RETURN m
 ```
 
-The variable `m` refers to a node matched in the pattern `(:Movie)`. The node is then returned.
+The variable `m` refers to a node matched in the pattern `(:Movie)`. 
+The node is then returned.
 
+[NOTE]
+====
 Writing dynamic Cypher queries can be challenging as the resulting variables need to have unique names that correctly reference the values.
 In Cypher Builder, JavaScript references remove the need to track variable names, thus providing another layer of abstraction.
+====
 
 === Types
 
 Cypher Builder distinguishes four types of variables:
 
-* `Node`: Holds a reference to a Node matched in a pattern.
-* `Relationship`: Holds a reference to a Relationship in a pattern.
-* `Variable`: Generic variable reference.
+* `Node`: holds a reference to a node matched in a pattern.
+* `Relationship`: holds a reference to a relationship in a pattern.
+* `Variable`: generic variable reference.
 * `Path`: a variable to hold a path.
 
 [NOTE]
@@ -49,7 +54,8 @@ const query = new Cypher.Return(myVar)
 RETURN var0
 ```
 
-The name `var0` is automatically generated when `.build()` is called to prevent name collision. If the variable is reused, the same name will be used in the generated Cypher, for instance:
+The name `var0` is automatically generated when `.build()` is called to prevent name collision. 
+If the variable is reused, the same name will be used in the generated Cypher, for instance:
 
 ```javascript
 const myVar = new Cypher.Variable();
@@ -76,8 +82,8 @@ RETURN var1
 
 === Nodes and relationships
 
-Nodes and relationships are variables holding extra data on nodes and relationships that can be used in xref:patterns.adoc[Patterns].
-For example:
+Nodes and relationships are variables holding extra data on nodes and relationships.
+They can be used in xref:patterns.adoc[Patterns], for example:
 
 ```javascript
 const movie = new Cypher.Node({labels: ["Movie"]});
@@ -94,20 +100,24 @@ RETURN this0
 
 In this example, the node variable `movie` is created and then used in the `MATCH` and `RETURN` clauses.
 
-In the translated Cypher, you can see how the node variable is translated to the Cypher variable `this0`, while the relationship is assigned to `this1`. These names are not defined in your JavaScript code, but are automatically generated when the query is built with `.build()`. The labels and type passed to `Node` and `Relationship` variables are used in the Pattern.
+In the translated Cypher, you can see how the node variable is translated to the Cypher variable `this0`, while the relationship is assigned to `this1`. 
 
-The following parameters can be passed to a `Node` class:
+These names are not defined in your JavaScript code, but are automatically generated when the query is built with `.build()`. 
+The labels and type passed to `Node` and `Relationship` variables are used in the pattern.
 
-* `labels`: An array containing the labels of that node.
+Parameter that can be passed to a `Node` class:
 
-The following parameters can be passed to a Relationship:
+* `labels`: an array containing the labels of that node.
 
-* `type`: A string with the type of the relationship
+Parameters that can be passed to a Relationship:
+
+* `type`: a string with the type of the relationship.
 
 
 ==== Escaping labels and types
 
-Labels and types will be automatically escaped if any uncommon character is detected. For example:
+Labels and types will be automatically escaped if any uncommon character is detected. 
+For example:
 
 ```javascript
 const movie = new Cypher.Node({labels: ["My Movie"]});
@@ -119,12 +129,10 @@ MATCH (this0:`My Movie`)
 RETURN this0
 ```
 
-[NOTE]
-====
-`My Movie` is being surrounded in quotes to prevent code injection with dynamic labels.
-====
+Note that `My Movie` is being surrounded in quotes to prevent code injection with dynamic labels.
 
 === Path
+
 Path variables can be used for path assignment in patterns, for example:
 
 ```cypher
@@ -143,7 +151,7 @@ const query = new Cypher.Match(pattern).assignToPath(path).return(path);
 
 === Named variables
 
-By default, variables do not have a name; a unique name/id is generated at build time to avoid collisions. 
+By default, variables do not have a name; a unique name/id is generated at build time to avoid collisions.
 However, in some cases, you may want to generate a query with a specific name. 
 To do this, all variable types must have a counterpart _named_ class:
 
@@ -164,9 +172,10 @@ MATCH (n:Movie)
 RETURN n
 ```
 
-
 == Property
-Variables such as nodes or maps may contain properties. To access these properties in the generated Cypher, you can use the method `.property` on variables:
+
+Variables such as nodes or maps may contain properties. 
+To access these properties in the generated Cypher, you can use the method `.property` on variables:
 
 ```javascript
 const movie = new Cypher.Node({labels: ["Movie"]})
@@ -179,21 +188,23 @@ RETURN this0.title
 ```
 
 === Nested properties
-Nested properties can also be accessed, either by passing multiple parameters or concatenating calls to `.property`:
+
+Nested properties can also be accessed either by passing multiple parameters or concatenating calls to `.property`:
 
 ```javascript
 new Cypher.Variable().property("movie", "title");
 new Cypher.Variable().property("movie").property("title")
 ```
 
-In both cases, the resulting Cypher should look like:
+In both cases, the resulting Cypher should look like this:
 
 ```cypher
 var0.movie.title
 ```
 
 === Expressions
-Expressions can also be used as a property key, to dynamically access properties:
+
+Expressions can also be used as a property key to dynamically access properties:
 
 ```javascript
 const movie = new Cypher.Node({labels: ["Movie"]})
@@ -210,6 +221,7 @@ RETURN this0[($param0 + $param1)]
 ```
 
 === Index
+
 Like properties, an index can also be accessed through the method `.index`:
 
 ```javascript
@@ -220,12 +232,12 @@ new Cypher.Variable().index(2);
 var0[2]
 ```
 
-
 == Parameters
-Another common challenge with dynamic queries is keeping track of the parameters. To solve this, you can use the class `Param` to create Cypher Builder parameters.
+
+Another common challenge with dynamic queries is keeping track of parameters. 
+To solve this, you can use the class `Param` to create Cypher Builder parameters.
 
 Parameters behave similarly to variables, however, they contain a defined value that will automatically be returned as part of the parameters when the `.build()` method is called.
-
 For example:
 
 ```javascript
@@ -278,7 +290,7 @@ _Params_
 }
 ```
 
-In these cases, Cypher Builder provides a name to the parameter and correctly links it to the `Param` object. 
+In such cases, Cypher Builder provides a name to the parameter and correctly links it to the `Param` object.
 
 Note that if two instances of `Param` are used, then two separate parameters should be returned, regardless of the value.
 For example:
@@ -308,10 +320,10 @@ _Params_
 }
 ```
 
-
 == Literal
-Literal values can be defined with `Cypher.Literal`. Literals behave like Parameters, but they will inject the value provided directly into the Cypher, serializing it as needed.
 
+Literal values can be defined with `Cypher.Literal`. 
+Literals behave like parameters, but they will inject the value provided directly into the Cypher, serializing it as needed.
 For instance:
 
 ```javascript
@@ -336,7 +348,8 @@ _Params_
 { }
 ```
 
-Note how the value `The Matrix` is not injected directly, but correctly serialized to a string in Cypher. The following values are supported by `Literal`:
+Note how the value `The Matrix` is not injected directly, but correctly serialized to a string in Cypher. 
+The following values are supported by `Literal`:
 
 * String: `Cypher.Literal("Hello")` -> `"Hello"`
 * Number: `Cypher.Literal(5)` -> `5`
@@ -353,12 +366,21 @@ It is generally recommended to use `Cypher.Param` instead.
 
 === `NULL`
 
-As a shortcut for `new Cypher.Literal(null)`, the constant `Cypher.Null` is available. This will be translated to `NULL`.
+As a shortcut for `new Cypher.Literal(null)`, the constant `Cypher.Null` is available. 
+This will be translated to `NULL`:
 
+```javascript
+new Cypher.Return(Cypher.Null)
+```
+
+```cypher
+RETURN NULL
+```
 
 == Aliasing
 // Maybe aliasing can be moved to a how-to guide
-Variables are commonly used for aliasing in a `WITH` or `RETURN` statement. To do that, simply pass a tuple of the value and its alias.
+Variables are commonly used for aliasing in a `WITH` or `RETURN` statement. 
+To do that, you need to pass a tuple of the value and its alias.
 
 === Aliasing to a string
 
@@ -389,7 +411,8 @@ WITH this0 AS var1
 RETURN var1 AS Film 
 ```
 
-In the previous example, after a `MATCH` the node variable `this0` is aliased to a variable with an arbitrary name (`var1`) in a `WITH` statement. Finally, in the `RETURN` the variable is aliased to the specific name `Film` that will be returned.
+In the previous example, after a `MATCH` the node variable `this0` is aliased to a variable with an arbitrary name (`var1`) in a `WITH` statement. 
+Finally, in the `RETURN` the variable is aliased to the specific name `Film` that will be returned.
 
 // TODO
 // == Environment
