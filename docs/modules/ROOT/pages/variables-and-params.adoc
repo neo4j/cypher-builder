@@ -367,9 +367,15 @@ It is generally recommended to use `Cypher.Param` instead.
 === `NULL`
 
 As a shortcut for `new Cypher.Literal(null)`, the constant `Cypher.Null` is available. 
-This will be translated to `NULL`.
+This will be translated to `NULL`:
 
-// It could be helpful to have an example here to show how this would look like IRL
+```javascript
+new Cypher.Return(Cypher.Null)
+```
+
+```cypher
+RETURN NULL
+```
 
 == Aliasing
 // Maybe aliasing can be moved to a how-to guide
