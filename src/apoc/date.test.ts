@@ -36,6 +36,21 @@ describe("apoc.date", () => {
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+    test("convertFormat with expression", () => {
+        const convertFormat = Cypher.apoc.date.convertFormat(
+            Cypher.max(new Cypher.Variable()),
+            "iso_zoned_date_time",
+            "iso_offset_date_time"
+        );
+
+        const queryResult = new TestClause(convertFormat).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(
+            `"apoc.date.convertFormat(toString(max(var0)), \\"iso_zoned_date_time\\", \\"iso_offset_date_time\\")"`
+        );
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 
     test("convertFormat with default convertTo", () => {
         const convertFormat = Cypher.apoc.date.convertFormat(new Cypher.Variable(), "iso_zoned_date_time");
