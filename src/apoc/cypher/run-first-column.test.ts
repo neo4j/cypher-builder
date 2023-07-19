@@ -25,6 +25,20 @@ describe("apoc.cypher", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const subquery = new Cypher.Match(node).return(node);
 
+        const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery);
+        const queryResult = new TestClause(apocRunFirstColum).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "apoc.cypher.runFirstColumnSingle(\\"MATCH (this0:Movie)
+            RETURN this0\\", {  })"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("runFirstColumnSingle with parameters", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const subquery = new Cypher.Match(node).return(node);
+
         const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery, [node]);
         const queryResult = new TestClause(apocRunFirstColum).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -36,6 +50,20 @@ describe("apoc.cypher", () => {
     });
 
     test("runFirstColumnMany", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const subquery = new Cypher.Match(node).return(node);
+
+        const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnMany(subquery);
+        const queryResult = new TestClause(apocRunFirstColum).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "apoc.cypher.runFirstColumnMany(\\"MATCH (this0:Movie)
+            RETURN this0\\", {  })"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("runFirstColumnMany with parameters", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const subquery = new Cypher.Match(node).return(node);
 

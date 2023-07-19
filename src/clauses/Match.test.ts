@@ -182,6 +182,41 @@ describe("CypherBuilder Match", () => {
             `);
         });
 
+        test("Match node with where...and", () => {
+            const idParam = new Cypher.Param("my-id");
+            const nameParam = new Cypher.Param("my-name");
+            const ageParam = new Cypher.Param(5);
+
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode).withProperties({
+                    test: new Cypher.Param("test-value"),
+                })
+            )
+                .where(movieNode, { id: idParam, name: nameParam, age: ageParam })
+                .and(movieNode, { value: new Cypher.Literal("Another value") })
+                .return(movieNode);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "MATCH (this0:Movie { test: $param0 })
+                WHERE (((this0.id = $param1 AND this0.name = $param2) AND this0.age = $param3) AND this0.value = \\"Another value\\")
+                RETURN this0"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": "test-value",
+                  "param1": "my-id",
+                  "param2": "my-name",
+                  "param3": 5,
+                }
+            `);
+        });
+
         test("Match named node with alias and where", () => {
             const idParam = new Cypher.Param("my-id");
             const nameParam = new Cypher.Param("my-name");
@@ -347,6 +382,22 @@ describe("CypherBuilder Match", () => {
                   "param1": "my-name",
                 }
             `);
+        });
+
+        test("Match where with empty operation", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Match(movieNode).where(new Cypher.RawCypher("")).return(movieNode);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "MATCH (this0:Movie)
+                RETURN this0"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 
