@@ -92,6 +92,13 @@ describe("Patterns", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(:TestLabel)"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
+
+        test("Simple node getVariables", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node).withoutLabels().withoutVariable();
+            expect(pattern.getVariables()).toEqual([node]);
+        });
     });
 
     describe("relationships", () => {
@@ -175,6 +182,22 @@ describe("Patterns", () => {
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Long relationship Pattern getVariables", () => {
+            const a = new Cypher.Node();
+            const b = new Cypher.Node();
+            const c = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const rel1 = new Cypher.Relationship({
+                type: "ACTED_IN",
+            });
+            const rel2 = new Cypher.Relationship({
+                type: "ACTED_IN",
+            });
+
+            const pattern = new Cypher.Pattern(a).related(rel1).to(b).related(rel2).to(c);
+            expect(pattern.getVariables()).toEqual([a, rel1, b, rel2, c]);
         });
 
         test("Escape relationship type if needed", () => {

@@ -20,6 +20,7 @@
 import { CypherEnvironment } from "../Environment";
 import type { NodeProperties, NodeRef } from "../references/NodeRef";
 import type { RelationshipProperties, RelationshipRef } from "../references/RelationshipRef";
+import type { Variable } from "../references/Variable";
 import type { CypherCompilable } from "../types";
 import { padBlock } from "../utils/pad-block";
 import { padLeft } from "../utils/pad-left";
@@ -35,6 +36,12 @@ export abstract class PatternElement<T extends NodeRef | RelationshipRef> implem
     }
 
     public abstract getCypher(env: CypherEnvironment): string;
+
+    /**
+     * Returns the ordered variables of the Pattern
+     * Note that even unnamed variables will be returned
+     */
+    public abstract getVariables(): Variable[];
 
     protected serializeParameters(parameters: NodeProperties | RelationshipProperties, env: CypherEnvironment): string {
         if (Object.keys(parameters).length === 0) return "";
