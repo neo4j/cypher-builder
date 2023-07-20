@@ -19,8 +19,6 @@
 
 import Cypher from "..";
 import { CypherFunction } from "../expressions/functions/CypherFunctions";
-import type { PropertyRef } from "../references/PropertyRef";
-import type { Variable } from "../references/Variable";
 
 /**
  * @group Cypher Functions
@@ -35,12 +33,12 @@ import type { Variable } from "../references/Variable";
  *```
  */
 export function convertFormat(
-    temporalParam: Variable | PropertyRef,
+    temporalParam: Cypher.Expr,
     currentFormat: string,
     convertTo = "yyyy-MM-dd"
 ): CypherFunction {
     return new CypherFunction("apoc.date.convertFormat", [
-        Cypher.toString(temporalParam),
+        Cypher.toString(temporalParam), // NOTE: should this be `toString` by default?
         new Cypher.Literal(currentFormat),
         new Cypher.Literal(convertTo),
     ]);
