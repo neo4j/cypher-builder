@@ -25,7 +25,6 @@ import { RelationshipRef } from "../references/RelationshipRef";
 import { escapeLabel } from "../utils/escape";
 import { PartialPattern } from "./PartialPattern";
 import { PatternElement } from "./PatternElement";
-import type { Variable } from "../references/Variable";
 
 /** Represents a pattern of a single node or n-relationships to be used in clauses.
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns/)
@@ -60,13 +59,6 @@ export class Pattern extends PatternElement<NodeRef> {
     public related(rel?: RelationshipRef): PartialPattern {
         if (!rel) rel = new RelationshipRef();
         return new PartialPattern(rel, this);
-    }
-
-    public getVariables(): Variable[] {
-        const prevVars = this.previous?.getVariables() || [];
-
-        prevVars.push(this.element);
-        return prevVars;
     }
 
     /**
