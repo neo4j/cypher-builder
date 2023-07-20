@@ -1,5 +1,17 @@
 # @neo4j/cypher-builder
 
+## 1.1.0
+
+### Minor Changes
+
+-   [#80](https://github.com/neo4j/cypher-builder/pull/80) [`ecbfd52`](https://github.com/neo4j/cypher-builder/commit/ecbfd529dc20aa971b6306b18ab51a45f27d4cfc) Thanks [@angrykoala](https://github.com/angrykoala)! - Add `getVariables` method to Pattern
+
+### Patch Changes
+
+-   [#75](https://github.com/neo4j/cypher-builder/pull/75) [`a71639e`](https://github.com/neo4j/cypher-builder/commit/a71639ef8b6b6f3788df8e8e721b18fe5dce213d) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix typings on innerWith so at least a parameter is required
+
+-   [#79](https://github.com/neo4j/cypher-builder/pull/79) [`d542fe7`](https://github.com/neo4j/cypher-builder/commit/d542fe71b774797d494dd9c490b96c2f0d9a49dd) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix typings for `apoc.date.convertFormat` input
+
 ## 1.0.0
 
 ### Major Changes
