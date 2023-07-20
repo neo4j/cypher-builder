@@ -24,7 +24,7 @@ import { Pattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
 import type { Param } from "../references/Param";
 import { LabelExpr } from "../expressions/labels/label-expressions";
-import type { Environment } from "..";
+import type { Environment, Variable } from "..";
 import { escapeType } from "../utils/escape";
 
 type LengthOption =
@@ -78,6 +78,13 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
     public withLength(option: LengthOption): this {
         this.length = option;
         return this;
+    }
+
+    public getVariables(): Variable[] {
+        const prevVars = this.previous?.getVariables() || [];
+
+        prevVars.push(this.element);
+        return prevVars;
     }
 
     /**
