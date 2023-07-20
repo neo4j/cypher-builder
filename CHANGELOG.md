@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 1.1.1
+
+### Patch Changes
+
+-   [#81](https://github.com/neo4j/cypher-builder/pull/81) [`0af8a3a`](https://github.com/neo4j/cypher-builder/commit/0af8a3a33b2cd2c318250f041789f5e34ece0224) Thanks [@angrykoala](https://github.com/angrykoala)! - Reverts types for Call innerWith, With without parameters will not be rendered
+
 ## 1.1.0
 
 ### Minor Changes
