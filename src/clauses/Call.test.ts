@@ -97,6 +97,31 @@ describe("CypherBuilder Call", () => {
         `);
     });
 
+    test("CALL with inner with without parameters", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const matchClause = new Cypher.Match(node)
+            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
+            .return([node.property("title"), "movie"]);
+
+        const clause = new Cypher.Call(matchClause).innerWith();
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "CALL {
+                MATCH (this0:Movie)
+                WHERE $param0 = $param1
+                RETURN this0.title AS movie
+            }"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "aa",
+              "param1": "bb",
+            }
+        `);
+    });
+
     test("CALL with inner with multiple parameters", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
