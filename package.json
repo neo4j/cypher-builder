@@ -43,6 +43,8 @@
     "devDependencies": {
         "@changesets/changelog-github": "^0.4.8",
         "@changesets/cli": "^2.26.2",
+        "@stryker-mutator/core": "^7.1.1",
+        "@stryker-mutator/jest-runner": "^7.1.1",
         "@tsconfig/node16": "^16.1.0",
         "@types/jest": "29.5.3",
         "@types/node": "20.4.2",

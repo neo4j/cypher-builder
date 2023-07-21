@@ -3,6 +3,11 @@
 -   `npm test` to run cypher builder tests
 -   `npm run build` to compile cypher builder library
 -   `npm run docs` to generate the API reference docs
+-   `npm run docs -- --coverage`
+
+## Mutation tests
+
+`stryker run --ignoreStatic`
 
 ## Link Cypher Builder locally with yarn
 

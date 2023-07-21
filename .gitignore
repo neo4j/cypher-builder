@@ -88,3 +88,7 @@ tsconfig.*.tsbuildinfo.gz
 
 docs/reference/
 docs/build/
+
+# stryker temp files
+.stryker-tmp
+reports/

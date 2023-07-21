@@ -52,7 +52,7 @@ class RunFirstColumnFunction extends CypherFunction {
     private many: boolean;
 
     constructor(clause: Clause | string, variables: Variable[] | MapExpr | Record<string, Expr>, many: boolean) {
-        super(`apoc.cypher.runFirstColumn${many ? "Many" : "Single"}`);
+        super("");
 
         this.innerClause = clause;
         this.variables = this.parseVariablesInput(variables);
@@ -84,6 +84,7 @@ class RunFirstColumnFunction extends CypherFunction {
 
     private escapeQuery(query: string): string {
         return query.replace(/("|\\)/g, "\\$1");
+        // return query.replace(/("|\\)/g, "");
     }
 
     private parseVariablesInput(variables: Variable[] | MapExpr | Record<string, Expr>): Variable[] | MapExpr {
