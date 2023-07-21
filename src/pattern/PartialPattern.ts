@@ -113,7 +113,7 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
         } else if (this.length === "*") {
             return "*";
         } else {
-            return `*${this.length.min || ""}..${this.length.max || ""}`;
+            return `*${this.length.min ?? ""}..${this.length.max ?? ""}`;
         }
     }
 
