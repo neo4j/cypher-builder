@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 1.1.2
+
+### Patch Changes
+
+-   [#84](https://github.com/neo4j/cypher-builder/pull/84) [`c083fc0`](https://github.com/neo4j/cypher-builder/commit/c083fc0d3f3307f0684c06d45f7cfb6cab55b71e) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix relationship patterns length with value of 0
+
 ## 1.1.1
 
 ### Patch Changes
