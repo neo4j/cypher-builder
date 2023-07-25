@@ -19,6 +19,7 @@
 
 import type { CypherEnvironment } from "../../Environment";
 import type { Expr } from "../../types";
+import { normalizeExpr } from "../../utils/normalize-variable";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
@@ -27,7 +28,7 @@ import { CypherFunction } from "./CypherFunctions";
  * @category Aggregations
  */
 export function count(expr: Expr | "*"): CypherAggregationFunction {
-    return new CypherAggregationFunction("count", expr);
+    return new CypherAggregationFunction("count", [expr]);
 }
 
 /**
@@ -36,7 +37,7 @@ export function count(expr: Expr | "*"): CypherAggregationFunction {
  * @category Aggregations
  */
 export function min(expr: Expr): CypherAggregationFunction {
-    return new CypherAggregationFunction("min", expr);
+    return new CypherAggregationFunction("min", [expr]);
 }
 
 /**
@@ -45,7 +46,7 @@ export function min(expr: Expr): CypherAggregationFunction {
  * @category Aggregations
  */
 export function max(expr: Expr): CypherAggregationFunction {
-    return new CypherAggregationFunction("max", expr);
+    return new CypherAggregationFunction("max", [expr]);
 }
 
 /**
@@ -54,7 +55,7 @@ export function max(expr: Expr): CypherAggregationFunction {
  * @category Aggregations
  */
 export function avg(expr: Expr): CypherAggregationFunction {
-    return new CypherAggregationFunction("avg", expr);
+    return new CypherAggregationFunction("avg", [expr]);
 }
 
 /**
@@ -63,7 +64,7 @@ export function avg(expr: Expr): CypherAggregationFunction {
  * @category Aggregations
  */
 export function sum(expr: Expr): CypherAggregationFunction {
-    return new CypherAggregationFunction("sum", expr);
+    return new CypherAggregationFunction("sum", [expr]);
 }
 
 /**
@@ -72,7 +73,45 @@ export function sum(expr: Expr): CypherAggregationFunction {
  * @category Aggregations
  */
 export function collect(expr: Expr): CypherAggregationFunction {
-    return new CypherAggregationFunction("collect", expr);
+    return new CypherAggregationFunction("collect", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-percentilecont)
+ * @group Cypher Functions
+ * @category Aggregations
+ */
+export function percentileCont(expr: Expr, percentile: number | Expr): CypherAggregationFunction {
+    const normalizedPercentile = normalizeExpr(percentile);
+    return new CypherAggregationFunction("percentileCont", [expr, normalizedPercentile]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-percentiledisc)
+ * @group Cypher Functions
+ * @category Aggregations
+ */
+export function percentileDisc(expr: Expr, percentile: number | Expr): CypherAggregationFunction {
+    const normalizedPercentile = normalizeExpr(percentile);
+    return new CypherAggregationFunction("percentileDisc", [expr, normalizedPercentile]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-stdev)
+ * @group Cypher Functions
+ * @category Aggregations
+ */
+export function stDev(expr: Expr): CypherAggregationFunction {
+    return new CypherAggregationFunction("stDev", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-stdevp)
+ * @group Cypher Functions
+ * @category Aggregations
+ */
+export function stDevP(expr: Expr): CypherAggregationFunction {
+    return new CypherAggregationFunction("stDevP", [expr]);
 }
 
 /** Represents a Cypher Aggregation function
@@ -87,12 +126,15 @@ export class CypherAggregationFunction extends CypherFunction {
     /**
      * @internal
      */
-    constructor(name: string, param: Expr | "*") {
+    constructor(name: string, params: Array<Expr | "*">) {
         super(name);
-        if (param === "*") {
-            this.hasStar = true;
-        } else {
-            this.addParam(param);
+
+        for (const param of params) {
+            if (param === "*") {
+                this.hasStar = true;
+            } else {
+                this.addParam(param);
+            }
         }
     }
 

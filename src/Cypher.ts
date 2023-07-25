@@ -92,7 +92,18 @@ export {
     cypherTime as time,
 } from "./expressions/functions/temporal";
 export * from "./expressions/functions/scalar";
-export { count, min, max, avg, sum, collect } from "./expressions/functions/aggregation";
+export {
+    count,
+    min,
+    max,
+    avg,
+    sum,
+    collect,
+    percentileCont,
+    percentileDisc,
+    stDev,
+    stDevP,
+} from "./expressions/functions/aggregation";
 export * from "./expressions/functions/string";
 export * from "./expressions/functions/list";
 export * from "./expressions/functions/spatial";

@@ -21,9 +21,8 @@ import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
 describe("Aggregation Functions", () => {
-    const testParam = new Cypher.Param("Hello");
-
-    describe.each(["count", "min", "max", "avg", "sum", "collect"] as const)("%s", (value) => {
+    describe.each(["count", "min", "max", "avg", "sum", "collect", "stDev", "stDevP"] as const)("%s", (value) => {
+        const testParam = new Cypher.Param("Hello");
         test(value, () => {
             const aggregationFunction = Cypher[value](testParam);
             const queryResult = new TestClause(aggregationFunction).build();
@@ -56,5 +55,28 @@ describe("Aggregation Functions", () => {
         expect(() => {
             Cypher.count("*").distinct();
         }).toThrowError("count(*) is not supported with DISTINCT");
+    });
+
+    describe.each(["percentileCont", "percentileDisc"] as const)("%s", (value) => {
+        const testParam = new Cypher.Param(10);
+        test(value, () => {
+            const aggregationFunction = Cypher[value](testParam, 0.5);
+            const queryResult = new TestClause(aggregationFunction).build();
+
+            expect(queryResult.cypher).toBe(`${value}($param0, 0.5)`);
+            expect(queryResult.params).toEqual({
+                param0: 10,
+            });
+        });
+
+        test(`${value} with DISTINCT`, () => {
+            const aggregationFunction = Cypher[value](testParam, 0.5).distinct();
+            const queryResult = new TestClause(aggregationFunction).build();
+
+            expect(queryResult.cypher).toBe(`${value}(DISTINCT $param0, 0.5)`);
+            expect(queryResult.params).toEqual({
+                param0: 10,
+            });
+        });
     });
 });
