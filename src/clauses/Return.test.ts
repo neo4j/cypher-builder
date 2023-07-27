@@ -162,5 +162,25 @@ describe("CypherBuilder Return", () => {
                 }
             `);
         });
+
+        test("Return with skip and limit expressions and no order", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Return(movieNode)
+                .limit(Cypher.plus(new Cypher.Literal(5), new Cypher.Literal(5)))
+                .skip(Cypher.plus(new Cypher.Literal(2), new Cypher.Literal(2)));
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "RETURN this0
+
+                SKIP (2 + 2)
+                LIMIT (5 + 5)"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
     });
 });
