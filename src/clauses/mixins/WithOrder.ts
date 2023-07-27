@@ -50,7 +50,7 @@ export abstract class WithOrder extends ClauseMixin {
     /** Add a `SKIP` subclause.
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/skip/)
      */
-    public skip(value: number | Param<Integer> | Param<number> | Literal<number>): this {
+    public skip(value: number | Expr): this {
         const orderByStatement = this.getOrCreateOrderBy();
         orderByStatement.skip(value);
         return this;
@@ -59,7 +59,7 @@ export abstract class WithOrder extends ClauseMixin {
     /** Add a `LIMIT` subclause.
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/limit/)
      */
-    public limit(value: number | Param<Integer> | Param<number> | Literal<number>): this {
+    public limit(value: number | Expr): this {
         const orderByStatement = this.getOrCreateOrderBy();
         orderByStatement.limit(value);
         return this;
