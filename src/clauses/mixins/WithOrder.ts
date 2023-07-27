@@ -21,9 +21,6 @@ import type { Order } from "../sub-clauses/OrderBy";
 import { OrderBy } from "../sub-clauses/OrderBy";
 import { ClauseMixin } from "./ClauseMixin";
 import type { Expr } from "../../types";
-import type { Param } from "../../references/Param";
-import type { Literal } from "../../references/Literal";
-import type { Integer } from "neo4j-driver";
 
 const DEFAULT_ORDER = "ASC";
 
