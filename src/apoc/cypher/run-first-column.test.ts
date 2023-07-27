@@ -168,4 +168,22 @@ describe("apoc.cypher", () => {
             }
         `);
     });
+
+    test("runFirstColumnSingle", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const nestedSubquery = new Cypher.Match(node).return(node);
+        const nestedRunFirstColumn = Cypher.apoc.cypher.runFirstColumnSingle(nestedSubquery);
+
+        const subquery = new Cypher.Return([nestedRunFirstColumn, "result"]);
+
+        const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery);
+        const queryResult = new TestClause(apocRunFirstColum).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "apoc.cypher.runFirstColumnSingle(\\"RETURN apoc.cypher.runFirstColumnSingle(\\\\\\"MATCH (this0:Movie)
+            RETURN this0\\\\\\", {  }) AS result\\", {  })"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });
