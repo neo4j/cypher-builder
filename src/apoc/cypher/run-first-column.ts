@@ -52,7 +52,7 @@ class RunFirstColumnFunction extends CypherFunction {
     private many: boolean;
 
     constructor(clause: Clause | string, variables: Variable[] | MapExpr | Record<string, Expr>, many: boolean) {
-        super("");
+        super(`apoc.cypher.runFirstColumn${many ? "Many" : "Single"}`); // Note: this argument is never used
 
         this.innerClause = clause;
         this.variables = this.parseVariablesInput(variables);
