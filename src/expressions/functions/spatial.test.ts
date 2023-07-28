@@ -21,26 +21,17 @@ import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
 
 describe("Spatial Functions", () => {
-    test.each(["distance"] as const)("%s", (value) => {
-        const leftExpr = new Cypher.Variable();
-        const rightExpr = new Cypher.Variable();
-        const spatialFn = Cypher[value](leftExpr, rightExpr);
+    describe("4.x deprecated functions", () => {
+        test.each(["distance"] as const)("%s", (value) => {
+            const leftExpr = new Cypher.Variable();
+            const rightExpr = new Cypher.Variable();
+            const spatialFn = Cypher[value](leftExpr, rightExpr);
 
-        const queryResult = new TestClause(spatialFn).build();
+            const queryResult = new TestClause(spatialFn).build();
 
-        expect(queryResult.cypher).toBe(`${value}(var0, var1)`);
-        expect(queryResult.params).toEqual({});
-    });
-
-    test("point.distance", () => {
-        const leftExpr = new Cypher.Variable();
-        const rightExpr = new Cypher.Variable();
-        const pointDistanceFn = Cypher.pointDistance(leftExpr, rightExpr);
-
-        const queryResult = new TestClause(pointDistanceFn).build();
-
-        expect(queryResult.cypher).toBe(`point.distance(var0, var1)`);
-        expect(queryResult.params).toEqual({});
+            expect(queryResult.cypher).toBe(`${value}(var0, var1)`);
+            expect(queryResult.params).toEqual({});
+        });
     });
 
     test("point function", () => {
@@ -49,6 +40,29 @@ describe("Spatial Functions", () => {
         const queryResult = new TestClause(pointFn).build();
 
         expect(queryResult.cypher).toBe(`point(var0)`);
+        expect(queryResult.params).toEqual({});
+    });
+
+    test("point.distance", () => {
+        const leftExpr = new Cypher.Variable();
+        const rightExpr = new Cypher.Variable();
+        const pointDistanceFn = Cypher.point.distance(leftExpr, rightExpr);
+
+        const queryResult = new TestClause(pointDistanceFn).build();
+
+        expect(queryResult.cypher).toBe(`point.distance(var0, var1)`);
+        expect(queryResult.params).toEqual({});
+    });
+
+    test("point.withinBBox", () => {
+        const pointVar = new Cypher.Variable();
+        const leftExpr = new Cypher.Variable();
+        const rightExpr = new Cypher.Variable();
+        const pointDistanceFn = Cypher.point.withinBBox(pointVar, leftExpr, rightExpr);
+
+        const queryResult = new TestClause(pointDistanceFn).build();
+
+        expect(queryResult.cypher).toBe(`point.withinBBox(var0, var1, var2)`);
         expect(queryResult.params).toEqual({});
     });
 });

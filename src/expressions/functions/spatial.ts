@@ -33,7 +33,7 @@ export function point(variable: Expr): CypherFunction {
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/4.3/functions/spatial/#functions-distance)
  * @group Cypher Functions
  * @category Spatial
- * @deprecated No longer supported in Neo4j 5. Use {@link pointDistance} instead.
+ * @deprecated No longer supported in Neo4j 5. Use {@link point.distance} instead.
  */
 export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
     return new CypherFunction("distance", [lexpr, rexpr]);
@@ -44,7 +44,27 @@ export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
  * @group Cypher Functions
  * @category Spatial
  * @example Generated Cypher: `point.distance(point1, point2)`
+ * @deprecated Use {@link point.distance} instead
  */
 export function pointDistance(lexpr: Expr, rexpr: Expr): CypherFunction {
     return new CypherFunction("point.distance", [lexpr, rexpr]);
 }
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance)
+ * @group Cypher Functions
+ * @category Spatial
+ * @example Generated Cypher: `point.distance(point1, point2)`
+ */
+point.distance = (lexpr: Expr, rexpr: Expr): CypherFunction => {
+    return new CypherFunction("point.distance", [lexpr, rexpr]);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-withinBBox)
+ * @group Cypher Functions
+ * @category Spatial
+ */
+point.withinBBox = (point: Expr, lexpr: Expr, rexpr: Expr): CypherFunction => {
+    return new CypherFunction("point.withinBBox", [point, lexpr, rexpr]);
+};
