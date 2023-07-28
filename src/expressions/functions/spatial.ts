@@ -44,7 +44,7 @@ export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
  * @group Cypher Functions
  * @category Spatial
  * @example Generated Cypher: `point.distance(point1, point2)`
- * @deprecated Use `Cypher.point.distance()` instead
+ * @deprecated Use {@link point.distance} instead
  */
 export function pointDistance(lexpr: Expr, rexpr: Expr): CypherFunction {
     return new CypherFunction("point.distance", [lexpr, rexpr]);
