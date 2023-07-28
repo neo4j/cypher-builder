@@ -47,6 +47,7 @@ class BinaryLabelExpr extends LabelExpr {
      */
     public getCypher(env: Environment): string {
         const labelStrs = this.labels.map((l) => this.compileLabel(l, env));
+        if (labelStrs.length === 0) return "";
 
         return `(${labelStrs.join(this.operator)})`;
     }
@@ -88,8 +89,8 @@ class WildcardLabelExpr extends LabelExpr {
  * @group Expressions
  * @category Operators
  */
-function labelAnd(left: Label, right: Label, ...extra: Label[]): LabelExpr {
-    return new BinaryLabelExpr("&", [left, right, ...extra]);
+function labelAnd(...labels: Label[]): LabelExpr {
+    return new BinaryLabelExpr("&", labels);
 }
 
 /** Generates an `|` operator between labels or types
@@ -97,8 +98,8 @@ function labelAnd(left: Label, right: Label, ...extra: Label[]): LabelExpr {
  * @group Expressions
  * @category Operators
  */
-function labelOr(left: Label, right: Label, ...extra: Label[]): LabelExpr {
-    return new BinaryLabelExpr("|", [left, right, ...extra]);
+function labelOr(...labels: Label[]): LabelExpr {
+    return new BinaryLabelExpr("|", labels);
 }
 
 /** Generates an `!` operator for a label or type

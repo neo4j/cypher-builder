@@ -40,6 +40,42 @@ describe("Label Expressions", () => {
             expect(queryResult.cypher).toBe(`(this0:(A|B))`);
         });
 
+        test("Multiple labels with expression: &", () => {
+            const labelExpr = Cypher.labelExpr.and(...["A", "B", "C"]);
+            const node = new Cypher.Node({ labels: labelExpr });
+
+            const pattern = new Cypher.Pattern(node);
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toBe(`(this0:(A&B&C))`);
+        });
+
+        test("Multiple labels with expression: |", () => {
+            const labelExpr = Cypher.labelExpr.or(...["A", "B", "C"]);
+            const node = new Cypher.Node({ labels: labelExpr });
+
+            const pattern = new Cypher.Pattern(node);
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toBe(`(this0:(A|B|C))`);
+        });
+
+        test("No labels with expression: &", () => {
+            const labelExpr = Cypher.labelExpr.and();
+            const node = new Cypher.Node({ labels: labelExpr });
+
+            const pattern = new Cypher.Pattern(node);
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toBe(`(this0)`);
+        });
+
+        test("No labels with expression: |", () => {
+            const labelExpr = Cypher.labelExpr.or();
+            const node = new Cypher.Node({ labels: labelExpr });
+
+            const pattern = new Cypher.Pattern(node);
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toBe(`(this0)`);
+        });
+
         test("Simple label expression: !", () => {
             const labelExpr = Cypher.labelExpr.not("A");
             const node = new Cypher.Node({ labels: labelExpr });
