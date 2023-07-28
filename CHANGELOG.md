@@ -1,5 +1,27 @@
 # @neo4j/cypher-builder
 
+## 1.2.0
+
+### Minor Changes
+
+-   [#96](https://github.com/neo4j/cypher-builder/pull/96) [`7cb59d1`](https://github.com/neo4j/cypher-builder/commit/7cb59d1f44d479b878dca435c0ad8d56a380bd19) Thanks [@angrykoala](https://github.com/angrykoala)! - Add missing spatial functions:
+
+    -   withinBBox
+
+-   [#91](https://github.com/neo4j/cypher-builder/pull/91) [`0940e2b`](https://github.com/neo4j/cypher-builder/commit/0940e2b88ed229510b431d0db4c9fb53c1c74cab) Thanks [@angrykoala](https://github.com/angrykoala)! - Add missing aggregation functions:
+    -   percentileCont
+    -   percentileDisc
+    -   stDev
+    -   stDevP
+
+### Patch Changes
+
+-   [#96](https://github.com/neo4j/cypher-builder/pull/96) [`7cb59d1`](https://github.com/neo4j/cypher-builder/commit/7cb59d1f44d479b878dca435c0ad8d56a380bd19) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates `pointDistance` in favour of `point.distance`
+
+-   [#99](https://github.com/neo4j/cypher-builder/pull/99) [`11d89d3`](https://github.com/neo4j/cypher-builder/commit/11d89d37d7c25004247eb03911f8255a0218af6a) Thanks [@angrykoala](https://github.com/angrykoala)! - Update types on label expressions & and | to support 1 or 0 parameters
+
+-   [#95](https://github.com/neo4j/cypher-builder/pull/95) [`0550f83`](https://github.com/neo4j/cypher-builder/commit/0550f8309469a19a47f4bb2f3c0fc9b32cec8a61) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix typings on `.skip()` and `.limit()` to support expressions
+
 ## 1.1.2
 
 ### Patch Changes
