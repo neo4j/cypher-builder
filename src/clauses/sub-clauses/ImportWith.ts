@@ -30,7 +30,7 @@ export type SetParam = [PropertyRef, Param<unknown>];
 export class ImportWith extends CypherASTNode {
     private params: Variable[];
 
-    constructor(parent: Call, params: Variable[] = []) {
+    constructor(parent: Call, params: Variable[]) {
         super(parent);
         this.params = params;
     }

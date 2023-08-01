@@ -20,7 +20,7 @@
 import * as Cypher from "../Cypher";
 
 describe("CypherBuilder UNION", () => {
-    test("UNWIND Movies", () => {
+    test("Union Movies", () => {
         const n1 = new Cypher.Node({ labels: ["Movie"] });
         const query1 = new Cypher.Match(n1).return(n1);
         const n2 = new Cypher.Node({ labels: ["Movie"] });
@@ -41,5 +41,27 @@ describe("CypherBuilder UNION", () => {
             RETURN this2"
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Union ALL Movies", () => {
+        const n1 = new Cypher.Node({ labels: ["Movie"] });
+        const query1 = new Cypher.Match(n1).return(n1);
+        const n2 = new Cypher.Node({ labels: ["Movie"] });
+        const query2 = new Cypher.Match(n2).return(n2);
+        const n3 = new Cypher.Node({ labels: ["Movie"] });
+        const query3 = new Cypher.Match(n3).return(n3);
+
+        const unionQuery = new Cypher.Union(query1, query2, query3).all();
+        const queryResult = unionQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "MATCH (this0:Movie)
+            RETURN this0
+            UNION ALL
+            MATCH (this1:Movie)
+            RETURN this1
+            UNION ALL
+            MATCH (this2:Movie)
+            RETURN this2"
+        `);
     });
 });
