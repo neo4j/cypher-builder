@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { Literal } from "../../references/Literal";
 import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
@@ -63,6 +64,51 @@ export function cypherDate(timezone?: Expr): CypherFunction {
 }
 
 /**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-realtime)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDate.realtime = (timezone?: Expr): CypherFunction => {
+    return dateFunction("date.realtime", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-statement)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDate.statement = (timezone?: Expr): CypherFunction => {
+    return dateFunction("date.statement", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-transaction)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDate.transaction = (timezone?: Expr): CypherFunction => {
+    return dateFunction("date.transaction", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-truncate)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDate.truncate = (
+    unit: "millennium" | "century" | "decade" | "year" | "weekYear" | "quarter" | "month" | "week" | "day",
+    temporalInstantValue: Expr,
+    mapOfComponentsTimezone?: Expr
+): CypherFunction => {
+    const unitLiteral = new Literal(unit);
+
+    const params = [unitLiteral, temporalInstantValue];
+    if (mapOfComponentsTimezone) params.push(mapOfComponentsTimezone);
+
+    return new CypherFunction("date.truncate", params);
+};
+
+/**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
  * @group Cypher Functions
  * @category Temporal
@@ -89,10 +135,6 @@ export function cypherLocalTime(timezone?: Expr): CypherFunction {
 
 export function cypherTime(timezone?: Expr): CypherFunction {
     return dateFunction("time", timezone);
-}
-
-function dateFunction(name: string, timezone?: Expr): CypherFunction {
-    return new CypherFunction(name, timezone ? [timezone] : undefined);
 }
 
 /**
@@ -139,3 +181,8 @@ duration.inDays = (instant1: Expr, instant2: Expr): CypherFunction => {
 duration.inSeconds = (instant1: Expr, instant2: Expr): CypherFunction => {
     return new CypherFunction("duration.inSeconds", [instant1, instant2]);
 };
+
+// Handles optional timezone param before creating a function
+function dateFunction(name: string, timezone?: Expr): CypherFunction {
+    return new CypherFunction(name, timezone ? [timezone] : undefined);
+}
