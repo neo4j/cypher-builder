@@ -41,7 +41,7 @@ export { NodeRef as Node, NamedNode } from "./references/NodeRef";
 export { RelationshipRef as Relationship, NamedRelationship } from "./references/RelationshipRef";
 export { Param, NamedParam } from "./references/Param";
 export { NamedVariable, Variable } from "./references/Variable";
-export { Literal, CypherNull as Null } from "./references/Literal";
+export { Literal, CypherNull as Null, CypherTrue as true, CypherFalse as false } from "./references/Literal";
 export { Path, NamedPath } from "./references/Path";
 export { PropertyRef as Property } from "./references/PropertyRef";
 
