@@ -62,7 +62,7 @@ describe("Temporal Functions", () => {
         });
 
         describe.each(["realtime", "statement", "transaction"] as const)(`${fn}.%s()`, (value) => {
-            const temporalFn = (Cypher[fn] as any)[value];
+            const temporalFn = Cypher[fn][value];
 
             test(`${fn}.${value} without parameters`, () => {
                 const queryResult = new TestClause(temporalFn()).build();
@@ -103,7 +103,7 @@ describe("Temporal Functions", () => {
         });
 
         test(`${fn}.truncate()`, () => {
-            const truncate = (Cypher[fn] as any).truncate("millennium", new Cypher.Variable());
+            const truncate = Cypher[fn].truncate("millennium", new Cypher.Variable());
 
             const queryResult = new TestClause(truncate).build();
 
@@ -112,7 +112,7 @@ describe("Temporal Functions", () => {
             expect(queryResult.params).toEqual({});
         });
         test(`${fn}.truncate() with 2 mapOfComponents`, () => {
-            const truncate = (Cypher[fn] as any).truncate(
+            const truncate = Cypher[fn].truncate(
                 "century",
                 new Cypher.Variable(),
                 new Cypher.Map({ day: new Cypher.Literal(5) })
