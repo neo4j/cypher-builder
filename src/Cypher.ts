@@ -91,6 +91,7 @@ export {
     cypherLocalDatetime as localdatetime,
     cypherTime as time,
     duration,
+    TemporalUnit,
 } from "./expressions/functions/temporal";
 export * from "./expressions/functions/scalar";
 export {
