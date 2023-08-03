@@ -73,6 +73,7 @@ export function cypherLocalDatetime(timezone?: Expr): CypherFunction {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
  * @group Cypher Functions
  * @category Temporal
  */
@@ -85,6 +86,7 @@ export function cypherLocalTime(timezone?: Expr): CypherFunction {
  * @group Cypher Functions
  * @category Temporal
  */
+
 export function cypherTime(timezone?: Expr): CypherFunction {
     return dateFunction("time", timezone);
 }
@@ -92,3 +94,48 @@ export function cypherTime(timezone?: Expr): CypherFunction {
 function dateFunction(name: string, timezone?: Expr): CypherFunction {
     return new CypherFunction(name, timezone ? [timezone] : undefined);
 }
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/duration)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+export function duration(components: Expr): CypherFunction {
+    return new CypherFunction("duration", [components]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/duration/#functions-duration-between)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+duration.between = (instant1: Expr, instant2: Expr): CypherFunction => {
+    return new CypherFunction("duration.between", [instant1, instant2]);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/duration/#functions-duration-inmonths)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+duration.inMonths = (instant1: Expr, instant2: Expr): CypherFunction => {
+    return new CypherFunction("duration.inMonths", [instant1, instant2]);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/duration/#functions-duration-indays)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+duration.inDays = (instant1: Expr, instant2: Expr): CypherFunction => {
+    return new CypherFunction("duration.inDays", [instant1, instant2]);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/duration/#functions-duration-inseconds)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+duration.inSeconds = (instant1: Expr, instant2: Expr): CypherFunction => {
+    return new CypherFunction("duration.inSeconds", [instant1, instant2]);
+};
