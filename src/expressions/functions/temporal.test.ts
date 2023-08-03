@@ -61,4 +61,35 @@ describe("Temporal Functions", () => {
             expect(queryResult.params).toEqual({});
         });
     });
+
+    describe("duration", () => {
+        test("duration as a function", () => {
+            const durationFunc = Cypher.duration(
+                new Cypher.Map({ days: new Cypher.Literal(2), hours: new Cypher.Param(10) })
+            );
+
+            const queryResult = new TestClause(durationFunc).build();
+
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"duration({ days: 2, hours: $param0 })"`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(
+                `
+                {
+                  "param0": 10,
+                }
+            `
+            );
+        });
+
+        test.each(["between", "inMonths", "inDays", "inSeconds"] as const)("duration.%s", (fun) => {
+            const instant1 = new Cypher.Variable();
+            const instant2 = new Cypher.Variable();
+
+            const durationFunc = Cypher.duration[fun](instant1, instant2);
+
+            const queryResult = new TestClause(durationFunc).build();
+
+            expect(queryResult.cypher).toBe(`duration.${fun}(var0, var1)`);
+        });
+    });
 });
