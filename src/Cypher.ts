@@ -90,6 +90,7 @@ export {
     cypherLocalTime as localtime,
     cypherLocalDatetime as localdatetime,
     cypherTime as time,
+    duration,
 } from "./expressions/functions/temporal";
 export * from "./expressions/functions/scalar";
 export {
