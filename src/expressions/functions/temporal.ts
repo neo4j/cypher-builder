@@ -19,6 +19,7 @@
 
 import { Literal } from "../../references/Literal";
 import type { Expr } from "../../types";
+import { normalizeExpr } from "../../utils/normalize-variable";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
@@ -29,6 +30,28 @@ import { CypherFunction } from "./CypherFunctions";
 export function cypherDatetime(timezone?: Expr): CypherFunction {
     return dateFunction("datetime", timezone);
 }
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime-timestamp)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDatetime.fromepoch = (seconds: number | Expr, nanoseconds: number | Expr): CypherFunction => {
+    const secondsExpr = normalizeExpr(seconds);
+    const nanosecondsExpr = normalizeExpr(nanoseconds);
+    return new CypherFunction("date.fromepoch", [secondsExpr, nanosecondsExpr]);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime-timestamp)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDatetime.fromepochmilis = (seconds: number | Expr, nanoseconds: number | Expr): CypherFunction => {
+    const secondsExpr = normalizeExpr(seconds);
+    const nanosecondsExpr = normalizeExpr(nanoseconds);
+    return new CypherFunction("date.fromepochmilis", [secondsExpr, nanosecondsExpr]);
+};
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date)

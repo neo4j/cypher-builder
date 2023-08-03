@@ -131,6 +131,31 @@ describe("Temporal Functions", () => {
         });
     });
 
+    describe("datetime", () => {
+        test.each(["fromepoch", "fromepochmilis"] as const)("datetime.%s() with number parameters", (value) => {
+            const fromepochFn = Cypher.datetime[value](2, 2);
+            const queryResult = new TestClause(fromepochFn).build();
+
+            expect(queryResult.cypher).toBe(`date.${value}(2, 2)`);
+
+            expect(queryResult.params).toEqual({});
+        });
+
+        test.each(["fromepoch", "fromepochmilis"] as const)("datetime.%s() with Expr", (value) => {
+            const fromepochFn = Cypher.datetime[value](
+                Cypher.plus(new Cypher.Literal(2), new Cypher.Literal(2)),
+                new Cypher.Param(10)
+            );
+            const queryResult = new TestClause(fromepochFn).build();
+
+            expect(queryResult.cypher).toBe(`date.${value}((2 + 2), $param0)`);
+
+            expect(queryResult.params).toEqual({
+                param0: 10,
+            });
+        });
+    });
+
     describe("duration", () => {
         test("duration()", () => {
             const durationFunc = Cypher.duration(
