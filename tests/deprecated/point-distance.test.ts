@@ -17,4 +17,18 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import Cypher from "../../src";
+import { TestClause } from "../../src/utils/TestClause";
+
+describe("Spatial Functions", () => {
+    test("point.distance", () => {
+        const leftExpr = new Cypher.Variable();
+        const rightExpr = new Cypher.Variable();
+        const pointDistanceFn = Cypher.pointDistance(leftExpr, rightExpr);
+
+        const queryResult = new TestClause(pointDistanceFn).build();
+
+        expect(queryResult.cypher).toBe(`point.distance(var0, var1)`);
+        expect(queryResult.params).toEqual({});
+    });
+});

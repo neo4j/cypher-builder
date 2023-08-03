@@ -86,6 +86,8 @@ export class Pattern extends PatternElement<NodeRef> {
     private getNodeLabelsString(node: NodeRef, env: CypherEnvironment): string {
         const labels = node.labels;
         if (labels instanceof LabelExpr) {
+            const labelsStr = labels.getCypher(env);
+            if (!labelsStr) return "";
             return `:${labels.getCypher(env)}`;
         } else {
             const escapedLabels = labels.map(escapeLabel);
