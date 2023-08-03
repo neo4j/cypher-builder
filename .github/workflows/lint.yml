@@ -18,3 +18,16 @@ jobs:
           node-version: 18.x
       - run: npm install
       - run: npm run lint
+
+  license-header-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "^1.17.0"
+      - name: Install addlicense
+        run: go install github.com/google/addlicense@latest
+      - name: Run addlicense
+        run: addlicense -f ./addlicense -check $(find . -name "*.ts" -type f -print0 | xargs -0)
