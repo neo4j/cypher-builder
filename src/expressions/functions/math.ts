@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type { Expr} from "../../Cypher";
+import type { Expr } from "../../Cypher";
 import { Literal } from "../../Cypher";
 import { filterTruthy } from "../../utils/filter-truthy";
 import { CypherFunction } from "./CypherFunctions";
@@ -54,7 +54,7 @@ export function floor(expr: Expr): CypherFunction {
  * @group Cypher Functions
  * @category Math
  */
-export function isNaN(expr: Expr): CypherFunction {
+export function cypherIsNaN(expr: Expr): CypherFunction {
     return new CypherFunction("isNaN", [expr]);
 }
 
