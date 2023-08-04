@@ -72,4 +72,18 @@ describe("Literal", () => {
         const queryResult = testClause.build();
         expect(queryResult.cypher).toBe(`NULL`);
     });
+
+    test("True constant literal", () => {
+        const testClause = new TestClause(Cypher.true);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toBe(`true`);
+    });
+
+    test("False constant literal", () => {
+        const testClause = new TestClause(Cypher.false);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toBe(`false`);
+    });
 });
