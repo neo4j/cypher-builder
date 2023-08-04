@@ -55,3 +55,13 @@ export class Literal<T extends LiteralValue = LiteralValue> implements CypherCom
  * @group Variables
  */
 export const CypherNull = new Literal(null);
+
+/** Represents a `true` literal value
+ * @group Variables
+ */
+export const CypherTrue = new Literal(true);
+
+/** Represents a `false` literal value
+ * @group Variables
+ */
+export const CypherFalse = new Literal(false);
