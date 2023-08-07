@@ -31,7 +31,7 @@ describe("Environment", () => {
     test("creates new environment and adds param references", () => {
         const environment = new CypherEnvironment();
 
-        const param = new Param("my-param");
+        const param = new Param("my-param") as any;
 
         const paramId = environment.getReferenceId(param);
 
