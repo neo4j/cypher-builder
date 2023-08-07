@@ -63,7 +63,7 @@ export class Pattern extends PatternElement<NodeRef> {
     }
 
     public getVariables(): Variable[] {
-        const prevVars = this.previous?.getVariables() || [];
+        const prevVars = this.previous?.getVariables() ?? [];
 
         prevVars.push(this.element);
         return prevVars;

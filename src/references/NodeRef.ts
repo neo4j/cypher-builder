@@ -51,7 +51,7 @@ export class NodeRef extends Variable {
 
     private parseLabels(labelsOption: NodeRefOptions["labels"]): string[] | LabelExpr {
         if (labelsOption instanceof LabelExpr) return labelsOption;
-        return Array.from(labelsOption || []);
+        return Array.from(labelsOption ?? []);
     }
 }
 
@@ -62,7 +62,7 @@ export class NamedNode extends NodeRef implements NamedReference {
     public readonly id: string;
 
     constructor(id: string, options?: NodeRefOptions) {
-        super(options || {});
+        super(options ?? {});
         this.id = id;
     }
 
