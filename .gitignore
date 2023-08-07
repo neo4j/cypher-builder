@@ -88,3 +88,5 @@ tsconfig.*.tsbuildinfo.gz
 
 docs/reference/
 docs/build/
+
+reports/
