@@ -7,7 +7,7 @@
 
 ## Mutation tests
 
-`stryker run --ignoreStatic`
+`npx stryker run`
 
 ## Link Cypher Builder locally with yarn
 
