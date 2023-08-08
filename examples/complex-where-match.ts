@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../src";
+import Cypher from "../dist";
 
 // MATCH (this1)-[this0:ACTED_IN]->(this2:`Person`)
 // WHERE (this2.name = $param0 AND (this1.year = $param1 OR this1.year = $param2))

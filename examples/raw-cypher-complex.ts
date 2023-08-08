@@ -17,17 +17,29 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../dist";
 
-// CALL db.labels() yield label as this0
+// MATCH (this0:`Movie`)
+// WHERE this0.prop = $myParam
 // RETURN this0
 
-const label = new Cypher.NamedVariable("label");
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const match = new Cypher.Match(movie)
+    .where(
+        new Cypher.RawCypher((env) => {
+            const movieStr = movie.getCypher(env);
 
-const labelVar = new Cypher.Variable();
-const labelsCall = Cypher.db.labels().yield(["label", labelVar]).return(label);
+            const cypher = `${movieStr}.prop = $myParam`;
+            const params = {
+                myParam: "Hello World",
+            };
 
-const { cypher, params } = labelsCall.build();
+            return [cypher, params];
+        })
+    )
+    .return(movie);
+
+const { cypher, params } = match.build();
 
 console.log("Cypher");
 console.log(cypher);

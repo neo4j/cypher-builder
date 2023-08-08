@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../src";
+import Cypher from "..";
 
 // MATCH (this1:`Person`)-[this0:ACTED_IN]->(this2:`Movie`)
 // WHERE (this1.name = $param0 AND this2.released = $param1)

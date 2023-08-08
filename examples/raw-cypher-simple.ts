@@ -17,17 +17,15 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../dist";
 
-// CALL db.labels() yield label as this0
-// RETURN this0
+// RETURN 10 as myVal
 
-const label = new Cypher.NamedVariable("label");
+const customReturn = new Cypher.RawCypher(`10 as myVal`);
 
-const labelVar = new Cypher.Variable();
-const labelsCall = Cypher.db.labels().yield(["label", labelVar]).return(label);
+const returnClause = new Cypher.Return(customReturn);
 
-const { cypher, params } = labelsCall.build();
+const { cypher, params } = returnClause.build();
 
 console.log("Cypher");
 console.log(cypher);
