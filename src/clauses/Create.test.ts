@@ -123,4 +123,33 @@ describe("CypherBuilder Create", () => {
             }
         `);
     });
+
+    test("Create Node with empty set", () => {
+        const idParam = new Cypher.Param("my-id");
+        const movieNode = new Cypher.Node({
+            labels: ["Movie"],
+        });
+
+        const createQuery = new Cypher.Create(
+            new Cypher.Pattern(movieNode).withProperties({
+                test: new Cypher.Param("test-value"),
+                id: idParam,
+            })
+        )
+            .set()
+            .return(movieNode);
+
+        const queryResult = createQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "CREATE (this0:Movie { test: $param0, id: $param1 })
+            RETURN this0"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "test-value",
+              "param1": "my-id",
+            }
+        `);
+    });
 });
