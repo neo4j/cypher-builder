@@ -53,7 +53,7 @@ function normalizeString(str: string): string {
 
 function needsEscape(str: string): boolean {
     if (!str) return false;
-    const validStr = /^[a-z_]+[0-9a-z_]*$/i;
+    const validStr = /^[a-z_][0-9a-z_]*$/i;
     return !validStr.test(str);
 }
 

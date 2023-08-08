@@ -82,4 +82,16 @@ describe("CypherBuilder Utils", () => {
             expect(label).toBe("TestLabel");
         });
     });
+
+    it("toCypherParams", () => {
+        const cypherParams = Cypher.utils.toCypherParams({
+            param1: "my param",
+            param2: 5,
+        });
+
+        expect(cypherParams).toEqual({
+            param1: new Cypher.Param("my param"),
+            param2: new Cypher.Param(5),
+        });
+    });
 });
