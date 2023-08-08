@@ -45,5 +45,12 @@ describe("NodeRef", () => {
             expect(node.labels).toIncludeSameMembers(["Movie", "Film"]);
             expect(node.name).toBe("myNode");
         });
+
+        test("Generates named node without labels", () => {
+            const node = new Cypher.NamedNode("myNode");
+
+            expect(node.labels).toIncludeSameMembers([]);
+            expect(node.name).toBe("myNode");
+        });
     });
 });

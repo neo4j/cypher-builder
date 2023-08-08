@@ -23,7 +23,6 @@ import { CypherASTNode } from "../../CypherASTNode";
 import type { Variable } from "../../references/Variable";
 import type { Literal } from "../../references/Literal";
 
-// TODO: improve projection column, some expressions require alias
 export type ProjectionColumn = Expr | [Expr, string | Variable | Literal];
 
 export class Projection extends CypherASTNode {

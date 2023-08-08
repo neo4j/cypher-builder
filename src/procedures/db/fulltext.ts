@@ -19,7 +19,7 @@
 
 import type { Literal, Param, Variable } from "../../Cypher";
 import type { Expr } from "../../types";
-import type { InputArgument} from "../../utils/normalize-variable";
+import type { InputArgument } from "../../utils/normalize-variable";
 import { normalizeVariable, normalizeMap } from "../../utils/normalize-variable";
 import { CypherProcedure } from "../CypherProcedure";
 
@@ -34,14 +34,7 @@ export function queryNodes(
     queryString: FulltextPhrase,
     options?: { skip?: InputArgument<number>; limit?: InputArgument<number>; analyser?: InputArgument<string> }
 ): CypherProcedure<"node" | "score"> {
-    const phraseVar = normalizeVariable(queryString);
-    const indexNameVar = normalizeVariable(indexName);
-
-    const procedureArgs: Expr[] = [indexNameVar, phraseVar];
-    if (options) {
-        const optionsMap = normalizeMap(options);
-        procedureArgs.push(optionsMap);
-    }
+    const procedureArgs = getFulltextArguments(indexName, queryString, options);
 
     return new CypherProcedure("db.index.fulltext.queryNodes", procedureArgs);
 }
@@ -55,6 +48,16 @@ export function queryRelationships(
     queryString: FulltextPhrase,
     options?: { skip?: InputArgument<number>; limit?: InputArgument<number>; analyser?: InputArgument<string> }
 ): CypherProcedure<"relationship" | "score"> {
+    const procedureArgs = getFulltextArguments(indexName, queryString, options);
+
+    return new CypherProcedure("db.index.fulltext.queryRelationships", procedureArgs);
+}
+
+function getFulltextArguments(
+    indexName: string | Literal<string>,
+    queryString: FulltextPhrase,
+    options?: { skip?: InputArgument<number>; limit?: InputArgument<number>; analyser?: InputArgument<string> }
+): Expr[] {
     const phraseVar = normalizeVariable(queryString);
     const indexNameVar = normalizeVariable(indexName);
 
@@ -63,6 +66,5 @@ export function queryRelationships(
         const optionsMap = normalizeMap(options);
         procedureArgs.push(optionsMap);
     }
-
-    return new CypherProcedure("db.index.fulltext.queryRelationships", procedureArgs);
+    return procedureArgs;
 }

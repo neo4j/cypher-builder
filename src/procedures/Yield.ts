@@ -44,7 +44,7 @@ export interface Yield extends WithReturn, WithWhere, WithWith {}
 export class Yield extends Clause {
     private projection: YieldProjection;
 
-    constructor(yieldColumns: Array<"*" | YieldProjectionColumn<string>>) {
+    constructor(yieldColumns: Array<YieldProjectionColumn<string>>) {
         super();
 
         const columns = asArray<YieldProjectionColumn<string> | "*">(yieldColumns);
@@ -72,13 +72,13 @@ export class Yield extends Clause {
 }
 
 export class YieldProjection extends Projection {
-    constructor(columns: Array<"*" | YieldProjectionColumn<string>>) {
+    constructor(columns: Array<YieldProjectionColumn<string>>) {
         super([]);
         const parsedColumns = columns.map((c) => this.parseYieldColumn(c));
         this.addColumns(parsedColumns);
     }
 
-    private parseYieldColumn(input: "*" | YieldProjectionColumn<string>): "*" | ProjectionColumn {
+    private parseYieldColumn(input: YieldProjectionColumn<string>): "*" | ProjectionColumn {
         if (input === "*") return input;
         if (typeof input === "string") return this.createVariableForStrings(input);
         if (Array.isArray(input)) {
