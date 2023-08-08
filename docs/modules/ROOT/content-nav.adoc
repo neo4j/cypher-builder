@@ -7,4 +7,5 @@
 * xref:patterns.adoc[]
 * xref:variables-and-params.adoc[]
 * xref:functions.adoc[]
+* link:https://github.com/neo4j/cypher-builder/tree/main/examples[Examples]
 * link:/cypher-builder/reference[Reference]
