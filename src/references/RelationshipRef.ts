@@ -44,7 +44,7 @@ export class RelationshipRef extends Variable {
     constructor(input: { type?: string | LabelExpr } = {}) {
         super();
         this.prefix = "this";
-        this._type = input.type || undefined;
+        this._type = input.type ?? undefined;
     }
 
     public get type(): string | LabelExpr | undefined {
@@ -59,7 +59,7 @@ export class NamedRelationship extends RelationshipRef implements NamedReference
     public readonly id: string;
 
     constructor(id: string, options?: RelationshipRefOptions) {
-        super(options || {});
+        super(options ?? {});
         this.id = id;
     }
 

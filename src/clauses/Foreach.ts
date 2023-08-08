@@ -34,7 +34,6 @@ import type { Expr } from "../types";
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Foreach extends WithWith {}
 
-// TODO: Set, Remove and Delete cannot be used as they are not directly exposed
 type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | DeleteClause;
 
 /**
