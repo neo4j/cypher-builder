@@ -83,7 +83,7 @@ class RunFirstColumnFunction extends CypherFunction {
     }
 
     private escapeQuery(query: string): string {
-        return query.replace(/("|\\)/g, "\\$1");
+        return query.replace(/(["\\])/g, "\\$1");
     }
 
     private parseVariablesInput(variables: Variable[] | MapExpr | Record<string, Expr>): Variable[] | MapExpr {
