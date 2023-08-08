@@ -17,8 +17,24 @@
  * limitations under the License.
  */
 
+import { Literal } from "../../references/Literal";
 import type { Expr } from "../../types";
+import { normalizeExpr } from "../../utils/normalize-variable";
 import { CypherFunction } from "./CypherFunctions";
+
+/** Temporal unit to be used in `.truncate() functions
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-truncate)
+ */
+export type TemporalUnit =
+    | "millennium"
+    | "century"
+    | "decade"
+    | "year"
+    | "weekYear"
+    | "quarter"
+    | "month"
+    | "week"
+    | "day";
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime)
@@ -28,6 +44,73 @@ import { CypherFunction } from "./CypherFunctions";
 export function cypherDatetime(timezone?: Expr): CypherFunction {
     return dateFunction("datetime", timezone);
 }
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime-timestamp)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDatetime.fromepoch = (seconds: number | Expr, nanoseconds: number | Expr): CypherFunction => {
+    const secondsExpr = normalizeExpr(seconds);
+    const nanosecondsExpr = normalizeExpr(nanoseconds);
+    return new CypherFunction("datetime.fromepoch", [secondsExpr, nanosecondsExpr]);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime-timestamp)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDatetime.fromepochmilis = (seconds: number | Expr, nanoseconds: number | Expr): CypherFunction => {
+    const secondsExpr = normalizeExpr(seconds);
+    const nanosecondsExpr = normalizeExpr(nanoseconds);
+    return new CypherFunction("datetime.fromepochmilis", [secondsExpr, nanosecondsExpr]);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime-realtime)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDatetime.realtime = (timezone?: Expr): CypherFunction => {
+    return dateFunction("datetime.realtime", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime-statement)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDatetime.statement = (timezone?: Expr): CypherFunction => {
+    return dateFunction("datetime.statement", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime-transaction)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDatetime.transaction = (timezone?: Expr): CypherFunction => {
+    return dateFunction("datetime.transaction", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime-truncate)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDatetime.truncate = (
+    unit: TemporalUnit,
+    temporalInstantValue: Expr,
+    mapOfComponentsTimezone?: Expr
+): CypherFunction => {
+    const unitLiteral = new Literal(unit);
+
+    const params = [unitLiteral, temporalInstantValue];
+    if (mapOfComponentsTimezone) params.push(mapOfComponentsTimezone);
+
+    return new CypherFunction("datetime.truncate", params);
+};
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date)
@@ -63,6 +146,51 @@ export function cypherDate(timezone?: Expr): CypherFunction {
 }
 
 /**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-realtime)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDate.realtime = (timezone?: Expr): CypherFunction => {
+    return dateFunction("date.realtime", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-statement)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDate.statement = (timezone?: Expr): CypherFunction => {
+    return dateFunction("date.statement", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-transaction)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDate.transaction = (timezone?: Expr): CypherFunction => {
+    return dateFunction("date.transaction", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-truncate)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherDate.truncate = (
+    unit: TemporalUnit,
+    temporalInstantValue: Expr,
+    mapOfComponentsTimezone?: Expr
+): CypherFunction => {
+    const unitLiteral = new Literal(unit);
+
+    const params = [unitLiteral, temporalInstantValue];
+    if (mapOfComponentsTimezone) params.push(mapOfComponentsTimezone);
+
+    return new CypherFunction("date.truncate", params);
+};
+
+/**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
  * @group Cypher Functions
  * @category Temporal
@@ -72,14 +200,103 @@ export function cypherLocalDatetime(timezone?: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime)
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime-realtime)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherLocalDatetime.realtime = (timezone?: Expr): CypherFunction => {
+    return dateFunction("localdatetime.realtime", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime-statement)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherLocalDatetime.statement = (timezone?: Expr): CypherFunction => {
+    return dateFunction("localdatetime.statement", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime-transaction)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherLocalDatetime.transaction = (timezone?: Expr): CypherFunction => {
+    return dateFunction("localdatetime.transaction", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localdatetime-truncate)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherLocalDatetime.truncate = (
+    unit: TemporalUnit,
+    temporalInstantValue: Expr,
+    mapOfComponentsTimezone?: Expr
+): CypherFunction => {
+    const unitLiteral = new Literal(unit);
+
+    const params = [unitLiteral, temporalInstantValue];
+    if (mapOfComponentsTimezone) params.push(mapOfComponentsTimezone);
+
+    return new CypherFunction("localdatetime.truncate", params);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localtime)
  * @group Cypher Functions
  * @category Temporal
  */
 export function cypherLocalTime(timezone?: Expr): CypherFunction {
     return dateFunction("localtime", timezone);
 }
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localtime-realtime)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherLocalTime.realtime = (timezone?: Expr): CypherFunction => {
+    return dateFunction("localtime.realtime", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localtime-statement)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherLocalTime.statement = (timezone?: Expr): CypherFunction => {
+    return dateFunction("localtime.statement", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localtime-transaction)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherLocalTime.transaction = (timezone?: Expr): CypherFunction => {
+    return dateFunction("localtime.transaction", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-localtime-truncate)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherLocalTime.truncate = (
+    unit: TemporalUnit,
+    temporalInstantValue: Expr,
+    mapOfComponentsTimezone?: Expr
+): CypherFunction => {
+    const unitLiteral = new Literal(unit);
+
+    const params = [unitLiteral, temporalInstantValue];
+    if (mapOfComponentsTimezone) params.push(mapOfComponentsTimezone);
+
+    return new CypherFunction("localtime.truncate", params);
+};
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-time)
@@ -91,9 +308,50 @@ export function cypherTime(timezone?: Expr): CypherFunction {
     return dateFunction("time", timezone);
 }
 
-function dateFunction(name: string, timezone?: Expr): CypherFunction {
-    return new CypherFunction(name, timezone ? [timezone] : undefined);
-}
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-time-realtime)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherTime.realtime = (timezone?: Expr): CypherFunction => {
+    return dateFunction("time.realtime", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-time-statement)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherTime.statement = (timezone?: Expr): CypherFunction => {
+    return dateFunction("time.statement", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-time-transaction)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherTime.transaction = (timezone?: Expr): CypherFunction => {
+    return dateFunction("time.transaction", timezone);
+};
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-time-truncate)
+ * @group Cypher Functions
+ * @category Temporal
+ */
+cypherTime.truncate = (
+    unit: TemporalUnit,
+    temporalInstantValue: Expr,
+    mapOfComponentsTimezone?: Expr
+): CypherFunction => {
+    const unitLiteral = new Literal(unit);
+
+    const params = [unitLiteral, temporalInstantValue];
+    if (mapOfComponentsTimezone) params.push(mapOfComponentsTimezone);
+
+    return new CypherFunction("time.truncate", params);
+};
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/duration)
@@ -139,3 +397,8 @@ duration.inDays = (instant1: Expr, instant2: Expr): CypherFunction => {
 duration.inSeconds = (instant1: Expr, instant2: Expr): CypherFunction => {
     return new CypherFunction("duration.inSeconds", [instant1, instant2]);
 };
+
+// Handles optional timezone param before creating a function
+function dateFunction(name: string, timezone?: Expr): CypherFunction {
+    return new CypherFunction(name, timezone ? [timezone] : undefined);
+}

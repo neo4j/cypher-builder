@@ -91,6 +91,7 @@ export {
     cypherLocalDatetime as localdatetime,
     cypherTime as time,
     duration,
+    TemporalUnit,
 } from "./expressions/functions/temporal";
 export * from "./expressions/functions/scalar";
 export {
@@ -109,7 +110,32 @@ export * from "./expressions/functions/string";
 export * from "./expressions/functions/list";
 export * from "./expressions/functions/spatial";
 export * from "./expressions/functions/path";
-export * from "./expressions/functions/math";
+export {
+    abs,
+    ceil,
+    floor,
+    cypherIsNaN as isNaN,
+    rand,
+    round,
+    sign,
+    e,
+    exp,
+    log,
+    log10,
+    sqrt,
+    acos,
+    asin,
+    atan,
+    atan2,
+    cos,
+    cot,
+    degrees,
+    haversin,
+    pi,
+    radians,
+    sin,
+    tan,
+} from "./expressions/functions/math";
 export * as graph from "./expressions/functions/graph";
 
 export { any, all, exists, single, none, isEmpty } from "./expressions/functions/predicate";

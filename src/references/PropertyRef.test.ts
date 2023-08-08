@@ -31,6 +31,26 @@ describe("Property", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.myProperty"`);
     });
 
+    test("Create property ref directly", () => {
+        const variable = new Cypher.Variable();
+        const property = new Cypher.Property(variable, "myProperty");
+
+        const testClause = new TestClause(property);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.myProperty"`);
+    });
+
+    test("Create nested property ref directly", () => {
+        const variable = new Cypher.Variable();
+        const property = new Cypher.Property(variable, "myProperty", "nested");
+
+        const testClause = new TestClause(property);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.myProperty.nested"`);
+    });
+
     test("Escape string property if needed", () => {
         const variable = new Cypher.Variable();
         const property = variable.property("myPro`perty");

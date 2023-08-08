@@ -40,13 +40,13 @@ export class CypherEnvironment {
     constructor(prefix?: string | EnvPrefix) {
         if (!prefix || typeof prefix === "string") {
             this.globalPrefix = {
-                params: prefix || "",
-                variables: prefix || "",
+                params: prefix ?? "",
+                variables: prefix ?? "",
             };
         } else {
             this.globalPrefix = {
-                params: prefix.params || "",
-                variables: prefix.variables || "",
+                params: prefix.params ?? "",
+                variables: prefix.variables ?? "",
             };
         }
     }

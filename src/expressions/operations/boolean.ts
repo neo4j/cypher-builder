@@ -54,7 +54,9 @@ class BinaryOp extends BooleanOp {
         if (childrenStrs.length <= 1) {
             return childrenStrs.join("");
         }
-        return `(${childrenStrs.join(` ${this.operator} `)})`;
+
+        const operatorStr = ` ${this.operator} `;
+        return `(${childrenStrs.join(operatorStr)})`;
     }
 }
 

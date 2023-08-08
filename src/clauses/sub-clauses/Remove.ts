@@ -21,7 +21,6 @@ import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import type { PropertyRef } from "../../references/PropertyRef";
 
-// TODO: Remove label
 export type RemoveInput = Array<PropertyRef>;
 
 export class RemoveClause extends CypherASTNode {

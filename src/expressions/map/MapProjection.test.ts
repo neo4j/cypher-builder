@@ -22,7 +22,7 @@ import Cypher from "../..";
 
 describe("Map Projection", () => {
     test("Project empty map", () => {
-        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), []);
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable());
 
         const queryResult = new TestClause(mapProjection).build();
 

@@ -81,7 +81,7 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
     }
 
     public getVariables(): Variable[] {
-        const prevVars = this.previous?.getVariables() || [];
+        const prevVars = this.previous.getVariables();
 
         prevVars.push(this.element);
         return prevVars;
@@ -118,7 +118,7 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
     }
 
     private getRelationshipTypesString(relationship: RelationshipRef, env: Environment): string {
-        const type = relationship.type || "";
+        const type = relationship.type ?? "";
         if (type instanceof LabelExpr) {
             return `:${type.getCypher(env)}`;
         } else {

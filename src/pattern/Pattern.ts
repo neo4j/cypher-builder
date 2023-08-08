@@ -63,7 +63,7 @@ export class Pattern extends PatternElement<NodeRef> {
     }
 
     public getVariables(): Variable[] {
-        const prevVars = this.previous?.getVariables() || [];
+        const prevVars = this.previous?.getVariables() ?? [];
 
         prevVars.push(this.element);
         return prevVars;
@@ -73,7 +73,7 @@ export class Pattern extends PatternElement<NodeRef> {
      * @internal
      */
     public getCypher(env: CypherEnvironment): string {
-        const prevStr = this.previous?.getCypher(env) || "";
+        const prevStr = this.previous?.getCypher(env) ?? "";
 
         const nodeRefId = this.withVariable ? `${this.element.getCypher(env)}` : "";
 
