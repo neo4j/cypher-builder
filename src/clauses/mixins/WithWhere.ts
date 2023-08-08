@@ -73,7 +73,7 @@ export abstract class WithWhere extends ClauseMixin {
         params: Record<string, VariableLike> | undefined
     ): Predicate | undefined {
         if (input instanceof Variable || input instanceof PropertyRef) {
-            const generatedOp = this.variableAndObjectToOperation(input, params || {});
+            const generatedOp = this.variableAndObjectToOperation(input, params ?? {});
             return generatedOp;
         }
         return input;
