@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../dist";
+import Cypher from "..";
 
 // MATCH (this0:`Movie`)
 // WHERE this0.prop = $myParam
@@ -27,7 +27,7 @@ const movie = new Cypher.Node({ labels: ["Movie"] });
 const match = new Cypher.Match(movie)
     .where(
         new Cypher.RawCypher((env) => {
-            const movieStr = movie.getCypher(env);
+            const movieStr = Cypher.utils.compileCypher(movie, env);
 
             const cypher = `${movieStr}.prop = $myParam`;
             const params = {

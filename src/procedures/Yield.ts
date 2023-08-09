@@ -47,7 +47,7 @@ export class Yield extends Clause {
     constructor(yieldColumns: Array<YieldProjectionColumn<string>>) {
         super();
 
-        const columns = asArray<YieldProjectionColumn<string> | "*">(yieldColumns);
+        const columns = asArray(yieldColumns);
         this.projection = new YieldProjection(columns);
     }
 

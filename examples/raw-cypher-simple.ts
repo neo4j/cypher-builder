@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../dist";
+import Cypher from "..";
 
 // RETURN 10 as myVal
 
