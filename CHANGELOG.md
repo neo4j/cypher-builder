@@ -1,5 +1,39 @@
 # @neo4j/cypher-builder
 
+## 1.3.0
+
+### Minor Changes
+
+-   [#106](https://github.com/neo4j/cypher-builder/pull/106) [`7474e62`](https://github.com/neo4j/cypher-builder/commit/7474e62ef8336b394d43021d459686096f0cae4c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add instant temporal functions:
+
+    -   time
+    -   localtime
+    -   localdatetime
+    -   datetime
+    -   date
+
+    As well as the related nested functions:
+
+    -   \*.realtime
+    -   \*.statement
+    -   \*.transaction
+    -   \*.truncate
+    -   datetime.fromepoch
+    -   datetime.fromepochmillis
+
+-   [#100](https://github.com/neo4j/cypher-builder/pull/100) [`73d9cba`](https://github.com/neo4j/cypher-builder/commit/73d9cbac0d0790f4a5cda90c26d8d191cdb241bd) Thanks [@angrykoala](https://github.com/angrykoala)! - Add duration functions:
+    -   duration
+    -   duration.between
+    -   duration.inMonths
+    -   duration.inDays
+    -   duration.inSeconds
+
+### Patch Changes
+
+-   [#110](https://github.com/neo4j/cypher-builder/pull/110) [`f405df2`](https://github.com/neo4j/cypher-builder/commit/f405df2e58519ce2eb9e602482492e839db79548) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix RegExp with super-linear runtime
+
+-   [#107](https://github.com/neo4j/cypher-builder/pull/107) [`ed13cb8`](https://github.com/neo4j/cypher-builder/commit/ed13cb823d04b01ea358364966f3c7e93c5c4f2e) Thanks [@angrykoala](https://github.com/angrykoala)! - Add sugar syntax `Cypher.true` and `Cypher.false` for `new Cypher.Literal(true)` and `new Cypher.Literal(false)`
+
 ## 1.2.0
 
 ### Minor Changes
