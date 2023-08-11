@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import type { SetParam } from "../sub-clauses/Set";
-import { SetClause } from "../sub-clauses/Set";
-import { ClauseMixin } from "./ClauseMixin";
+import type { SetParam } from "../../sub-clauses/Set";
+import { SetClause } from "../../sub-clauses/Set";
+import { ClauseMixin } from "../ClauseMixin";
 
 export abstract class WithSet extends ClauseMixin {
     protected setSubClause: SetClause | undefined;

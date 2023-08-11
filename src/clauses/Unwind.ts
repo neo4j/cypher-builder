@@ -22,9 +22,9 @@ import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
-import { WithWith } from "./mixins/WithWith";
+import { WithWith } from "./mixins/clauses/WithWith";
 import { mixin } from "./utils/mixin";
-import { WithDelete } from "./mixins/WithDelete";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 
 export interface Unwind extends WithWith, WithDelete {}
 

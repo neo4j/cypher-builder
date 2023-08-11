@@ -17,10 +17,10 @@
  * limitations under the License.
  */
 
-import type { Order } from "../sub-clauses/OrderBy";
-import { OrderBy } from "../sub-clauses/OrderBy";
-import { ClauseMixin } from "./ClauseMixin";
-import type { Expr } from "../../types";
+import type { Order } from "../../sub-clauses/OrderBy";
+import { OrderBy } from "../../sub-clauses/OrderBy";
+import { ClauseMixin } from "../ClauseMixin";
+import type { Expr } from "../../../types";
 
 const DEFAULT_ORDER = "ASC";
 

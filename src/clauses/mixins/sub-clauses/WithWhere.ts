@@ -17,16 +17,16 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "./ClauseMixin";
-import { Where } from "../sub-clauses/Where";
-import type { BooleanOp } from "../../expressions/operations/boolean";
-import { and } from "../../expressions/operations/boolean";
-import { PropertyRef } from "../../references/PropertyRef";
-import type { ComparisonOp } from "../../expressions/operations/comparison";
-import { eq } from "../../expressions/operations/comparison";
-import type { Predicate } from "../../types";
-import { Variable } from "../../references/Variable";
-import type { Literal } from "../../references/Literal";
+import { ClauseMixin } from "../ClauseMixin";
+import { Where } from "../../sub-clauses/Where";
+import type { BooleanOp } from "../../../expressions/operations/boolean";
+import { and } from "../../../expressions/operations/boolean";
+import { PropertyRef } from "../../../references/PropertyRef";
+import type { ComparisonOp } from "../../../expressions/operations/comparison";
+import { eq } from "../../../expressions/operations/comparison";
+import type { Predicate } from "../../../types";
+import { Variable } from "../../../references/Variable";
+import type { Literal } from "../../../references/Literal";
 
 export type VariableLike = Variable | Literal | PropertyRef;
 type VariableWithProperties = Variable | PropertyRef;

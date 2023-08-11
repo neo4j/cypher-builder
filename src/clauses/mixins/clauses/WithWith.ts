@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "./ClauseMixin";
-import type { WithProjection } from "../With";
-import { With } from "../With";
+import { ClauseMixin } from "../ClauseMixin";
+import type { WithProjection } from "../../With";
+import { With } from "../../With";
 
 // Sorry for this name, at least it is funny
 export abstract class WithWith extends ClauseMixin {

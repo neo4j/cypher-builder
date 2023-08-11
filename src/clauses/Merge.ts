@@ -22,13 +22,13 @@ import { Pattern } from "../pattern/Pattern";
 import { Clause } from "./Clause";
 import type { OnCreateParam } from "./sub-clauses/OnCreate";
 import { OnCreate } from "./sub-clauses/OnCreate";
-import { WithReturn } from "./mixins/WithReturn";
+import { WithReturn } from "./mixins/clauses/WithReturn";
 import { mixin } from "./utils/mixin";
-import { WithSet } from "./mixins/WithSet";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { NodeRef } from "../references/NodeRef";
 import { WithPathAssign } from "./mixins/WithPathAssign";
-import { WithDelete } from "./mixins/WithDelete";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 
 export interface Merge extends WithReturn, WithSet, WithPathAssign, WithDelete {}
 

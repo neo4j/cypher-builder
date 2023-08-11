@@ -23,11 +23,11 @@ import type { Variable } from "../references/Variable";
 import { Clause } from "./Clause";
 import { padBlock } from "../utils/pad-block";
 import { ImportWith } from "./sub-clauses/ImportWith";
-import { WithReturn } from "./mixins/WithReturn";
+import { WithReturn } from "./mixins/clauses/WithReturn";
 import { mixin } from "./utils/mixin";
-import { WithWith } from "./mixins/WithWith";
+import { WithWith } from "./mixins/clauses/WithWith";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { WithUnwind } from "./mixins/WithUnwind";
+import { WithUnwind } from "./mixins/clauses/WithUnwind";
 
 export interface Call extends WithReturn, WithWith, WithUnwind {}
 

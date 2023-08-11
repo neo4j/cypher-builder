@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "./ClauseMixin";
-import type { ProjectionColumn } from "../sub-clauses/Projection";
-import { Unwind } from "../Unwind";
+import { ClauseMixin } from "../ClauseMixin";
+import type { ProjectionColumn } from "../../sub-clauses/Projection";
+import { Unwind } from "../../Unwind";
 
 export abstract class WithUnwind extends ClauseMixin {
     protected unwindStatement: Unwind | undefined;
