@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "../ClauseMixin";
 import { Where } from "../../sub-clauses/Where";
 import type { BooleanOp } from "../../../expressions/operations/boolean";
 import { and } from "../../../expressions/operations/boolean";
@@ -27,11 +26,12 @@ import { eq } from "../../../expressions/operations/comparison";
 import type { Predicate } from "../../../types";
 import { Variable } from "../../../references/Variable";
 import type { Literal } from "../../../references/Literal";
+import { Mixin } from "../Mixin";
 
 export type VariableLike = Variable | Literal | PropertyRef;
 type VariableWithProperties = Variable | PropertyRef;
 
-export abstract class WithWhere extends ClauseMixin {
+export abstract class WithWhere extends Mixin {
     protected whereSubClause: Where | undefined;
 
     /** Add a `WHERE` subclause

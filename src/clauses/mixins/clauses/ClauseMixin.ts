@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
+import { Mixin } from "../Mixin";
 
 /** Represents a clause mixin */
-export abstract class ClauseMixin extends CypherASTNode {}
+export abstract class ClauseMixin extends Mixin {}

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "../ClauseMixin";
+import { ClauseMixin } from "./ClauseMixin";
 import type { WithProjection } from "../../With";
 import { With } from "../../With";
 

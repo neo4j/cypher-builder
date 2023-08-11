@@ -19,12 +19,12 @@
 
 import type { Order } from "../../sub-clauses/OrderBy";
 import { OrderBy } from "../../sub-clauses/OrderBy";
-import { ClauseMixin } from "../ClauseMixin";
 import type { Expr } from "../../../types";
+import { Mixin } from "../Mixin";
 
 const DEFAULT_ORDER = "ASC";
 
-export abstract class WithOrder extends ClauseMixin {
+export abstract class WithOrder extends Mixin {
     protected orderByStatement: OrderBy | undefined;
 
     /** Add an `ORDER BY` subclause. Note that `ASC` is the default sorting order

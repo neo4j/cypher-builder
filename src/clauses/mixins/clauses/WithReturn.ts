@@ -19,7 +19,7 @@
 
 import type { ProjectionColumn } from "../../sub-clauses/Projection";
 import { Return } from "../../Return";
-import { ClauseMixin } from "../ClauseMixin";
+import { ClauseMixin } from "./ClauseMixin";
 
 export abstract class WithReturn extends ClauseMixin {
     protected returnStatement: Return | undefined;

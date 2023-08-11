@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "../ClauseMixin";
+import { ClauseMixin } from "./ClauseMixin";
 import type { ProjectionColumn } from "../../sub-clauses/Projection";
 import { Unwind } from "../../Unwind";
 
