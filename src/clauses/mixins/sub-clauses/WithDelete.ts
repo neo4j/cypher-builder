@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "./ClauseMixin";
-import type { DeleteInput } from "../sub-clauses/Delete";
-import { DeleteClause } from "../sub-clauses/Delete";
+import type { DeleteInput } from "../../sub-clauses/Delete";
+import { DeleteClause } from "../../sub-clauses/Delete";
+import { Mixin } from "../Mixin";
 
-export abstract class WithDelete extends ClauseMixin {
+export abstract class WithDelete extends Mixin {
     protected deleteClause: DeleteClause | undefined;
 
     /** Add a `DELETE` subclause
