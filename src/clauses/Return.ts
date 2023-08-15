@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { WithOrder } from "./mixins/WithOrder";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { mixin } from "./utils/mixin";
 import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";

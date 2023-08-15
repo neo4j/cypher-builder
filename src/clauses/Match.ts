@@ -20,17 +20,17 @@
 import { Pattern } from "../pattern/Pattern";
 import { Clause } from "./Clause";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { WithReturn } from "./mixins/WithReturn";
+import { WithReturn } from "./mixins/clauses/WithReturn";
 import { mixin } from "./utils/mixin";
-import { WithWhere } from "./mixins/WithWhere";
-import { WithSet } from "./mixins/WithSet";
-import { WithWith } from "./mixins/WithWith";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithWith } from "./mixins/clauses/WithWith";
 import { WithPathAssign } from "./mixins/WithPathAssign";
 import type { PropertyRef } from "../references/PropertyRef";
 import { RemoveClause } from "./sub-clauses/Remove";
 import type { CypherEnvironment } from "../Environment";
 import type { NodeRef } from "../references/NodeRef";
-import { WithDelete } from "./mixins/WithDelete";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 
 export interface Match extends WithReturn, WithWhere, WithSet, WithWith, WithPathAssign, WithDelete {}
 

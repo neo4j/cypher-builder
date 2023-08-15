@@ -24,11 +24,11 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { Literal } from "../references/Literal";
 import type { Variable } from "../references/Variable";
 import { Clause } from "./Clause";
-import { WithOrder } from "./mixins/WithOrder";
-import { WithReturn } from "./mixins/WithReturn";
-import { WithWhere } from "./mixins/WithWhere";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
+import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere";
 import { mixin } from "./utils/mixin";
-import { WithDelete } from "./mixins/WithDelete";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 
 // With requires an alias for expressions that are not variables
 export type WithProjection = Variable | [Expr, string | Variable | Literal];

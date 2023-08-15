@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-import type { SetParam } from "../sub-clauses/Set";
-import { SetClause } from "../sub-clauses/Set";
-import { ClauseMixin } from "./ClauseMixin";
+import type { SetParam } from "../../sub-clauses/Set";
+import { SetClause } from "../../sub-clauses/Set";
+import { Mixin } from "../Mixin";
 
-export abstract class WithSet extends ClauseMixin {
+export abstract class WithSet extends Mixin {
     protected setSubClause: SetClause | undefined;
 
     /** Append a `SET` clause. Allowing to assign variable properties to values.
