@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { WithWhere } from "../../clauses/mixins/WithWhere";
+import { WithWhere } from "../../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../../clauses/utils/mixin";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";

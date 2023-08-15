@@ -18,7 +18,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ClauseMixin } from "../mixins/ClauseMixin";
+import type { ClauseMixin } from "../mixins/clauses/ClauseMixin";
 
 type ConstructorType<T> = new (...args: any[]) => T;
 type AbstractConstructorType<T> = abstract new (...args: any[]) => T;

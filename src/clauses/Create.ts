@@ -23,9 +23,9 @@ import { Pattern } from "../pattern/Pattern";
 import { SetClause } from "./sub-clauses/Set";
 import { Clause } from "./Clause";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { WithReturn } from "./mixins/WithReturn";
+import { WithReturn } from "./mixins/clauses/WithReturn";
 import { mixin } from "./utils/mixin";
-import { WithSet } from "./mixins/WithSet";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { WithPathAssign } from "./mixins/WithPathAssign";
 
 export interface Create extends WithReturn, WithSet, WithPathAssign {}

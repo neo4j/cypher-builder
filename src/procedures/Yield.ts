@@ -18,9 +18,9 @@
  */
 
 import { Clause } from "../clauses/Clause";
-import { WithReturn } from "../clauses/mixins/WithReturn";
-import { WithWhere } from "../clauses/mixins/WithWhere";
-import { WithWith } from "../clauses/mixins/WithWith";
+import { WithReturn } from "../clauses/mixins/clauses/WithReturn";
+import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
+import { WithWith } from "../clauses/mixins/clauses/WithWith";
 import type { ProjectionColumn } from "../clauses/sub-clauses/Projection";
 import { Projection } from "../clauses/sub-clauses/Projection";
 import { mixin } from "../clauses/utils/mixin";
