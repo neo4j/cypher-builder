@@ -19,7 +19,7 @@
 
 import { Param } from "./references/Param";
 import type { NamedReference, Variable } from "./references/Variable";
-import { CypherCompilable } from "./types";
+import type { CypherCompilable } from "./types";
 
 export type EnvPrefix = {
     params?: string;
