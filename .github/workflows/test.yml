@@ -40,7 +40,7 @@ jobs:
         run: |
           npm install
           npm install -g ts-node
-
+      - run: npm run build
       - name: Run Examples
         run: |
           examples=$(find ./examples -name "*.ts")
