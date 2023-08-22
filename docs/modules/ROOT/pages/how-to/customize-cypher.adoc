@@ -1,0 +1,302 @@
+= Customize Cypher
+
+In some cases, you may need to write highly customized queries within the Cypher Builder. For instance if you:
+
+* Need to embed Cypher strings into existing Cypher queries
+* Use Cypher Builder within a larger Cypher query
+* Need to use features that are not supported in the current version of the Cypher Builder
+* Use custom functions or procedures
+
+
+[WARNING]
+====
+Embedding custom Cypher in a query may lead to Code Injection and other security issues.  
+====
+
+== Custom Variable Names
+
+Usually, Cypher Builder takes care of variable names, ensuring these are unique and do not collide. In some cases, you may need to explicitly set names, to do it, you can use the `Named*` variables:
+
+```JavaScript
+new Cypher.NamedVariable("myVarName")
+```
+
+To learn more, check xref:variables-and-params.adoc#_named_variables[Named Variables].
+
+=== Build Prefix
+
+Whilst not recommended, you may need to mix multiple queries built with Cypher Builder into a single string.
+
+For example:
+
+```JavaScript
+const match1=new Cypher.Match(new Cypher.Node({ labels: ["Movie"] }))
+const match2=new Cypher.Match(new Cypher.Node({ labels: ["Person"] }))
+
+const cypher=`
+${match1.build()}
+${match2.build()}
+`
+```
+
+Will generate the following Cypher:
+
+```cypher
+MATCH(this0:Movie)
+MATCH(this0:Person)
+```
+
+In this query, `this0` is used for both `MATCH` statements, causing variable name collision. This happens because both queries (`match1` and `match2`) are built separately.
+
+If merging these queries before executing `.build()` (i.e. using `Cypher.concat`) is not a viable solution, a `prefix` string can be passed to `.build()` to avoid name collision:
+
+```JavaScript
+const cypher=`
+${match1.build("movie")}
+${match2.build("person")}
+`
+```
+
+In this case, the resulting Cypher will look like:
+
+```cypher
+MATCH(movie_this0:Movie)
+MATCH(person_this0:Person)
+```
+
+The prefix parameter in `.build()` will prepend the provided string to every variable, except named variables.
+
+== Custom Parameters
+
+Parameters are only generated if they are used in the query. To add custom parameters, regardless of these being used or not, an object can be passed as a second parameter to `.build`:
+
+```JavaScript
+const clause = new Cypher.Return(new Cypher.Param("Hello"))
+clause.build("", {
+    myParameter: "Hello World"
+});
+```
+
+This generates the Cypher:
+
+```cypher
+RETURN $param1
+```
+
+And the parameters:
+
+```JavaScripton
+{
+    "param1": "Hello",
+    "myParameter": "Hello World"
+}
+```
+
+=== Custom Parameter Name
+
+Just like variables, when defining a parameter this can be explicitly named by using the class `NamedParam` instead of `Param`.
+
+For example:
+```JavaScript
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const matchQuery = new Cypher.Match(movie).where(movie, { name: new Cypher.NamedParam("myParam") }).return(movie);
+```
+
+Will generate the following query:
+
+```Cypher
+MATCH (this0:Movie)
+WHERE this0.name = $myParam
+RETURN this0
+```
+
+Note that `$myParam` will not be returned as a param by `.build()`. To generate the parameter, pass a value like with normal parameters:
+
+```JavaScript
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const matchQuery = new Cypher.Match(movie).where(movie, { name: new Cypher.NamedParam("myParam", "Keanu Reeves") }).return(movie);
+```
+
+The resulting parameters will be:
+
+```JavaScripton
+{
+    "myParam": "Keanu Reeves"
+}
+```
+
+
+== Custom Function & Procedures
+
+Cypher Builder provide some built-in functions and procedures, but it also supports custom ones, for instance when using plugins or creating link:https://neo4j.com/docs/cypher-manual/current/functions/user-defined[User-defined functions].
+
+=== Functions
+
+Arbitrary function calls can be built using the `Cypher.Function` class:
+
+```JavaScript
+new Cypher.Function("myFunc");
+```
+
+
+To learn more about creating custom functions go to xref:functions.adoc#_custom_functions[here].
+
+=== Procedures
+
+// TODO: move this section to `procedures.adoc` when the documentation is ready and add a link here
+
+Arbitrary procedures can be defined with the class `Cypher.Procedure`:
+
+```JavaScript
+const myProcedure = new Cypher.Procedure("my-procedure");
+```
+
+The generated Cypher will automatically add the link:https://neo4j.com/docs/cypher-manual/current/clauses/call/[`CALL` clause]:
+
+```Cypher
+CALL my-procedure()
+```
+
+Parameters can be passed as an argument to the constructor:
+
+```JavaScript
+const myProcedure = new Cypher.Procedure("my-procedure", [new Cypher.Literal("Keanu"), new Cypher.Variable()])
+```
+
+```Cypher
+CALL my-procedure("Keanu", var0)
+```
+
+==== Yield
+
+
+Custom procedures may be followed by a `YIELD` statement with the `.yield` method:
+
+```JavaScript
+const myProcedure = new Cypher.Procedure("my-procedure").yield("value");
+```
+
+```Cypher
+CALL my-procedure() YIELD value
+```
+
+Unlike built-in procedures, however, this method won't have TypeScript typings for the column names, so `.yield` will accept any string. More specific typings can be set in the `Procedure` class:
+
+```TypeScript
+new Cypher.Procedure<"columnA" | "columnB">("my-procedure")
+```
+
+Trying to use `.yield` with anything different to `"columnA"` or `"columnB"` will be a TypeScript error.
+
+
+==== Void Procedures
+
+Some procedures cannot be used along with `YIELD` as they do not return any values. These can be defined with `Cypher.VoidProcedure`:
+
+```JavaScript
+const myProcedure = new Cypher.VoidProcedure("my-proc");
+```
+
+This can be used exactly as any other procedure, except the `.yield` method is not available.
+
+==== Reusing custom procedures
+
+Custom procedures can be easily reused by wrapping them with a JavaScript function:
+
+```JavaScript
+function myCustomProcedure(param1) {
+    return new Cypher.Procedure("my-custom-procedure", [param1])
+}
+```
+
+This function can then be used in the same fashion as built-in procedures:
+
+```JavaScript
+myCustomProcedure(new Cypher.Variable()).yield("column")
+```
+
+```Cypher
+CALL my-custom-procedure(var0) YIELD "column"
+```
+
+== Raw Cypher
+
+The class `Cypher.RawCypher` allows embedding a Cypher string within a larger query built with Cypher Builder, acting as a wildcard that can be used anywhere.
+
+For instance:
+
+```JavaScript
+const customReturn = new Cypher.RawCypher(`10 as myVal`);
+
+const returnClause = new Cypher.Return(customReturn);
+
+const { cypher, params } = returnClause.build();
+```
+
+This will return the following Cypher:
+
+```cypher
+RETURN 10 as myVal
+```
+
+In this case, the `RETURN` clause is being generated by Cypher Builder, but the actual value `10 as myVal` has been injected with `RawCypher`. This string can be anything, including other clauses or invalid Cypher, and can be generated dynamically:
+
+```JavaScript
+const returnVar="myVal"
+const customReturn = new Cypher.RawCypher(`10 as ${returnVar}`);
+
+const returnClause = new Cypher.Return(customReturn);
+```
+
+`RawCypher` can be used in `Cypher.concat` to attach an arbitrary string to any Cypher Builder element. 
+
+=== Using a callback
+
+In more complex scenarios, you may need to access variables created with the Cypher Builder in your custom Cypher string, however, these values are not available before executing `.build`. To achieve this, `RawCypher` supports a callback that will be executed when the query is being built, and have access to the variables. 
+
+This callback receives a parameter `env` that can be used to manually compile Cypher Builder clauses and translate variable names. The callback can return the following values:
+
+* `string`: Returns the Cypher string to be used for this element.
+* `[string, object]`: Returns a tuple, with the first element being the cypher string, and the second an object with the parameters to be injected in the query.
+* `undefined`: If undefined, the RawCypher will be translated as an empty string.
+
+
+In this example, a `MATCH...RETURN` statement is being created with the Cypher Builder in the usual way, however, a custom `RawCypher` is being injected as part of the `WHERE` subclause.  
+
+```JavaScript
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const match = new Cypher.Match(movie)
+    .where(
+        new Cypher.RawCypher((env) => {
+            const movieStr = Cypher.utils.compileCypher(movie, env);
+
+            const cypher = `${movieStr}.prop = $myParam`;
+            const params = {
+                myParam: "Hello World",
+            };
+
+            return [cypher, params];
+        })
+    )
+    .return(movie);
+
+const { cypher, params } = match.build();
+```
+
+This returns the following Cypher:
+
+```cypher
+MATCH (this0:`Movie`)
+WHERE this0.prop = $myParam
+RETURN this0
+```
+
+And the following parameters:
+
+```JavaScripton
+{
+    "myParam": "Hello World"
+}
+```
+
+The callback passed into the RawCypher is producing the string `this0.prop = $myParam`. To achieve this, it uses the utility method `utils.compileCypher`, passing the variable `movie` and the `env` parameter. This returns the string `this0`. Finally, the custom parameter `$myParam` is being returned in the tuple `[cypher, params]`, ensuring that it will be available when executing `match.build()`.

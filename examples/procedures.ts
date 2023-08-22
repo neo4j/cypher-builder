@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../src";
+import Cypher from "..";
 
 // CALL db.labels() yield label as this0
 // RETURN this0
