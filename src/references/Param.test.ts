@@ -37,13 +37,13 @@ describe("Params", () => {
         const { params } = query.build();
 
         expect(params).toMatchInlineSnapshot(`
-{
-  "param0": 1999,
-}
-`);
+            {
+              "param0": 1999,
+            }
+        `);
     });
 
-    test("use named param twice", () => {
+    test("Use named param twice", () => {
         const param1 = new Cypher.NamedParam("auth");
         const var1 = new Cypher.Variable();
 
@@ -57,5 +57,21 @@ describe("Params", () => {
             $authvar1"
         `);
         expect(params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Named param with value", () => {
+        const param1 = new Cypher.NamedParam("auth", { test: "Hello" });
+
+        const clause = new TestClause(param1);
+        const { cypher, params } = clause.build();
+
+        expect(cypher).toMatchInlineSnapshot(`"$auth"`);
+        expect(params).toMatchInlineSnapshot(`
+            {
+              "auth": {
+                "test": "Hello",
+              },
+            }
+        `);
     });
 });

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../src";
+import Cypher from "..";
 
 // CREATE (this0:`Movie`)
 // SET
