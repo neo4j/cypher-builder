@@ -19,7 +19,6 @@
 
 import { Param } from "./references/Param";
 import type { NamedReference, Variable } from "./references/Variable";
-import type { CypherCompilable } from "./types";
 
 export type EnvPrefix = {
     params?: string;
@@ -85,10 +84,6 @@ export class CypherEnvironment {
 
     public getParamsSize(): number {
         return this.params.length;
-    }
-
-    public compile(element: CypherCompilable): string {
-        return element.getCypher(this);
     }
 
     private addParam(id: string, param: Param): string {
