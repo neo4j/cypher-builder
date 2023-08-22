@@ -19,27 +19,27 @@
 
 import Cypher from "..";
 
-// MATCH (this1:`Person`)-[this0:ACTED_IN]->(this2:`Movie`)
-// WHERE (this1.name = $param0 AND this2.released = $param1)
-// RETURN this2.title, this2.released AS year
+// MATCH (this0:`Movie`)
+// WHERE this0.prop = $myParam
+// RETURN this0
 
-const movieNode = new Cypher.Node({
-    labels: ["Movie"],
-});
-const personNode = new Cypher.Node({
-    labels: ["Person"],
-});
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const match = new Cypher.Match(movie)
+    .where(
+        new Cypher.RawCypher((env) => {
+            const movieStr = Cypher.utils.compileCypher(movie, env);
 
-const actedInPattern = new Cypher.Pattern(movieNode)
-    .related(new Cypher.Relationship({ type: "ACTED_IN" }))
-    .to(personNode);
+            const cypher = `${movieStr}.prop = $myParam`;
+            const params = {
+                myParam: "Hello World",
+            };
 
-const matchQuery = new Cypher.Match(actedInPattern)
-    .where(personNode, { name: new Cypher.Param("Keanu Reeves") })
-    .and(movieNode, { released: new Cypher.Param(1999) })
-    .return(movieNode.property("title"), [movieNode.property("released"), "year"]);
+            return [cypher, params];
+        })
+    )
+    .return(movie);
 
-const { cypher, params } = matchQuery.build();
+const { cypher, params } = match.build();
 
 console.log("Cypher");
 console.log(cypher);
