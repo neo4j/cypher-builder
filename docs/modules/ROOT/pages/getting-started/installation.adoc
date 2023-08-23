@@ -1,3 +1,5 @@
+[[installation]]
+:description: This guide shows how to start using Cypher Builder.
 = Installation
 
 This guide shows how to start using Cypher Builder by setting up a Node.js project with `@neo4j/cypher-builder`.
@@ -12,29 +14,33 @@ This guide shows how to start using Cypher Builder by setting up a Node.js proje
 
 . In a folder of your choice, run the following command to create a Node.js project and a `package.json` file: 
 +
-```bash
+[source, bash]
+----
 npm init es6 -y
-``` 
+----
 +
 Note that these examples use ES6 modules, but CommonJS modules can be used as well.
 
 
 . Install link:https://www.npmjs.com/package/@neo4j/cypher-builder[`@neo4j/cypher-builder`] and add it to the dependencies list with the following command: 
 +
-```
+[source, cmd]
+----
 npm install --save @neo4j/cypher-builder
-```
+---
 
 . Create a new file `main.js` with the following content:
 +
-```javascript
+[source, javascript]
+----
 import Cypher from "@neo4j/cypher-builder";
-```
+----
 
 . Execute the script:
 +
-```bash
+[source, bash]
+----
 node main.js
-```
+----
 +
 At this point, the script should not do anything, but if it doesn't show an error it means Cypher Builder has been correctly installed.
