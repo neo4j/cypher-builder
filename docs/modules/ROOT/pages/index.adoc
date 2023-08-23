@@ -1,4 +1,6 @@
-= Cypher Builder Manual
+[[cypher-builder-docs]]
+:description: This section covers all documentation for Cypher Builder.
+= Cypher Builder
 
 Cypher Builder is a programmatic API for building link:https://neo4j.com/docs/cypher-manual/[Cypher] queries for Neo4j in JavaScript and TypeScript.
 

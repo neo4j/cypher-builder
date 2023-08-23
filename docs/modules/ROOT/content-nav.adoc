@@ -4,10 +4,10 @@
 ** xref:getting-started/querying.adoc[]
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
+* xref:functions.adoc[]
 * xref:patterns.adoc[]
 * xref:variables-and-params.adoc[]
-* xref:functions.adoc[]
-* How To
+* How-to guides
 ** xref:how-to/customize-cypher.adoc[]
 * link:https://github.com/neo4j/cypher-builder/tree/main/examples[Examples]
 * link:/cypher-builder/reference[Reference]
