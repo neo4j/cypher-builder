@@ -6,7 +6,8 @@ site:
 content:
   sources:
     - url: https://github.com/neo4j/cypher-builder.git
-      branches: HEAD
+      branches:
+        - main
       start_path: docs
       include: docs
       exclude:
