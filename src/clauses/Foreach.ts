@@ -19,7 +19,7 @@
 
 import type { CypherEnvironment } from "../Environment";
 import { Clause } from "./Clause";
-import { WithWith } from "./mixins/WithWith";
+import { WithWith } from "./mixins/clauses/WithWith";
 import { mixin } from "./utils/mixin";
 import type { DeleteClause } from "./sub-clauses/Delete";
 import type { SetClause } from "./sub-clauses/Set";

@@ -1,14 +1,17 @@
+[[filters-and-projections]]
+:description: This tutorial shows how to use filters and projections in Cypher Builder.
 = Filters and projections
 
 After learning how to write a basic `MATCH` and `RETURN` Cypher query in the xref:getting-started/querying.adoc[Querying] tutorial, you can now add filters and change the projection to only return some fields, as well as work with parameters.
 
 This tutorial shows how to achieve the resulting query when using the link:https://neo4j.com/docs/getting-started/appendix/example-data/#built-in-examples[Movies Dataset]:
 
-```cypher
+[source, cypher]
+----
 MATCH(m:Movie)
 WHERE (m.title = "The Matrix" AND m.released < 2000)
 RETURN m.title, m.tagline, m.released
-```
+----
 
 This query should return all movies with the title `"The Matrix"` released before the year of `2000`.
 It should return only the movie "The Matrix", released in 1999. 
@@ -20,30 +23,34 @@ Here is how you should proceed:
 
 . Use the method `.where`:
 +
-```javascript
+[source, javascript]
+----
 const clause = new Cypher.Match(movieNode)
     .where()
     .return(movieNode);
-```
+----
 
 . Then, add a condition to the filter:
 +
-```cypher
+[source, cypher]
+----
 m.title = "The Matrix"
-```
+----
 
 . Use the function `Cypher.eq()` to add the property `title` of the `movieNode` variable and compare them with an equality operator (`=`):
 +
-```javascript
+[source, javascript]
+----
 movieNode.property("title") 
-```
+----
 
 . Use the `Cypher.Param` class to add the string `"The Matrix"` as a parameter.
 It will replace the value with a suitable placeholder:
 +
-```javascript
+[source, javascript]
+----
 new Cypher.Param("The Matrix")
-```
+----
 +
 [NOTE]
 ====
@@ -52,41 +59,46 @@ Though it is possible to inject the string value into the query, it is good prac
 
 . Finally, your `MATCH` clause should now look like this:
 +
-```javascript
+[source, javascript]
+----
 const clause = new Cypher.Match(movieNode)
     .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
     .return(movieNode);
-```
+----
 
 . Run the script again (`node main.js`). 
 You should now get the following Cypher:
 +
-```cypher
+[source, cypher]
+----
 MATCH (this0:Movie)
 WHERE this0.title = $param0
 RETURN this0
-```
+----
 +
 That means `Movie` is now filtered by its title to a param, but the param itself is missing from the output.
 To fix that, you need to modify the build process at the end of the script:
 +
-```javascript
+[source, javascript]
+----
 const { cypher, params } = match.build();
 console.log(cypher);
 console.log(params);
-```
+----
 +
 Executing this script prompts the following Cypher query and its parameters:
 +
-```cypher
+[source, cypher]
+----
 MATCH (this0:Movie)
 WHERE this0.title = $param0
 RETURN this0
-```
+----
 +
-```javascript
+[source, javascript]
+----
 { param0: 'The Matrix' }
-```
+----
 
 === `AND` filtering
 
@@ -94,10 +106,11 @@ Here is how to add an `AND` filter to your query:
 
 . Use the method `.and` after `.where`, with a new `Cypher.eq` predicate:
 +
-```javascript
+[source, javascript]
+----
     .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
     .and(Cypher.lt(movieNode.property("released"), new Cypher.Param(2000)))
-```
+----
 +
 This takes the same parameters as `.where` and ensures the proper concatenation of the filters with `AND`.
 +
@@ -105,15 +118,17 @@ In this case, the function `Cypher.lt` will add the operator `<` (**l**ower **t*
 
 . Run the script again. You should get these results:
 +
-```cypher
+[source, cypher]
+----
 MATCH (this0:Movie)
 WHERE (this0.title = $param0 AND this0.released < $param1)
 RETURN this0
-```
+----
 +
-```javascript
+[source, javascript]
+----
 { param0: 'The Matrix', param1: 1999 }
-```
+----
 +
 [NOTE]
 ====
@@ -127,23 +142,26 @@ See more information about xref:getting-started/relationships-and-advanced-filte
 Returning the full node is usually not necessary, but you can do that by explicitly setting a projection in `RETURN`. 
 For example:
 
-```cypher
+[source, cypher]
+----
 RETURN m.title, m.tagline, m.released
-```
+----
 
 To define these columns, you can pass the variables into the `.return` method:
 
-```javascript
+[source, javascript]
+----
 .return(movieNode.property("title"), movieNode.property("tagline"), movieNode.property("year"));
-```
+----
 
 The returned Cypher now should have the explicit projection:
 
-```cypher
+[source, cypher]
+----
 MATCH (this0:Movie)
 WHERE (this0.title = $param0 AND this0.released < $param1)
 RETURN this0.title, this0.tagline, this0.released
-```
+----
 
 === Reusing variables
 
@@ -152,7 +170,8 @@ However, relying on the name of the properties might make maintenance unecessari
 
 To avoid that scenario, make sure both filters and projections use the same property variable (in this case, `movieNode.`):
 
-```javascript
+[source, javascript]
+----
 const titleProp = movieNode.property("title");
 const yearProp = movieNode.property("released");
 const taglineProp = movieNode.property("tagline");
@@ -161,7 +180,7 @@ const clause = new Cypher.Match(movieNode)
     .where(Cypher.eq(titleProp, new Cypher.Param("The Matrix")))
     .and(Cypher.lt(yearProp, new Cypher.Param(2000)))
     .return(titleProp, taglineProp, yearProp);
-```
+----
 
 That should keep different parts of the query in sync and also make the clause itself shorter.
 
@@ -176,7 +195,8 @@ See an example in xref:getting-started/relationships-and-advanced-filtering.adoc
 
 After going through all the steps previously described, your script should look like this:
 
-```javascript
+[source, javascript]
+----
 import Cypher from "@neo4j/cypher-builder";
 
 const movieNode = new Cypher.Node({
@@ -195,19 +215,21 @@ const clause = new Cypher.Match(movieNode)
 const { cypher, params } = clause.build();
 console.log(cypher);
 console.log(params);
-```
+----
 
 And its execution should show the following query:
 
-```cypher
+[source, cypher]
+----
 MATCH (this0:Movie)
 WHERE (this0.title = $param0 AND this0.released < $param1)
 RETURN this0.title, this0.tagline, this0.released
-```
+----
 
-```javascript
+[source, javascript]
+----
 { param0: 'The Matrix', param1: 2000 }
-```
+----
 
 With this, you already have the tools to write simple queries and to add parameters to it.
 

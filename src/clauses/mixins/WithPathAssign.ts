@@ -17,12 +17,12 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "./ClauseMixin";
 import type { Path } from "../../references/Path";
 import type { CypherEnvironment } from "../../Environment";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
+import { Mixin } from "./Mixin";
 
-export abstract class WithPathAssign extends ClauseMixin {
+export abstract class WithPathAssign extends Mixin {
     private pathVariable: Path | undefined;
 
     /** Add a path assignment to the pattern
