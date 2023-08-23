@@ -1,54 +1,63 @@
+[[querying]]
+:description: This guide shows how to create a simple Cypher query to `MATCH` and `RETURN` Movies using the Cypher Builder.
 = Querying
 
 This guide shows how to create a simple Cypher query to `MATCH` and `RETURN` Movies using the Cypher Builder:
 
-```cypher
+[source, cypher]
+----
 MATCH(m:Movie)
 RETURN m
-```
+----
 
 == Instructions
 
 . Define a node variable by creating a new instance of `Cypher.Node`:
 +
-```javascript
+[source, javascript]
+----
 const movieNode = new Cypher.Node({
   labels: ["Movie"]
 });
-```
+----
 
 . Create a `MATCH` clause and pass the node variable as an argument:
 +
-```javascript
+[source, javascript]
+----
 const clause = new Cypher.Match(movieNode);
-```
+----
 
 . To `RETURN` the Node variables, use the `.return` method in the `MATCH` clause:
 +
-```javascript
+[source, javascript]
+----
 clause.return(movieNode);
-```
+----
 
 .. Alternatively, you can do the same thing by creating the clause in a single statement:
 +
-```javascript
+[source, javascript]
+----
 const clause = new Cypher.Match(movieNode).return(movieNode);
-```
+----
 
 . After the query is ready, it is time to build it. 
 This step will generate the actual Cypher string that can be used in a Neo4j database:
 +
-```javascript
+[source, javascript]
+----
 const { cypher } = clause.build();
 
 console.log(cypher);
-```
+----
 
 == Conclusion
 
 Altogether, your script should look like this:
 
-```javascript
+[source, javascript]
+----
 import Cypher from "@neo4j/cypher-builder";
 
 const movieNode = new Cypher.Node({
@@ -60,14 +69,15 @@ const clause = new Cypher.Match(movieNode).return(movieNode);
 const { cypher } = clause.build();
 
 console.log(cypher);
-```
+----
 
 Now, if you execute `node main.js` again, it will output the following query:
 
-```cypher
+[source, cypher]
+----
 MATCH (this0:Movie)
 RETURN this0
-```
+----
 
 [NOTE]
 ====
