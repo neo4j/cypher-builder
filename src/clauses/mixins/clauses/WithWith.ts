@@ -17,12 +17,12 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "./ClauseMixin";
 import type { WithProjection } from "../../With";
 import { With } from "../../With";
+import { Mixin } from "../Mixin";
 
 // Sorry for this name, at least it is funny
-export abstract class WithWith extends ClauseMixin {
+export abstract class WithWith extends Mixin {
     protected withStatement: With | undefined;
 
     /** Add a {@link With} clause
