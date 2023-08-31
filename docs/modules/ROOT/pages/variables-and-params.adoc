@@ -9,7 +9,8 @@ This page shows how to use variables and parameters with Cypher Builder.
 Variables can be used in Cypher to reference parts of a pattern and hold values.
 For example:
 
-----Cypher
+[source, cypher]
+----
 MATCH (m:Movie)
 RETURN m
 ----
@@ -103,7 +104,8 @@ const pattern = new Cypher.Pattern(movie).related(relationship).to();
 const match = new Cypher.Match(pattern).return(movie);
 ----
 
-----Cypher
+[source, cypher]
+----
 MATCH (this0:Movie)-[this1:ACTED_IN]->(this2)
 RETURN this0
 ----
@@ -124,7 +126,7 @@ Parameters that can be passed to a Relationship:
 * `type`: a string with the type of the relationship.
 
 
-==== Escaping labels and types
+=== Escaping labels and types
 
 Labels and types will be automatically escaped if any uncommon character is detected. 
 For example:
@@ -135,7 +137,8 @@ const movie = new Cypher.Node({labels: ["My Movie"]});
 const match = new Cypher.Match(movie).return(movie);
 ----
 
-----Cypher
+[source, cypher]
+----
 MATCH (this0:`My Movie`)
 RETURN this0
 ----
@@ -181,7 +184,8 @@ const movie = new Cypher.NamedNode("n", {labels: ["Movie"]});
 const match = new Cypher.Match(movie).return(movie);
 ----
 
-----Cypher
+[source, cypher]
+----
 MATCH (n:Movie)
 RETURN n
 ----

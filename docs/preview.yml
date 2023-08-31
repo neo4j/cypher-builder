@@ -16,6 +16,8 @@ content:
 ui:
   bundle:
     url: https://static-content.neo4j.com/build/ui-bundle-latest.zip
+    snapshot: true
+  output_dir: /assets
 
 urls:
   html_extension_style: indexify
