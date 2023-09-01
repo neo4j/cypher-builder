@@ -17,35 +17,14 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../src";
 
-describe("RawCypher", () => {
-    test("Return a simple string as a clause", () => {
-        const rawQuery = new Cypher.RawCypher(() => {
-            const cypherStr = "RETURN $myParam as title";
-            return [
-                cypherStr,
-                {
-                    param: "My Title",
-                },
-            ];
-        });
-
-        const queryResult = rawQuery.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN $myParam as title"`);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param": "My Title",
-            }
-        `);
-    });
-
-    test("Create a custom query with RawCypher callback", () => {
+describe("Utils.compileCypher", () => {
+    test("Create a custom query with RawCypher callback using compileCypher", () => {
         const releasedParam = new Cypher.Param(1999);
 
         const rawCypher = new Cypher.RawCypher((env: Cypher.Environment) => {
-            const releasedParamId = env.compile(releasedParam); // Gets the raw Cypher for the param
+            const releasedParamId = Cypher.utils.compileCypher(releasedParam, env); // Gets the raw Cypher for the param
 
             const customCypher = `MATCH(n) WHERE n.title=$title_param AND n.released=${releasedParamId}`;
 
@@ -62,10 +41,10 @@ describe("RawCypher", () => {
         );
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": 1999,
-              "title_param": "The Matrix",
-            }
-        `);
+        {
+          "param0": 1999,
+          "title_param": "The Matrix",
+        }
+    `);
     });
 });

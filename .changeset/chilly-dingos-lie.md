@@ -2,7 +2,7 @@
 "@neo4j/cypher-builder": minor
 ---
 
-Adds `compile` method to environment. To be used within a RawCypher clause instead of `.getCypher`:
+Deprecates `Cypher.utils.compileCypher` and `.getCypher` in favor of `env.compile`:
 
 Previously:
 
@@ -10,6 +10,15 @@ Previously:
 new Cypher.RawCypher((env) => {
     const myVar = new Cypher.Variable();
     return myVar.getCypher(env);
+});
+```
+
+Or
+
+```js
+new Cypher.RawCypher((env) => {
+    const myVar = new Cypher.Variable();
+    return Cypher.utils.compileCypher(myVar, env);
 });
 ```
 
