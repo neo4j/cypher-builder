@@ -27,7 +27,7 @@ Note that these examples use ES6 modules, but CommonJS modules can be used as we
 [source, cmd]
 ----
 npm install --save @neo4j/cypher-builder
----
+----
 
 . Create a new file `main.js` with the following content:
 +

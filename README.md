@@ -31,7 +31,7 @@ console.log(params);
 _Cypher_
 
 ```cypher
-MATCH (this0:`Movie`)
+MATCH (this0:Movie)
 WHERE this0.title = $param0
 RETURN this0.title
 ```
