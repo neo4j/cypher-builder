@@ -29,7 +29,6 @@ export class Use extends Clause {
     private graph: string;
     private subClause: CypherASTNode;
 
-    // TODO: change this subClause into proper methods
     constructor(graph: string, subClause: Clause) {
         super();
         this.subClause = subClause.getRoot();
