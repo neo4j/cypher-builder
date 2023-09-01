@@ -10,4 +10,4 @@
 * How-to guides
 ** xref:how-to/customize-cypher.adoc[]
 * link:https://github.com/neo4j/cypher-builder/tree/main/examples[Examples]
-* link:/cypher-builder/reference[Reference]
+* link:https://neo4j.github.io/cypher-builder/reference/[Reference]

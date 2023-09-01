@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-import { ClauseMixin } from "./ClauseMixin";
 import type { ProjectionColumn } from "../../sub-clauses/Projection";
 import { Unwind } from "../../Unwind";
+import { Mixin } from "../Mixin";
 
-export abstract class WithUnwind extends ClauseMixin {
+export abstract class WithUnwind extends Mixin {
     protected unwindStatement: Unwind | undefined;
 
     /** Append an {@link Unwind} clause.
