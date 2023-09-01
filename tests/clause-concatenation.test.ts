@@ -19,7 +19,7 @@
 
 import Cypher from "../src";
 
-// TODO: ListComprehension.with ?
+// TODO: Implement missing methods in clauses
 describe("Clause concatenation", () => {
     describe("Match", () => {
         const clause = new Cypher.Match(new Cypher.Node());

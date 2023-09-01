@@ -45,6 +45,7 @@ jobs:
         run: |
           examples=$(find ./examples -name "*.ts")
           for example in $examples; do
+            echo "Run example $example"
             ts-node $example > /dev/null
             exit_code=$?
             if [ $exit_code -ne 0 ]; then
