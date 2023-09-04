@@ -57,6 +57,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.NEO4J_TEAM_GRAPHQL_PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  docs:
+    needs:
+      - release
+    if: ${{ needs.release.outputs.published == 'true' }}
+    uses: ./.github/workflows/docs.yml
+    secrets: inherit
 
   # slack-notify:
   #   needs:

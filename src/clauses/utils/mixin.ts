@@ -18,23 +18,34 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ClauseMixin } from "../mixins/clauses/ClauseMixin";
 
 type ConstructorType<T> = new (...args: any[]) => T;
 type AbstractConstructorType<T> = abstract new (...args: any[]) => T;
 
-export function mixin(...mixins: AbstractConstructorType<ClauseMixin>[]): any {
+/**
+ * Decorator for mixins. Support for adding mixins into classes
+ * Based on https://www.typescriptlang.org/docs/handbook/mixins.html
+ *
+ * All "Mixin" classes will be inherited by the decorated class. Note that mixin classes must be abstract
+ * Typings will not automatically be updated, but exporting an interface with the same name will fix typings
+ *
+ * @example
+ *  ```ts
+ * export interface MyClass extends WithName, WithAge
+ * \@mixin(WithName, WithAge)
+ * export class MyClass{}
+ * ```
+ */
+export function mixin(...mixins: AbstractConstructorType<any>[]) {
     return (constructor: ConstructorType<any>) => {
         return applyMixins(constructor, mixins);
     };
 }
 
-// Based on https://www.typescriptlang.org/docs/handbook/mixins.html
-/** Applies mixins into a class */
-function applyMixins<T>(
-    baseClass: ConstructorType<T>,
-    mixins: AbstractConstructorType<ClauseMixin>[]
-): ConstructorType<T> {
+/** Applies mixins into a class
+ * Based on https://www.typescriptlang.org/docs/handbook/mixins.html
+ */
+function applyMixins<T>(baseClass: ConstructorType<T>, mixins: AbstractConstructorType<unknown>[]): ConstructorType<T> {
     mixins.forEach((baseCtor) => {
         Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
             if (name !== "constructor") {

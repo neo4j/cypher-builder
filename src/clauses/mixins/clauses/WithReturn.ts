@@ -19,9 +19,9 @@
 
 import type { ProjectionColumn } from "../../sub-clauses/Projection";
 import { Return } from "../../Return";
-import { ClauseMixin } from "./ClauseMixin";
+import { Mixin } from "../Mixin";
 
-export abstract class WithReturn extends ClauseMixin {
+export abstract class WithReturn extends Mixin {
     protected returnStatement: Return | undefined;
 
     /** Append a {@link Return} clause
