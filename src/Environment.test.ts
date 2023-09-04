@@ -54,6 +54,26 @@ describe("Environment", () => {
         expect(environment.getReferenceId(variable1)).toBe(variable1Id);
     });
 
+    test("compile", () => {
+        const param = new Param("Hello");
+        const environment = new CypherEnvironment();
+
+        const str = environment.compile(param);
+
+        expect(environment.getParams()).toEqual({
+            param0: "Hello",
+        });
+        expect(str).toEqual("$param0");
+    });
+
+    test("compile not compilable should throw", () => {
+        const environment = new CypherEnvironment();
+        expect(() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            environment.compile({} as any);
+        }).toThrowError("Can't compile. Passing a non Cypher Builder element to env.compile");
+    });
+
     describe("prefix", () => {
         test("environment with a string prefix", () => {
             const environment = new CypherEnvironment("my-prefix");

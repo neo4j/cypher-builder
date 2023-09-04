@@ -25,6 +25,7 @@ import { isCypherCompilable } from "./is-cypher-compilable";
 /** Compiles a clause or expression to a Cypher string, adding optional prefix or suffix. To be used in a RawCypher callback
  *
  *  The prefix and suffix will only be added if the resulting Cypher is **not** an empty string
+ * @deprecated Use `env.compile` in a RawCypher callback instead
  */
 export function compileCypher(
     element: Expr | Clause,
