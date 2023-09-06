@@ -1,5 +1,42 @@
 # @neo4j/cypher-builder
 
+## 1.4.0
+
+### Minor Changes
+
+-   [#127](https://github.com/neo4j/cypher-builder/pull/127) [`574f5f6`](https://github.com/neo4j/cypher-builder/commit/574f5f6bd270e89285893a7da8e5c4e80467dea0) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates `Cypher.utils.compileCypher` and `.getCypher` in favor of `env.compile`:
+
+    Previously:
+
+    ```js
+    new Cypher.RawCypher((env) => {
+        const myVar = new Cypher.Variable();
+        return myVar.getCypher(env);
+    });
+    ```
+
+    Or
+
+    ```js
+    new Cypher.RawCypher((env) => {
+        const myVar = new Cypher.Variable();
+        return Cypher.utils.compileCypher(myVar, env);
+    });
+    ```
+
+    Now:
+
+    ```js
+    new Cypher.RawCypher((env) => {
+        const myVar = new Cypher.Variable();
+        return env.compile(myVar);
+    });
+    ```
+
+### Patch Changes
+
+-   [#139](https://github.com/neo4j/cypher-builder/pull/139) [`480d3b4`](https://github.com/neo4j/cypher-builder/commit/480d3b4e3f5efadf4b044806e9ddae61ebc7da74) Thanks [@angrykoala](https://github.com/angrykoala)! - Change mixins class hierarchy, removing intermediate "ClauseMixin"
+
 ## 1.3.0
 
 ### Minor Changes
