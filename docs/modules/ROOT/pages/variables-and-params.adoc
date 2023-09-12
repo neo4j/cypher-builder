@@ -367,7 +367,7 @@ const movie = new Cypher.Node({ labels: ["Movie"] });
 const titleProp = movie.property(movie);
 const titleLiteral = new Cypher.Literal("The Matrix")
 
-const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleParam)).return(titleParam);
+const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleLiteral)).return(titleLiteral);
 
 const {cypher, params} = query.build();
 ----
