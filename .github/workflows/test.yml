@@ -53,3 +53,23 @@ jobs:
               exit 1
             fi
           done
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs:
+      - test
+      - examples
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+      - name: Coverage
+        run: npm test -- --coverage
+
+      - name: Upload code coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage
+          path: coverage/lcov.info
