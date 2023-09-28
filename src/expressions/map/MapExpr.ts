@@ -39,7 +39,7 @@ export class MapExpr implements CypherCompilable {
     public set(key: string, value: Expr): void;
     public set(values: Record<string, Expr>): void;
     public set(keyOrValues: Record<string, Expr> | string, value?: Expr): void {
-        if (typeof keyOrValues === "string") {
+        if (typeof keyOrValues == "string") {
             this.setField(keyOrValues, value);
         } else {
             Object.entries(keyOrValues).forEach(([key, value]) => {
