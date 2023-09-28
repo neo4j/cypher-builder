@@ -37,7 +37,10 @@ jobs:
             fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/coverage.zip`, Buffer.from(download.data));
 
       - name: "Unzip artifact"
-        run: unzip coverage.zip
+        run: |
+          unzip lcov_info.zip
+          mkdir coverage
+          mv lcov.info coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
