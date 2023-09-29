@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
-import type { ListExpr as List } from "../expressions/list/ListExpr";
-import type { MapExpr as Map } from "../expressions/map/MapExpr";
-import { Literal } from "../references/Literal";
-import { normalizeVariable } from "../utils/normalize-variable";
-import { VoidCypherProcedure } from "../procedures/CypherProcedure";
-import { CypherFunction } from "../expressions/functions/CypherFunctions";
-import type { Predicate } from "../types";
+import type { ListExpr as List } from "../../expressions/list/ListExpr";
+import type { MapExpr as Map } from "../../expressions/map/MapExpr";
+import { Literal } from "../../references/Literal";
+import { normalizeVariable } from "../../utils/normalize-variable";
+import { VoidCypherProcedure } from "../../procedures/CypherProcedure";
+import { CypherFunction } from "../../expressions/functions/CypherFunctions";
+import type { Predicate } from "../../types";
 
 /**
  * @group Procedures
