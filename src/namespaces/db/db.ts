@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { CypherProcedure } from "../CypherProcedure";
+import { CypherProcedure } from "../../procedures/CypherProcedure";
 
 export * as index from "./dbIndex";
 

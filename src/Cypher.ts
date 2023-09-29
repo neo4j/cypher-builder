@@ -51,7 +51,7 @@ export { Count } from "./expressions/subquery/Count";
 export { Case } from "./expressions/Case";
 
 // --Apoc
-export * as apoc from "./apoc/apoc";
+export * as apoc from "./namespaces/apoc/apoc";
 
 // --Lists
 export { ListComprehension } from "./expressions/list/ListComprehension";
@@ -143,7 +143,7 @@ export { any, all, exists, single, none, isEmpty } from "./expressions/functions
 // Procedures
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
 
-export * as db from "./procedures/db/db";
+export * as db from "./namespaces/db/db";
 
 // Types
 export type { CypherResult } from "./types";
