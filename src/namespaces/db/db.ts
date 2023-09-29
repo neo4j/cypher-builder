@@ -17,7 +17,10 @@
  * limitations under the License.
  */
 
+import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 import { CypherProcedure } from "../../procedures/CypherProcedure";
+import type { Expr } from "../../types";
+import { normalizeExpr } from "../../utils/normalize-variable";
 
 export * as index from "./dbIndex";
 
@@ -27,4 +30,13 @@ export * as index from "./dbIndex";
  */
 export function labels(): CypherProcedure<"label"> {
     return new CypherProcedure("db.labels");
+}
+
+/**
+ * @see [Neo4j Documentation](https://neo4j.com/docs/cypher-manual/current/functions/database/#functions-database-nameFromElementId)
+ * @group Functions
+ */
+export function nameFromElementId(dbName: Expr | string): CypherFunction {
+    const dbNameExpr = normalizeExpr(dbName);
+    return new CypherFunction("db.nameFromElementId", [dbNameExpr]);
 }
