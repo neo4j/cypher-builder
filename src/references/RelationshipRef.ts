@@ -32,7 +32,7 @@ export type RelationshipInput = {
 export type RelationshipProperties = Record<string, Param<unknown>>;
 
 type RelationshipRefOptions = {
-    type?: string;
+    type?: string | LabelExpr;
 };
 
 /** Reference to a relationship property
@@ -41,7 +41,7 @@ type RelationshipRefOptions = {
 export class RelationshipRef extends Variable {
     private _type: string | LabelExpr | undefined;
 
-    constructor(input: { type?: string | LabelExpr } = {}) {
+    constructor(input: RelationshipRefOptions = {}) {
         super();
         this.prefix = "this";
         this._type = input.type ?? undefined;
