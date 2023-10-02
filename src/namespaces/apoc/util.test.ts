@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../..";
 describe("apoc.util", () => {
     describe("Validate", () => {
         test("Simple Validate", () => {

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
-import { CypherFunction } from "../expressions/functions/CypherFunctions";
+import Cypher from "../..";
+import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 
 /**
  * @group Cypher Functions

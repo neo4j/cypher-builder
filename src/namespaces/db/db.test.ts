@@ -19,6 +19,7 @@
 
 import Cypher from "../../index";
 import { Param } from "../../references/Param";
+import { TestClause } from "../../utils/TestClause";
 
 describe("db procedures", () => {
     describe("db.index.fulltext.queryNodes", () => {
@@ -159,5 +160,25 @@ describe("db procedures", () => {
                 Cypher.db.labels().yield();
             }).toThrowError("Empty projection in CALL ... YIELD");
         });
+    });
+});
+
+describe("db functions", () => {
+    test("db.nameFromElementId with string", () => {
+        const dbNameFromElementId = Cypher.db.nameFromElementId("1234");
+        const { cypher, params } = new TestClause(dbNameFromElementId).build();
+
+        expect(cypher).toMatchInlineSnapshot(`"db.nameFromElementId(\\"1234\\")"`);
+        expect(params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("db.nameFromElementId with variable", () => {
+        const varId = new Cypher.Variable();
+        const dbNameFromElementId = Cypher.db.nameFromElementId(varId);
+
+        const { cypher, params } = new TestClause(dbNameFromElementId).build();
+
+        expect(cypher).toMatchInlineSnapshot(`"db.nameFromElementId(var0)"`);
+        expect(params).toMatchInlineSnapshot(`{}`);
     });
 });
