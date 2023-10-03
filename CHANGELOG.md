@@ -1,5 +1,15 @@
 # @neo4j/cypher-builder
 
+## 1.5.0
+
+### Minor Changes
+
+-   [#171](https://github.com/neo4j/cypher-builder/pull/171) [`888dca7`](https://github.com/neo4j/cypher-builder/commit/888dca7e2a98be8f6fe45a585fdfabe45bab4b87) Thanks [@angrykoala](https://github.com/angrykoala)! - Adds `db.nameFromElementId` function
+
+### Patch Changes
+
+-   [#148](https://github.com/neo4j/cypher-builder/pull/148) [`6f6b48e`](https://github.com/neo4j/cypher-builder/commit/6f6b48e4d01864a8f4f261c620cd2352e1db6484) Thanks [@jhanggi](https://github.com/jhanggi)! - Fix typing to allow NamedRelationship to accept a LabelExpr
+
 ## 1.4.0
 
 ### Minor Changes
