@@ -17,17 +17,17 @@
  * limitations under the License.
  */
 
-import type { CypherEnvironment } from "../Environment";
 import type { CypherASTNode } from "../CypherASTNode";
+import type { CypherEnvironment } from "../Environment";
 import type { Variable } from "../references/Variable";
-import { Clause } from "./Clause";
-import { padBlock } from "../utils/pad-block";
-import { ImportWith } from "./sub-clauses/ImportWith";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { mixin } from "./utils/mixin";
-import { WithWith } from "./mixins/clauses/WithWith";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { padBlock } from "../utils/pad-block";
+import { Clause } from "./Clause";
+import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
+import { WithWith } from "./mixins/clauses/WithWith";
+import { ImportWith } from "./sub-clauses/ImportWith";
+import { mixin } from "./utils/mixin";
 
 export interface Call extends WithReturn, WithWith, WithUnwind {}
 

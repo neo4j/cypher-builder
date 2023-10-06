@@ -54,7 +54,8 @@ export class CypherEnvironment {
     }
 
     public compile(element: CypherCompilable): string {
-        if (!isCypherCompilable(element)) throw new Error("Can't compile. Passing a non Cypher Builder element to env.compile");
+        if (!isCypherCompilable(element))
+            throw new Error("Can't compile. Passing a non Cypher Builder element to env.compile");
 
         return element.getCypher(this);
     }

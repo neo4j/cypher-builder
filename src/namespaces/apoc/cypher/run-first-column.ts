@@ -92,12 +92,15 @@ class RunFirstColumnFunction extends CypherFunction {
     }
 
     private convertArrayToParams(env: CypherEnvironment, variables: Variable[]): string {
-        const params = variables.reduce((acc, variable) => {
-            const globalScopeName = variable.getCypher(env);
-            const key = env.getReferenceId(variable);
-            acc[key] = globalScopeName;
-            return acc;
-        }, {} as Record<string, string>);
+        const params = variables.reduce(
+            (acc, variable) => {
+                const globalScopeName = variable.getCypher(env);
+                const key = env.getReferenceId(variable);
+                acc[key] = globalScopeName;
+                return acc;
+            },
+            {} as Record<string, string>
+        );
 
         const paramsStr = Object.entries(params)
             .map(([key, value]) => {

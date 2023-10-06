@@ -45,10 +45,13 @@ export abstract class PatternElement<T extends NodeRef | RelationshipRef> implem
 
     protected serializeParameters(parameters: NodeProperties | RelationshipProperties, env: CypherEnvironment): string {
         if (Object.keys(parameters).length === 0) return "";
-        const paramValues = Object.entries(parameters).reduce((acc, [key, param]) => {
-            acc[key] = param.getCypher(env);
-            return acc;
-        }, {} as Record<string, string>);
+        const paramValues = Object.entries(parameters).reduce(
+            (acc, [key, param]) => {
+                acc[key] = param.getCypher(env);
+                return acc;
+            },
+            {} as Record<string, string>
+        );
 
         return padLeft(stringifyObject(paramValues));
     }

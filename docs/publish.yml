@@ -58,5 +58,5 @@ asciidoc:
     common-license-page-uri: https://neo4j.com/docs/license/
     check-mark: icon:check[]
     cross-mark: icon:times[]
-    neo4j-base-uri: ''
+    neo4j-base-uri: ""
     neo4j-docs-base-uri: /docs

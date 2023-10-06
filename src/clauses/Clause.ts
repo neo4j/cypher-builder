@@ -21,8 +21,8 @@ import { CypherASTNode } from "../CypherASTNode";
 import type { EnvPrefix } from "../Environment";
 import { CypherEnvironment } from "../Environment";
 import type { CypherResult } from "../types";
-import { toCypherParams } from "../utils/to-cypher-params";
 import { padBlock } from "../utils/pad-block";
+import { toCypherParams } from "../utils/to-cypher-params";
 
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 
