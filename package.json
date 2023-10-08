@@ -55,7 +55,7 @@
         "jest-extended": "4.0.1",
         "neo4j-driver": "^5.9.2",
         "ts-jest": "29.1.1",
-        "typedoc": "0.25.1",
+        "typedoc": "0.25.2",
         "typescript": "^5.1.6"
     }
 }
