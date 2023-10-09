@@ -23,10 +23,10 @@ import { Clause } from "./Clause";
 
 type RawCypherCallback = (env: CypherEnvironment) => [string, Record<string, unknown>] | string | undefined;
 
-/** For compatibility reasons, allows for a raw string to be used as a clause
+/** Allows for a raw string to be used as a clause
  * @group Other
  */
-export class RawCypher extends Clause {
+export class Raw extends Clause {
     private callback: RawCypherCallback;
 
     constructor(callback: RawCypherCallback | string) {
@@ -56,3 +56,9 @@ export class RawCypher extends Clause {
         return () => str;
     }
 }
+
+/** Allows for a raw string to be used as a clause
+ * @group Other
+ * @deprecated use {@link Raw} instead
+ */
+export const RawCypher = Raw;

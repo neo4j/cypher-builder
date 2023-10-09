@@ -21,7 +21,7 @@ import Cypher from "..";
 
 // RETURN 10 as myVal
 
-const customReturn = new Cypher.RawCypher(`10 as myVal`);
+const customReturn = new Cypher.Raw(`10 as myVal`);
 
 const returnClause = new Cypher.Return(customReturn);
 

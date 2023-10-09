@@ -389,7 +389,7 @@ describe("CypherBuilder Match", () => {
                 labels: ["Movie"],
             });
 
-            const matchQuery = new Cypher.Match(movieNode).where(new Cypher.RawCypher("")).return(movieNode);
+            const matchQuery = new Cypher.Match(movieNode).where(new Cypher.Raw("")).return(movieNode);
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
