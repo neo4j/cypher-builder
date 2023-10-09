@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../src";
 
 describe("RawCypher", () => {
     test("Return a simple string as a clause", () => {

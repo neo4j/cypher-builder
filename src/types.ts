@@ -17,25 +17,25 @@
  * limitations under the License.
  */
 
-import type { PropertyRef } from "./references/PropertyRef";
-import type { CypherFunction } from "./expressions/functions/CypherFunctions";
-import type { Literal } from "./references/Literal";
-import type { Exists } from "./expressions/subquery/Exists";
+import type { Raw } from ".";
 import type { CypherEnvironment } from "./Environment";
+import type { Case } from "./expressions/Case";
+import type { HasLabel } from "./expressions/HasLabel";
+import type { CypherFunction } from "./expressions/functions/CypherFunctions";
+import type { PredicateFunction } from "./expressions/functions/predicate";
+import type { ListComprehension } from "./expressions/list/ListComprehension";
+import type { ListExpr } from "./expressions/list/ListExpr";
+import type { ListIndex } from "./expressions/list/ListIndex";
+import type { PatternComprehension } from "./expressions/list/PatternComprehension";
 import type { MapExpr } from "./expressions/map/MapExpr";
+import type { MapProjection } from "./expressions/map/MapProjection";
 import type { BooleanOp } from "./expressions/operations/boolean";
 import type { ComparisonOp } from "./expressions/operations/comparison";
-import type { RawCypher } from "./clauses/RawCypher";
-import type { PredicateFunction } from "./expressions/functions/predicate";
-import type { Case } from "./expressions/Case";
 import type { MathOp } from "./expressions/operations/math";
-import type { ListComprehension } from "./expressions/list/ListComprehension";
-import type { PatternComprehension } from "./expressions/list/PatternComprehension";
-import type { ListExpr } from "./expressions/list/ListExpr";
-import type { MapProjection } from "./expressions/map/MapProjection";
-import type { HasLabel } from "./expressions/HasLabel";
-import type { ListIndex } from "./expressions/list/ListIndex";
 import type { Count } from "./expressions/subquery/Count";
+import type { Exists } from "./expressions/subquery/Exists";
+import type { Literal } from "./references/Literal";
+import type { PropertyRef } from "./references/PropertyRef";
 import type { Variable } from "./references/Variable";
 
 export type Operation = BooleanOp | ComparisonOp | MathOp;
@@ -58,11 +58,11 @@ export type Expr =
     | ListIndex
     | Case<ComparisonOp>;
 
-/** Represents a predicate statement (i.e returns a boolean). Note that RawCypher is only added for compatibility */
+/** Represents a predicate statement (i.e returns a boolean). Note that Raw is only added for compatibility */
 export type Predicate =
     | BooleanOp
     | ComparisonOp
-    | RawCypher
+    | Raw
     | Exists
     | Count
     | PredicateFunction

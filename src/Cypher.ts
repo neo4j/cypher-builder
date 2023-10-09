@@ -18,127 +18,127 @@
  */
 
 // Clauses
-export { Match, OptionalMatch } from "./clauses/Match";
-export { Create } from "./clauses/Create";
-export { Merge } from "./clauses/Merge";
 export { Call } from "./clauses/Call";
-export { Use } from "./clauses/Use";
-export { Return } from "./clauses/Return";
-export { RawCypher } from "./clauses/RawCypher";
-export { With } from "./clauses/With";
-export { Unwind } from "./clauses/Unwind";
-export { Union } from "./clauses/Union";
+export { Create } from "./clauses/Create";
 export { Foreach } from "./clauses/Foreach";
+export { Match, OptionalMatch } from "./clauses/Match";
+export { Merge } from "./clauses/Merge";
+export { Raw, RawCypher } from "./clauses/Raw";
+export { Return } from "./clauses/Return";
+export { Union } from "./clauses/Union";
+export { Unwind } from "./clauses/Unwind";
+export { Use } from "./clauses/Use";
+export { With } from "./clauses/With";
 
 export { concat } from "./clauses/utils/concat";
 
 // Patterns
-export { Pattern } from "./pattern/Pattern";
 export { labelExpr } from "./expressions/labels/label-expressions";
+export { Pattern } from "./pattern/Pattern";
 
 // Variables and references
-export { NodeRef as Node, NamedNode } from "./references/NodeRef";
-export { RelationshipRef as Relationship, NamedRelationship } from "./references/RelationshipRef";
-export { Param, NamedParam } from "./references/Param";
-export { NamedVariable, Variable } from "./references/Variable";
-export { Literal, CypherNull as Null, CypherTrue as true, CypherFalse as false } from "./references/Literal";
-export { Path, NamedPath } from "./references/Path";
+export { Literal, CypherNull as Null, CypherFalse as false, CypherTrue as true } from "./references/Literal";
+export { NamedNode, NodeRef as Node } from "./references/NodeRef";
+export { NamedParam, Param } from "./references/Param";
+export { NamedPath, Path } from "./references/Path";
 export { PropertyRef as Property } from "./references/PropertyRef";
+export { NamedRelationship, RelationshipRef as Relationship } from "./references/RelationshipRef";
+export { NamedVariable, Variable } from "./references/Variable";
 
 // Expressions
-export { Exists } from "./expressions/subquery/Exists";
-export { Count } from "./expressions/subquery/Count";
 export { Case } from "./expressions/Case";
+export { Count } from "./expressions/subquery/Count";
+export { Exists } from "./expressions/subquery/Exists";
 
 // --Apoc
 export * as apoc from "./namespaces/apoc/apoc";
 
 // --Lists
 export { ListComprehension } from "./expressions/list/ListComprehension";
-export { PatternComprehension } from "./expressions/list/PatternComprehension";
 export { ListExpr as List } from "./expressions/list/ListExpr";
+export { PatternComprehension } from "./expressions/list/PatternComprehension";
 
 // --Map
 export { MapExpr as Map } from "./expressions/map/MapExpr";
 export { MapProjection } from "./expressions/map/MapProjection";
 
 // --Operations
-export { or, and, not, xor } from "./expressions/operations/boolean";
+export { and, not, or, xor } from "./expressions/operations/boolean";
 export {
+    contains,
+    endsWith,
     eq,
-    neq,
     gt,
     gte,
+    inOp as in,
+    isNotNull,
+    isNull,
     lt,
     lte,
-    isNull,
-    isNotNull,
-    inOp as in,
-    contains,
-    startsWith,
-    endsWith,
     matches,
+    neq,
+    startsWith,
 } from "./expressions/operations/comparison";
-export { plus, minus, divide, multiply, mod, pow } from "./expressions/operations/math";
+export { divide, minus, mod, multiply, plus, pow } from "./expressions/operations/math";
 
 // --Functions
 export { CypherFunction as Function } from "./expressions/functions/CypherFunctions";
 
 export {
-    cypherDatetime as datetime,
-    cypherDate as date,
-    cypherLocalTime as localtime,
-    cypherLocalDatetime as localdatetime,
-    cypherTime as time,
-    duration,
-    TemporalUnit,
-} from "./expressions/functions/temporal";
-export * from "./expressions/functions/scalar";
-export {
-    count,
-    min,
-    max,
     avg,
-    sum,
     collect,
+    count,
+    max,
+    min,
     percentileCont,
     percentileDisc,
     stDev,
     stDevP,
+    sum,
 } from "./expressions/functions/aggregation";
-export * from "./expressions/functions/string";
+export * as graph from "./expressions/functions/graph";
 export * from "./expressions/functions/list";
-export * from "./expressions/functions/spatial";
-export * from "./expressions/functions/path";
 export {
     abs,
-    ceil,
-    floor,
-    cypherIsNaN as isNaN,
-    rand,
-    round,
-    sign,
-    e,
-    exp,
-    log,
-    log10,
-    sqrt,
     acos,
     asin,
     atan,
     atan2,
+    ceil,
     cos,
     cot,
     degrees,
+    e,
+    exp,
+    floor,
     haversin,
+    cypherIsNaN as isNaN,
+    log,
+    log10,
     pi,
     radians,
+    rand,
+    round,
+    sign,
     sin,
+    sqrt,
     tan,
 } from "./expressions/functions/math";
-export * as graph from "./expressions/functions/graph";
+export * from "./expressions/functions/path";
+export * from "./expressions/functions/scalar";
+export * from "./expressions/functions/spatial";
+export * from "./expressions/functions/string";
+export {
+    TemporalUnit,
+    cypherDate as date,
+    cypherDatetime as datetime,
+    duration,
+    cypherLocalDatetime as localdatetime,
+    cypherLocalTime as localtime,
+    cypherTime as time,
+} from "./expressions/functions/temporal";
 
-export { any, all, exists, single, none, isEmpty } from "./expressions/functions/predicate";
+export { all, any, exists, isEmpty, none, single } from "./expressions/functions/predicate";
 
 // Procedures
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
@@ -146,21 +146,20 @@ export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } fr
 export * as db from "./namespaces/db/db";
 
 // Types
-export type { CypherResult } from "./types";
-export type { Clause } from "./clauses/Clause";
 export type { CypherEnvironment as Environment } from "./Environment";
-export type { ComparisonOp } from "./expressions/operations/comparison";
-export type { BooleanOp } from "./expressions/operations/boolean";
-export type { Expr, Predicate, Operation } from "./types";
-export type { Yield } from "./procedures/Yield";
+export type { Clause } from "./clauses/Clause";
+export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
-export type { PredicateFunction } from "./expressions/functions/predicate";
-export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { CompositeClause } from "./clauses/utils/concat";
-export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
-export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation";
 export type { HasLabel } from "./expressions/HasLabel";
+export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation";
+export type { PredicateFunction } from "./expressions/functions/predicate";
+export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
+export type { BooleanOp } from "./expressions/operations/boolean";
+export type { ComparisonOp } from "./expressions/operations/comparison";
+export type { Yield } from "./procedures/Yield";
+export type { CypherResult, Expr, Operation, Predicate } from "./types";
 export type { InputArgument } from "./utils/normalize-variable";
 
 // utils

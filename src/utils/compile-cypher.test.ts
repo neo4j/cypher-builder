@@ -20,14 +20,14 @@
 import Cypher from "..";
 
 describe("utils.compileCypher", () => {
-    test("compile cypher in RawCypher", () => {
+    test("compile cypher in Raw", () => {
         const matchClause = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).where(
             Cypher.eq(new Cypher.Literal("first"), new Cypher.Param("first"))
         );
         const secondMatch = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).where(
             Cypher.eq(new Cypher.Literal("Hello"), new Cypher.Param("Hello"))
         );
-        const raw = new Cypher.RawCypher((env) => {
+        const raw = new Cypher.Raw((env) => {
             return Cypher.utils.compileCypher(secondMatch, env);
         });
 
@@ -59,7 +59,7 @@ describe("utils.compileCypher", () => {
     });
 
     test("fails if element is not compilable", () => {
-        const raw = new Cypher.RawCypher((env) => {
+        const raw = new Cypher.Raw((env) => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             return Cypher.utils.compileCypher({} as any, env);
         });
@@ -74,7 +74,7 @@ describe("utils.compileCypher", () => {
                 return undefined;
             },
         };
-        const raw = new Cypher.RawCypher((env) => {
+        const raw = new Cypher.Raw((env) => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             return Cypher.utils.compileCypher(fakeClause as any, env);
         });

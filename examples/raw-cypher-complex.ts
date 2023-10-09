@@ -26,7 +26,7 @@ import Cypher from "..";
 const movie = new Cypher.Node({ labels: ["Movie"] });
 const match = new Cypher.Match(movie)
     .where(
-        new Cypher.RawCypher((env) => {
+        new Cypher.Raw((env) => {
             const movieStr = env.compile(movie);
 
             const cypher = `${movieStr}.prop = $myParam`;
