@@ -46,7 +46,7 @@
         "@changesets/cli": "^2.26.2",
         "@tsconfig/node16": "^16.1.0",
         "@types/jest": "29.5.5",
-        "@types/node": "20.8.2",
+        "@types/node": "20.8.3",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
         "@typescript-eslint/parser": "^6.0.0",
         "eslint": "^8.43.0",
@@ -57,7 +57,7 @@
         "neo4j-driver": "^5.9.2",
         "prettier": "^3.0.3",
         "ts-jest": "29.1.1",
-        "typedoc": "0.25.1",
+        "typedoc": "0.25.2",
         "typescript": "^5.1.6"
     }
 }
