@@ -2,6 +2,9 @@
     "endOfLine": "auto",
     "tabWidth": 4,
     "printWidth": 120,
+    "trailingComma": "es5",
+    "bracketSameLine": true,
+    "semi": true,
     "overrides": [
         {
             "files": ["*.yaml", "*.yml"],

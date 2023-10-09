@@ -31,3 +31,16 @@ jobs:
         run: go install github.com/google/addlicense@latest
       - name: Run addlicense
         run: addlicense -f ./addlicense -check $(find . -name "*.ts" -type f -print0 | xargs -0)
+
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js lts/*
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+      - run: npm install
+      - name: "Run Prettier"
+        run: npm run prettier

@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import { filterTruthy } from "../../utils/filter-truthy";
 import type { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
+import { filterTruthy } from "../../utils/filter-truthy";
 import { Clause } from "../Clause";
 
 /** The result of multiple clauses concatenated with {@link concat}
@@ -31,7 +31,10 @@ export class CompositeClause extends Clause {
     /**
      * @internal
      */
-    constructor(children: Array<Clause | undefined>, private separator: string) {
+    constructor(
+        children: Array<Clause | undefined>,
+        private separator: string
+    ) {
         super();
         this._children = [];
         this.concat(...children);
