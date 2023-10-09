@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 1.5.1
+
+### Patch Changes
+
+-   [#185](https://github.com/neo4j/cypher-builder/pull/185) [`75e083e`](https://github.com/neo4j/cypher-builder/commit/75e083eb166f476e8bfe2432e16448bce3452b11) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates `Cypher.RawCypher` in favor of `Cypher.Raw`
+
 ## 1.5.0
 
 ### Minor Changes
