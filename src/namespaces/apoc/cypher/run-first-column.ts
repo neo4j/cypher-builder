@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-import type { Clause } from "../../../clauses/Clause";
-import type { Variable } from "../../../references/Variable";
 import type { CypherEnvironment } from "../../../Environment";
-import { MapExpr } from "../../../expressions/map/MapExpr";
+import type { Clause } from "../../../clauses/Clause";
 import { CypherFunction } from "../../../expressions/functions/CypherFunctions";
+import { MapExpr } from "../../../expressions/map/MapExpr";
+import type { Variable } from "../../../references/Variable";
 import type { Expr } from "../../../types";
 
 /**
@@ -92,15 +92,12 @@ class RunFirstColumnFunction extends CypherFunction {
     }
 
     private convertArrayToParams(env: CypherEnvironment, variables: Variable[]): string {
-        const params = variables.reduce(
-            (acc, variable) => {
-                const globalScopeName = variable.getCypher(env);
-                const key = env.getReferenceId(variable);
-                acc[key] = globalScopeName;
-                return acc;
-            },
-            {} as Record<string, string>
-        );
+        const params = variables.reduce((acc: Record<string, string>, variable) => {
+            const globalScopeName = variable.getCypher(env);
+            const key = env.getReferenceId(variable);
+            acc[key] = globalScopeName;
+            return acc;
+        }, {});
 
         const paramsStr = Object.entries(params)
             .map(([key, value]) => {
