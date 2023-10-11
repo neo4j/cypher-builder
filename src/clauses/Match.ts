@@ -17,20 +17,20 @@
  * limitations under the License.
  */
 
-import { Pattern } from "../pattern/Pattern";
-import { Clause } from "./Clause";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { mixin } from "./utils/mixin";
-import { WithWhere } from "./mixins/sub-clauses/WithWhere";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
-import { WithWith } from "./mixins/clauses/WithWith";
-import { WithPathAssign } from "./mixins/WithPathAssign";
-import type { PropertyRef } from "../references/PropertyRef";
-import { RemoveClause } from "./sub-clauses/Remove";
 import type { CypherEnvironment } from "../Environment";
+import { Pattern } from "../pattern/Pattern";
 import type { NodeRef } from "../references/NodeRef";
+import type { PropertyRef } from "../references/PropertyRef";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { Clause } from "./Clause";
+import { WithPathAssign } from "./mixins/WithPathAssign";
+import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere";
+import { RemoveClause } from "./sub-clauses/Remove";
+import { mixin } from "./utils/mixin";
 
 export interface Match extends WithReturn, WithWhere, WithSet, WithWith, WithPathAssign, WithDelete {}
 
@@ -43,6 +43,8 @@ export class Match extends Clause {
     private pattern: Pattern;
     private removeClause: RemoveClause | undefined;
     private _optional = false;
+
+    private addTest = false;
 
     constructor(pattern: NodeRef | Pattern) {
         super();
@@ -74,6 +76,11 @@ export class Match extends Clause {
         return this;
     }
 
+    public test(): this {
+        this.addTest = true;
+        return this;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathAssignStr = this.compilePath(env);
@@ -88,7 +95,9 @@ export class Match extends Clause {
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const optionalMatch = this._optional ? "OPTIONAL " : "";
 
-        return `${optionalMatch}MATCH ${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${withCypher}${returnCypher}`;
+        return `${optionalMatch}MATCH ${
+            this.addTest ? "TEST" : ""
+        }${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${withCypher}${returnCypher}`;
     }
 }
 
