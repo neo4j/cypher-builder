@@ -18,13 +18,13 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import type { ProjectionColumn } from "./sub-clauses/Projection";
-import { Projection } from "./sub-clauses/Projection";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithWith } from "./mixins/clauses/WithWith";
-import { mixin } from "./utils/mixin";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import type { ProjectionColumn } from "./sub-clauses/Projection";
+import { Projection } from "./sub-clauses/Projection";
+import { mixin } from "./utils/mixin";
 
 export interface Unwind extends WithWith, WithDelete {}
 
@@ -48,8 +48,9 @@ export class Unwind extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const projectionStr = this.projection.getCypher(env);
-        const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        return `UNWIND ${projectionStr}${deleteStr}${withStr}`;
+        const nextClause = this.compileNextClause(env);
+
+        return `UNWIND ${projectionStr}${deleteStr}${nextClause}`;
     }
 }

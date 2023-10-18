@@ -17,20 +17,20 @@
  * limitations under the License.
  */
 
-import { Pattern } from "../pattern/Pattern";
-import { Clause } from "./Clause";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { mixin } from "./utils/mixin";
-import { WithWhere } from "./mixins/sub-clauses/WithWhere";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
-import { WithWith } from "./mixins/clauses/WithWith";
-import { WithPathAssign } from "./mixins/WithPathAssign";
-import type { PropertyRef } from "../references/PropertyRef";
-import { RemoveClause } from "./sub-clauses/Remove";
 import type { CypherEnvironment } from "../Environment";
+import { Pattern } from "../pattern/Pattern";
 import type { NodeRef } from "../references/NodeRef";
+import type { PropertyRef } from "../references/PropertyRef";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { Clause } from "./Clause";
+import { WithPathAssign } from "./mixins/WithPathAssign";
+import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere";
+import { RemoveClause } from "./sub-clauses/Remove";
+import { mixin } from "./utils/mixin";
 
 export interface Match extends WithReturn, WithWhere, WithSet, WithWith, WithPathAssign, WithDelete {}
 
@@ -81,14 +81,14 @@ export class Match extends Clause {
         const patternCypher = this.pattern.getCypher(env);
 
         const whereCypher = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
-        const returnCypher = compileCypherIfExists(this.returnStatement, env, { prefix: "\n" });
+
+        const nextClause = this.compileNextClause(env);
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
-        const withCypher = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const optionalMatch = this._optional ? "OPTIONAL " : "";
 
-        return `${optionalMatch}MATCH ${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${withCypher}${returnCypher}`;
+        return `${optionalMatch}MATCH ${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 }
 

@@ -18,17 +18,17 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { Projection } from "./sub-clauses/Projection";
-import type { Expr } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { Literal } from "../references/Literal";
 import type { Variable } from "../references/Variable";
+import type { Expr } from "../types";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithReturn } from "./mixins/clauses/WithReturn";
-import { WithWhere } from "./mixins/sub-clauses/WithWhere";
-import { mixin } from "./utils/mixin";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere";
+import { Projection } from "./sub-clauses/Projection";
+import { mixin } from "./utils/mixin";
 
 // With requires an alias for expressions that are not variables
 export type WithProjection = Variable | [Expr, string | Variable | Literal];
@@ -64,13 +64,14 @@ export class With extends Clause {
     public getCypher(env: CypherEnvironment): string {
         const projectionStr = this.projection.getCypher(env);
         const orderByStr = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
-        const returnStr = compileCypherIfExists(this.returnStatement, env, { prefix: "\n" });
         const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const distinctStr = this.isDistinct ? " DISTINCT" : "";
 
-        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${returnStr}`;
+        const nextClause = this.compileNextClause(env);
+
+        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${nextClause}`;
     }
 
     // Cannot be part of WithWith due to dependency cycles

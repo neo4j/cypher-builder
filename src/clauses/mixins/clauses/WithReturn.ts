@@ -17,13 +17,11 @@
  * limitations under the License.
  */
 
-import type { ProjectionColumn } from "../../sub-clauses/Projection";
 import { Return } from "../../Return";
-import { Mixin } from "../Mixin";
+import type { ProjectionColumn } from "../../sub-clauses/Projection";
+import { MixinClause } from "../Mixin";
 
-export abstract class WithReturn extends Mixin {
-    protected returnStatement: Return | undefined;
-
+export abstract class WithReturn extends MixinClause {
     /** Append a {@link Return} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/return/)
      */
@@ -38,18 +36,20 @@ export abstract class WithReturn extends Mixin {
     }
 
     private addColumnsToReturnClause(...columns: Array<"*" | ProjectionColumn>): Return {
-        let returnStatement = this.returnStatement;
-        if (!returnStatement) {
-            returnStatement = this.addReturnStatement(new Return());
+        if (!this.nextClause) {
+            this.addReturnStatement(new Return());
         }
 
-        returnStatement.addColumns(...columns);
-        return returnStatement;
+        if (!(this.nextClause instanceof Return)) {
+            throw new Error("Invalid Return");
+        }
+
+        this.nextClause.addColumns(...columns);
+        return this.nextClause;
     }
 
     private addReturnStatement(clause: Return): Return {
-        this.returnStatement = clause;
-        this.addChildren(this.returnStatement);
+        this.addNextClause(clause);
         return clause;
     }
 }

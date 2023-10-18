@@ -18,15 +18,15 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import type { NodeRef } from "../references/NodeRef";
 import { Pattern } from "../pattern/Pattern";
-import { SetClause } from "./sub-clauses/Set";
-import { Clause } from "./Clause";
+import type { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { mixin } from "./utils/mixin";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
+import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { SetClause } from "./sub-clauses/Set";
+import { mixin } from "./utils/mixin";
 
 export interface Create extends WithReturn, WithSet, WithPathAssign {}
 
@@ -55,8 +55,7 @@ export class Create extends Clause {
         const patternCypher = this.pattern.getCypher(env);
 
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
-        const returnCypher = compileCypherIfExists(this.returnStatement, env, { prefix: "\n" });
-
-        return `CREATE ${pathCypher}${patternCypher}${setCypher}${returnCypher}`;
+        const nextClause = this.compileNextClause(env);
+        return `CREATE ${pathCypher}${patternCypher}${setCypher}${nextClause}`;
     }
 }

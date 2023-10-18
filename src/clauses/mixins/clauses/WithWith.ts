@@ -17,14 +17,11 @@
  * limitations under the License.
  */
 
+import { With } from "../../..";
 import type { WithProjection } from "../../With";
-import { With } from "../../With";
-import { Mixin } from "../Mixin";
+import { MixinClause } from "../Mixin";
 
-// Sorry for this name, at least it is funny
-export abstract class WithWith extends Mixin {
-    protected withStatement: With | undefined;
-
+export abstract class WithWith extends MixinClause {
     /** Add a {@link With} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
      */
@@ -39,18 +36,21 @@ export abstract class WithWith extends Mixin {
     }
 
     private addColumnsToWithClause(...columns: Array<"*" | WithProjection>): With {
-        let withStatement = this.withStatement;
-        if (!withStatement) {
-            withStatement = this.addWithStatement(new With());
+        if (!this.nextClause) {
+            this.addWithStatement(new With());
         }
 
-        withStatement.addColumns(...columns);
-        return withStatement;
+        if (!(this.nextClause instanceof With)) {
+            throw new Error("Invalid With");
+        }
+
+        this.nextClause.addColumns(...columns);
+        return this.nextClause;
     }
 
     private addWithStatement(clause: With): With {
-        this.withStatement = clause;
-        this.addChildren(this.withStatement);
+        this.nextClause = clause;
+        this.addChildren(this.nextClause);
         return clause;
     }
 }

@@ -21,6 +21,7 @@ import { CypherASTNode } from "../CypherASTNode";
 import type { EnvPrefix } from "../Environment";
 import { CypherEnvironment } from "../Environment";
 import type { CypherResult } from "../types";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 import { toCypherParams } from "../utils/to-cypher-params";
 
@@ -30,6 +31,8 @@ const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
  *  @group Internal
  */
 export abstract class Clause extends CypherASTNode {
+    protected nextClause: Clause | undefined;
+
     /** Compiles a clause into Cypher and params */
     public build(prefix?: string | EnvPrefix | undefined, extraParams: Record<string, unknown> = {}): CypherResult {
         if (this.isRoot) {
@@ -72,5 +75,17 @@ export abstract class Clause extends CypherASTNode {
      */
     [customInspectSymbol](): string {
         return this.toString();
+    }
+
+    protected addNextClause(clause: Clause): void {
+        if (this.nextClause) {
+            throw new Error("Cannot attach 2 next clauses");
+        }
+        this.nextClause = clause;
+        this.addChildren(this.nextClause);
+    }
+
+    protected compileNextClause(env: CypherEnvironment): string {
+        return compileCypherIfExists(this.nextClause, env, { prefix: "\n" });
     }
 }

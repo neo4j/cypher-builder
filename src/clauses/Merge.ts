@@ -19,16 +19,16 @@
 
 import type { CypherEnvironment } from "../Environment";
 import { Pattern } from "../pattern/Pattern";
+import type { NodeRef } from "../references/NodeRef";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
+import { WithPathAssign } from "./mixins/WithPathAssign";
+import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
 import type { OnCreateParam } from "./sub-clauses/OnCreate";
 import { OnCreate } from "./sub-clauses/OnCreate";
-import { WithReturn } from "./mixins/clauses/WithReturn";
 import { mixin } from "./utils/mixin";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import type { NodeRef } from "../references/NodeRef";
-import { WithPathAssign } from "./mixins/WithPathAssign";
-import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 
 export interface Merge extends WithReturn, WithSet, WithPathAssign, WithDelete {}
 
@@ -66,9 +66,9 @@ export class Merge extends Clause {
         const mergeStr = `MERGE ${pathAssignStr}${this.pattern.getCypher(env)}`;
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const onCreateStr = compileCypherIfExists(this.onCreateClause, env, { prefix: "\n" });
-        const returnStr = compileCypherIfExists(this.returnStatement, env, { prefix: "\n" });
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const nextClause = this.compileNextClause(env);
 
-        return `${mergeStr}${setCypher}${onCreateStr}${deleteStr}${returnStr}`;
+        return `${mergeStr}${setCypher}${onCreateStr}${deleteStr}${nextClause}`;
     }
 }
