@@ -53,6 +53,19 @@ describe("Patterns", () => {
             `);
         });
 
+        test("Node with properties using expressions and labels", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node).withProperties({
+                name: Cypher.plus(new Cypher.Literal("The "), new Cypher.Literal("Matrix")),
+            });
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"(this0:TestLabel { name: (\\"The \\" + \\"Matrix\\") })"`
+            );
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
         test("Simple node with label that needs normalize", () => {
             const node = new Cypher.Node({ labels: ["Test&Label"] });
 
@@ -161,6 +174,30 @@ describe("Patterns", () => {
                   ],
                 }
             `);
+        });
+
+        test("Simple Pattern with expressions in properties", () => {
+            const a = new Cypher.Node({
+                labels: ["Person", "Actor"],
+            });
+
+            const b = new Cypher.Node();
+            const rel = new Cypher.Relationship({
+                type: "ACTED_IN",
+            });
+
+            const query = new TestClause(
+                new Cypher.Pattern(a)
+                    .related(rel)
+                    .withProperties({
+                        roles: Cypher.plus(new Cypher.Literal("The "), new Cypher.Literal("Matrix")),
+                    })
+                    .to(b)
+            );
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:Person:Actor)-[this1:ACTED_IN { roles: (\\"The \\" + \\"Matrix\\") }]->(this2)"`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("Long relationship Pattern", () => {
