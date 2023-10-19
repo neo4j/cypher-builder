@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import Cypher from "..";
 import type { CypherEnvironment } from "../Environment";
 import { Pattern } from "../pattern/Pattern";
 import type { NodeRef } from "../references/NodeRef";
@@ -90,6 +91,33 @@ export class Match extends Clause {
         const optionalMatch = this._optional ? "OPTIONAL " : "";
 
         return `${optionalMatch}MATCH ${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+    }
+
+    /** Add a {@link Match} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
+     */
+    public match(clause: Match): Match;
+    public match(pattern: NodeRef | Pattern): Match;
+    public match(clauseOrPattern: Match | NodeRef | Pattern): Match {
+        if (clauseOrPattern instanceof Match) {
+            this.addNextClause(clauseOrPattern);
+            return clauseOrPattern;
+        }
+
+        const matchClause = new Cypher.Match(clauseOrPattern);
+        this.addNextClause(matchClause);
+
+        return matchClause;
+    }
+
+    /** Add an {@link OptionalMatch} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
+     */
+    public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch {
+        const matchClause = new Cypher.OptionalMatch(pattern);
+        this.addNextClause(matchClause);
+
+        return matchClause;
     }
 }
 

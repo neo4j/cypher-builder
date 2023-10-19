@@ -6,6 +6,7 @@ module.exports = {
     snapshotFormat: {
         escapeString: true,
     },
+    prettierPath: null,
     transform: {
         "^.+\\.ts$": [
             "ts-jest",
