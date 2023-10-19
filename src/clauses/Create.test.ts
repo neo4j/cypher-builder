@@ -152,4 +152,78 @@ describe("CypherBuilder Create", () => {
             }
         `);
     });
+
+    test("Create with delete", () => {
+        const idParam = new Cypher.Param("my-id");
+        const movieNode = new Cypher.Node({
+            labels: ["Movie"],
+        });
+
+        const createQuery = new Cypher.Create(
+            new Cypher.Pattern(movieNode).withProperties({
+                test: new Cypher.Param("test-value"),
+                id: idParam,
+            })
+        )
+            .set(
+                [movieNode.property("title"), new Cypher.Param("The Matrix")],
+                [movieNode.property("runtime"), new Cypher.Param(120)]
+            )
+            .delete(movieNode);
+
+        const queryResult = createQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CREATE (this0:Movie { test: $param0, id: $param1 })
+SET
+    this0.title = $param2,
+    this0.runtime = $param3
+DELETE this0"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "test-value",
+  "param1": "my-id",
+  "param2": "The Matrix",
+  "param3": 120,
+}
+`);
+    });
+
+    test("Create with detach delete", () => {
+        const idParam = new Cypher.Param("my-id");
+        const movieNode = new Cypher.Node({
+            labels: ["Movie"],
+        });
+
+        const createQuery = new Cypher.Create(
+            new Cypher.Pattern(movieNode).withProperties({
+                test: new Cypher.Param("test-value"),
+                id: idParam,
+            })
+        )
+            .set(
+                [movieNode.property("title"), new Cypher.Param("The Matrix")],
+                [movieNode.property("runtime"), new Cypher.Param(120)]
+            )
+            .detachDelete(movieNode);
+
+        const queryResult = createQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CREATE (this0:Movie { test: $param0, id: $param1 })
+SET
+    this0.title = $param2,
+    this0.runtime = $param3
+DETACH DELETE this0"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "test-value",
+  "param1": "my-id",
+  "param2": "The Matrix",
+  "param3": 120,
+}
+`);
+    });
 });
