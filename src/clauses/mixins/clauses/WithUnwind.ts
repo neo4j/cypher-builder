@@ -29,16 +29,16 @@ export abstract class WithUnwind extends MixinClause {
     public unwind(...columns: Array<ProjectionColumn>): Unwind;
     public unwind(clauseOrColumn: Unwind | ProjectionColumn, ...columns: Array<ProjectionColumn>): Unwind {
         if (clauseOrColumn instanceof Unwind) {
-            return this.addUnwindStatement(clauseOrColumn);
+            this.addNextClause(clauseOrColumn);
+            return clauseOrColumn;
         }
 
         return this.addColumnsToUnwindClause(clauseOrColumn, ...columns);
     }
 
     private addColumnsToUnwindClause(...columns: Array<"*" | ProjectionColumn>): Unwind {
-        let unwindStatement = this.nextClause;
-        if (!unwindStatement) {
-            unwindStatement = this.addUnwindStatement(new Unwind());
+        if (!this.nextClause) {
+            this.addNextClause(new Unwind());
         }
 
         if (!(this.nextClause instanceof Unwind)) {
@@ -47,10 +47,5 @@ export abstract class WithUnwind extends MixinClause {
 
         this.nextClause.addColumns(...columns);
         return this.nextClause;
-    }
-
-    private addUnwindStatement(clause: Unwind): Unwind {
-        this.addNextClause(clause);
-        return clause;
     }
 }

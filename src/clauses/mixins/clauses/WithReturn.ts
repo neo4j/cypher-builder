@@ -29,7 +29,8 @@ export abstract class WithReturn extends MixinClause {
     public return(...columns: Array<"*" | ProjectionColumn>): Return;
     public return(clauseOrColumn: Return | "*" | ProjectionColumn, ...columns: Array<"*" | ProjectionColumn>): Return {
         if (clauseOrColumn instanceof Return) {
-            return this.addReturnStatement(clauseOrColumn);
+            this.addNextClause(clauseOrColumn);
+            return clauseOrColumn;
         }
 
         return this.addColumnsToReturnClause(clauseOrColumn, ...columns);
@@ -37,7 +38,7 @@ export abstract class WithReturn extends MixinClause {
 
     private addColumnsToReturnClause(...columns: Array<"*" | ProjectionColumn>): Return {
         if (!this.nextClause) {
-            this.addReturnStatement(new Return());
+            this.addNextClause(new Return());
         }
 
         if (!(this.nextClause instanceof Return)) {
@@ -46,10 +47,5 @@ export abstract class WithReturn extends MixinClause {
 
         this.nextClause.addColumns(...columns);
         return this.nextClause;
-    }
-
-    private addReturnStatement(clause: Return): Return {
-        this.addNextClause(clause);
-        return clause;
     }
 }
