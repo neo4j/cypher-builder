@@ -26,17 +26,18 @@ import { WithPathAssign } from "./mixins/WithPathAssign";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { SetClause } from "./sub-clauses/Set";
 import { mixin } from "./utils/mixin";
 
-export interface Create extends WithReturn, WithSet, WithPathAssign, WithWith, WithDelete {}
+export interface Create extends WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
  * @group Clauses
  */
-@mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete)
+@mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove)
 export class Create extends Clause {
     private pattern: Pattern;
 
@@ -58,7 +59,8 @@ export class Create extends Clause {
 
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const nextClause = this.compileNextClause(env);
-        return `CREATE ${pathCypher}${patternCypher}${setCypher}${deleteStr}${nextClause}`;
+        return `CREATE ${pathCypher}${patternCypher}${setCypher}${removeCypher}${deleteStr}${nextClause}`;
     }
 }

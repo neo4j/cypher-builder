@@ -172,4 +172,19 @@ describe("CypherBuilder Merge", () => {
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Merge node and remove", () => {
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+
+        const query = new Cypher.Merge(node).remove(node.property("title"));
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MERGE (this0:MyLabel)
+REMOVE this0.title"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });

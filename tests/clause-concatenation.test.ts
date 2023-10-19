@@ -49,7 +49,7 @@ describe("Clause concatenation", () => {
 
         it.each([
             "return",
-            // "remove",
+            "remove",
             "set",
             "delete",
             "detachDelete",
@@ -67,7 +67,7 @@ describe("Clause concatenation", () => {
 
         it.each([
             "return",
-            // "remove",
+            "remove",
             // "set",
             // "delete",
             // "detachDelete",
@@ -93,7 +93,7 @@ describe("Clause concatenation", () => {
 
         it.each([
             "return",
-            // "remove",
+            "remove",
             // "set",
             // "delete",
             // "detachDelete",
@@ -110,7 +110,7 @@ describe("Clause concatenation", () => {
 
         it.each([
             "return",
-            // "remove",
+            "remove",
             "set",
             "delete",
             "detachDelete",
@@ -137,7 +137,7 @@ describe("Clause concatenation", () => {
             // "where",
             // "and",
             // "return",
-            // "remove",
+            "remove",
             // "set",
             "delete",
             "detachDelete",

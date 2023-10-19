@@ -42,4 +42,15 @@ describe("CypherBuilder Unwind", () => {
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Unwind and remove", () => {
+        const variable = new Cypher.Variable();
+        const unwindQuery = new Cypher.Unwind([new Cypher.Variable(), variable]).remove(variable.property("title"));
+        const queryResult = unwindQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"UNWIND var0 AS var1
+REMOVE var1.title"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });

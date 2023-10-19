@@ -23,17 +23,18 @@ import { Clause } from "./Clause";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
-export interface Unwind extends WithWith, WithDelete, WithMatch {}
+export interface Unwind extends WithWith, WithDelete, WithMatch, WithRemove {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
  * @group Clauses
  */
-@mixin(WithWith, WithDelete, WithMatch)
+@mixin(WithWith, WithDelete, WithMatch, WithRemove)
 export class Unwind extends Clause {
     private projection: Projection;
 
@@ -50,9 +51,10 @@ export class Unwind extends Clause {
     public getCypher(env: CypherEnvironment): string {
         const projectionStr = this.projection.getCypher(env);
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const nextClause = this.compileNextClause(env);
 
-        return `UNWIND ${projectionStr}${deleteStr}${nextClause}`;
+        return `UNWIND ${projectionStr}${removeCypher}${deleteStr}${nextClause}`;
     }
 
     // Cannot be part of WithUnwind due to dependency cycles
