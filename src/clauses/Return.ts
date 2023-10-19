@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
+import type { CypherEnvironment } from "../Environment";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { Clause } from "./Clause";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { mixin } from "./utils/mixin";
 import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";
-import type { CypherEnvironment } from "../Environment";
-import { Clause } from "./Clause";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { mixin } from "./utils/mixin";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Return extends WithOrder {}

@@ -24,6 +24,7 @@ import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
 import type { Create } from "./Create";
 import type { Merge } from "./Merge";
+import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import type { DeleteClause } from "./sub-clauses/Delete";
 import type { RemoveClause } from "./sub-clauses/Remove";
@@ -31,7 +32,7 @@ import type { SetClause } from "./sub-clauses/Set";
 import { mixin } from "./utils/mixin";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Foreach extends WithWith {}
+export interface Foreach extends WithWith, WithReturn {}
 
 type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | DeleteClause;
 
@@ -39,7 +40,7 @@ type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | Dele
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/foreach/)
  * @group Clauses
  */
-@mixin(WithWith)
+@mixin(WithWith, WithReturn)
 export class Foreach extends Clause {
     private variable: Variable;
     private listExpr: Expr;

@@ -53,4 +53,32 @@ export class Unwind extends Clause {
 
         return `UNWIND ${projectionStr}${deleteStr}${nextClause}`;
     }
+
+    // Cannot be part of WithUnwind due to dependency cycles
+    /** Append an {@link Unwind} clause.
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
+     */
+    public unwind(clause: Unwind): Unwind;
+    public unwind(...columns: Array<ProjectionColumn>): Unwind;
+    public unwind(clauseOrColumn: Unwind | ProjectionColumn, ...columns: Array<ProjectionColumn>): Unwind {
+        if (clauseOrColumn instanceof Unwind) {
+            this.addNextClause(clauseOrColumn);
+            return clauseOrColumn;
+        }
+
+        return this.addColumnsToUnwindClause(clauseOrColumn, ...columns);
+    }
+
+    private addColumnsToUnwindClause(...columns: Array<"*" | ProjectionColumn>): Unwind {
+        if (!this.nextClause) {
+            this.addNextClause(new Unwind());
+        }
+
+        if (!(this.nextClause instanceof Unwind)) {
+            throw new Error("Invalid Unwind statement");
+        }
+
+        this.nextClause.addColumns(...columns);
+        return this.nextClause;
+    }
 }
