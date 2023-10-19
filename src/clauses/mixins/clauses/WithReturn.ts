@@ -28,24 +28,19 @@ export abstract class WithReturn extends MixinClause {
     public return(clause: Return): Return;
     public return(...columns: Array<"*" | ProjectionColumn>): Return;
     public return(clauseOrColumn: Return | "*" | ProjectionColumn, ...columns: Array<"*" | ProjectionColumn>): Return {
-        if (clauseOrColumn instanceof Return) {
-            this.addNextClause(clauseOrColumn);
-            return clauseOrColumn;
-        }
-
-        return this.addColumnsToReturnClause(clauseOrColumn, ...columns);
+        const returnClause = this.getReturnClause(clauseOrColumn, columns);
+        this.addNextClause(returnClause);
+        return returnClause;
     }
 
-    private addColumnsToReturnClause(...columns: Array<"*" | ProjectionColumn>): Return {
-        if (!this.nextClause) {
-            this.addNextClause(new Return());
+    private getReturnClause(
+        clauseOrColumn: Return | "*" | ProjectionColumn,
+        columns: Array<"*" | ProjectionColumn>
+    ): Return {
+        if (clauseOrColumn instanceof Return) {
+            return clauseOrColumn;
+        } else {
+            return new Return(clauseOrColumn, ...columns);
         }
-
-        if (!(this.nextClause instanceof Return)) {
-            throw new Error("Cannot add Return clause, this clause is not the last in the chain");
-        }
-
-        this.nextClause.addColumns(...columns);
-        return this.nextClause;
     }
 }

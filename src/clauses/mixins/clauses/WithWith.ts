@@ -28,24 +28,16 @@ export abstract class WithWith extends MixinClause {
     public with(clause: With): With;
     public with(...columns: Array<"*" | WithProjection>): With;
     public with(clauseOrColumn: With | "*" | WithProjection, ...columns: Array<"*" | WithProjection>): With {
-        if (clauseOrColumn instanceof With) {
-            this.addNextClause(clauseOrColumn);
-            return clauseOrColumn;
-        }
-
-        return this.addColumnsToWithClause(clauseOrColumn, ...columns);
+        const withClause = this.getWithClause(clauseOrColumn, columns);
+        this.addNextClause(withClause);
+        return withClause;
     }
 
-    private addColumnsToWithClause(...columns: Array<"*" | WithProjection>): With {
-        if (!this.nextClause) {
-            this.addNextClause(new With());
+    private getWithClause(clauseOrColumn: With | "*" | WithProjection, columns: Array<"*" | WithProjection>): With {
+        if (clauseOrColumn instanceof With) {
+            return clauseOrColumn;
+        } else {
+            return new With(clauseOrColumn, ...columns);
         }
-
-        if (!(this.nextClause instanceof With)) {
-            throw new Error("Cannot add With clause, this clause is not the last in the chain");
-        }
-
-        this.nextClause.addColumns(...columns);
-        return this.nextClause;
     }
 }
