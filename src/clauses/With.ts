@@ -43,7 +43,6 @@ export interface With extends WithOrder, WithReturn, WithWhere, WithDelete {}
 export class With extends Clause {
     private projection: Projection;
     private isDistinct = false;
-    private withStatement: With | undefined;
 
     constructor(...columns: Array<"*" | WithProjection>) {
         super();
@@ -64,24 +63,40 @@ export class With extends Clause {
     public getCypher(env: CypherEnvironment): string {
         const projectionStr = this.projection.getCypher(env);
         const orderByStr = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
-        const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const distinctStr = this.isDistinct ? " DISTINCT" : "";
 
         const nextClause = this.compileNextClause(env);
 
-        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${nextClause}`;
+        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${nextClause}`;
     }
 
     // Cannot be part of WithWith due to dependency cycles
-    public with(...columns: ("*" | WithProjection)[]): With {
-        if (this.withStatement) {
-            this.withStatement.addColumns(...columns);
-        } else {
-            this.withStatement = new With(...columns);
-            this.addChildren(this.withStatement);
+    /** Add a {@link With} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
+     */
+    public with(clause: With): With;
+    public with(...columns: Array<"*" | WithProjection>): With;
+    public with(clauseOrColumn: With | "*" | WithProjection, ...columns: Array<"*" | WithProjection>): With {
+        if (clauseOrColumn instanceof With) {
+            this.addNextClause(clauseOrColumn);
+            return clauseOrColumn;
         }
-        return this.withStatement;
+
+        return this.addColumnsToWithClause(clauseOrColumn, ...columns);
+    }
+
+    private addColumnsToWithClause(...columns: Array<"*" | WithProjection>): With {
+        if (!this.nextClause) {
+            this.addNextClause(new With());
+        }
+
+        if (!(this.nextClause instanceof With)) {
+            throw new Error("Invalid With");
+        }
+
+        this.nextClause.addColumns(...columns);
+        return this.nextClause;
     }
 }

@@ -29,7 +29,8 @@ export abstract class WithWith extends MixinClause {
     public with(...columns: Array<"*" | WithProjection>): With;
     public with(clauseOrColumn: With | "*" | WithProjection, ...columns: Array<"*" | WithProjection>): With {
         if (clauseOrColumn instanceof With) {
-            return this.addWithStatement(clauseOrColumn);
+            this.addNextClause(clauseOrColumn);
+            return clauseOrColumn;
         }
 
         return this.addColumnsToWithClause(clauseOrColumn, ...columns);
@@ -37,7 +38,7 @@ export abstract class WithWith extends MixinClause {
 
     private addColumnsToWithClause(...columns: Array<"*" | WithProjection>): With {
         if (!this.nextClause) {
-            this.addWithStatement(new With());
+            this.addNextClause(new With());
         }
 
         if (!(this.nextClause instanceof With)) {
@@ -46,11 +47,5 @@ export abstract class WithWith extends MixinClause {
 
         this.nextClause.addColumns(...columns);
         return this.nextClause;
-    }
-
-    private addWithStatement(clause: With): With {
-        this.nextClause = clause;
-        this.addChildren(this.nextClause);
-        return clause;
     }
 }
