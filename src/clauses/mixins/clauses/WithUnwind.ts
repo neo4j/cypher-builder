@@ -42,7 +42,7 @@ export abstract class WithUnwind extends MixinClause {
         }
 
         if (!(this.nextClause instanceof Unwind)) {
-            throw new Error("Invalid Unwind statement");
+            throw new Error("Cannot add Unwind clause, this clause is not the last in the chain");
         }
 
         this.nextClause.addColumns(...columns);

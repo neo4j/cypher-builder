@@ -42,7 +42,7 @@ export abstract class WithWith extends MixinClause {
         }
 
         if (!(this.nextClause instanceof With)) {
-            throw new Error("Invalid With");
+            throw new Error("Cannot add With clause, this clause is not the last in the chain");
         }
 
         this.nextClause.addColumns(...columns);

@@ -79,7 +79,7 @@ export abstract class Clause extends CypherASTNode {
 
     protected addNextClause(clause: Clause): void {
         if (this.nextClause) {
-            throw new Error("Cannot attach 2 next clauses");
+            throw new Error("Cannot chain 2 top-level clauses to the same clause");
         }
         this.nextClause = clause;
         this.addChildren(this.nextClause);

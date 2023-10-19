@@ -42,7 +42,7 @@ export abstract class WithReturn extends MixinClause {
         }
 
         if (!(this.nextClause instanceof Return)) {
-            throw new Error("Invalid Return");
+            throw new Error("Cannot add Return clause, this clause is not the last in the chain");
         }
 
         this.nextClause.addColumns(...columns);
