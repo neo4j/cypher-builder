@@ -18,18 +18,17 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { Clause } from "./Clause";
-import { WithWith } from "./mixins/clauses/WithWith";
-import { mixin } from "./utils/mixin";
-import type { DeleteClause } from "./sub-clauses/Delete";
-import type { SetClause } from "./sub-clauses/Set";
-import type { RemoveClause } from "./sub-clauses/Remove";
-import { padBlock } from "../utils/pad-block";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import type { Create } from "./Create";
-import type { Merge } from "./Merge";
 import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
+import { padBlock } from "../utils/pad-block";
+import { Clause } from "./Clause";
+import type { Create } from "./Create";
+import type { Merge } from "./Merge";
+import { WithWith } from "./mixins/clauses/WithWith";
+import type { DeleteClause } from "./sub-clauses/Delete";
+import type { RemoveClause } from "./sub-clauses/Remove";
+import type { SetClause } from "./sub-clauses/Set";
+import { mixin } from "./utils/mixin";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Foreach extends WithWith {}
@@ -58,10 +57,9 @@ export class Foreach extends Clause {
         const variableStr = this.variable.getCypher(env);
         const listExpr = this.listExpr.getCypher(env);
         const mapClauseStr = this.mapClause.getCypher(env);
-        const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
-
+        const nextClause = this.compileNextClause(env);
         const foreachStr = [`FOREACH (${variableStr} IN ${listExpr} |`, padBlock(mapClauseStr), `)`].join("\n");
 
-        return `${foreachStr}${withStr}`;
+        return `${foreachStr}${nextClause}`;
     }
 }

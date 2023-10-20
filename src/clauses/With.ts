@@ -64,16 +64,20 @@ export class With extends Clause {
     public getCypher(env: CypherEnvironment): string {
         const projectionStr = this.projection.getCypher(env);
         const orderByStr = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
-        const returnStr = compileCypherIfExists(this.returnStatement, env, { prefix: "\n" });
         const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const distinctStr = this.isDistinct ? " DISTINCT" : "";
 
-        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${returnStr}`;
+        const nextClause = this.compileNextClause(env);
+
+        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${nextClause}`;
     }
 
     // Cannot be part of WithWith due to dependency cycles
+    /** Add a {@link With} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
+     */
     public with(...columns: ("*" | WithProjection)[]): With {
         if (this.withStatement) {
             // This behaviour of `.with` is deprecated, use `.addColumns` instead

@@ -19,37 +19,25 @@
 
 import type { ProjectionColumn } from "../../sub-clauses/Projection";
 import { Unwind } from "../../Unwind";
-import { Mixin } from "../Mixin";
+import { MixinClause } from "../Mixin";
 
-export abstract class WithUnwind extends Mixin {
-    protected unwindStatement: Unwind | undefined;
-
+export abstract class WithUnwind extends MixinClause {
     /** Append an {@link Unwind} clause.
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
      */
     public unwind(clause: Unwind): Unwind;
     public unwind(...columns: Array<ProjectionColumn>): Unwind;
     public unwind(clauseOrColumn: Unwind | ProjectionColumn, ...columns: Array<ProjectionColumn>): Unwind {
+        const unwindClause = this.getUnwindClause(clauseOrColumn, columns);
+        this.addNextClause(unwindClause);
+        return unwindClause;
+    }
+
+    private getUnwindClause(clauseOrColumn: Unwind | ProjectionColumn, columns: Array<ProjectionColumn>): Unwind {
         if (clauseOrColumn instanceof Unwind) {
-            return this.addUnwindStatement(clauseOrColumn);
+            return clauseOrColumn;
+        } else {
+            return new Unwind(clauseOrColumn, ...columns);
         }
-
-        return this.addColumnsToUnwindClause(clauseOrColumn, ...columns);
-    }
-
-    private addColumnsToUnwindClause(...columns: Array<"*" | ProjectionColumn>): Unwind {
-        let unwindStatement = this.unwindStatement;
-        if (!unwindStatement) {
-            unwindStatement = this.addUnwindStatement(new Unwind());
-        }
-
-        unwindStatement.addColumns(...columns);
-        return unwindStatement;
-    }
-
-    private addUnwindStatement(clause: Unwind): Unwind {
-        this.unwindStatement = clause;
-        this.addChildren(this.unwindStatement);
-        return clause;
     }
 }

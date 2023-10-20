@@ -17,39 +17,30 @@
  * limitations under the License.
  */
 
-import type { ProjectionColumn } from "../../sub-clauses/Projection";
 import { Return } from "../../Return";
-import { Mixin } from "../Mixin";
+import type { ProjectionColumn } from "../../sub-clauses/Projection";
+import { MixinClause } from "../Mixin";
 
-export abstract class WithReturn extends Mixin {
-    protected returnStatement: Return | undefined;
-
+export abstract class WithReturn extends MixinClause {
     /** Append a {@link Return} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/return/)
      */
     public return(clause: Return): Return;
     public return(...columns: Array<"*" | ProjectionColumn>): Return;
     public return(clauseOrColumn: Return | "*" | ProjectionColumn, ...columns: Array<"*" | ProjectionColumn>): Return {
+        const returnClause = this.getReturnClause(clauseOrColumn, columns);
+        this.addNextClause(returnClause);
+        return returnClause;
+    }
+
+    private getReturnClause(
+        clauseOrColumn: Return | "*" | ProjectionColumn,
+        columns: Array<"*" | ProjectionColumn>
+    ): Return {
         if (clauseOrColumn instanceof Return) {
-            return this.addReturnStatement(clauseOrColumn);
+            return clauseOrColumn;
+        } else {
+            return new Return(clauseOrColumn, ...columns);
         }
-
-        return this.addColumnsToReturnClause(clauseOrColumn, ...columns);
-    }
-
-    private addColumnsToReturnClause(...columns: Array<"*" | ProjectionColumn>): Return {
-        let returnStatement = this.returnStatement;
-        if (!returnStatement) {
-            returnStatement = this.addReturnStatement(new Return());
-        }
-
-        returnStatement.addColumns(...columns);
-        return returnStatement;
-    }
-
-    private addReturnStatement(clause: Return): Return {
-        this.returnStatement = clause;
-        this.addChildren(this.returnStatement);
-        return clause;
     }
 }

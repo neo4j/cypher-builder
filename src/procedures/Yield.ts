@@ -17,14 +17,14 @@
  * limitations under the License.
  */
 
+import type { CypherEnvironment } from "../Environment";
 import { Clause } from "../clauses/Clause";
 import { WithReturn } from "../clauses/mixins/clauses/WithReturn";
-import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { WithWith } from "../clauses/mixins/clauses/WithWith";
+import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import type { ProjectionColumn } from "../clauses/sub-clauses/Projection";
 import { Projection } from "../clauses/sub-clauses/Projection";
 import { mixin } from "../clauses/utils/mixin";
-import type { CypherEnvironment } from "../Environment";
 import type { Literal } from "../references/Literal";
 import type { Variable } from "../references/Variable";
 import { NamedVariable } from "../references/Variable";
@@ -59,15 +59,8 @@ export class Yield extends Clause {
             prefix: "\n",
         });
 
-        const withStr = compileCypherIfExists(this.withStatement, env, {
-            prefix: "\n",
-        });
-
-        const returnStr = compileCypherIfExists(this.returnStatement, env, {
-            prefix: "\n",
-        });
-
-        return `YIELD ${yieldProjectionStr}${whereStr}${withStr}${returnStr}`;
+        const nextClause = this.compileNextClause(env);
+        return `YIELD ${yieldProjectionStr}${whereStr}${nextClause}`;
     }
 }
 
