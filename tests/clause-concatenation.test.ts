@@ -20,7 +20,7 @@
 import Cypher from "../src";
 
 // TODO: Implement missing methods in clauses
-describe("Clause concatenation", () => {
+describe("Clause chaining", () => {
     describe("Match", () => {
         const clause = new Cypher.Match(new Cypher.Node());
 
@@ -192,6 +192,16 @@ describe("Clause concatenation", () => {
             "limit",
         ] as const)("With.%s", (value) => {
             expect(clause[value]).toBeFunction();
+        });
+    });
+
+    describe("Invalid Chaining", () => {
+        test("Multiple top-level clauses should fail", () => {
+            const match = new Cypher.Match(new Cypher.Node());
+            match.return("*");
+            expect(() => {
+                match.return("*");
+            }).toThrowError("Cannot chain 2 top-level clauses to the same clause");
         });
     });
 });

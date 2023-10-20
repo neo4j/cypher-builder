@@ -3,7 +3,7 @@
 ---
 
 Refactors mixins.
-Due to this, multiple top-level clauses nested in the same clause will fail:
+Due to this, multiple top-level clauses nested in the same clause will explicitly fail, instead of silent failing:
 
 The following is not supported;
 

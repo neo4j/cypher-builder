@@ -45,6 +45,7 @@ export interface With extends WithOrder, WithReturn, WithWhere, WithDelete, With
 export class With extends Clause {
     private projection: Projection;
     private isDistinct = false;
+    private withStatement: With | undefined;
 
     constructor(...columns: Array<"*" | WithProjection>) {
         super();
@@ -65,31 +66,28 @@ export class With extends Clause {
     public getCypher(env: CypherEnvironment): string {
         const projectionStr = this.projection.getCypher(env);
         const orderByStr = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
+        const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const distinctStr = this.isDistinct ? " DISTINCT" : "";
 
         const nextClause = this.compileNextClause(env);
 
-        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${nextClause}`;
+        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${nextClause}`;
     }
 
+    // Cannot be part of WithWith due to dependency cycles
     /** Add a {@link With} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
      */
-    public with(clause: With): With;
-    public with(...columns: Array<"*" | WithProjection>): With;
-    public with(clauseOrColumn: With | "*" | WithProjection, ...columns: Array<"*" | WithProjection>): With {
-        const withClause = this.getWithClause(clauseOrColumn, columns);
-        this.addNextClause(withClause);
-        return withClause;
-    }
-
-    private getWithClause(clauseOrColumn: With | "*" | WithProjection, columns: Array<"*" | WithProjection>): With {
-        if (clauseOrColumn instanceof With) {
-            return clauseOrColumn;
+    public with(...columns: ("*" | WithProjection)[]): With {
+        if (this.withStatement) {
+            // This behaviour of `.with` is deprecated, use `.addColumns` instead
+            this.withStatement.addColumns(...columns);
         } else {
-            return new With(clauseOrColumn, ...columns);
+            this.withStatement = new With(...columns);
+            this.addChildren(this.withStatement);
         }
+        return this.withStatement;
     }
 }

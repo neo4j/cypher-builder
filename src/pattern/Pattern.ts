@@ -17,15 +17,15 @@
  * limitations under the License.
  */
 
-import { LabelExpr } from "../expressions/labels/label-expressions";
+import type { Expr } from "..";
 import type { CypherEnvironment } from "../Environment";
+import { LabelExpr } from "../expressions/labels/label-expressions";
 import type { NodeRef } from "../references/NodeRef";
-import type { Param } from "../references/Param";
 import { RelationshipRef } from "../references/RelationshipRef";
+import type { Variable } from "../references/Variable";
 import { escapeLabel } from "../utils/escape";
 import { PartialPattern } from "./PartialPattern";
 import { PatternElement } from "./PatternElement";
-import type { Variable } from "../references/Variable";
 
 /** Represents a pattern of a single node or n-relationships to be used in clauses.
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns/)
@@ -35,7 +35,7 @@ export class Pattern extends PatternElement<NodeRef> {
     private withLabels = true;
     private withVariable = true;
     private previous: PartialPattern | undefined;
-    private properties: Record<string, Param> | undefined;
+    private properties: Record<string, Expr> | undefined;
 
     constructor(node: NodeRef, previous?: PartialPattern) {
         super(node);
@@ -52,7 +52,7 @@ export class Pattern extends PatternElement<NodeRef> {
         return this;
     }
 
-    public withProperties(properties: Record<string, Param>): this {
+    public withProperties(properties: Record<string, Expr>): this {
         this.properties = properties;
         return this;
     }

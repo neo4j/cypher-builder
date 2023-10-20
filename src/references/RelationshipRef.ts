@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import type { NodeRef } from "./NodeRef";
-import type { Param } from "./Param";
+import type { Expr } from "..";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
+import type { NodeRef } from "./NodeRef";
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
 
@@ -29,7 +29,7 @@ export type RelationshipInput = {
     type?: string;
 };
 
-export type RelationshipProperties = Record<string, Param<unknown>>;
+export type RelationshipProperties = Record<string, Expr>;
 
 type RelationshipRefOptions = {
     type?: string | LabelExpr;

@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
+import type { Expr } from "..";
 import { HasLabel } from "../expressions/HasLabel";
 import { LabelExpr } from "../expressions/labels/label-expressions";
-import type { Param } from "./Param";
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
 
-export type NodeProperties = Record<string, Param<unknown>>;
+export type NodeProperties = Record<string, Expr>;
 
 type NodeRefOptions = {
     labels?: Set<string> | Array<string> | LabelExpr;
