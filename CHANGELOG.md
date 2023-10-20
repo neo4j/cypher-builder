@@ -1,5 +1,63 @@
 # @neo4j/cypher-builder
 
+## 1.5.2
+
+### Patch Changes
+
+-   [#194](https://github.com/neo4j/cypher-builder/pull/194) [`0c40f04`](https://github.com/neo4j/cypher-builder/commit/0c40f04ce32bb9a6bb628d46440d01b01b6287ed) Thanks [@angrykoala](https://github.com/angrykoala)! - Refactors mixins.
+    Due to this, multiple top-level clauses nested in the same clause will explicitly fail, instead of silent failing:
+
+    The following is not supported;
+
+    ```javascript
+    const match = new Cypher.Match();
+
+    match.with();
+    match.return();
+    ```
+
+    In favor of the following:
+
+    ```javascript
+    const match = new Cypher.Match();
+
+    match.with().return();
+    ```
+
+-   [#195](https://github.com/neo4j/cypher-builder/pull/195) [`6b24fdd`](https://github.com/neo4j/cypher-builder/commit/6b24fdd293c6b31ef745744b35502ecdd3782020) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for expressions on Pattern properties:
+
+    ```js
+    const pattern = new Cypher.Pattern(node).withProperties({
+        name: Cypher.plus(new Cypher.Literal("The "), new Cypher.Literal("Matrix")),
+    });
+    ```
+
+    Results in:
+
+    ```cypher
+    (this0: {name: "The " + "Matrix"})
+    ```
+
+-   [#199](https://github.com/neo4j/cypher-builder/pull/199) [`58dfee6`](https://github.com/neo4j/cypher-builder/commit/58dfee6af88856c169b683e364f3a8b65e3010de) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix RawCypher types
+
+-   [#198](https://github.com/neo4j/cypher-builder/pull/198) [`bfb1c97`](https://github.com/neo4j/cypher-builder/commit/bfb1c9764d74b8ae53b687555162304c00355dd5) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates using `With.with` when nested with already exists in favour of `addColumn`:
+
+    ```js
+    const withQuery = new Cypher.With(node);
+
+    withQuery.with(node2);
+    withQuery.with("*");
+    ```
+
+    Instead, it should be:
+
+    ```js
+    const withQuery = new Cypher.With(node);
+
+    const nestedWith = withQuery.with(node2);
+    nestedWith.addColumn("*");
+    ```
+
 ## 1.5.1
 
 ### Patch Changes

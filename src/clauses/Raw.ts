@@ -61,4 +61,33 @@ export class Raw extends Clause {
  * @group Other
  * @deprecated use {@link Raw} instead
  */
-export const RawCypher = Raw;
+export class RawCypher extends Clause {
+    private callback: RawCypherCallback;
+
+    constructor(callback: RawCypherCallback | string) {
+        super();
+        if (typeof callback === "string") {
+            this.callback = this.stringToCallback(callback);
+        } else this.callback = callback;
+    }
+
+    public getCypher(env: CypherEnvironment): string {
+        const cbResult = this.callback(env);
+        if (!cbResult) return "";
+        let query: string;
+        let params = {};
+        if (typeof cbResult === "string") query = cbResult;
+        else {
+            [query, params] = cbResult;
+        }
+
+        const cypherParams = toCypherParams(params);
+        env.addExtraParams(cypherParams);
+
+        return query;
+    }
+
+    private stringToCallback(str: string): RawCypherCallback {
+        return () => str;
+    }
+}
