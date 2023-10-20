@@ -56,14 +56,14 @@ describe("CypherBuilder With", () => {
         });
         const withQuery = new Cypher.With(node);
 
-        withQuery.with(node);
-        withQuery.with("*");
+        const nestedWith = withQuery.with(node);
+        nestedWith.addColumns("*");
 
         const queryResult = withQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "WITH this0
-            WITH *, this0"
-        `);
+        "WITH this0
+        WITH *, this0"
+    `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 

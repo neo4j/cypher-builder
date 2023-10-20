@@ -18,17 +18,17 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { Projection } from "./sub-clauses/Projection";
-import type { Expr } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { Literal } from "../references/Literal";
 import type { Variable } from "../references/Variable";
+import type { Expr } from "../types";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithReturn } from "./mixins/clauses/WithReturn";
-import { WithWhere } from "./mixins/sub-clauses/WithWhere";
-import { mixin } from "./utils/mixin";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere";
+import { Projection } from "./sub-clauses/Projection";
+import { mixin } from "./utils/mixin";
 
 // With requires an alias for expressions that are not variables
 export type WithProjection = Variable | [Expr, string | Variable | Literal];
@@ -76,6 +76,7 @@ export class With extends Clause {
     // Cannot be part of WithWith due to dependency cycles
     public with(...columns: ("*" | WithProjection)[]): With {
         if (this.withStatement) {
+            // This behaviour of `.with` is deprecated, use `.addColumns` instead
             this.withStatement.addColumns(...columns);
         } else {
             this.withStatement = new With(...columns);
