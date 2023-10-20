@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type { Raw } from ".";
+import type { Raw, RawCypher } from ".";
 import type { CypherEnvironment } from "./Environment";
 import type { Case } from "./expressions/Case";
 import type { HasLabel } from "./expressions/HasLabel";
@@ -63,6 +63,7 @@ export type Predicate =
     | BooleanOp
     | ComparisonOp
     | Raw
+    | RawCypher
     | Exists
     | Count
     | PredicateFunction
