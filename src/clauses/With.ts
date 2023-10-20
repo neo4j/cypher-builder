@@ -80,6 +80,7 @@ export class With extends Clause {
      */
     public with(...columns: ("*" | WithProjection)[]): With {
         if (this.withStatement) {
+            // This behaviour of `.with` is deprecated, use `.addColumns` instead
             this.withStatement.addColumns(...columns);
         } else {
             this.withStatement = new With(...columns);
