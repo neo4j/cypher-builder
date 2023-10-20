@@ -17,15 +17,14 @@
  * limitations under the License.
  */
 
+import type { Environment, Variable } from "..";
 import type { CypherEnvironment } from "../Environment";
-import type { RelationshipRef } from "../references/RelationshipRef";
+import { LabelExpr } from "../expressions/labels/label-expressions";
 import { NodeRef } from "../references/NodeRef";
+import type { RelationshipProperties, RelationshipRef } from "../references/RelationshipRef";
+import { escapeType } from "../utils/escape";
 import { Pattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
-import type { Param } from "../references/Param";
-import { LabelExpr } from "../expressions/labels/label-expressions";
-import type { Environment, Variable } from "..";
-import { escapeType } from "../utils/escape";
 
 type LengthOption =
     | number
@@ -43,7 +42,7 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
     private withVariable = true;
     private direction: "left" | "right" | "undirected" = "right";
     private previous: Pattern;
-    private properties: Record<string, Param> | undefined;
+    private properties: RelationshipProperties | undefined;
 
     constructor(rel: RelationshipRef, previous: Pattern) {
         super(rel);
@@ -70,7 +69,7 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
         return this;
     }
 
-    public withProperties(properties: Record<string, Param>): this {
+    public withProperties(properties: RelationshipProperties): this {
         this.properties = properties;
         return this;
     }
