@@ -43,7 +43,7 @@ describe("CypherBuilder Unwind", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    test("Nested Unwind", () => {
+    test("Chained Unwind", () => {
         const variable = new Cypher.Variable();
         const unwindQuery = new Cypher.Unwind([new Cypher.Variable(), variable]).unwind([
             variable,
@@ -55,5 +55,29 @@ describe("CypherBuilder Unwind", () => {
 UNWIND var1 AS var2"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Chained Unwind with existing clause", () => {
+        const variable = new Cypher.Variable();
+
+        const secondUnwind = new Cypher.Unwind([variable, new Cypher.Variable()]);
+        const unwindQuery = new Cypher.Unwind([new Cypher.Variable(), variable]).unwind(secondUnwind);
+        const queryResult = unwindQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"UNWIND var0 AS var1
+UNWIND var1 AS var2"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Fails to chain unwind if there is an existing chained clause", () => {
+        const variable = new Cypher.Variable();
+        const unwindQuery = new Cypher.Unwind([new Cypher.Variable(), variable]);
+
+        unwindQuery.with("*");
+
+        expect(() => {
+            unwindQuery.unwind([variable, new Cypher.Variable()]);
+        }).toThrowError("Invalid Unwind statement");
     });
 });
