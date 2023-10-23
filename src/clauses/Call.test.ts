@@ -186,6 +186,40 @@ describe("CypherBuilder Call", () => {
             }
         `);
     });
+
+    test("CALL with external with, set and remove", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const matchClause = new Cypher.Match(node)
+            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
+            .return(node);
+
+        const clause = new Cypher.Call(matchClause)
+            .set([node.property("title"), new Cypher.Param("movie")])
+            .remove(node.property("title"))
+            .with("*");
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CALL {
+    MATCH (this0:Movie)
+    WHERE $param0 = $param1
+    RETURN this0
+}
+SET
+    this0.title = $param2
+REMOVE this0.title
+WITH *"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "aa",
+  "param1": "bb",
+  "param2": "movie",
+}
+`);
+    });
+
     test("CALL with external with clause", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 

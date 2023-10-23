@@ -26,16 +26,19 @@ import { Clause } from "./Clause";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithRemove } from "./mixins/sub-clauses/WithRemove";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { ImportWith } from "./sub-clauses/ImportWith";
 import { mixin } from "./utils/mixin";
 
-export interface Call extends WithReturn, WithWith, WithUnwind {}
+export interface Call extends WithReturn, WithWith, WithUnwind, WithSet, WithRemove, WithDelete {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
  * @group Clauses
  */
-@mixin(WithReturn, WithWith, WithUnwind)
+@mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet)
 export class Call extends Clause {
     private subQuery: CypherASTNode;
     private importWith: ImportWith | undefined;
@@ -60,10 +63,12 @@ export class Call extends Clause {
     public getCypher(env: CypherEnvironment): string {
         const subQueryStr = this.subQuery.getCypher(env);
         const innerWithCypher = compileCypherIfExists(this.importWith, env, { suffix: "\n" });
-        const inCallBlock = `${innerWithCypher}${subQueryStr}`;
+        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
 
+        const inCallBlock = `${innerWithCypher}${subQueryStr}`;
         const nextClause = this.compileNextClause(env);
 
-        return `CALL {\n${padBlock(inCallBlock)}\n}${nextClause}`;
+        return `CALL {\n${padBlock(inCallBlock)}\n}${setCypher}${removeCypher}${nextClause}`;
     }
 }
