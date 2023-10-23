@@ -2,8 +2,7 @@
 "@neo4j/cypher-builder": minor
 ---
 
-Add support for some chained clauses after Match such as `new Match().match()`:
+Add support for some nested match:
 
--   Unwind
--   Match
--   Optional Match
+-   `new Match().match()`
+-   `new Match().optionalMatch()`

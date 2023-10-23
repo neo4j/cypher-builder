@@ -33,7 +33,7 @@ describe("Clause chaining", () => {
             "delete",
             "detachDelete",
             "with",
-            "unwind",
+            // "unwind",
             "match",
             "optionalMatch",
             // "merge",
