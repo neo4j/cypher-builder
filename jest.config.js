@@ -3,6 +3,7 @@ module.exports = {
     setupFilesAfterEnv: ["jest-extended/all"],
     roots: ["<rootDir>/src/", "<rootDir>/tests/"],
     coverageDirectory: "<rootDir>/coverage/",
+    prettierPath: null,
     snapshotFormat: {
         escapeString: true,
     },

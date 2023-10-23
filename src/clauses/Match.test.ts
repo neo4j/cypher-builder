@@ -88,6 +88,35 @@ describe("CypherBuilder Match", () => {
         `);
     });
 
+    test("Match with remove with multiple properties", () => {
+        const idParam = new Cypher.Param("my-id");
+        const nameParam = new Cypher.Param("my-name");
+
+        const movieNode = new Cypher.Node({
+            labels: ["Movie"],
+        });
+
+        const matchQuery = new Cypher.Match(movieNode)
+            .where(movieNode, { id: idParam, name: nameParam })
+            .remove(movieNode.property("name"), movieNode.property("released"))
+            .return(movieNode.property("id"));
+
+        const queryResult = matchQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "MATCH (this0:Movie)
+            WHERE (this0.id = $param0 AND this0.name = $param1)
+            REMOVE this0.name,this0.released
+            RETURN this0.id"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "my-id",
+              "param1": "my-name",
+            }
+        `);
+    });
+
     test("Optional match", () => {
         const movieNode = new Cypher.Node({
             labels: ["Movie"],
