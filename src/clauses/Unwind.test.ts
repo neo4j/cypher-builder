@@ -42,4 +42,18 @@ describe("CypherBuilder Unwind", () => {
         `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Nested Unwind", () => {
+        const variable = new Cypher.Variable();
+        const unwindQuery = new Cypher.Unwind([new Cypher.Variable(), variable]).unwind([
+            variable,
+            new Cypher.Variable(),
+        ]);
+        const queryResult = unwindQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"UNWIND var0 AS var1
+UNWIND var1 AS var2"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });
