@@ -173,4 +173,40 @@ DELETE this0"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Chained Merge", () => {
+        const node1 = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+        const node2 = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+
+        const query = new Cypher.Merge(node1).merge(node2);
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MERGE (this0:MyLabel)
+MERGE (this1:MyLabel)"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Chained Merge with existing clause", () => {
+        const node1 = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+        const node2 = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+
+        const query = new Cypher.Merge(node1).merge(new Cypher.Merge(node2));
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MERGE (this0:MyLabel)
+MERGE (this1:MyLabel)"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });
