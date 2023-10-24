@@ -4,5 +4,5 @@
 
 Add support for some chained match clauses:
 
--   `new Match().match()`
--   `new Match().optionalMatch()`
+-   `Match.match()`
+-   `Match.optionalMatch()`

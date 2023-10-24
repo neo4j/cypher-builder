@@ -4,8 +4,8 @@
 
 Add support for chained methods on Create clause:
 
--   `remove`
--   `delete`
--   `detachDelete`
--   `with`
--   `create`
+-   `Create.remove`
+-   `Create.delete`
+-   `Create.detachDelete`
+-   `Create.with`
+-   `Create.create`

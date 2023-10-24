@@ -4,7 +4,7 @@
 
 Add support for chained clauses on CALL clause:
 
--   remove
--   set
--   delete
--   detachDelete
+-   `Call.remove`
+-   `Call.set`
+-   `Call.delete`
+-   `Call.detachDelete`
