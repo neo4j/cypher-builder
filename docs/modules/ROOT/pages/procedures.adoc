@@ -1,0 +1,121 @@
+[[procedures]]
+:description: This page shows how to use Cypher procedures with Cypher Builder.
+= Procedures
+
+Cypher link:https://neo4j.com/docs/operations-manual/current/reference/procedures/[Procedures] are called using the link:https://neo4j.com/docs/cypher-manual/current/clauses/call/#call-call-a-procedure-using-call[CALL clause]: 
+
+
+[source, cypher]
+----
+CALL db.labels()
+----
+
+
+In Cypher Builder, however, procedures can be called directly, the `CALL` clause will be created automatically:
+
+[source, javascript]
+----
+const dbLabels = Cypher.db.labels();
+const { cypher, params } = dbLabels.build();
+----
+
+Cypher Builder has several built-in procedures such as `db.*` procedures that can be called as JavaScript functions. 
+
+== Custom Procedures
+
+Most procedures depend on the Neo4j setup, and such need to be defined with the `Procedure` class:
+
+[source, javascript]
+----
+const myProcedure = new Cypher.Procedure("MyProcedure")
+const { cypher } = myProcedure.build();
+----
+
+
+[source, cypher]
+----
+CALL MyProcedure()
+----
+
+=== Parameters
+
+Built-in procedures received the Cypher Procedure parameters directly:
+
+[source, javascript]
+----
+const myProcedure = Cypher.db.nameFromElementId("element-id")
+----
+
+For custom procedures, parameters need to be passed as an array into the `Procedure` class:
+
+[source, javascript]
+----
+const myProcedure = new Cypher.Procedure("MyProcedure", [new Cypher.Literal("param1")])
+----
+
+Note that the parameters need to be Cypher Expressions, such as `Cypher.Param`, `Cypher.Variable` or `Cypher.Literal`
+
+
+=== Yield
+
+Procedures that return a value have a method `.yield` to generate a `YIELD` statement:
+
+[source, javascript]
+----
+const dbLabels = Cypher.db.labels().yield("label");
+----
+
+[source, cypher]
+----
+CALL db.labels() YIELD label
+----
+
+== Reusing Custom Procedures
+
+Custom procedures can be wrapped within a function so these can be reused in the same fashion as built-in procedures:
+
+[source, javascript]
+----
+function myProcedure(myParam){
+    return new Cypher.Procedure("my-procedure", [myParam])
+}
+----
+
+This function can now be used to easily and safely generate calls to `my-procedure`:
+
+[source, javascript]
+----
+const procedureClause = myProcedure("my param")
+const { cypher } = procedureClause.build();
+----
+
+[source, cypher]
+----
+CALL my-procedure("my param")
+----
+
+=== Define Typings for YIELD
+
+In typescript, custom procedures can be defined with typings for the `.yield` method:
+
+[source, javascript]
+----
+function myProcedure(myParam: string) {
+    return new Cypher.Procedure<"column1" | "column2">("my-procedure", [myParam])
+}
+----
+
+This way, in the resulting procedure, only the strings `"column1"` and `"column2"` will be accepted by Typescript in the `.yield` method:
+
+[source, javascript]
+----
+myProcedure("my param").yield("column1"); // OK
+myProcedure("my param").yield("column1", "column2"); // OK
+myProcedure("my param").yield("another"); // Type Error
+----
+
+
+[NOTE]
+====
+If you want to create a procedure that does not allow for `YIELD` you can use the class `VoidProcedure` instead
+====

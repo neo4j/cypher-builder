@@ -5,6 +5,7 @@
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
 * xref:functions.adoc[]
+* xref:procedures.adoc[]
 * xref:patterns.adoc[]
 * xref:variables-and-params.adoc[]
 * How-to guides
