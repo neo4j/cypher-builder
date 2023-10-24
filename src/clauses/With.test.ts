@@ -191,4 +191,39 @@ describe("CypherBuilder With", () => {
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
+
+    describe("Chained Match", () => {
+        test("chained match", () => {
+            const withQuery = new Cypher.With("*").match(new Cypher.Node());
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH *
+MATCH (this0)"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("chained optional match", () => {
+            const withQuery = new Cypher.With("*").optionalMatch(new Cypher.Node());
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH *
+OPTIONAL MATCH (this0)"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("chained match with existing clause", () => {
+            const withQuery = new Cypher.With("*").match(new Cypher.Match(new Cypher.Node()));
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH *
+MATCH (this0)"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+    });
 });
