@@ -49,13 +49,13 @@ describe("Clause chaining", () => {
 
         it.each([
             "return",
-            // "remove",
+            "remove",
             "set",
-            // "delete",
-            // "detachDelete",
-            // "with",
+            "delete",
+            "detachDelete",
+            "with",
             // "merge",
-            // "create",
+            "create",
             "assignToPath",
         ] as const)("Create.%s", (value) => {
             expect(clause[value]).toBeFunction();
