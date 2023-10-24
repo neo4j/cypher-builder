@@ -24,17 +24,20 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
 import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithWith } from "./mixins/clauses/WithWith";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { SetClause } from "./sub-clauses/Set";
 import { mixin } from "./utils/mixin";
 
-export interface Create extends WithReturn, WithSet, WithPathAssign {}
+export interface Create extends WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
  * @group Clauses
  */
-@mixin(WithReturn, WithSet, WithPathAssign)
+@mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove)
 export class Create extends Clause {
     private pattern: Pattern;
 
@@ -49,13 +52,33 @@ export class Create extends Clause {
         this.setSubClause = new SetClause(this);
     }
 
+    /** Add a {@link Create} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
+     */
+    public create(clause: Create): Create;
+    public create(pattern: NodeRef | Pattern): Create;
+    public create(clauseOrPattern: Create | NodeRef | Pattern): Create {
+        if (clauseOrPattern instanceof Create) {
+            this.addNextClause(clauseOrPattern);
+            return clauseOrPattern;
+        }
+
+        const matchClause = new Create(clauseOrPattern);
+        this.addNextClause(matchClause);
+
+        return matchClause;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathCypher = this.compilePath(env);
         const patternCypher = this.pattern.getCypher(env);
 
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+
         const nextClause = this.compileNextClause(env);
-        return `CREATE ${pathCypher}${patternCypher}${setCypher}${nextClause}`;
+        return `CREATE ${pathCypher}${patternCypher}${setCypher}${removeCypher}${deleteStr}${nextClause}`;
     }
 }

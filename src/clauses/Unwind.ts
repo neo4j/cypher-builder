@@ -20,19 +20,20 @@
 import type { CypherEnvironment } from "../Environment";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
+import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
-export interface Unwind extends WithWith, WithDelete {}
+export interface Unwind extends WithWith, WithDelete, WithMatch {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
  * @group Clauses
  */
-@mixin(WithWith, WithDelete)
+@mixin(WithWith, WithDelete, WithMatch)
 export class Unwind extends Clause {
     private projection: Projection;
 
