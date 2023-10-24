@@ -226,4 +226,29 @@ MATCH (this0)"
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
+
+    describe("Chained Create", () => {
+        test("With * and create", () => {
+            const withQuery = new Cypher.With("*").create(new Cypher.Node({ labels: ["Movie"] }));
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH *
+CREATE (this0:Movie)"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("With * and existing create clause", () => {
+            const createClause = new Cypher.Create(new Cypher.Node({ labels: ["Movie"] }));
+            const withQuery = new Cypher.With("*").create(createClause);
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH *
+CREATE (this0:Movie)"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+    });
 });
