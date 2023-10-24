@@ -41,4 +41,53 @@ describe("Foreach", () => {
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Foreach create with set, remove and delete", () => {
+        const list = new Cypher.Literal([1, 2, 3]);
+        const variable = new Cypher.Variable();
+
+        const movieNode = new Cypher.Node({ labels: ["Movie"] });
+        const createMovie = new Cypher.Create(movieNode);
+
+        const foreachClause = new Cypher.Foreach(variable, list, createMovie)
+            .remove(movieNode.property("title"))
+            .set([movieNode.property("id"), variable])
+            .delete(movieNode)
+            .with("*");
+
+        const queryResult = foreachClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"FOREACH (var0 IN [1, 2, 3] |
+    CREATE (this1:Movie)
+)
+SET
+    this1.id = var0
+REMOVE this1.title
+DELETE this1
+WITH *"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Foreach create detachDelete", () => {
+        const list = new Cypher.Literal([1, 2, 3]);
+        const variable = new Cypher.Variable();
+
+        const movieNode = new Cypher.Node({ labels: ["Movie"] });
+        const createMovie = new Cypher.Create(movieNode);
+
+        const foreachClause = new Cypher.Foreach(variable, list, createMovie).detachDelete(movieNode).with("*");
+
+        const queryResult = foreachClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"FOREACH (var0 IN [1, 2, 3] |
+    CREATE (this1:Movie)
+)
+DETACH DELETE this1
+WITH *"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });

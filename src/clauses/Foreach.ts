@@ -20,18 +20,22 @@
 import type { CypherEnvironment } from "../Environment";
 import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
 import type { Create } from "./Create";
 import type { Merge } from "./Merge";
+import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithRemove } from "./mixins/sub-clauses/WithRemove";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
 import type { DeleteClause } from "./sub-clauses/Delete";
 import type { RemoveClause } from "./sub-clauses/Remove";
 import type { SetClause } from "./sub-clauses/Set";
 import { mixin } from "./utils/mixin";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Foreach extends WithWith {}
+export interface Foreach extends WithWith, WithReturn, WithRemove, WithSet, WithDelete {}
 
 type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | DeleteClause;
 
@@ -39,7 +43,7 @@ type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | Dele
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/foreach/)
  * @group Clauses
  */
-@mixin(WithWith)
+@mixin(WithWith, WithReturn, WithRemove, WithSet, WithDelete)
 export class Foreach extends Clause {
     private variable: Variable;
     private listExpr: Expr;
@@ -58,8 +62,13 @@ export class Foreach extends Clause {
         const listExpr = this.listExpr.getCypher(env);
         const mapClauseStr = this.mapClause.getCypher(env);
         const nextClause = this.compileNextClause(env);
+
         const foreachStr = [`FOREACH (${variableStr} IN ${listExpr} |`, padBlock(mapClauseStr), `)`].join("\n");
 
-        return `${foreachStr}${nextClause}`;
+        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+
+        return `${foreachStr}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 }
