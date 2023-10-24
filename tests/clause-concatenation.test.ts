@@ -67,10 +67,10 @@ describe("Clause chaining", () => {
 
         it.each([
             "return",
-            // "remove",
-            // "set",
-            // "delete",
-            // "detachDelete",
+            "remove",
+            "set",
+            "delete",
+            "detachDelete",
             "with",
             "unwind",
             "match",
