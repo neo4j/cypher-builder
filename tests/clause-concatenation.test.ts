@@ -92,11 +92,11 @@ describe("Clause chaining", () => {
         const clause = new Cypher.Foreach(variable, list, createMovie);
 
         it.each([
-            // "return",
-            // "remove",
-            // "set",
-            // "delete",
-            // "detachDelete",
+            "return",
+            "remove",
+            "set",
+            "delete",
+            "detachDelete",
             "with",
             // "merge",
             // "create",
