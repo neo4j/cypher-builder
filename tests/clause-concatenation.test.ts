@@ -110,11 +110,11 @@ describe("Clause chaining", () => {
 
         it.each([
             "return",
-            // "remove",
+            "remove",
             "set",
             "delete",
             "detachDelete",
-            // "with",
+            "with",
             // "merge",
             // "create",
             "assignToPath",
