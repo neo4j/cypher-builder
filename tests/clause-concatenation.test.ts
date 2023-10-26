@@ -134,11 +134,9 @@ describe("Clause chaining", () => {
         const clause = new Cypher.Unwind();
 
         it.each([
-            // "where",
-            // "and",
-            // "return",
-            // "remove",
-            // "set",
+            "return",
+            "remove",
+            "set",
             "delete",
             "detachDelete",
             "with",
@@ -147,10 +145,6 @@ describe("Clause chaining", () => {
             "optionalMatch",
             // "merge",
             // "create",
-            // "assignToPath",
-            // "orderBy",
-            // "skip",
-            // "limit",
         ] as const)("Unwind.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });

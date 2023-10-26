@@ -21,19 +21,22 @@ import type { CypherEnvironment } from "../Environment";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithMatch } from "./mixins/clauses/WithMatch";
+import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithRemove } from "./mixins/sub-clauses/WithRemove";
+import { WithSet } from "./mixins/sub-clauses/WithSet";
 import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
-export interface Unwind extends WithWith, WithDelete, WithMatch {}
+export interface Unwind extends WithWith, WithDelete, WithMatch, WithReturn, WithRemove, WithSet {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
  * @group Clauses
  */
-@mixin(WithWith, WithDelete, WithMatch)
+@mixin(WithWith, WithDelete, WithMatch, WithReturn, WithRemove, WithSet)
 export class Unwind extends Clause {
     private projection: Projection;
 
@@ -64,10 +67,14 @@ export class Unwind extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const projectionStr = this.projection.getCypher(env);
-        const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+
+        const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+
         const nextClause = this.compileNextClause(env);
 
-        return `UNWIND ${projectionStr}${deleteStr}${nextClause}`;
+        return `UNWIND ${projectionStr}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 
     private addColumnsToUnwindClause(...columns: Array<"*" | ProjectionColumn>): Unwind {
