@@ -2,7 +2,7 @@
 "@neo4j/cypher-builder": minor
 ---
 
-Add chained Create method:
+Add methods for chained Create method:
 
 -   `Match.create`
 -   `Call.create`

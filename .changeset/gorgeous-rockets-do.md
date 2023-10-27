@@ -2,7 +2,7 @@
 "@neo4j/cypher-builder": minor
 ---
 
-Support for chained match clauses:
+Add methods for chained match clauses:
 
 -   `With.match`
 -   `With.optionalMatch`
