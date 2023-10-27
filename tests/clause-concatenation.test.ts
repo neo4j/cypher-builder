@@ -37,7 +37,7 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             // "merge",
-            // "create",
+            "create",
             "assignToPath",
         ] as const)("Match.%s", (value) => {
             expect(clause[value]).toBeFunction();
@@ -76,7 +76,7 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             // "merge",
-            // "create",
+            "create",
         ] as const)("Call.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -99,7 +99,7 @@ describe("Clause chaining", () => {
             "detachDelete",
             "with",
             // "merge",
-            // "create",
+            "create",
         ] as const)("Foreach.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -116,7 +116,7 @@ describe("Clause chaining", () => {
             "detachDelete",
             "with",
             // "merge",
-            // "create",
+            "create",
             "assignToPath",
         ] as const)("Merge.%s", (value) => {
             expect(clause[value]).toBeFunction();
@@ -144,7 +144,7 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             // "merge",
-            // "create",
+            "create",
         ] as const)("Unwind.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -180,7 +180,7 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             // "merge",
-            // "create",
+            "create",
             "orderBy",
             "skip",
             "limit",
