@@ -1,0 +1,68 @@
+[[change-data-capture]]
+:description: This page describes how use Change Data Capture API.
+= Use Change Data Capture
+
+link:https://neo4j.com/docs/cdc/current/[Change Data Capture] (CDC) queries can be created with the Cypher Builder by using the Procedures in the `cdc` namespace:
+
+* `Cypher.cdc.current()`
+* `Cypher.cdc.earliest()`
+* `Cypher.cdc.query(from, selectors)`
+
+
+== Examples
+
+=== Acquiring the current change identifier
+
+[source, javascript]
+----
+const query = Cypher.cdc.current().yield("id");
+const { cypher } = query.build();
+----
+
+
+[source, cypher]
+----
+CALL cdc.current() YIELD id
+----
+
+
+=== Querying changes
+
+[source, javascript]
+----
+const query = Cypher.cdc.query(fromId);
+const { cypher } = query.build();
+----
+
+[source, cypher]
+----
+CALL cdc.query("cdc-id", [])
+----
+
+
+=== Using query selectors
+
+To use link:https://neo4j.com/docs/cdc/current/selectors/[CDC selectors] you'll need to define a `Map` with the properties of the selector schema for each selector:
+
+[source, javascript]
+----
+const fromId="cdc-id";
+const selector = new Cypher.Map({
+    select: new Cypher.Literal("e"),
+    operation: new Cypher.Literal("c"),
+    changesTo: new Cypher.List([new Cypher.Literal("name"), new Cypher.Literal("title")]),
+});
+
+
+const query = Cypher.cdc.query(fromId, [selector]);
+const { cypher } = query.build();
+----
+
+[source, cypher]
+----
+CALL cdc.query("cdc-id", [{
+    select: "e",
+    operation: "c",
+    changesTo: ["name", "title"]
+}])
+----
