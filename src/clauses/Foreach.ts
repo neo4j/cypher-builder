@@ -26,6 +26,7 @@ import { Clause } from "./Clause";
 import type { Create } from "./Create";
 import type { Merge } from "./Merge";
 import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
@@ -36,7 +37,7 @@ import type { RemoveClause } from "./sub-clauses/Remove";
 import type { SetClause } from "./sub-clauses/Set";
 import { mixin } from "./utils/mixin";
 
-export interface Foreach extends WithWith, WithReturn, WithRemove, WithSet, WithDelete, WithCreate {}
+export interface Foreach extends WithWith, WithReturn, WithRemove, WithSet, WithDelete, WithCreate, WithMerge {}
 
 type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | DeleteClause;
 
@@ -44,7 +45,7 @@ type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | Dele
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/foreach/)
  * @group Clauses
  */
-@mixin(WithWith, WithReturn, WithRemove, WithSet, WithDelete, WithCreate)
+@mixin(WithWith, WithReturn, WithRemove, WithSet, WithDelete, WithCreate, WithMerge)
 export class Foreach extends Clause {
     private variable: Variable;
     private listExpr: Expr;

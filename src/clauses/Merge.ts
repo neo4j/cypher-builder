@@ -62,6 +62,23 @@ export class Merge extends Clause {
         return this;
     }
 
+    /** Add a {@link Merge} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
+     */
+    public merge(clause: Merge): Merge;
+    public merge(pattern: NodeRef | Pattern): Merge;
+    public merge(clauseOrPattern: Merge | NodeRef | Pattern): Merge {
+        if (clauseOrPattern instanceof Merge) {
+            this.addNextClause(clauseOrPattern);
+            return clauseOrPattern;
+        }
+
+        const matchClause = new Merge(clauseOrPattern);
+        this.addNextClause(matchClause);
+
+        return matchClause;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathAssignStr = this.compilePath(env);
