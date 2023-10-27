@@ -23,6 +23,7 @@ import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
+import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
@@ -36,13 +37,21 @@ import { mixin } from "./utils/mixin";
 // With requires an alias for expressions that are not variables
 export type WithProjection = Variable | [Expr, string | Variable | Literal];
 
-export interface With extends WithOrder, WithReturn, WithWhere, WithDelete, WithMatch, WithUnwind, WithMerge {}
+export interface With
+    extends WithOrder,
+        WithReturn,
+        WithWhere,
+        WithDelete,
+        WithMatch,
+        WithUnwind,
+        WithCreate,
+        WithMerge {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
  * @group Clauses
  */
-@mixin(WithOrder, WithReturn, WithWhere, WithDelete, WithMatch, WithUnwind, WithMerge)
+@mixin(WithOrder, WithReturn, WithWhere, WithDelete, WithMatch, WithUnwind, WithCreate, WithMerge)
 export class With extends Clause {
     private projection: Projection;
     private isDistinct = false;

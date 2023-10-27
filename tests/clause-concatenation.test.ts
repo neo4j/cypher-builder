@@ -37,7 +37,7 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             "merge",
-            // "create",
+            "create",
             "assignToPath",
         ] as const)("Match.%s", (value) => {
             expect(clause[value]).toBeFunction();
@@ -76,7 +76,8 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             "merge",
-            // "create",
+
+            "create",
         ] as const)("Call.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -91,18 +92,12 @@ describe("Clause chaining", () => {
 
         const clause = new Cypher.Foreach(variable, list, createMovie);
 
-        it.each([
-            "return",
-            "remove",
-            "set",
-            "delete",
-            "detachDelete",
-            "with",
-            "merge",
-            // "create",
-        ] as const)("Foreach.%s", (value) => {
-            expect(clause[value]).toBeFunction();
-        });
+        it.each(["return", "remove", "set", "delete", "detachDelete", "with", "merge", "create"] as const)(
+            "Foreach.%s",
+            (value) => {
+                expect(clause[value]).toBeFunction();
+            }
+        );
     });
 
     describe("Merge", () => {
@@ -116,7 +111,8 @@ describe("Clause chaining", () => {
             "detachDelete",
             "with",
             "merge",
-            // "create",
+
+            "create",
             "assignToPath",
         ] as const)("Merge.%s", (value) => {
             expect(clause[value]).toBeFunction();
@@ -134,11 +130,9 @@ describe("Clause chaining", () => {
         const clause = new Cypher.Unwind();
 
         it.each([
-            // "where",
-            // "and",
-            // "return",
-            // "remove",
-            // "set",
+            "return",
+            "remove",
+            "set",
             "delete",
             "detachDelete",
             "with",
@@ -146,11 +140,7 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             "merge",
-            // "create",
-            // "assignToPath",
-            // "orderBy",
-            // "skip",
-            // "limit",
+            "create",
         ] as const)("Unwind.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -186,7 +176,7 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             "merge",
-            // "create",
+            "create",
             "orderBy",
             "skip",
             "limit",

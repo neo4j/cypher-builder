@@ -23,6 +23,7 @@ import type { Variable } from "../references/Variable";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
+import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
@@ -34,13 +35,22 @@ import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { ImportWith } from "./sub-clauses/ImportWith";
 import { mixin } from "./utils/mixin";
 
-export interface Call extends WithReturn, WithWith, WithUnwind, WithSet, WithRemove, WithDelete, WithMatch, WithMerge {}
+export interface Call
+    extends WithReturn,
+        WithWith,
+        WithUnwind,
+        WithSet,
+        WithRemove,
+        WithDelete,
+        WithMatch,
+        WithCreate,
+        WithMerge {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
  * @group Clauses
  */
-@mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithMerge)
+@mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge)
 export class Call extends Clause {
     private subQuery: CypherASTNode;
     private importWith: ImportWith | undefined;
