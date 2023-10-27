@@ -1,5 +1,82 @@
 # @neo4j/cypher-builder
 
+## 1.6.0
+
+### Minor Changes
+
+-   [#211](https://github.com/neo4j/cypher-builder/pull/211) [`2e76445`](https://github.com/neo4j/cypher-builder/commit/2e76445174843dcb77fcd68633f22a4cc427a508) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained clauses in unwind:
+
+    -   `Unwind.return`
+    -   `Unwind.remove`
+    -   `Unwind.set`
+
+-   [`fa3d246`](https://github.com/neo4j/cypher-builder/commit/fa3d24612c7094ec947b036bf7bd00f660916e33) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained methods in Merge:
+
+    -   `Merge.remove`
+    -   `Merge.with`
+
+-   [#213](https://github.com/neo4j/cypher-builder/pull/213) [`64edcdd`](https://github.com/neo4j/cypher-builder/commit/64edcdd580fb72cf8e859edf4f6331ffee65c189) Thanks [@angrykoala](https://github.com/angrykoala)! - Add methods for chained Merge:
+
+    -   `Match.merge`
+    -   `Create.merge`
+    -   `Call.merge`
+    -   `Foreach.merge`
+    -   `Merge.merge`
+    -   `Unwind.merge`
+    -   `With.merge`
+
+-   [#206](https://github.com/neo4j/cypher-builder/pull/206) [`1ef6244`](https://github.com/neo4j/cypher-builder/commit/1ef6244df80dd1f48e69623b0f3ea0cdb62b6376) Thanks [@angrykoala](https://github.com/angrykoala)! - Add methods for chained match clauses:
+
+    -   `With.match`
+    -   `With.optionalMatch`
+    -   `Unwind.match`
+    -   `Unwind.optionalMatch`
+    -   `Call.match`
+    -   `Call.optionalMatch`
+
+-   [#204](https://github.com/neo4j/cypher-builder/pull/204) [`8227ade`](https://github.com/neo4j/cypher-builder/commit/8227ade6f7174d6c61bf5d2475fea04912e9a2c8) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained clauses in CALL clause:
+
+    -   `Call.remove`
+    -   `Call.set`
+    -   `Call.delete`
+    -   `Call.detachDelete`
+
+-   [#212](https://github.com/neo4j/cypher-builder/pull/212) [`33ceb71`](https://github.com/neo4j/cypher-builder/commit/33ceb71a5eeea0af2f46d52417015643a0a9f2fb) Thanks [@angrykoala](https://github.com/angrykoala)! - Add methods for chained Create method:
+
+    -   `Match.create`
+    -   `Call.create`
+    -   `Foreach.create`
+    -   `Merge.create`
+    -   `Unwind.create`
+    -   `With.create`
+
+-   [#200](https://github.com/neo4j/cypher-builder/pull/200) [`d582e1a`](https://github.com/neo4j/cypher-builder/commit/d582e1ace8665de5ea3ed2abcfc9ad6c571fdfbf) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support nested match clauses #90:
+
+    -   `Match.match()`
+    -   `Match.optionalMatch()`
+
+-   [#210](https://github.com/neo4j/cypher-builder/pull/210) [`9388048`](https://github.com/neo4j/cypher-builder/commit/9388048f65f1850d9eee6c0fa666328da27d46ea) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained subclauses for foreach:
+
+    -   `Foreach.return`
+    -   `Foreach.remove`
+    -   `Foreach.set`
+    -   `Foreach.delete`
+    -   `Foreach.detachDelete`
+
+-   [#201](https://github.com/neo4j/cypher-builder/pull/201) [`70c60b1`](https://github.com/neo4j/cypher-builder/commit/70c60b1edbb672c32d4394401d37c60a85d45633) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for chained unwind:
+
+    -   `Unwind.unwind`
+    -   `Match.unwind`
+    -   `With.unwind`
+
+-   [#203](https://github.com/neo4j/cypher-builder/pull/203) [`d7d0d2f`](https://github.com/neo4j/cypher-builder/commit/d7d0d2f8d2262d854deea49faf611d2581cb3392) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for chained methods on Create clause:
+
+    -   `Create.remove`
+    -   `Create.delete`
+    -   `Create.detachDelete`
+    -   `Create.with`
+    -   `Create.create`
+
 ## 1.5.2
 
 ### Patch Changes
