@@ -73,7 +73,9 @@ describe("CDC procedures", () => {
 
             const { cypher } = query.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL cdc.query(\\"my-cursor\\", [{ select: \\"e\\", operation: \\"c\\", changesTo: [\\"name\\", \\"title\\"] }])"`);
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL cdc.query(\\"my-cursor\\", [{ select: \\"e\\", operation: \\"c\\", changesTo: [\\"name\\", \\"title\\"] }])"`
+            );
         });
     });
 });
