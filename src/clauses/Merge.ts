@@ -23,6 +23,7 @@ import type { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
+import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
@@ -32,13 +33,13 @@ import type { OnCreateParam } from "./sub-clauses/OnCreate";
 import { OnCreate } from "./sub-clauses/OnCreate";
 import { mixin } from "./utils/mixin";
 
-export interface Merge extends WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith {}
+export interface Merge extends WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
  * @group Clauses
  */
-@mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith)
+@mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate)
 export class Merge extends Clause {
     private pattern: Pattern;
     private onCreateClause: OnCreate;
@@ -59,6 +60,23 @@ export class Merge extends Clause {
         this.onCreateClause.addParams(...onCreateParams);
 
         return this;
+    }
+
+    /** Add a {@link Merge} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
+     */
+    public merge(clause: Merge): Merge;
+    public merge(pattern: NodeRef | Pattern): Merge;
+    public merge(clauseOrPattern: Merge | NodeRef | Pattern): Merge {
+        if (clauseOrPattern instanceof Merge) {
+            this.addNextClause(clauseOrPattern);
+            return clauseOrPattern;
+        }
+
+        const matchClause = new Merge(clauseOrPattern);
+        this.addNextClause(matchClause);
+
+        return matchClause;
     }
 
     /** @internal */
