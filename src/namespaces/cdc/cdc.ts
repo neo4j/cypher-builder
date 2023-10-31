@@ -22,7 +22,7 @@ import { CypherProcedure } from "../../procedures/CypherProcedure";
 import { normalizeExpr, normalizeList } from "../../utils/normalize-variable";
 
 /** Acquire a change identifier for the last committed transaction
- * @see [Neo4j Documentation](https://neo4j.com/docs/cdc/current/)
+ * @see [Neo4j Documentation](https://neo4j.com/docs/cdc/current/procedures/current/)
  * @group Procedures
  */
 export function current(): CypherProcedure<"id"> {
