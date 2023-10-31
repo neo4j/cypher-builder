@@ -17,12 +17,13 @@
  * limitations under the License.
  */
 
+import { ListExpr } from "../expressions/list/ListExpr";
+import { MapExpr } from "../expressions/map/MapExpr";
 import { Literal } from "../references/Literal";
-import { isCypherCompilable } from "./is-cypher-compilable";
 import type { Param } from "../references/Param";
 import type { Variable } from "../references/Variable";
-import { MapExpr } from "../expressions/map/MapExpr";
 import type { Expr } from "../types";
+import { isCypherCompilable } from "./is-cypher-compilable";
 
 type VariableInput = string | number | Variable | Literal | Param;
 
@@ -44,4 +45,9 @@ export function normalizeMap(map: Record<string, VariableInput>): MapExpr {
         mapExpr.set(key, normalizeVariable(value));
         return mapExpr;
     }, new MapExpr());
+}
+
+export function normalizeList(list: Array<VariableInput | Expr>): ListExpr {
+    const expressions = list.map((v) => normalizeExpr(v));
+    return new ListExpr(expressions);
 }
