@@ -23,6 +23,7 @@ import type { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
+import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
@@ -31,13 +32,13 @@ import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { SetClause } from "./sub-clauses/Set";
 import { mixin } from "./utils/mixin";
 
-export interface Create extends WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove {}
+export interface Create extends WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove, WithMerge {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
  * @group Clauses
  */
-@mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove)
+@mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove, WithMerge)
 export class Create extends Clause {
     private pattern: Pattern;
 

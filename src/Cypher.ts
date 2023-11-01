@@ -53,6 +53,9 @@ export { Exists } from "./expressions/subquery/Exists";
 // --Apoc
 export * as apoc from "./namespaces/apoc/apoc";
 
+// --CDC
+export * as cdc from "./namespaces/cdc/cdc";
+
 // --Lists
 export { ListComprehension } from "./expressions/list/ListComprehension";
 export { ListExpr as List } from "./expressions/list/ListExpr";

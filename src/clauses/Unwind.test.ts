@@ -43,6 +43,27 @@ describe("CypherBuilder Unwind", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
+    test("Unwind with set, remove and delete", () => {
+        const variable = new Cypher.Variable();
+        const unwindQuery = new Cypher.Unwind([new Cypher.Variable(), variable])
+            .set([variable.property("title"), new Cypher.Param("The Matrix")])
+            .remove(variable.property("title"))
+            .delete(variable);
+        const queryResult = unwindQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"UNWIND var0 AS var1
+SET
+    var1.title = $param0
+REMOVE var1.title
+DELETE var1"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "The Matrix",
+}
+`);
+    });
+
     test("Chained Unwind", () => {
         const variable = new Cypher.Variable();
         const unwindQuery = new Cypher.Unwind([new Cypher.Variable(), variable]).unwind([
