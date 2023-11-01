@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Scalar Functions", () => {
     // no parameter functions
@@ -47,6 +47,9 @@ describe("Scalar Functions", () => {
         "toInteger",
         "toIntegerOrNull",
         "type",
+        "valueType",
+        "char_length",
+        "character_length",
     ] as const)("%s()", (func) => {
         const param = new Cypher.Variable();
 

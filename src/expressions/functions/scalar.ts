@@ -191,3 +191,30 @@ export function toIntegerOrNull(expr: Expr): CypherFunction {
 export function type(relationship: Expr): CypherFunction {
     return new CypherFunction("type", [relationship]);
 }
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-valueType)
+ * @group Cypher Functions
+ * @category Scalar
+ */
+export function valueType(expr: Expr): CypherFunction {
+    return new CypherFunction("valueType", [expr]);
+}
+
+/** Alias of size()
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-char_length)
+ * @group Cypher Functions
+ * @category Scalar
+ */
+export function char_length(expr: Expr): CypherFunction {
+    return new CypherFunction("char_length", [expr]);
+}
+
+/** Alias of size()
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-character_length)
+ * @group Cypher Functions
+ * @category Scalar
+ */
+export function character_length(expr: Expr): CypherFunction {
+    return new CypherFunction("character_length", [expr]);
+}
