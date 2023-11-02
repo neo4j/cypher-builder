@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 1.7.1
+
+### Patch Changes
+
+-   [#226](https://github.com/neo4j/cypher-builder/pull/226) [`84b1534`](https://github.com/neo4j/cypher-builder/commit/84b1534f766c8c009e8a4f8b15d4c282c6ead500) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for `new Call().innerWith("*")` to generate `WITH *` inside a `CALL` subquery
+
 ## 1.7.0
 
 ### Minor Changes
