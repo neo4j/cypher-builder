@@ -62,7 +62,7 @@ export class Call extends Clause {
         this.subQuery = rootQuery;
     }
 
-    public innerWith(...params: Variable[]): this {
+    public innerWith(...params: Array<Variable | "*">): this {
         if (this.importWith) throw new Error("Call import already set");
         if (params.length > 0) {
             this.importWith = new ImportWith(this, [...params]);
