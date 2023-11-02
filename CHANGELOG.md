@@ -1,5 +1,25 @@
 # @neo4j/cypher-builder
 
+## 1.7.0
+
+### Minor Changes
+
+-   [#218](https://github.com/neo4j/cypher-builder/pull/218) [`81dc823`](https://github.com/neo4j/cypher-builder/commit/81dc82377cc93a50d373cf05824ab8ef45efa93a) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for CDC procedures:
+
+    -   `cdc.current`
+    -   `cdc.earliest`
+    -   `cdc.query`
+
+-   [#224](https://github.com/neo4j/cypher-builder/pull/224) [`c872abd`](https://github.com/neo4j/cypher-builder/commit/c872abd611e22db3ae1fd3b6c8162f44f7e47eb6) Thanks [@angrykoala](https://github.com/angrykoala)! - Implement functions from Cypher 5.13:
+
+    -   `valueType`
+    -   `char_length`
+    -   `character_length`
+
+### Patch Changes
+
+-   [#219](https://github.com/neo4j/cypher-builder/pull/219) [`cae1828`](https://github.com/neo4j/cypher-builder/commit/cae182840b8718d7f972bf2e83f990c23807bd1f) Thanks [@angrykoala](https://github.com/angrykoala)! - Removes duplication between RawCypher (deprecated) and Raw
+
 ## 1.6.0
 
 ### Minor Changes
