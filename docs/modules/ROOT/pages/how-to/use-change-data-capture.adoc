@@ -13,6 +13,8 @@ link:https://neo4j.com/docs/cdc/current/[Change Data Capture] (CDC) queries can 
 
 === Acquiring the current change identifier
 
+To acquire the current change identifier, follow these instructions:
+
 [source, javascript]
 ----
 const query = Cypher.cdc.current().yield("id");
@@ -27,6 +29,8 @@ CALL cdc.current() YIELD id
 
 
 === Querying changes
+
+To query changes in the graph, follow these instructions:
 
 [source, javascript]
 ----
