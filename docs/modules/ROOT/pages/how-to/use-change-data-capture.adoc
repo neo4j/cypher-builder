@@ -13,7 +13,7 @@ link:https://neo4j.com/docs/cdc/current/[Change Data Capture] (CDC) queries can 
 
 === Acquiring the current change identifier
 
-To acquire the current change identifier, follow these instructions:
+In order to query changes, you need to acquire a change identifier. This can be done with `cdc.current()` or `cdc.earliest()`. To acquire the latest change identifier, follow these instructions:
 
 [source, javascript]
 ----
