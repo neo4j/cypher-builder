@@ -29,7 +29,6 @@ import { Where } from "../../sub-clauses/Where";
 import { Mixin } from "../Mixin";
 
 export type VariableLike = Variable | Literal | PropertyRef;
-type VariableWithProperties = Variable | PropertyRef;
 
 export abstract class WithWhere extends Mixin {
     protected whereSubClause: Where | undefined;
@@ -38,31 +37,29 @@ export abstract class WithWhere extends Mixin {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/where/)
      */
     public where(input: Predicate | undefined): this;
-    public where(target: VariableWithProperties, params: Record<string, VariableLike>): this;
-    public where(input: Predicate | VariableWithProperties | undefined, params?: Record<string, VariableLike>): this {
-        if (input) {
-            this.updateOrCreateWhereClause(input, params);
-        }
+    public where(target: Variable | PropertyRef, params: Record<string, VariableLike>): this;
+    public where(input: Predicate | Variable | PropertyRef | undefined, params?: Record<string, VariableLike>): this {
+        this.updateOrCreateWhereClause(input, params);
         return this;
     }
 
     /** Shorthand for `AND` operation after a `WHERE` subclause
      */
     public and(input: Predicate | undefined): this;
-    public and(target: VariableWithProperties, params: Record<string, VariableLike>): this;
-    public and(input: Predicate | VariableWithProperties | undefined, params?: Record<string, VariableLike>): this {
-        if (input) {
-            this.updateOrCreateWhereClause(input, params);
-        }
+    public and(target: Variable | PropertyRef, params: Record<string, VariableLike>): this;
+    public and(input: Predicate | Variable | PropertyRef | undefined, params?: Record<string, VariableLike>): this {
+        this.updateOrCreateWhereClause(input, params);
         return this;
     }
 
     private updateOrCreateWhereClause(
-        input: Predicate | VariableWithProperties,
+        input: Predicate | Variable | PropertyRef | undefined,
         params?: Record<string, VariableLike>
     ): void {
         const whereInput = this.createWhereInput(input, params);
-        if (!whereInput) return;
+        if (!whereInput) {
+            return;
+        }
 
         if (!this.whereSubClause) {
             const whereClause = new Where(this, whereInput);
@@ -73,9 +70,12 @@ export abstract class WithWhere extends Mixin {
     }
 
     private createWhereInput(
-        input: Predicate | Variable | PropertyRef,
+        input: Predicate | Variable | PropertyRef | undefined,
         params: Record<string, VariableLike> | undefined
     ): Predicate | undefined {
+        if (!input) {
+            return undefined;
+        }
         if (input instanceof Variable || input instanceof PropertyRef) {
             const generatedOp = this.variableAndObjectToOperation(input, params ?? {});
             return generatedOp;
