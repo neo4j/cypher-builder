@@ -97,6 +97,41 @@ describe("CypherBuilder Call", () => {
         `);
     });
 
+    test("CALL with inner with *", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const matchClause = new Cypher.Match(node).return([node.property("title"), "movie"]);
+
+        const clause = new Cypher.Call(matchClause).innerWith("*");
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "CALL {
+                WITH *
+                MATCH (this0:Movie)
+                RETURN this0.title AS movie
+            }"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+    test("CALL with inner with * and extra fields", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const matchClause = new Cypher.Match(node).return([node.property("title"), "movie"]);
+
+        const clause = new Cypher.Call(matchClause).innerWith(node, "*");
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "CALL {
+                WITH *, this0
+                MATCH (this0:Movie)
+                RETURN this0.title AS movie
+            }"
+        `);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
     test("CALL with inner with without parameters", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 

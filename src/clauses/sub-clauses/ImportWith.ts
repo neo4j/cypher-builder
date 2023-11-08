@@ -17,27 +17,42 @@
  * limitations under the License.
  */
 
-import type { Call } from "../Call";
-import type { CypherEnvironment } from "../../Environment";
-import type { PropertyRef } from "../../references/PropertyRef";
-import type { Param } from "../../references/Param";
-import type { Variable } from "../../references/Variable";
 import { CypherASTNode } from "../../CypherASTNode";
+import type { CypherEnvironment } from "../../Environment";
+import type { Param } from "../../references/Param";
+import type { PropertyRef } from "../../references/PropertyRef";
+import type { Variable } from "../../references/Variable";
+import type { Call } from "../Call";
 
 export type SetParam = [PropertyRef, Param<unknown>];
 
 /** Represents a WITH statement to import variables into a CALL subquery */
 export class ImportWith extends CypherASTNode {
     private params: Variable[];
+    private hasStar = false;
 
-    constructor(parent: Call, params: Variable[]) {
+    constructor(parent: Call, params: Array<"*" | Variable>) {
         super(parent);
-        this.params = params;
+        this.params = this.filterParams(params);
     }
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const paramsStr = this.params.map((v) => v.getCypher(env));
+        let paramsStr = this.params.map((v) => v.getCypher(env));
+        if (this.hasStar) {
+            paramsStr = ["*", ...paramsStr];
+        }
+
         return `WITH ${paramsStr.join(", ")}`;
+    }
+
+    private filterParams(params: Array<"*" | Variable>): Variable[] {
+        return params.filter((p: "*" | Variable): p is Variable => {
+            if (p === "*") {
+                this.hasStar = true;
+                return false;
+            }
+            return true;
+        });
     }
 }

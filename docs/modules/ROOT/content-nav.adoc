@@ -10,5 +10,6 @@
 * xref:variables-and-params.adoc[]
 * How-to guides
 ** xref:how-to/customize-cypher.adoc[]
+** xref:how-to/use-change-data-capture.adoc[]
 * link:https://github.com/neo4j/cypher-builder/tree/main/examples[Examples]
 * link:https://neo4j.github.io/cypher-builder/reference/[Reference]
