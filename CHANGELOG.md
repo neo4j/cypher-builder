@@ -1,5 +1,25 @@
 # @neo4j/cypher-builder
 
+## 1.7.2
+
+### Patch Changes
+
+-   [#230](https://github.com/neo4j/cypher-builder/pull/230) [`f37cc99`](https://github.com/neo4j/cypher-builder/commit/f37cc9999f3a5945c981e8c9d81ae3d49dac7237) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for passing `undefined` to `.where`:
+
+    ```ts
+    const n = new Cypher.Node();
+    new Cypher.Match(n).where(undefined).return(n);
+    ```
+
+    This will generate the following Cypher:
+
+    ```
+    MATCH(n)
+    RETURN n
+    ```
+
+    Note that the `WHERE` clause is omitted if the predicate is `undefined`
+
 ## 1.7.1
 
 ### Patch Changes
