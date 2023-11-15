@@ -88,4 +88,15 @@ describe("Procedures", () => {
         expect(cypher).toMatchInlineSnapshot(`"CALL customProcedure(this0)"`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Custom Procedure with chained yield", () => {
+        const customProcedure = new Cypher.Procedure<"result1" | "result2">("customProcedure")
+            .yield("result1")
+            .yield(["result2", "aliased"]);
+
+        const { cypher, params } = customProcedure.build();
+
+        expect(cypher).toMatchInlineSnapshot(`"CALL customProcedure() YIELD result1, result2 AS aliased"`);
+        expect(params).toMatchInlineSnapshot(`{}`);
+    });
 });

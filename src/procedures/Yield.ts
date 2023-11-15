@@ -41,14 +41,19 @@ export interface Yield extends WithReturn, WithWhere, WithWith {}
  * @group Procedures
  */
 @mixin(WithReturn, WithWhere, WithWith)
-export class Yield extends Clause {
+export class Yield<T extends string = string> extends Clause {
     private projection: YieldProjection;
 
-    constructor(yieldColumns: Array<YieldProjectionColumn<string>>) {
+    constructor(yieldColumns: Array<YieldProjectionColumn<T>>) {
         super();
 
         const columns = asArray(yieldColumns);
         this.projection = new YieldProjection(columns);
+    }
+
+    public yield(...columns: Array<YieldProjectionColumn<T>>): this {
+        this.projection.addYieldColumns(columns);
+        return this;
     }
 
     /** @internal */
@@ -67,6 +72,10 @@ export class Yield extends Clause {
 export class YieldProjection extends Projection {
     constructor(columns: Array<YieldProjectionColumn<string>>) {
         super([]);
+        this.addYieldColumns(columns);
+    }
+
+    public addYieldColumns(columns: Array<YieldProjectionColumn<string>>) {
         const parsedColumns = columns.map((c) => this.parseYieldColumn(c));
         this.addColumns(parsedColumns);
     }

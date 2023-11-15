@@ -62,9 +62,9 @@ export class VoidCypherProcedure extends Clause {
  * @group Procedures
  */
 export class CypherProcedure<T extends string = string> extends VoidCypherProcedure {
-    private yieldStatement: Yield | undefined;
+    private yieldStatement: Yield<T> | undefined;
 
-    public yield(...columns: Array<"*" | YieldProjectionColumn<T>>): Yield {
+    public yield(...columns: Array<"*" | YieldProjectionColumn<T>>): Yield<T> {
         if (columns.length === 0) throw new Error("Empty projection in CALL ... YIELD");
         this.yieldStatement = new Yield(columns);
         this.addChildren(this.yieldStatement);
