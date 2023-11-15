@@ -1,5 +1,27 @@
 # @neo4j/cypher-builder
 
+## 1.7.3
+
+### Patch Changes
+
+-   [#236](https://github.com/neo4j/cypher-builder/pull/236) [`34552dc`](https://github.com/neo4j/cypher-builder/commit/34552dc31339f4392afcc578ff82f011a4c21f3f) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for chained `.yield`:
+
+    ```ts
+    const customProcedure = new Cypher.Procedure("customProcedure", []).yield("result1").yield(["result2", "aliased"]);
+    ```
+
+    is equivalent to:
+
+    ```ts
+    const customProcedure = new Cypher.Procedure("customProcedure", []).yield("result1", ["result2", "aliased"]);
+    ```
+
+    and results in the Cypher:
+
+    ```cypher
+    CALL customProcedure() YIELD result1, result2 AS aliased
+    ```
+
 ## 1.7.2
 
 ### Patch Changes
