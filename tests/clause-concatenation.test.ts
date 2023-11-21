@@ -111,7 +111,6 @@ describe("Clause chaining", () => {
             "detachDelete",
             "with",
             "merge",
-
             "create",
             "assignToPath",
         ] as const)("Merge.%s", (value) => {

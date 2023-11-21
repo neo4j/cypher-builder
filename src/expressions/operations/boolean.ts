@@ -17,10 +17,10 @@
  * limitations under the License.
  */
 
-import { filterTruthy } from "../../utils/filter-truthy";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import type { Predicate } from "../../types";
+import { filterTruthy } from "../../utils/filter-truthy";
 
 type BooleanOperator = "AND" | "NOT" | "OR" | "XOR";
 
@@ -39,9 +39,9 @@ export abstract class BooleanOp extends CypherASTNode {
 class BinaryOp extends BooleanOp {
     private children: Predicate[];
 
-    constructor(operator: BooleanOperator, left: Predicate, right: Predicate, ...extra: Predicate[]) {
+    constructor(operator: BooleanOperator, predicates: Predicate[]) {
         super(operator);
-        this.children = [left, right, ...extra];
+        this.children = [...predicates];
         this.addChildren(...this.children);
     }
 
@@ -84,37 +84,6 @@ class NotOp extends BooleanOp {
     }
 }
 
-/** Generates an `AND` operator between the given predicates
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
- * @group Operators
- * @category Boolean
- * @example
- * ```ts
- * console.log("Test", Cypher.and(
- *     Cypher.eq(new Cypher.Literal("Hi"), new Cypher.Literal("Hi")),
- *     new Cypher.Literal(false)).toString()
- * );
- * ```
- * Translates to
- * ```cypher
- * "Hi" = "Hi" AND false
- * ```
- *
- */
-export function and(): undefined;
-export function and(left: Predicate, right: Predicate, ...extra: Array<Predicate | undefined>): BooleanOp;
-export function and(...ops: Array<Predicate>): Predicate;
-export function and(...ops: Array<Predicate | undefined>): Predicate | undefined;
-export function and(...ops: Array<Predicate | undefined>): Predicate | undefined {
-    const filteredPredicates = filterTruthy(ops);
-    const predicate1 = filteredPredicates.shift();
-    const predicate2 = filteredPredicates.shift();
-    if (predicate1 && predicate2) {
-        return new BinaryOp("AND", predicate1, predicate2, ...filteredPredicates);
-    }
-    return predicate1;
-}
-
 /** Generates an `NOT` operator before the given predicate
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
  * @group Operators
@@ -135,6 +104,34 @@ export function not(child: Predicate): BooleanOp {
     return new NotOp(child);
 }
 
+/** Generates an `AND` operator between the given predicates
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
+ * @group Operators
+ * @category Boolean
+ * @example
+ * ```ts
+ * console.log("Test", Cypher.and(
+ *     Cypher.eq(new Cypher.Literal("Hi"), new Cypher.Literal("Hi")),
+ *     new Cypher.Literal(false)).toString()
+ * );
+ * ```
+ * Translates to
+ * ```cypher
+ * "Hi" = "Hi" AND false
+ * ```
+ *
+ */
+export function and(...ops: Array<Predicate | undefined>): Predicate {
+    const filteredPredicates = filterTruthy(ops);
+
+    // Small optimization on the resulting tree by removing binary operations if they are actually unary
+    if (filteredPredicates.length === 1) {
+        return filteredPredicates[0]!;
+    }
+
+    return new BinaryOp("AND", filteredPredicates);
+}
+
 /** Generates an `OR` operator between the given predicates
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
  * @group Operators
@@ -152,18 +149,16 @@ export function not(child: Predicate): BooleanOp {
  * ```
  *
  */
-export function or(): undefined;
-export function or(left: Predicate, right: Predicate, ...extra: Array<Predicate | undefined>): BooleanOp;
-export function or(...ops: Array<Predicate>): Predicate;
-export function or(...ops: Array<Predicate | undefined>): Predicate | undefined;
-export function or(...ops: Array<Predicate | undefined>): Predicate | undefined {
+
+export function or(...ops: Array<Predicate | undefined>): Predicate {
     const filteredPredicates = filterTruthy(ops);
-    const predicate1 = filteredPredicates.shift();
-    const predicate2 = filteredPredicates.shift();
-    if (predicate1 && predicate2) {
-        return new BinaryOp("OR", predicate1, predicate2, ...filteredPredicates);
+
+    // Small optimization on the resulting tree by removing binary operations if they are actually unary
+    if (filteredPredicates.length === 1) {
+        return filteredPredicates[0]!;
     }
-    return predicate1;
+
+    return new BinaryOp("OR", filteredPredicates);
 }
 
 /** Generates an `XOR` operator between the given predicates
@@ -183,16 +178,13 @@ export function or(...ops: Array<Predicate | undefined>): Predicate | undefined 
  * ```
  *
  */
-export function xor(): undefined;
-export function xor(left: Predicate, right: Predicate, ...extra: Array<Predicate | undefined>): BooleanOp;
-export function xor(...ops: Array<Predicate>): Predicate;
-export function xor(...ops: Array<Predicate | undefined>): Predicate | undefined;
-export function xor(...ops: Array<Predicate | undefined>): Predicate | undefined {
+export function xor(...ops: Array<Predicate | undefined>): Predicate {
     const filteredPredicates = filterTruthy(ops);
-    const predicate1 = filteredPredicates.shift();
-    const predicate2 = filteredPredicates.shift();
-    if (predicate1 && predicate2) {
-        return new BinaryOp("XOR", predicate1, predicate2, ...filteredPredicates);
+
+    // Small optimization on the resulting tree by removing binary operations if they are actually unary
+    if (filteredPredicates.length === 1) {
+        return filteredPredicates[0]!;
     }
-    return predicate1;
+
+    return new BinaryOp("XOR", filteredPredicates);
 }

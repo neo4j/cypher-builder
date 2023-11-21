@@ -17,9 +17,7 @@
  * limitations under the License.
  */
 
-import type { BooleanOp } from "../../../expressions/operations/boolean";
 import { and } from "../../../expressions/operations/boolean";
-import type { ComparisonOp } from "../../../expressions/operations/comparison";
 import { eq } from "../../../expressions/operations/comparison";
 import type { Literal } from "../../../references/Literal";
 import { PropertyRef } from "../../../references/PropertyRef";
@@ -87,8 +85,8 @@ export abstract class WithWhere extends Mixin {
     private variableAndObjectToOperation(
         target: Variable | PropertyRef,
         params: Record<string, VariableLike>
-    ): BooleanOp | ComparisonOp | undefined {
-        let operation: BooleanOp | ComparisonOp | undefined;
+    ): Predicate | undefined {
+        let operation: Predicate | undefined;
         for (const [key, value] of Object.entries(params)) {
             const property = target.property(key);
             const eqOp = eq(property, value);

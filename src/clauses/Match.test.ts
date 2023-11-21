@@ -447,6 +447,7 @@ RETURN this0"
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
+
         test("Match where ... and with undefined predicate", () => {
             const movieNode = new Cypher.Node({
                 labels: ["Movie"],
@@ -463,6 +464,24 @@ RETURN this0"
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Movie)
 WHERE var1 = var2
+RETURN this0"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Match where with undefined predicate inside boolean operation", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const maybePredicate: Predicate = Cypher.and(undefined);
+
+            const matchQuery = new Cypher.Match(movieNode).where(maybePredicate).return(movieNode);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
 RETURN this0"
 `);
 

@@ -25,33 +25,51 @@ describe("boolean operations", () => {
     const predicate2 = Cypher.max(new Cypher.Variable());
     const predicate3 = Cypher.min(new Cypher.Variable());
 
-    describe("and", () => {
-        test("and operation with 2 predicates", () => {
-            const and = Cypher.and(predicate1, predicate2);
-            const { cypher } = new TestClause(and).build();
-            expect(cypher).toMatchInlineSnapshot(`"(coalesce(var0) AND max(var1))"`);
+    describe.each([
+        { func: "and", operator: "AND" },
+        { func: "or", operator: "OR" },
+        { func: "xor", operator: "XOR" },
+    ] as const)("$func", ({ func, operator }) => {
+        test("operation with 2 predicates", () => {
+            const booleanFunc = Cypher[func](predicate1, predicate2);
+            const { cypher } = new TestClause(booleanFunc).build();
+            expect(cypher).toBe(`(coalesce(var0) ${operator} max(var1))`);
         });
 
-        test("and operation with single predicate", () => {
-            const and = Cypher.and(predicate1);
-            const { cypher } = new TestClause(and).build();
-            expect(cypher).toMatchInlineSnapshot(`"coalesce(var0)"`);
+        test("operation with single predicate", () => {
+            const booleanFunc = Cypher[func](predicate1);
+            const { cypher } = new TestClause(booleanFunc).build();
+            expect(cypher).toBe(`coalesce(var0)`);
         });
 
-        test("and operation with three predicates", () => {
-            const and = Cypher.and(predicate1, predicate2, predicate3);
-            const { cypher } = new TestClause(and).build();
-            expect(cypher).toMatchInlineSnapshot(`"(coalesce(var0) AND max(var1) AND min(var2))"`);
+        test("operation with three predicates", () => {
+            const booleanFunc = Cypher[func](predicate1, predicate2, predicate3);
+            const { cypher } = new TestClause(booleanFunc).build();
+            expect(cypher).toBe(`(coalesce(var0) ${operator} max(var1) ${operator} min(var2))`);
         });
 
-        test("and operation without parameters", () => {
-            const and = Cypher.and();
-            expect(and).toBeUndefined();
+        test("operation without parameters", () => {
+            const booleanFunc = Cypher[func]();
+            const { cypher } = new TestClause(booleanFunc).build();
+            expect(cypher).toBe("");
         });
 
-        test("and operation with undefined", () => {
-            const and = Cypher.and(undefined, undefined);
-            expect(and).toBeUndefined();
+        test("operation with undefined", () => {
+            const booleanFunc = Cypher[func](undefined, undefined);
+            const { cypher } = new TestClause(booleanFunc).build();
+            expect(cypher).toBe("");
+        });
+
+        test("nested boolean operation", () => {
+            const booleanFunc = Cypher[func](Cypher[func](predicate1, predicate2), predicate3);
+            const { cypher } = new TestClause(booleanFunc).build();
+            expect(cypher).toBe(`((coalesce(var0) ${operator} max(var1)) ${operator} min(var2))`);
+        });
+
+        test("nested boolean operation with undefined", () => {
+            const booleanFunc = Cypher[func](Cypher[func](), predicate2);
+            const { cypher } = new TestClause(booleanFunc).build();
+            expect(cypher).toBe(`max(var0)`);
         });
     });
     describe("not", () => {
@@ -64,64 +82,6 @@ describe("boolean operations", () => {
             const yes = Cypher.not(Cypher.not(predicate1));
             const { cypher } = new TestClause(yes).build();
             expect(cypher).toMatchInlineSnapshot(`"NOT (NOT (coalesce(var0)))"`);
-        });
-    });
-    describe("or", () => {
-        test("or operation with 2 predicates", () => {
-            const or = Cypher.or(predicate1, predicate2);
-            const { cypher } = new TestClause(or).build();
-            expect(cypher).toMatchInlineSnapshot(`"(coalesce(var0) OR max(var1))"`);
-        });
-
-        test("or operation with single predicates", () => {
-            const or = Cypher.or(predicate1);
-            const { cypher } = new TestClause(or).build();
-            expect(cypher).toMatchInlineSnapshot(`"coalesce(var0)"`);
-        });
-
-        test("or operation with three predicates", () => {
-            const or = Cypher.or(predicate1, predicate2, predicate3);
-            const { cypher } = new TestClause(or).build();
-            expect(cypher).toMatchInlineSnapshot(`"(coalesce(var0) OR max(var1) OR min(var2))"`);
-        });
-
-        test("or operation without parameters", () => {
-            const or = Cypher.or();
-            expect(or).toBeUndefined();
-        });
-
-        test("or operation with undefined", () => {
-            const or = Cypher.or(undefined, undefined);
-            expect(or).toBeUndefined();
-        });
-    });
-    describe("xor", () => {
-        test("xor operation with 2 predicates", () => {
-            const xor = Cypher.xor(predicate1, predicate2);
-            const { cypher } = new TestClause(xor).build();
-            expect(cypher).toMatchInlineSnapshot(`"(coalesce(var0) XOR max(var1))"`);
-        });
-
-        test("xor operation with single predicates", () => {
-            const xor = Cypher.xor(predicate1);
-            const { cypher } = new TestClause(xor).build();
-            expect(cypher).toMatchInlineSnapshot(`"coalesce(var0)"`);
-        });
-
-        test("xor operation with three predicates", () => {
-            const xor = Cypher.xor(predicate1, predicate2, predicate3);
-            const { cypher } = new TestClause(xor).build();
-            expect(cypher).toMatchInlineSnapshot(`"(coalesce(var0) XOR max(var1) XOR min(var2))"`);
-        });
-
-        test("xor operation without parameters", () => {
-            const xor = Cypher.xor();
-            expect(xor).toBeUndefined();
-        });
-
-        test("xor operation with undefined", () => {
-            const xor = Cypher.xor(undefined, undefined);
-            expect(xor).toBeUndefined();
         });
     });
 });
