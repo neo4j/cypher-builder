@@ -90,6 +90,6 @@ export class Merge extends Clause {
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const nextClause = this.compileNextClause(env);
 
-        return `${mergeStr}${setCypher}${onCreateCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `${mergeStr}${onCreateCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 }
