@@ -204,7 +204,7 @@ DELETE this0"
             labels: ["MyLabel"],
         });
         const node2 = new Cypher.Node({
-            labels: ["MyLabel"],
+            labels: ["MyOtherLabel"],
         });
 
         const query = new Cypher.Merge(node1).merge(node2);
@@ -212,7 +212,7 @@ DELETE this0"
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MERGE (this0:MyLabel)
-MERGE (this1:MyLabel)"
+MERGE (this1:MyOtherLabel)"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
@@ -222,7 +222,7 @@ MERGE (this1:MyLabel)"
             labels: ["MyLabel"],
         });
         const node2 = new Cypher.Node({
-            labels: ["MyLabel"],
+            labels: ["MyOtherLabel"],
         });
 
         const query = new Cypher.Merge(node1).merge(new Cypher.Merge(node2));
@@ -230,7 +230,7 @@ MERGE (this1:MyLabel)"
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MERGE (this0:MyLabel)
-MERGE (this1:MyLabel)"
+MERGE (this1:MyOtherLabel)"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
