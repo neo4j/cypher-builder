@@ -1,5 +1,29 @@
 # @neo4j/cypher-builder
 
+## 1.7.4
+
+### Patch Changes
+
+-   [#245](https://github.com/neo4j/cypher-builder/pull/245) [`a63337d`](https://github.com/neo4j/cypher-builder/commit/a63337d4bfc9eface369872d013288f9082791e1) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate `Merge.onCreate` in favor of `Merge.onCreateSet` to better reflect the resulting Cypher `ON CREATE SET`
+
+-   [#244](https://github.com/neo4j/cypher-builder/pull/244) [`347ae01`](https://github.com/neo4j/cypher-builder/commit/347ae01215e9946314cf795cd35e0530abe9df28) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix clauses order when using `Merge.onCreate` along with `.set`
+
+    For example:
+
+    ```js
+    const query = new Cypher.Merge(node)
+        .onCreate([node.property("age"), new Cypher.Param(23)])
+        .set([node.property("age"), new Cypher.Param(10)]);
+    ```
+
+    ```cypher
+    MERGE (this0:MyLabel)
+    ON CREATE SET
+        this0.age = $param1
+    SET
+        this0.age = $param0
+    ```
+
 ## 1.7.3
 
 ### Patch Changes
