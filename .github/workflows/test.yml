@@ -39,14 +39,14 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install -g ts-node
+          npm install -g tsx
       - run: npm run build
       - name: Run Examples
         run: |
           examples=$(find ./examples -name "*.ts")
           for example in $examples; do
             echo "Run example $example"
-            ts-node $example > /dev/null
+            tsx $example > /dev/null
             exit_code=$?
             if [ $exit_code -ne 0 ]; then
               echo "Error executing $example"
