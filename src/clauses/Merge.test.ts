@@ -40,6 +40,31 @@ describe("CypherBuilder Merge", () => {
         `);
     });
 
+    test("Merge node with set and onCreate", () => {
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+
+        const query = new Cypher.Merge(node)
+            .set([node.property("age"), new Cypher.Param(10)])
+            .onCreate([node.property("age"), new Cypher.Param(23)]);
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MERGE (this0:MyLabel)
+ON CREATE SET
+    this0.age = $param1
+SET
+    this0.age = $param0"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": 10,
+  "param1": 23,
+}
+`);
+    });
+
     test("Merge node onCreate with escaped property", () => {
         const node = new Cypher.Node({
             labels: ["MyLabel"],
