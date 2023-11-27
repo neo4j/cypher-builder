@@ -56,7 +56,16 @@ export class Merge extends Clause {
         this.onCreateClause = new OnCreate(this);
     }
 
+    /**
+     * @deprecated Use {@link onCreateSet} instead
+     */
     public onCreate(...onCreateParams: OnCreateParam[]): this {
+        this.onCreateClause.addParams(...onCreateParams);
+
+        return this;
+    }
+
+    public onCreateSet(...onCreateParams: OnCreateParam[]): this {
         this.onCreateClause.addParams(...onCreateParams);
 
         return this;

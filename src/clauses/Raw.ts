@@ -59,6 +59,6 @@ export class Raw extends Clause {
 
 /** Allows for a raw string to be used as a clause
  * @group Other
- * @deprecated use {@link Raw} instead
+ * @deprecated Use {@link Raw} instead
  */
 export class RawCypher extends Raw {}
