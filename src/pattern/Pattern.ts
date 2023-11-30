@@ -23,6 +23,7 @@ import { LabelExpr } from "../expressions/labels/label-expressions";
 import type { NodeRef } from "../references/NodeRef";
 import { RelationshipRef } from "../references/RelationshipRef";
 import type { Variable } from "../references/Variable";
+import { addLabelToken } from "../utils/add-label-token";
 import { escapeLabel } from "../utils/escape";
 import { PartialPattern } from "./PartialPattern";
 import { PatternElement } from "./PatternElement";
@@ -87,12 +88,16 @@ export class Pattern extends PatternElement<NodeRef> {
         const labels = node.labels;
         if (labels instanceof LabelExpr) {
             const labelsStr = labels.getCypher(env);
-            if (!labelsStr) return "";
-            return `:${labels.getCypher(env)}`;
+            if (!labelsStr) {
+                return "";
+            }
+            return addLabelToken(labels.getCypher(env));
         } else {
             const escapedLabels = labels.map(escapeLabel);
-            if (escapedLabels.length === 0) return "";
-            return `:${escapedLabels.join(":")}`;
+            if (escapedLabels.length === 0) {
+                return "";
+            }
+            return addLabelToken(...escapedLabels);
         }
     }
 }

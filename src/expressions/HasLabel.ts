@@ -21,6 +21,7 @@ import type { LabelExpr } from "..";
 import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 import type { NodeRef } from "../references/NodeRef";
+import { addLabelToken } from "../utils/add-label-token";
 import { escapeLabel } from "../utils/escape";
 
 /** Generates a predicate to check if a node has a label
@@ -55,13 +56,10 @@ export class HasLabel extends CypherASTNode {
 
     private generateLabelExpressionStr(env: CypherEnvironment): string {
         if (Array.isArray(this.expectedLabels)) {
-            return this.expectedLabels
-                .map((label) => {
-                    return `:${escapeLabel(label)}`;
-                })
-                .join("");
+            const escapedLabels = this.expectedLabels.map((label) => escapeLabel(label));
+            return addLabelToken(...escapedLabels);
         } else {
-            return `:${this.expectedLabels.getCypher(env)}`;
+            return addLabelToken(this.expectedLabels.getCypher(env));
         }
     }
 
