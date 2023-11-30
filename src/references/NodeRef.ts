@@ -45,8 +45,12 @@ export class NodeRef extends Variable {
         return new HasLabel(this, labels);
     }
 
-    public hasLabel(label: string): HasLabel {
-        return new HasLabel(this, [label]);
+    public hasLabel(label: string | LabelExpr): HasLabel {
+        if (typeof label === "string") {
+            return new HasLabel(this, [label]);
+        } else {
+            return new HasLabel(this, label);
+        }
     }
 
     private parseLabels(labelsOption: NodeRefOptions["labels"]): string[] | LabelExpr {

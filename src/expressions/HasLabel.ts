@@ -17,10 +17,12 @@
  * limitations under the License.
  */
 
+import type { LabelExpr } from "..";
 import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
-import { escapeLabel } from "../utils/escape";
 import type { NodeRef } from "../references/NodeRef";
+import { addLabelToken } from "../utils/add-label-token";
+import { escapeLabel } from "../utils/escape";
 
 /** Generates a predicate to check if a node has a label
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#existential-subqueries)
@@ -33,14 +35,14 @@ import type { NodeRef } from "../references/NodeRef";
  */
 export class HasLabel extends CypherASTNode {
     private node: NodeRef;
-    private expectedLabels: string[];
+    private expectedLabels: string[] | LabelExpr;
 
     /**
      * @hidden
      */
-    constructor(node: NodeRef, expectedLabels: string[]) {
+    constructor(node: NodeRef, expectedLabels: string[] | LabelExpr) {
         super();
-        if (expectedLabels.length === 0) throw new Error("HasLabel needs at least 1 label");
+        this.validateLabelsInput(expectedLabels);
         this.node = node;
         this.expectedLabels = expectedLabels;
     }
@@ -48,11 +50,22 @@ export class HasLabel extends CypherASTNode {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const nodeId = this.node.getCypher(env);
-        const labelsStr = this.expectedLabels
-            .map((label) => {
-                return `:${escapeLabel(label)}`;
-            })
-            .join("");
+        const labelsStr = this.generateLabelExpressionStr(env);
         return `${nodeId}${labelsStr}`;
+    }
+
+    private generateLabelExpressionStr(env: CypherEnvironment): string {
+        if (Array.isArray(this.expectedLabels)) {
+            const escapedLabels = this.expectedLabels.map((label) => escapeLabel(label));
+            return addLabelToken(...escapedLabels);
+        } else {
+            return addLabelToken(this.expectedLabels.getCypher(env));
+        }
+    }
+
+    private validateLabelsInput(expectedLabels: string[] | LabelExpr): void {
+        if (Array.isArray(expectedLabels) && expectedLabels.length === 0) {
+            throw new Error("HasLabel needs at least 1 label");
+        }
     }
 }
