@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../utils/TestClause";
 import Cypher from "..";
+import { TestClause } from "../utils/TestClause";
 import { HasLabel } from "./HasLabel";
 
 describe("HasLabel", () => {
@@ -55,5 +55,32 @@ describe("HasLabel", () => {
         expect(() => {
             new HasLabel(node, []);
         }).toThrow();
+    });
+
+    test("HasLabel with label expression &", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const query = new Cypher.Match(node).where(node.hasLabel(Cypher.labelExpr.and("Movie", "Film")));
+
+        const queryResult = new TestClause(query).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+WHERE this0:(Movie&Film)"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+    test("HasLabel with label expression |", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+        const query = new Cypher.Match(node).where(node.hasLabel(Cypher.labelExpr.or("Movie", "Film")));
+
+        const queryResult = new TestClause(query).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+WHERE this0:(Movie|Film)"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });
