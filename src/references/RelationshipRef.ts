@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
-import type { Expr } from "..";
+import { HasLabel } from "../expressions/HasLabel";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
+import type { Expr } from "../types";
 import type { NodeRef } from "./NodeRef";
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
@@ -45,6 +46,14 @@ export class RelationshipRef extends Variable {
         super();
         this.prefix = "this";
         this._type = input.type ?? undefined;
+    }
+
+    public hasType(label: string | LabelExpr): HasLabel {
+        if (typeof label === "string") {
+            return new HasLabel(this, [label]);
+        } else {
+            return new HasLabel(this, label);
+        }
     }
 
     public get type(): string | LabelExpr | undefined {
