@@ -21,11 +21,12 @@ import type { LabelExpr } from "..";
 import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 import type { NodeRef } from "../references/NodeRef";
+import type { RelationshipRef } from "../references/RelationshipRef";
 import { addLabelToken } from "../utils/add-label-token";
 import { escapeLabel } from "../utils/escape";
 
-/** Generates a predicate to check if a node has a label
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#existential-subqueries)
+/** Generates a predicate to check if a node has a label or a relationship has a type
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/where/#filter-on-node-label)
  * @group Other
  * @example
  * ```cypher
@@ -34,13 +35,13 @@ import { escapeLabel } from "../utils/escape";
  * ```
  */
 export class HasLabel extends CypherASTNode {
-    private node: NodeRef;
+    private node: NodeRef | RelationshipRef;
     private expectedLabels: string[] | LabelExpr;
 
     /**
      * @hidden
      */
-    constructor(node: NodeRef, expectedLabels: string[] | LabelExpr) {
+    constructor(node: NodeRef | RelationshipRef, expectedLabels: string[] | LabelExpr) {
         super();
         this.validateLabelsInput(expectedLabels);
         this.node = node;
