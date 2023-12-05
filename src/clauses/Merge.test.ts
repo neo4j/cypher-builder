@@ -234,4 +234,45 @@ MERGE (this1:MyOtherLabel)"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Merge node onMatchSet", () => {
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+
+        const query = new Cypher.Merge(node).onMatchSet([node.property("age"), new Cypher.Param(23)]);
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "MERGE (this0:MyLabel)
+            ON MATCH SET
+                this0.age = $param0"
+        `);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": 23,
+            }
+        `);
+    });
+
+    test("Merge node with onMatch and onCreate", () => {
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+
+        const countProp = node.property("count");
+        const query = new Cypher.Merge(node)
+            .onCreateSet([countProp, new Cypher.Literal(1)])
+            .onMatchSet([countProp, Cypher.plus(countProp, new Cypher.Literal(1))]);
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MERGE (this0:MyLabel)
+ON MATCH SET
+    this0.count = (this0.count + 1)
+ON CREATE SET
+    this0.count = 1"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });
