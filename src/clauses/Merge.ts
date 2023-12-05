@@ -31,6 +31,7 @@ import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import type { OnCreateParam } from "./sub-clauses/OnCreate";
 import { OnCreate } from "./sub-clauses/OnCreate";
+import { OnMatch } from "./sub-clauses/OnMatch";
 import { mixin } from "./utils/mixin";
 
 export interface Merge extends WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate {}
@@ -43,6 +44,7 @@ export interface Merge extends WithReturn, WithSet, WithPathAssign, WithDelete, 
 export class Merge extends Clause {
     private pattern: Pattern;
     private onCreateClause: OnCreate;
+    private onMatchClause: OnMatch;
 
     constructor(pattern: NodeRef | Pattern) {
         super();
@@ -54,6 +56,7 @@ export class Merge extends Clause {
         }
 
         this.onCreateClause = new OnCreate(this);
+        this.onMatchClause = new OnMatch(this);
     }
 
     /**
@@ -67,7 +70,11 @@ export class Merge extends Clause {
 
     public onCreateSet(...onCreateParams: OnCreateParam[]): this {
         this.onCreateClause.addParams(...onCreateParams);
+        return this;
+    }
 
+    public onMatchSet(...onMatchParams: OnCreateParam[]): this {
+        this.onMatchClause.addParams(...onMatchParams);
         return this;
     }
 
@@ -95,10 +102,11 @@ export class Merge extends Clause {
         const mergeStr = `MERGE ${pathAssignStr}${this.pattern.getCypher(env)}`;
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const onCreateCypher = compileCypherIfExists(this.onCreateClause, env, { prefix: "\n" });
+        const onMatchCypher = compileCypherIfExists(this.onMatchClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const nextClause = this.compileNextClause(env);
 
-        return `${mergeStr}${onCreateCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `${mergeStr}${onMatchCypher}${onCreateCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 }
