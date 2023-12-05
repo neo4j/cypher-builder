@@ -1,5 +1,54 @@
 # @neo4j/cypher-builder
 
+## 1.8.0
+
+### Minor Changes
+
+-   [#253](https://github.com/neo4j/cypher-builder/pull/253) [`da0b3ab`](https://github.com/neo4j/cypher-builder/commit/da0b3abb6be387026b732b91e6f8ed4770322671) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for type filtering on relationships
+
+    ```js
+    new Cypher.Match(new Cypher.Pattern().related(new Cypher.Relationship()).to()).where(
+        relationship.hasType("ACTED_IN")
+    );
+    ```
+
+    ```cypher
+    MATCH(this0)-[this1]->(this2)
+    WHERE this1:ACTED_IN
+    ```
+
+-   [#251](https://github.com/neo4j/cypher-builder/pull/251) [`80e1bca`](https://github.com/neo4j/cypher-builder/commit/80e1bcab017a15683431b1d7bba061ba23eff3d8) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for label expressions on `hasLabel`:
+
+    ```js
+    const query = new Cypher.Match(node).where(node.hasLabel(Cypher.labelExpr.or("Movie", "Film")));
+    ```
+
+    ```cypher
+    MATCH (this0:Movie)
+    WHERE this0:(Movie|Film)
+    ```
+
+-   [#256](https://github.com/neo4j/cypher-builder/pull/256) [`602c237`](https://github.com/neo4j/cypher-builder/commit/602c237ad471f8d81f076bc376d4d25e6f1a1fcc) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `ON MATCH SET` after `MERGE`:
+
+    ```js
+    const node = new Cypher.Node({
+        labels: ["MyLabel"],
+    });
+
+    const countProp = node.property("count");
+    const query = new Cypher.Merge(node)
+        .onCreateSet([countProp, new Cypher.Literal(1)])
+        .onMatchSet([countProp, Cypher.plus(countProp, new Cypher.Literal(1))]);
+    ```
+
+    ```cypher
+    MERGE (this0:MyLabel)
+    ON MATCH SET
+        this0.count = (this0.count + 1)
+    ON CREATE SET
+        this0.count = 1
+    ```
+
 ## 1.7.4
 
 ### Patch Changes
