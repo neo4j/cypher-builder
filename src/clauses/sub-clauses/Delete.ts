@@ -25,9 +25,11 @@ import type { Variable } from "../../references/Variable";
 
 export type DeleteInput = Array<NodeRef | RelationshipRef | Variable>;
 
+type DetachKeyword = "DETACH" | "NODETACH";
+
 export class DeleteClause extends CypherASTNode {
     private deleteInput: DeleteInput;
-    private _detach = false;
+    private detachKeyword: DetachKeyword | undefined;
 
     constructor(parent: CypherASTNode | undefined, deleteInput: DeleteInput) {
         super(parent);
@@ -35,13 +37,17 @@ export class DeleteClause extends CypherASTNode {
     }
 
     public detach(): void {
-        this._detach = true;
+        this.detachKeyword = "DETACH";
+    }
+
+    public noDetach(): void {
+        this.detachKeyword = "NODETACH";
     }
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const itemsToDelete = this.deleteInput.map((e) => e.getCypher(env));
-        const detachStr = this._detach ? "DETACH " : "";
+        const detachStr = this.detachKeyword ? `${this.detachKeyword} ` : "";
         return `${detachStr}DELETE ${itemsToDelete.join(",")}`;
     }
 }

@@ -558,6 +558,33 @@ RETURN this0"
                 }
             `);
         });
+
+        test("Match and noDetach delete", () => {
+            const idParam = new Cypher.Param("my-id");
+            const nameParam = new Cypher.Param("my-name");
+
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const matchQuery = new Cypher.Match(movieNode)
+                .where(movieNode, { id: idParam, name: nameParam })
+                .noDetachDelete(movieNode);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "MATCH (this0:Movie)
+                WHERE (this0.id = $param0 AND this0.name = $param1)
+                NODETACH DELETE this0"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": "my-id",
+                  "param1": "my-name",
+                }
+            `);
+        });
     });
 
     describe("Nested Match", () => {
