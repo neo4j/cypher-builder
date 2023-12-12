@@ -214,7 +214,18 @@ export function char_length(expr: Expr): CypherFunction {
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-character_length)
  * @group Cypher Functions
  * @category Scalar
+ * @version Neo4j 5.13
  */
 export function character_length(expr: Expr): CypherFunction {
     return new CypherFunction("character_length", [expr]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-nullIf)
+ * @group Cypher Functions
+ * @category Scalar
+ * @version Neo4j 5.14
+ */
+export function nullIf(expr1: Expr, expr2: Expr): CypherFunction {
+    return new CypherFunction("nullIf", [expr1, expr2]);
 }
