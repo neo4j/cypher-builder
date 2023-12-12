@@ -23,7 +23,7 @@
         "lint": "eslint .",
         "changeset": "changeset",
         "release": "npm run build && changeset publish",
-        "prettier": "prettier . --check --ignore-path .gitignore"
+        "prettier": "prettier . --check"
     },
     "repository": {
         "type": "git",
