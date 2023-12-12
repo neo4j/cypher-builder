@@ -59,6 +59,17 @@ describe("Scalar Functions", () => {
         expect(queryResult.cypher).toEqual(`${func}(var0)`);
     });
 
+    // 2 parameter functions
+    test.each(["nullIf"] as const)("%s()", (func) => {
+        const param1 = new Cypher.Variable();
+        const param2 = new Cypher.Variable();
+
+        const cypherFunction = Cypher[func](param1, param2);
+        const queryResult = new TestClause(cypherFunction).build();
+
+        expect(queryResult.cypher).toEqual(`${func}(var0, var1)`);
+    });
+
     test("coalesce()", () => {
         const testParam = new Cypher.Param("Hello");
         const nullParam = Cypher.Null;
