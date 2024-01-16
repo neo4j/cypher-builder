@@ -1,5 +1,21 @@
 # @neo4j/cypher-builder
 
+## 1.10.0
+
+### Minor Changes
+
+- [#269](https://github.com/neo4j/cypher-builder/pull/269) [`6d9d3e2`](https://github.com/neo4j/cypher-builder/commit/6d9d3e226ecc72252b3609dd22f367ae909b1dca) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained clauses to Procedures after YIELD:
+
+  - `.unwind`
+  - `.match`
+  - `.optionalMatch`
+  - `.delete`
+  - `.detachDelete`
+  - `.set`
+  - `.merge`
+  - `.create`
+  - `.remove`
+
 ## 1.9.0
 
 ### Minor Changes
