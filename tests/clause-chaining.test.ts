@@ -118,6 +118,7 @@ describe("Clause chaining", () => {
             expect(clause[value]).toBeFunction();
         });
     });
+
     describe("Return", () => {
         const clause = new Cypher.Return();
 
@@ -180,6 +181,28 @@ describe("Clause chaining", () => {
             "orderBy",
             "skip",
             "limit",
+        ] as const)("With.%s", (value) => {
+            expect(clause[value]).toBeFunction();
+        });
+    });
+
+    describe("Procedure Yield", () => {
+        const clause = new Cypher.Procedure<"result1">("customProcedure").yield("result1");
+
+        it.each([
+            "where",
+            "return",
+            "with",
+            "and",
+            "delete",
+            "detachDelete",
+            "unwind",
+            "match",
+            "optionalMatch",
+            "merge",
+            "create",
+            "remove",
+            "set",
         ] as const)("With.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
