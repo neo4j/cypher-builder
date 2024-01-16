@@ -91,13 +91,13 @@ export class Pattern extends PatternElement<NodeRef> {
             if (!labelsStr) {
                 return "";
             }
-            return addLabelToken(labels.getCypher(env));
+            return addLabelToken(env.config.labelOperator, labels.getCypher(env));
         } else {
             const escapedLabels = labels.map(escapeLabel);
             if (escapedLabels.length === 0) {
                 return "";
             }
-            return addLabelToken(...escapedLabels);
+            return addLabelToken(env.config.labelOperator, ...escapedLabels);
         }
     }
 }

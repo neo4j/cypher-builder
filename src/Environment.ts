@@ -27,6 +27,14 @@ export type EnvPrefix = {
     variables?: string;
 };
 
+export type EnvConfig = {
+    labelOperator: ":" | "&";
+};
+
+const defaultConfig: EnvConfig = {
+    labelOperator: ":",
+};
+
 /** Hold the internal references of Cypher parameters and variables
  *  @group Internal
  */
@@ -36,10 +44,12 @@ export class CypherEnvironment {
     private references: Map<Variable, string> = new Map();
     private params: Param[] = [];
 
+    public readonly config: EnvConfig;
+
     /**
      *  @internal
      */
-    constructor(prefix?: string | EnvPrefix) {
+    constructor(prefix?: string | EnvPrefix, config: Partial<EnvConfig> = {}) {
         if (!prefix || typeof prefix === "string") {
             this.globalPrefix = {
                 params: prefix ?? "",
@@ -51,6 +61,11 @@ export class CypherEnvironment {
                 variables: prefix.variables ?? "",
             };
         }
+
+        this.config = {
+            ...defaultConfig,
+            ...config,
+        };
     }
 
     public compile(element: CypherCompilable): string {

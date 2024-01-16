@@ -150,7 +150,7 @@ export * as db from "./namespaces/db/db";
 
 // Types
 export type { CypherEnvironment as Environment } from "./Environment";
-export type { Clause } from "./clauses/Clause";
+export type { BuildConfig, Clause } from "./clauses/Clause";
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
