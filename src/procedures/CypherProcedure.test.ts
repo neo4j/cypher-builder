@@ -99,4 +99,113 @@ describe("Procedures", () => {
         expect(cypher).toMatchInlineSnapshot(`"CALL customProcedure() YIELD result1, result2 AS aliased"`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
+
+    describe("Procedure with Yield and nested clauses", () => {
+        it("Procedure with Where", () => {
+            const procedure = new Cypher.Procedure("custom-procedure").yield("test");
+
+            procedure.where(Cypher.true).and(Cypher.false).return("*");
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test
+WHERE (true AND false)
+RETURN *"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("Procedure with Delete", () => {
+            const procedure = new Cypher.Procedure("custom-procedure").yield("test");
+
+            procedure.delete(new Cypher.Node());
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test
+DELETE this0"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("Procedure with Detach Delete", () => {
+            const procedure = new Cypher.Procedure("custom-procedure").yield("test");
+
+            procedure.detachDelete(new Cypher.Node());
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test
+DETACH DELETE this0"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("Procedure with Remove", () => {
+            const procedure = new Cypher.Procedure("custom-procedure").yield("test");
+
+            procedure.remove(new Cypher.Node().property("test"));
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test
+REMOVE this0.test"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("Procedure with Set", () => {
+            const procedure = new Cypher.Procedure("custom-procedure").yield("test");
+
+            procedure.set([new Cypher.Variable().property("test"), new Cypher.Literal("hello")]);
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test
+SET
+    var0.test = \\"hello\\""
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("Procedure with Unwind", () => {
+            const yieldVar = new Cypher.Variable();
+            const procedure = new Cypher.Procedure("custom-procedure").yield(["test", yieldVar]);
+
+            procedure.unwind([yieldVar, new Cypher.Variable()]);
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test AS var0
+UNWIND var0 AS var1"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("Procedure with Merge", () => {
+            const procedure = new Cypher.Procedure("custom-procedure").yield("test");
+
+            procedure.merge(new Cypher.Node());
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test
+MERGE (this0)"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        it("Procedure with Create", () => {
+            const procedure = new Cypher.Procedure("custom-procedure").yield("test");
+
+            procedure.create(new Cypher.Node());
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test
+CREATE (this0)"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+    });
 });

@@ -19,8 +19,15 @@
 
 import type { CypherEnvironment } from "../Environment";
 import { Clause } from "../clauses/Clause";
+import { WithCreate } from "../clauses/mixins/clauses/WithCreate";
+import { WithMatch } from "../clauses/mixins/clauses/WithMatch";
+import { WithMerge } from "../clauses/mixins/clauses/WithMerge";
 import { WithReturn } from "../clauses/mixins/clauses/WithReturn";
+import { WithUnwind } from "../clauses/mixins/clauses/WithUnwind";
 import { WithWith } from "../clauses/mixins/clauses/WithWith";
+import { WithDelete } from "../clauses/mixins/sub-clauses/WithDelete";
+import { WithRemove } from "../clauses/mixins/sub-clauses/WithRemove";
+import { WithSet } from "../clauses/mixins/sub-clauses/WithSet";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import type { ProjectionColumn } from "../clauses/sub-clauses/Projection";
 import { Projection } from "../clauses/sub-clauses/Projection";
@@ -34,13 +41,23 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 
 export type YieldProjectionColumn<T extends string> = T | [T, Variable | Literal | string];
 
-export interface Yield extends WithReturn, WithWhere, WithWith {}
+export interface Yield
+    extends WithReturn,
+        WithWhere,
+        WithWith,
+        WithMatch,
+        WithUnwind,
+        WithDelete,
+        WithMerge,
+        WithCreate,
+        WithRemove,
+        WithSet {}
 
 /** Yield statement after a Procedure CALL
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/#call-call-a-procedure-call-yield-star)
  * @group Procedures
  */
-@mixin(WithReturn, WithWhere, WithWith)
+@mixin(WithReturn, WithWhere, WithWith, WithMatch, WithUnwind, WithDelete, WithMerge, WithCreate, WithRemove, WithSet)
 export class Yield<T extends string = string> extends Clause {
     private projection: YieldProjection;
 
@@ -60,12 +77,16 @@ export class Yield<T extends string = string> extends Clause {
     public getCypher(env: CypherEnvironment): string {
         const yieldProjectionStr = this.projection.getCypher(env);
 
+        const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+
         const whereStr = compileCypherIfExists(this.whereSubClause, env, {
             prefix: "\n",
         });
 
         const nextClause = this.compileNextClause(env);
-        return `YIELD ${yieldProjectionStr}${whereStr}${nextClause}`;
+        return `YIELD ${yieldProjectionStr}${whereStr}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 }
 
