@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 1.10.2
+
+### Patch Changes
+
+- [#274](https://github.com/neo4j/cypher-builder/pull/274) [`d154995`](https://github.com/neo4j/cypher-builder/commit/d1549956660bce18ecd9938b24935022b568e8d1) Thanks [@MacondoExpress](https://github.com/MacondoExpress)! - Fix a bug where the delete clause where not being attached to `Cypher.Call`
+
 ## 1.10.1
 
 ### Patch Changes
