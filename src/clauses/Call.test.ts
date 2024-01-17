@@ -341,12 +341,10 @@ WITH *"
 
     test("CALL with delete", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
-        const movie = new Cypher.Variable();
 
     ;    const matchClause = new Cypher.Match(node)
-            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
-            .return([node.property("title"), movie]);
-
+            .where(Cypher.eq(node.property("title"), new Cypher.Param("bb")))
+            .return(node);
 
         const clause = new Cypher.Call(matchClause).delete(node);
         const queryResult = clause.build();
@@ -354,18 +352,17 @@ WITH *"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL {
     MATCH (this0:Movie)
-    WHERE $param0 = $param1
-    RETURN this0.title AS var1
+    WHERE this0.title = $param0
+    RETURN this0
 }
 DELETE this0"
 `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
+{
+  "param0": "bb",
+}
+`);
     });
   
 });
