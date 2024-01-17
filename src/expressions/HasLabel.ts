@@ -58,9 +58,9 @@ export class HasLabel extends CypherASTNode {
     private generateLabelExpressionStr(env: CypherEnvironment): string {
         if (Array.isArray(this.expectedLabels)) {
             const escapedLabels = this.expectedLabels.map((label) => escapeLabel(label));
-            return addLabelToken(...escapedLabels);
+            return addLabelToken(env.config.labelOperator, ...escapedLabels);
         } else {
-            return addLabelToken(this.expectedLabels.getCypher(env));
+            return addLabelToken(env.config.labelOperator, this.expectedLabels.getCypher(env));
         }
     }
 

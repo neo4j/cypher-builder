@@ -18,7 +18,7 @@
  */
 
 import { CypherASTNode } from "../CypherASTNode";
-import type { EnvPrefix } from "../Environment";
+import type { EnvConfig, EnvPrefix } from "../Environment";
 import { CypherEnvironment } from "../Environment";
 import type { CypherResult } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
@@ -27,6 +27,9 @@ import { toCypherParams } from "../utils/to-cypher-params";
 
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 
+/** Config fields for the .build method */
+export type BuildConfig = Partial<EnvConfig>;
+
 /** Represents a clause AST node
  *  @group Internal
  */
@@ -34,9 +37,13 @@ export abstract class Clause extends CypherASTNode {
     protected nextClause: Clause | undefined;
 
     /** Compiles a clause into Cypher and params */
-    public build(prefix?: string | EnvPrefix | undefined, extraParams: Record<string, unknown> = {}): CypherResult {
+    public build(
+        prefix?: string | EnvPrefix | undefined,
+        extraParams: Record<string, unknown> = {},
+        config?: BuildConfig
+    ): CypherResult {
         if (this.isRoot) {
-            const env = this.getEnv(prefix);
+            const env = this.getEnv(prefix, config);
             const cypher = this.getCypher(env);
 
             const cypherParams = toCypherParams(extraParams);
@@ -53,8 +60,8 @@ export abstract class Clause extends CypherASTNode {
         throw new Error(`Cannot build root: ${root.constructor.name}`);
     }
 
-    private getEnv(prefix?: string | EnvPrefix): CypherEnvironment {
-        return new CypherEnvironment(prefix);
+    private getEnv(prefix?: string | EnvPrefix, config: BuildConfig = {}): CypherEnvironment {
+        return new CypherEnvironment(prefix, config);
     }
 
     /** Custom string for browsers and templating

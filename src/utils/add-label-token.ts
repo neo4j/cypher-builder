@@ -17,8 +17,11 @@
  * limitations under the License.
  */
 
-import { LABEL_TOKEN } from "../constants";
+export function addLabelToken(andToken: ":" | "&", ...labels: string[]): string {
+    const firstLabel = labels.shift();
+    if (!firstLabel) return "";
 
-export function addLabelToken(...labels: string[]): string {
-    return labels.map((label) => `${LABEL_TOKEN}${label}`).join("");
+    const extraLabels = labels.map((label) => `${andToken}${label}`).join("");
+
+    return `:${firstLabel}${extraLabels}`;
 }
