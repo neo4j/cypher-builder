@@ -342,7 +342,7 @@ WITH *"
     test("CALL with delete", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
-    ;    const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(node)
             .where(Cypher.eq(node.property("title"), new Cypher.Param("bb")))
             .return(node);
 
@@ -364,5 +364,4 @@ DELETE this0"
 }
 `);
     });
-  
 });
