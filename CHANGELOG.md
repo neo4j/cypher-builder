@@ -1,5 +1,30 @@
 # @neo4j/cypher-builder
 
+## 1.10.1
+
+### Patch Changes
+
+- [#271](https://github.com/neo4j/cypher-builder/pull/271) [`5834c61`](https://github.com/neo4j/cypher-builder/commit/5834c612e1147137555e9684092dd9aadbc5b40d) Thanks [@angrykoala](https://github.com/angrykoala)! - Add `labelOperator` option on build to change the default label `AND` operator:
+
+  ```js
+  const node = new Cypher.Node({ labels: ["Movie", "Film"] });
+  const query = new Cypher.Match(node);
+
+  const queryResult = new TestClause(query).build(
+    undefined,
+    {},
+    {
+      labelOperator: "&",
+    },
+  );
+  ```
+
+  Will return:
+
+  ```cypher
+  MATCH (this:Movie&Film)
+  ```
+
 ## 1.10.0
 
 ### Minor Changes
