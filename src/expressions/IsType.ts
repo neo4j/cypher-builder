@@ -19,6 +19,7 @@
 
 import type Cypher from "..";
 import { CypherASTNode } from "../CypherASTNode";
+import { asArray } from "../utils/as-array";
 import type { ValueOf } from "../utils/type-helpers";
 
 const BaseTypes = {
@@ -71,8 +72,8 @@ export const CypherTypes = {
  * val IS :: INTEGER
  * ```
  */
-export function isType(expr: Cypher.Expr, ...type: Type[]): IsType {
-    return new IsType(expr, type);
+export function isType(expr: Cypher.Expr, type: Type | Type[]): IsType {
+    return new IsType(expr, asArray(type));
 }
 
 /**
@@ -83,8 +84,8 @@ export function isType(expr: Cypher.Expr, ...type: Type[]): IsType {
  * val IS NOT :: INTEGER
  * ```
  */
-export function isNotType(expr: Cypher.Expr, ...type: Type[]): IsType {
-    return new IsType(expr, type, true);
+export function isNotType(expr: Cypher.Expr, type: Type | Type[]): IsType {
+    return new IsType(expr, asArray(type), true);
 }
 
 class ListType {
