@@ -99,6 +99,6 @@ UNWIND var1 AS var2"
 
         expect(() => {
             unwindQuery.unwind([variable, new Cypher.Variable()]);
-        }).toThrowError("Invalid Unwind statement");
+        }).toThrow("Invalid Unwind statement");
     });
 });

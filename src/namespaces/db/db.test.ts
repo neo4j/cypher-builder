@@ -158,7 +158,7 @@ describe("db procedures", () => {
         test("db.labels with yield fails if projection is empty", () => {
             expect(() => {
                 Cypher.db.labels().yield();
-            }).toThrowError("Empty projection in CALL ... YIELD");
+            }).toThrow("Empty projection in CALL ... YIELD");
         });
     });
 });

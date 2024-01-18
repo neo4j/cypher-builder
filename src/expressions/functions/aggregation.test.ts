@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Aggregation Functions", () => {
     describe.each(["count", "min", "max", "avg", "sum", "collect", "stDev", "stDevP"] as const)("%s", (value) => {
@@ -54,7 +54,7 @@ describe("Aggregation Functions", () => {
     test("count(*) with distinct fails", () => {
         expect(() => {
             Cypher.count("*").distinct();
-        }).toThrowError("count(*) is not supported with DISTINCT");
+        }).toThrow("count(*) is not supported with DISTINCT");
     });
 
     describe.each(["percentileCont", "percentileDisc"] as const)("%s", (value) => {

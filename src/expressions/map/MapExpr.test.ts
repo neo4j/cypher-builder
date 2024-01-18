@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Map Expression", () => {
     test("Create from object", () => {
@@ -83,6 +83,6 @@ describe("Map Expression", () => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 myValue: "" as any,
             });
-        }).toThrowError("Missing value on map key myValue");
+        }).toThrow("Missing value on map key myValue");
     });
 });
