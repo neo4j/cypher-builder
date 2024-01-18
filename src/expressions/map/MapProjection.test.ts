@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Map Projection", () => {
     test("Project empty map", () => {
@@ -115,5 +115,23 @@ describe("Map Projection", () => {
                 myValue: "" as any,
             });
         }).toThrowError("Missing value on map key myValue");
+    });
+
+    test("Project { .* }", () => {
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), "*");
+
+        const queryResult = new TestClause(mapProjection).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .* }"`);
+    });
+
+    test("Project { .* } with extra fields", () => {
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), "*", {
+            title: new Cypher.Literal("Test"),
+        });
+
+        const queryResult = new TestClause(mapProjection).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .*, title: \\"Test\\" }"`);
     });
 });
