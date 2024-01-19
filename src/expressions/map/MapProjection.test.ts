@@ -116,4 +116,30 @@ describe("Map Projection", () => {
             });
         }).toThrow("Missing value on map key myValue");
     });
+
+    test("Project { .* }", () => {
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), "*");
+
+        const queryResult = new TestClause(mapProjection).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .* }"`);
+    });
+
+    test("Project { .* } with extra fields", () => {
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), "*", {
+            title: new Cypher.Literal("Test"),
+        });
+
+        const queryResult = new TestClause(mapProjection).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .*, title: \\"Test\\" }"`);
+    });
+
+    test("Passing * as a field escapes it", () => {
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), ["*"]);
+
+        const queryResult = new TestClause(mapProjection).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .\`*\` }"`);
+    });
 });
