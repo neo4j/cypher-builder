@@ -134,4 +134,12 @@ describe("Map Projection", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .*, title: \\"Test\\" }"`);
     });
+
+    test("Passing * as a field escapes it", () => {
+        const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), ["*"]);
+
+        const queryResult = new TestClause(mapProjection).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .\`*\` }"`);
+    });
 });
