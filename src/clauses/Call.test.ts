@@ -193,7 +193,7 @@ describe("CypherBuilder Call", () => {
         const clause = new Cypher.Call(matchClause).innerWith(node);
         expect(() => {
             clause.innerWith(node);
-        }).toThrowError("Call import already set");
+        }).toThrow("Call import already set");
     });
 
     test("CALL with external with", () => {

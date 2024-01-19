@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../utils/TestClause";
 import Cypher from "..";
+import { TestClause } from "../utils/TestClause";
 
 describe("Case", () => {
     test("case ... then ... else with comparator", () => {
@@ -76,6 +76,6 @@ describe("Case", () => {
 
         expect(() => {
             new TestClause(caseClause).build();
-        }).toThrowError("Cannot generate CASE ... WHEN statement without THEN");
+        }).toThrow("Cannot generate CASE ... WHEN statement without THEN");
     });
 });

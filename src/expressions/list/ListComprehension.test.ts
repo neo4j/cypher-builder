@@ -97,7 +97,7 @@ describe("List comprehension", () => {
 
         expect(() => {
             new Cypher.ListComprehension(variable, exprVariable).in(exprVariable);
-        }).toThrowError("Cannot set 2 lists in list comprehension IN");
+        }).toThrow("Cannot set 2 lists in list comprehension IN");
     });
 
     it("Fails to build if no expression is set", () => {
@@ -106,6 +106,6 @@ describe("List comprehension", () => {
         const listComprehension = new Cypher.ListComprehension(variable);
         expect(() => {
             new TestClause(listComprehension).build();
-        }).toThrowError("List Comprehension needs a source list after IN");
+        }).toThrow("List Comprehension needs a source list after IN");
     });
 });

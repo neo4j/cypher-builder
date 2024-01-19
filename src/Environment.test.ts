@@ -71,7 +71,7 @@ describe("Environment", () => {
         expect(() => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             environment.compile({} as any);
-        }).toThrowError("Can't compile. Passing a non Cypher Builder element to env.compile");
+        }).toThrow("Can't compile. Passing a non Cypher Builder element to env.compile");
     });
 
     describe("prefix", () => {
