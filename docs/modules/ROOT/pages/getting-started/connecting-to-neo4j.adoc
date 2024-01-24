@@ -1,0 +1,124 @@
+[[connecting-to-neo4j]]
+:description: "This tutorial demonstrates how to execute your Cypher Builder queries in a Neo4j instance using the Neo4j Javascript driver.
+= Connecting to Neo4j
+
+The Cypher Builder library helps you compose Cypher queries, but sending these to Neo4j must be done separately through a link:https://www.npmjs.com/package/neo4j-driver[Neo4j driver].
+This tutorial demonstrates how you can do that.
+
+
+== Setup the project
+
+. Initialize your project by following the instructions in the xref:/getting-started/installation.adoc[Installation] page.
+
+. To connect to Neo4j, make sure you have both `@neo4j/cypher-builder` and `neo4j-driver` installed in your NodeJS project:
++
+[source, cmd]
+----
+npm install @neo4j/cypher-builder neo4j-driver
+----
++
+For this example, the https://neo4j.com/docs/getting-started/appendix/example-data[Movies dataset] is used.
+Alternatively, you can create entries with the following Cypher examples:
++
+[source, cypher]
+----
+CREATE(:Movie {title: "The Matrix"})
+CREATE(:Movie {title: "The Terminal"})
+----
+
+== Initialize the driver
+Add the following lines to the JavaScript file created in the xref:/getting-started/installation.adoc[Installation] step to initialize the driver:```
+
+I think the link to the JS manual makes it a bit confusing here because the instructions are also featured below, so if that makes sense, removing that notion can be a bit more clarifying.
+
+
+[source, javascript]
+----
+import Cypher from "@neo4j/cypher-builder";
+import neo4j from "neo4j-driver";
+
+const driver = neo4j.driver("neo4j://localhost", neo4j.auth.basic("neo4j", "password"));
+----
+
+== Construct your Cypher query
+
+You can compose any query by using the Cypher object. 
+For instance, this query:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const query = new Cypher.Match(movie).return([movie.property("title"), "title"]);
+----
+
+Will translate to:
+
+[source, cypher]
+----
+MATCH (this0:Movie)
+RETURN this0.title AS title
+----
+
+== Execute the query
+
+Use `.build` in the query object to generate the Cypher query and the necessary parameters to pass to `neo4j-driver`:
+
+
+[source, javascript]
+----
+const { cypher, params } = query.build();
+const { records } = await driver.executeQuery(cypher, params);
+----
+
+When you are finished, close the driver connection:
+
+[source, javascript]
+----
+await driver.close();
+----
+
+
+== Consume the results
+
+The `records` object can be consumed as explained in the link:https://neo4j.com/docs/javascript-manual/current/transactions/[JavaScript Driver documentation]:
+
+[source, javascript]
+----
+for (const record of records) {
+    console.log(record.get("title"));
+}
+----
+
+With the xref:getting-started/connecting-to-neo4j.adoc#_initialize_the_driver[previous example data], this should output:
+
+[source]
+----
+The Matrix
+The Terminal
+----
+
+
+== Conclusion
+
+After following the steps here described, your script should look like this:
+
+
+[source, javascript]
+----
+import Cypher from "@neo4j/cypher-builder";
+import neo4j from "neo4j-driver";
+
+const driver = neo4j.driver("neo4j://localhost", neo4j.auth.basic("neo4j", "password"));
+
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const query = new Cypher.Match(movie).return([movie.property("title"), "title"]);
+
+const { cypher, params } = query.build();
+const { records } = await driver.executeQuery(cypher, params);
+
+await driver.close();
+
+for (const record of records) {
+    console.log(record.get("title"));
+}
+----
