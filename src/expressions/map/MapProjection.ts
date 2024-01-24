@@ -18,12 +18,12 @@
  */
 
 import type { CypherEnvironment } from "../../Environment";
-import type { CypherCompilable, Expr } from "../../types";
 import type { Variable } from "../../references/Variable";
+import type { CypherCompilable, Expr } from "../../types";
+import { escapeProperty } from "../../utils/escape";
+import { isString } from "../../utils/is-string";
 import { serializeMap } from "../../utils/serialize-map";
 import { MapExpr } from "./MapExpr";
-import { isString } from "../../utils/is-string";
-import { escapeProperty } from "../../utils/escape";
 
 /** Represents a Map projection
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/maps/#cypher-map-projection)
@@ -39,9 +39,16 @@ export class MapProjection implements CypherCompilable {
     private variable: Variable;
     private projection: string[];
 
-    constructor(variable: Variable, projection: string[] = [], extraValues: Record<string, Expr> = {}) {
+    private isStar = false;
+
+    constructor(variable: Variable, projection: "*" | string[] = [], extraValues: Record<string, Expr> = {}) {
         this.variable = variable;
-        this.projection = projection;
+        if (projection === "*") {
+            this.isStar = true;
+            this.projection = [];
+        } else {
+            this.projection = projection;
+        }
         this.setExtraValues(extraValues);
     }
 
@@ -81,7 +88,12 @@ export class MapProjection implements CypherCompilable {
         const variableStr = this.variable.getCypher(env);
         const extraValuesStr = serializeMap(env, this.extraValues, true);
 
-        const projectionStr = this.projection.map((p) => `.${escapeProperty(p)}`).join(", ");
+        const escapedColumns = this.projection.map((p) => `.${escapeProperty(p)}`);
+        if (this.isStar) {
+            escapedColumns.unshift(".*");
+        }
+
+        const projectionStr = escapedColumns.join(", ");
 
         const commaStr = extraValuesStr && projectionStr ? ", " : "";
 

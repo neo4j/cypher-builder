@@ -55,7 +55,7 @@ describe("utils.compileCypher", () => {
         expect(() => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             Cypher.utils.compileCypher(matchClause, undefined as any);
-        }).toThrowError("Missing env when compiling Cypher");
+        }).toThrow("Missing env when compiling Cypher");
     });
 
     test("fails if element is not compilable", () => {
@@ -65,7 +65,7 @@ describe("utils.compileCypher", () => {
         });
         expect(() => {
             raw.build();
-        }).toThrowError("Invalid element, missing `getCypher` method");
+        }).toThrow("Invalid element, missing `getCypher` method");
     });
 
     test("Return empty string if compiled cypher is empty", () => {

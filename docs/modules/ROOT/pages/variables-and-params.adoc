@@ -448,6 +448,7 @@ const myVar = new Cypher.Variable();
 const match = new Cypher.Match(movieNode).with([movieNode, myVar]).return([myVar, "Film"]);
 ----
 
+[source, cypher]
 ----
 MATCH (this0:`Movie`)
 WITH this0 AS var1
@@ -457,5 +458,95 @@ RETURN var1 AS Film
 In the previous example, after a `MATCH` the node variable `this0` is aliased to a variable with an arbitrary name (`var1`) in a `WITH` statement. 
 Finally, in the `RETURN` the variable is aliased to the specific name `Film` that will be returned.
 
-// TODO
-// == Environment
+
+== Maps
+
+link:https://neo4j.com/docs/cypher-manual/current/values-and-types/maps/[Cypher Maps] can be constructed with Cypher Builder using the `Cypher.Map` class and passing an object with the fields and corresponding Cypher expressions:
+
+
+[source, javascript]
+----
+const map = new Cypher.Map({
+    foo: new Cypher.Literal("barr"),
+    var: new Cypher.Variable(),
+    param: new Cypher.Param("test"),
+});
+----
+
+This map can be used wherever an expression is accepted to translate to the Map Literal in Cypher:
+
+[source, cypher]
+----
+{ foo: "barr", var: var0, param: $param0 }
+----
+
+The `Cypher.Map` class provides the following methods:
+
+* `size`: Returns the current size of the map.
+* `set`: Adds more fields to the Map. This method supports either two parameters (key, value) or an object with the fields to add.
+
+
+=== Map projection
+
+
+link:https://neo4j.com/docs/cypher-manual/current/values-and-types/maps/#cypher-map-projection[Maps Projections] can be created in Cypher Builder in a similar fashion to Maps, by using the class `Cypher.MapProjection` with the target variable and the projection fields:
+
+[source, javascript]
+----
+const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), ["name", "title"]);
+----
+
+This map can be used wherever an expression is accepted to translate to the Map Literal in Cypher:
+
+[source, cypher]
+----
+var0 { .name, .title }
+----
+
+==== Map projection with `.*`
+
+The syntax `{.*}` allows for the creation of a Map Projection containing all elements in the projection target. This can be achieved by passing `*` in the projection fields:
+
+[source, javascript]
+----
+const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), "*");
+----
+
+This map can be used wherever an expression is accepted to translate to the Map Literal in Cypher:
+
+[source, cypher]
+----
+var0 { .* }
+----
+
+[NOTE]
+====
+Using a `"\*"` string within the projection fields array will have a different effect, as it will be interpreted as a field named `*` and be escaped accordingly:
+
+[source, javascript]
+----
+const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), ["*"]);
+----
+
+[source, cypher]
+----
+var0 { .`*` }
+----
+====
+
+
+==== Setting extra fields to a Map Projection
+
+A Map Projection may also contain extra fields, that do not exist in the target variable, set in the projection. This can be achieved by passing a third parameter to `Cypher.MapProjection`:
+
+[source, javascript]
+----
+const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), ["name", "title"], {
+    anotherField: new Cypher.Literal("Another Field")
+});
+----
+
+[source, cypher]
+----
+var0 { .name, .title, anotherField: "Another Field" }
+----
