@@ -71,14 +71,14 @@ describe("CypherBuilder Call", () => {
         `);
     });
 
-    test("CALL with inner with", () => {
+    test("CALL with import with", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
-        const clause = new Cypher.Call(matchClause).innerWith(node);
+        const clause = new Cypher.Call(matchClause).importWith(node);
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
@@ -97,12 +97,12 @@ describe("CypherBuilder Call", () => {
         `);
     });
 
-    test("CALL with inner with *", () => {
+    test("CALL with import with *", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node).return([node.property("title"), "movie"]);
 
-        const clause = new Cypher.Call(matchClause).innerWith("*");
+        const clause = new Cypher.Call(matchClause).importWith("*");
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
@@ -114,12 +114,12 @@ describe("CypherBuilder Call", () => {
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
-    test("CALL with inner with * and extra fields", () => {
+    test("CALL with import with * and extra fields", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node).return([node.property("title"), "movie"]);
 
-        const clause = new Cypher.Call(matchClause).innerWith(node, "*");
+        const clause = new Cypher.Call(matchClause).importWith(node, "*");
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
@@ -132,14 +132,14 @@ describe("CypherBuilder Call", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    test("CALL with inner with without parameters", () => {
+    test("CALL with import with without parameters", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
-        const clause = new Cypher.Call(matchClause).innerWith();
+        const clause = new Cypher.Call(matchClause).importWith();
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
@@ -157,14 +157,14 @@ describe("CypherBuilder Call", () => {
         `);
     });
 
-    test("CALL with inner with multiple parameters", () => {
+    test("CALL with import with multiple parameters", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
-        const clause = new Cypher.Call(matchClause).innerWith(node, new Cypher.Variable());
+        const clause = new Cypher.Call(matchClause).importWith(node, new Cypher.Variable());
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
@@ -183,16 +183,16 @@ describe("CypherBuilder Call", () => {
         `);
     });
 
-    test("CALL with inner with fails if inner with is already set", () => {
+    test("CALL with import with fails if import with is already set", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
-        const clause = new Cypher.Call(matchClause).innerWith(node);
+        const clause = new Cypher.Call(matchClause).importWith(node);
         expect(() => {
-            clause.innerWith(node);
+            clause.importWith(node);
         }).toThrow("Call import already set");
     });
 

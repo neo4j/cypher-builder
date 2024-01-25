@@ -40,11 +40,14 @@ export class Union extends Clause {
         return this;
     }
 
-    /** @internal */
-    public getCypher(env: CypherEnvironment): string {
+    /**
+     * If importWithCypher is provided, it will be added at the beginning of each subquery except first
+     *  @internal
+     */
+    public getCypher(env: CypherEnvironment, importWithCypher?: string): string {
         const subqueriesStr = this.subqueries.map((s) => s.getCypher(env));
         const unionStr = this.includeAll ? "UNION ALL" : "UNION";
 
-        return subqueriesStr.join(`\n${unionStr}\n`);
+        return subqueriesStr.join(`\n${unionStr}\n${importWithCypher ?? ""}`);
     }
 }

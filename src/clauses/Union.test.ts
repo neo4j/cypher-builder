@@ -66,4 +66,64 @@ describe("CypherBuilder UNION", () => {
             RETURN this3 AS var1"
         `);
     });
+
+    test("Union in CALL statement with import with", () => {
+        const returnVar = new Cypher.Variable();
+        const n1 = new Cypher.Node({ labels: ["Movie"] });
+        const query1 = new Cypher.Match(n1).return([n1, returnVar]);
+        const n2 = new Cypher.Node({ labels: ["Movie"] });
+        const query2 = new Cypher.Match(n2).return([n2, returnVar]);
+        const n3 = new Cypher.Node({ labels: ["Movie"] });
+        const query3 = new Cypher.Match(n3).return([n3, returnVar]);
+
+        const unionQuery = new Cypher.Union(query1, query2, query3);
+        const callQuery = new Cypher.Call(unionQuery).importWith(new Cypher.Variable());
+        const queryResult = callQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CALL {
+    WITH var0
+    MATCH (this1:Movie)
+    RETURN this1 AS var2
+    UNION
+    WITH var0
+    MATCH (this3:Movie)
+    RETURN this3 AS var2
+    UNION
+    WITH var0
+    MATCH (this4:Movie)
+    RETURN this4 AS var2
+}"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Union in nested CALL statement should append top import with", () => {
+        const returnVar = new Cypher.Variable();
+        const n1 = new Cypher.Node({ labels: ["Movie"] });
+        const query1 = new Cypher.Match(n1).return([n1, returnVar]);
+        const n2 = new Cypher.Node({ labels: ["Movie"] });
+        const query2 = new Cypher.Match(n2).return([n2, returnVar]);
+        const n3 = new Cypher.Node({ labels: ["Movie"] });
+        const query3 = new Cypher.Match(n3).return([n3, returnVar]);
+
+        const unionQuery = new Cypher.Union(query1, query2, query3);
+        const callQuery = new Cypher.Call(new Cypher.Call(unionQuery)).importWith(new Cypher.Variable());
+        const queryResult = callQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CALL {
+    WITH var0
+    CALL {
+        MATCH (this1:Movie)
+        RETURN this1 AS var2
+        UNION
+        MATCH (this3:Movie)
+        RETURN this3 AS var2
+        UNION
+        MATCH (this4:Movie)
+        RETURN this4 AS var2
+    }
+}"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });
