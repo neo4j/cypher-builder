@@ -214,7 +214,7 @@ describe("Clause chaining", () => {
             match.return("*");
             expect(() => {
                 match.return("*");
-            }).toThrowError("Cannot chain 2 top-level clauses to the same clause");
+            }).toThrow("Cannot chain 2 top-level clauses to the same clause");
         });
     });
 });

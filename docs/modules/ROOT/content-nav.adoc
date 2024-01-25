@@ -4,6 +4,7 @@
 ** xref:getting-started/querying.adoc[]
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
+** xref:getting-started/connecting-to-neo4j.adoc[]
 * xref:functions.adoc[]
 * xref:procedures.adoc[]
 * xref:patterns.adoc[]

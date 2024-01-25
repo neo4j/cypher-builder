@@ -1,5 +1,19 @@
 # @neo4j/cypher-builder
 
+## 1.10.3
+
+### Patch Changes
+
+- [#279](https://github.com/neo4j/cypher-builder/pull/279) [`4620a2e`](https://github.com/neo4j/cypher-builder/commit/4620a2e6339251e13c20c9d30011c6b2560f8b19) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for "\*" parameter in MapProjection:
+
+  ```js
+  new Cypher.MapProjection(new Cypher.Variable(), "*");
+  ```
+
+  ```cypher
+  var0 { .* }
+  ```
+
 ## 1.10.2
 
 ### Patch Changes
