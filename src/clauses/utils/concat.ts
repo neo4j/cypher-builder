@@ -58,9 +58,9 @@ export class CompositeClause extends Clause {
 
     /** @internal */
     public getCypher(env: CypherEnvironment, importWithCypher?: string): string {
+        // NOTE: importWithCypher used to pass down import WITH to UNION clauses
         const childrenStrs = this._children.map((c) => {
             if (importWithCypher && c instanceof Union) {
-                //TODO: try to embed the importWithCypher in the environment for a more generic solution
                 return c.getCypher(env, importWithCypher);
             }
             return c.getCypher(env);

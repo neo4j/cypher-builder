@@ -93,15 +93,15 @@ export class Call extends Clause {
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const innerWithCypher = compileCypherIfExists(this._importWith, env, { suffix: "\n" });
+        const importWithCypher = compileCypherIfExists(this._importWith, env, { suffix: "\n" });
 
-        const subQueryStr = this.getSubqueryCypher(env, innerWithCypher);
+        const subQueryStr = this.getSubqueryCypher(env, importWithCypher);
 
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
 
-        const inCallBlock = `${innerWithCypher}${subQueryStr}`;
+        const inCallBlock = `${importWithCypher}${subQueryStr}`;
         const nextClause = this.compileNextClause(env);
 
         return `CALL {\n${padBlock(inCallBlock)}\n}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
