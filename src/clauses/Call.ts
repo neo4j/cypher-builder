@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
-import { Union } from "..";
 import type { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 import type { Variable } from "../references/Variable";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
+import { Union } from "./Union";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
@@ -34,6 +34,7 @@ import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { ImportWith } from "./sub-clauses/ImportWith";
+import { CompositeClause } from "./utils/concat";
 import { mixin } from "./utils/mixin";
 
 export interface Call
@@ -108,7 +109,7 @@ export class Call extends Clause {
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
         // This ensures the import with is added to all the union subqueries
-        if (this._usingImportWith && this.subquery instanceof Union) {
+        if (this._usingImportWith && (this.subquery instanceof Union || this.subquery instanceof CompositeClause)) {
             //TODO: try to embed the importWithCypher in the environment for a more generic solution
             return this.subquery.getCypher(env, importWithCypher);
         }

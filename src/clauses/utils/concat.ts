@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { Union } from "../..";
 import type { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import { filterTruthy } from "../../utils/filter-truthy";
@@ -56,8 +57,14 @@ export class CompositeClause extends Clause {
     }
 
     /** @internal */
-    public getCypher(env: CypherEnvironment): string {
-        const childrenStrs = this._children.map((c) => c.getCypher(env));
+    public getCypher(env: CypherEnvironment, importWithCypher?: string): string {
+        const childrenStrs = this._children.map((c) => {
+            if (importWithCypher && c instanceof Union) {
+                //TODO: try to embed the importWithCypher in the environment for a more generic solution
+                return c.getCypher(env, importWithCypher);
+            }
+            return c.getCypher(env);
+        });
         return childrenStrs.join(this.separator);
     }
 
