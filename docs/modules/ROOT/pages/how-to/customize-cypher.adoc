@@ -25,7 +25,7 @@ However, in case you need to explicitly set names, you can use the `Named*` vari
 new Cypher.NamedVariable("myVarName")
 ----
 
-For more information, see xref:variables-and-params.adoc#_named_variables[Named variables].
+For more information, see xref:variables-and-params/variables.adoc#_named_variables[Named variables].
 
 === Build Prefix
 

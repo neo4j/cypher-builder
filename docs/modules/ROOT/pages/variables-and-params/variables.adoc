@@ -1,0 +1,255 @@
+[[variables-parameters]]
+:description: This page shows how to use Cypher variables in Cypher Builder.
+= Variables
+
+Variables can be used in Cypher to reference parts of a pattern and hold values.
+For example:
+
+[source, cypher]
+----
+MATCH (m:Movie)
+RETURN m
+----
+
+The variable `m` refers to a node matched in the pattern `(:Movie)`. 
+The node is then returned.
+
+[NOTE]
+====
+Writing dynamic Cypher queries can be challenging as the resulting variables need to have unique names that correctly reference the values.
+In Cypher Builder, JavaScript references remove the need to track variable names, thus providing another layer of abstraction.
+====
+
+== Types
+
+Cypher Builder distinguishes four types of variables:
+
+* `Node`: holds a reference to a node matched in a pattern.
+* `Relationship`: holds a reference to a relationship in a pattern.
+* `Variable`: generic variable reference.
+* `Path`: a variable to hold a path.
+
+[NOTE]
+====
+All Cypher Builder variables are virtual references to a Cypher variable that will be translated to a unique name.
+====
+
+== Defining a variable
+
+An arbitrary Cypher variable can be defined with:
+
+[source, javascript]
+----
+const myVar = new Cypher.Variable();
+----
+
+This variable can then be used as an expression in any clause that supports variables, for instance:
+
+[source, javascript]
+----
+const myVar = new Cypher.Variable();
+const query = new Cypher.Return(myVar)
+----
+
+[source, cypher]
+----
+RETURN var0
+----
+
+The name `var0` is automatically generated when `.build()` is called to prevent name collision. 
+If the variable is reused, the same name will be used in the generated Cypher, for instance:
+
+[source, javascript]
+----
+const myVar = new Cypher.Variable();
+const query = new Cypher.With(myVar).return(myVar);
+----
+
+[source, cypher]
+----
+WITH var0
+RETURN var0
+----
+
+Each instance you create of a variable is associated with a different name:
+
+[source, javascript]
+----
+const withVar = new Cypher.Variable();
+const returnVar = new Cypher.Variable();
+const query = new Cypher.With(withVar).return(returnVar);
+----
+
+[source, cypher]
+----
+WITH var0
+RETURN var1
+----
+
+== Nodes and relationships
+
+Nodes and relationships are variables holding extra data on nodes and relationships.
+They can be used in xref:patterns.adoc[Patterns], for example:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({labels: ["Movie"]});
+const relationship = new Cypher.Relationship({type: "ACTED_IN"});
+
+const pattern = new Cypher.Pattern(movie).related(relationship).to();
+const match = new Cypher.Match(pattern).return(movie);
+----
+
+[source, cypher]
+----
+MATCH (this0:Movie)-[this1:ACTED_IN]->(this2)
+RETURN this0
+----
+
+In this example, the node variable `movie` is created and then used in the `MATCH` and `RETURN` clauses.
+
+In the translated Cypher, you can see how the node variable is translated to the Cypher variable `this0`, while the relationship is assigned to `this1`. 
+
+These names are not defined in your JavaScript code, but are automatically generated when the query is built with `.build()`. 
+The labels and type passed to `Node` and `Relationship` variables are used in the pattern.
+
+Parameters that can be passed to a `Node` class:
+
+* `labels`: an array containing the labels of that node.
+
+Parameters that can be passed to a Relationship:
+
+* `type`: a string with the type of the relationship.
+
+
+== Escaping labels and types
+
+Labels and types will be automatically escaped if any uncommon character is detected. 
+For example:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({labels: ["My Movie"]});
+const match = new Cypher.Match(movie).return(movie);
+----
+
+[source, cypher]
+----
+MATCH (this0:`My Movie`)
+RETURN this0
+----
+
+Note that `My Movie` is being surrounded in quotes to prevent code injection with dynamic labels.
+
+== Path
+
+Path variables can be used for path assignment in patterns, for example:
+
+[source, cypher]
+----
+MATCH p0 = (this1)-[this2:ACTED_IN]->(this3)
+RETURN p0
+----
+
+To assign a path variable, use the method `.assignToPath` in the relevant clause and pass a `new Path()` instance:
+
+[source, javascript]
+----
+const path = new Cypher.Path();
+
+const query = new Cypher.Match(pattern).assignToPath(path).return(path);
+----
+
+
+== Named variables
+
+By default, variables do not have a name; a unique name/id is generated at build time to avoid collisions.
+However, in some cases, you may want to generate a query with a specific name. 
+To do this, all variable types must have a counterpart _named_ class:
+
+* `NamedVariable`
+* `NamedNode`
+* `NamedRelationship`
+* `NamedPath`
+
+These can be used in the same fashion as normal variables, but a name must be provided when creating them:
+
+[source, javascript]
+----
+const movie = new Cypher.NamedNode("n", {labels: ["Movie"]});
+const match = new Cypher.Match(movie).return(movie);
+----
+
+[source, cypher]
+----
+MATCH (n:Movie)
+RETURN n
+----
+
+== Property
+
+Variables such as nodes or maps may contain properties. 
+To access these properties in the generated Cypher, you can use the method `.property` on variables:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({labels: ["Movie"]})
+const query = new Cypher.Match(movie).return(movie.property("title"));
+----
+
+[source, cypher]
+----
+MATCH(this0:Movie)
+RETURN this0.title
+----
+
+=== Nested properties
+
+Nested properties can also be accessed either by passing multiple parameters or concatenating calls to `.property`:
+
+[source, javascript]
+----
+new Cypher.Variable().property("movie", "title");
+new Cypher.Variable().property("movie").property("title")
+----
+
+In both cases, the resulting Cypher should look like this:
+
+[source, cypher]
+----
+var0.movie.title
+----
+
+=== Expressions
+
+Expressions can also be used as a property key to dynamically access properties:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({labels: ["Movie"]})
+
+const movieProperty = movie.property(Cypher.plus(new Cypher.Param("ti"), new Cypher.Literal("tle")))
+const query = new Cypher.Match(movie).return(movieProperty);
+----
+
+The query automatically adds square brackets (`[]`) notation to safely execute the expression:
+
+[source, cypher]
+----
+MATCH(this0:Movie)
+RETURN this0[($param0 + $param1)]
+----
+
+=== Index
+
+Like properties, an index can also be accessed through the method `.index`:
+
+[source, javascript]
+----
+new Cypher.Variable().index(2);
+----
+
+[source, cypher]
+----
+var0[2]
+----
