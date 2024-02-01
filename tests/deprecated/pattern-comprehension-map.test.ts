@@ -17,15 +17,15 @@
  * limitations under the License.
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../src";
+import { TestClause } from "../../src/utils/TestClause";
 
 describe("Pattern comprehension", () => {
     test("comprehension with map", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const andExpr = Cypher.eq(node.property("released"), new Cypher.Param(1999));
 
-        const comprehension = new Cypher.PatternComprehension(node).map(andExpr);
+        const comprehension = new Cypher.PatternComprehension(node, andExpr);
 
         const queryResult = new TestClause(comprehension).build();
 
@@ -36,18 +36,6 @@ describe("Pattern comprehension", () => {
               "param0": 1999,
             }
         `);
-    });
-
-    test("comprehension without map", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
-
-        const comprehension = new Cypher.PatternComprehension(node);
-
-        const queryResult = new TestClause(comprehension).build();
-
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[(this0:Movie)]"`);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("comprehension from relationship pattern", () => {
@@ -61,7 +49,7 @@ describe("Pattern comprehension", () => {
 
         const andExpr = Cypher.eq(rel.property("released"), new Cypher.Param(1999));
 
-        const comprehension = new Cypher.PatternComprehension(pattern).map(andExpr);
+        const comprehension = new Cypher.PatternComprehension(pattern, andExpr);
 
         const queryResult = new TestClause(comprehension).build();
 
@@ -85,9 +73,9 @@ describe("Pattern comprehension", () => {
 
         const pattern = new Cypher.Pattern(movie).related(rel).to(actor);
 
-        const comprehension = new Cypher.PatternComprehension(pattern)
-            .map(actor.property("name"))
-            .where(Cypher.contains(movie.property("title"), new Cypher.Literal("Matrix")));
+        const comprehension = new Cypher.PatternComprehension(pattern, actor.property("name")).where(
+            Cypher.contains(movie.property("title"), new Cypher.Literal("Matrix"))
+        );
 
         const queryResult = new TestClause(comprehension).build();
 
