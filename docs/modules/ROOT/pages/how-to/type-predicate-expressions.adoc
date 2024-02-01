@@ -1,0 +1,129 @@
+[[type-predicate-expressions]]
+:description: This page describes how to build type predicate expressions.
+= Build Type Predicate Expressions
+
+This section outlines the process of creating link:https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/[type predicate expressions] within your queries using Cypher Builder.
+
+A type predicate expression serves to validate the type of a variable, literal, property, or another Cypher expression. It follows the syntax below in Cypher:
+
+[source, cypher]
+----
+<expr> IS :: <TYPE>
+----
+
+For example
+
+[source, cypher]
+----
+movie.title IS :: STRING
+----
+
+== `isType`
+
+Type predicate expressions can be constructed using `Cypher.isType` (distinct from the `.hasType` method in Relationship). The `isType` function takes a xref:variables-and-params.adoc[Cypher variable] and a type specified in `Cypher.TYPE`:
+
+[source, javascript]
+----
+Cypher.isType(new Cypher.Variable(), Cypher.TYPE.INTEGER);
+----
+
+[source, cypher]
+----
+var0 IS :: INTEGER
+----
+
+Type predicate expressions can be used in a `WHERE` statement, for example:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const matchClause = new Cypher.Match(movie).where(Cypher.isType(movie.property("title"), Cypher.TYPE.STRING)).return(movie);
+----
+
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE this0.title IS :: STRING
+RETURN this0
+----
+
+=== Using Union types
+
+Union types, for example, `INTEGER | STRING`, can be used by passing an array to `.isType`:
+
+[source, javascript]
+----
+Cypher.isType(new Cypher.Variable(), [Cypher.TYPE.INTEGER, Cypher.TYPE.STRING]);
+----
+
+[source, cypher]
+----
+var0 IS :: INTEGER | STRING
+----
+
+=== List Types
+
+List types, for instance, `LIST<INTEGER>`, can be created using `Cypher.TYPES.list()`:
+
+[source, javascript]
+----
+Cypher.isType(new Cypher.Variable(), Cypher.TYPE.list(Cypher.TYPE.STRING));
+----
+
+[source, cypher]
+----
+var0 IS :: LIST<STRING>
+----
+
+Union types can also be used within a list:
+
+[source, javascript]
+----
+Cypher.isType(new Cypher.Variable(), Cypher.TYPE.list([Cypher.TYPE.STRING, Cypher.TYPE.INTEGER]));
+----
+
+[source, cypher]
+----
+var0 IS :: LIST<STRING | INTEGER>
+----
+
+
+== Type predicate expressions with NOT
+
+It is also possible to verify that a Cypher expression is not of a certain type with the function `Cypher.isNotType`:
+
+[source, javascript]
+----
+Cypher.isNotType(new Cypher.Variable(), Cypher.TYPE.INTEGER);
+----
+
+[source, cypher]
+----
+var0 IS NOT :: INTEGER
+----
+
+== Type predicate expressions for non-nullable types
+
+Type predicate expressions evaluate to `true` in Cypher for `NULL` values unless a `NOT NULL` is appended. In Cypher Builder, this can be achieved using the `.notNull` method:
+
+[source, javascript]
+----
+Cypher.isType(new Cypher.Variable(), Cypher.TYPE.INTEGER).notNull();
+----
+
+[source, cypher]
+----
+var0 IS :: INTEGER NOT NULL
+----
+
+Non-nullable types can also be used within a List type:
+
+[source, javascript]
+----
+Cypher.isType(new Cypher.Variable(), Cypher.TYPE.list(Cypher.TYPE.STRING).notNull());
+----
+
+[source, cypher]
+----
+var0 IS :: LIST<STRING NOT NULL>
+----

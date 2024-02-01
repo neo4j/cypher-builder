@@ -47,6 +47,7 @@ export { NamedVariable, Variable } from "./references/Variable";
 
 // Expressions
 export { Case } from "./expressions/Case";
+export { CypherTypes as TYPE, isNotType, isType } from "./expressions/IsType";
 export { Count } from "./expressions/subquery/Count";
 export { Exists } from "./expressions/subquery/Exists";
 
