@@ -23,6 +23,7 @@ import type { Variable } from "../references/Variable";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
+import { Union } from "./Union";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
@@ -33,6 +34,7 @@ import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { ImportWith } from "./sub-clauses/ImportWith";
+import { CompositeClause } from "./utils/concat";
 import { mixin } from "./utils/mixin";
 
 export interface Call
@@ -52,36 +54,65 @@ export interface Call
  */
 @mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge)
 export class Call extends Clause {
-    private subQuery: CypherASTNode;
-    private importWith: ImportWith | undefined;
+    private subquery: CypherASTNode;
+    private _importWith: ImportWith | undefined;
 
-    constructor(subQuery: Clause) {
+    // This is to preserve compatibility with innerWith and avoid breaking changes
+    // Remove on 2.0.0
+    private _usingImportWith = false;
+
+    constructor(subquery: Clause) {
         super();
-        const rootQuery = subQuery.getRoot();
+        const rootQuery = subquery.getRoot();
         this.addChildren(rootQuery);
-        this.subQuery = rootQuery;
+        this.subquery = rootQuery;
     }
 
-    public innerWith(...params: Array<Variable | "*">): this {
-        if (this.importWith) throw new Error("Call import already set");
+    /** Adds a `WITH` statement inside `CALL {`, this `WITH` can is used to import variables outside of the subquery
+     *  @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#call-importing-variables)
+     */
+    public importWith(...params: Array<Variable | "*">): this {
+        if (this._importWith) throw new Error("Call import already set");
         if (params.length > 0) {
-            this.importWith = new ImportWith(this, [...params]);
-            this.addChildren(this.importWith);
+            this._importWith = new ImportWith(this, [...params]);
+            this.addChildren(this._importWith);
+            this._usingImportWith = true;
+        }
+        return this;
+    }
+
+    /** @deprecated Use {@link importWith} instead */
+    public innerWith(...params: Array<Variable | "*">): this {
+        if (this._importWith) throw new Error("Call import already set");
+        if (params.length > 0) {
+            this._importWith = new ImportWith(this, [...params]);
+            this.addChildren(this._importWith);
         }
         return this;
     }
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const subQueryStr = this.subQuery.getCypher(env);
-        const innerWithCypher = compileCypherIfExists(this.importWith, env, { suffix: "\n" });
+        const importWithCypher = compileCypherIfExists(this._importWith, env, { suffix: "\n" });
+
+        const subQueryStr = this.getSubqueryCypher(env, importWithCypher);
+
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
 
-        const inCallBlock = `${innerWithCypher}${subQueryStr}`;
+        const inCallBlock = `${importWithCypher}${subQueryStr}`;
         const nextClause = this.compileNextClause(env);
 
         return `CALL {\n${padBlock(inCallBlock)}\n}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+    }
+
+    private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
+        // This ensures the import with is added to all the union subqueries
+        if (this._usingImportWith && (this.subquery instanceof Union || this.subquery instanceof CompositeClause)) {
+            //TODO: try to embed the importWithCypher in the environment for a more generic solution
+            return this.subquery.getCypher(env, importWithCypher);
+        }
+        return this.subquery.getCypher(env);
     }
 }
