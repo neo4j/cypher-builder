@@ -2,7 +2,7 @@
 :description: This page describes how to use parameters in Cypher Builder.
 = Parameters
 
-Another common challenge with dynamic queries is keeping track of parameters. 
+A common challenge with dynamic queries is keeping track of parameters. 
 To solve this, you can use the class `Param` to create Cypher Builder parameters.
 
 Parameters behave similarly to variables, however, they contain a defined value that will automatically be returned as part of the parameters when the `.build()` method is called.
@@ -48,7 +48,7 @@ const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleParam)).re
 const {cypher, params} = query.build();
 ----
 
-_Cypher_
+.Cypher
 [source, cypher]
 ----
 MATCH (this0:Movie)
@@ -56,7 +56,7 @@ WHERE this0[this0] = $param0
 RETURN this0, $param0
 ----
 
-_Params_
+.Params
 [source, javascript]
 ----
 {
@@ -81,7 +81,7 @@ const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleParam1)).r
 const {cypher, params} = query.build();
 ----
 
-_Cypher_
+.Cypher
 [source, cypher]
 ----
 MATCH (this0:Movie)
@@ -89,7 +89,7 @@ WHERE this0[this0] = $param0
 RETURN this0, $param0
 ----
 
-_Params_
+.Params
 [source, javascript]
 ----
 {

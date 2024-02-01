@@ -2,12 +2,11 @@
 :description: This page describes how to do aliasing with Cypher Builder.
 = Aliasing
 
-// Maybe aliasing can be moved to a how-to guide
 Variables are commonly used for aliasing in a `WITH` or `RETURN` statement. 
 To do that, you need to pass a tuple of the value and its alias.
 
 == Aliasing to a string
-
+This is how you should proceed when aliasing to a string:
 [source, javascript]
 ----
 const node = new Cypher.Node({

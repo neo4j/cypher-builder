@@ -2,7 +2,8 @@
 :description: This page shows how to use Cypher lists.
 = Lists
 
-Cypher lists can be created with `Cypher.List`, passing an array of Cypher expressions, for example:
+Cypher lists can be created with `Cypher.List` passing an array of Cypher expressions.
+For example:
 
 [source, javascript]
 ----
@@ -14,7 +15,7 @@ new Cypher.Return(new Cypher.List([new Cypher.Literal(1), new Cypher.Literal(2)]
 RETURN [1, 2]
 ----
 
-More complex expressions as part of the list are also possible:
+It is also possible to include more complex expressions in lists:
 
 [source, javascript]
 ----
@@ -29,13 +30,14 @@ RETURN [labels(node)]
 
 [NOTE]
 ====
-`Cypher.Literal` is a more succinct way of creating simple, literal lists: `new Cypher.Literal(["element 1", "element 2"])`
+`Cypher.Literal` is a more succinct way of creating simple, literal lists than `Cypher.List`. 
+You can use instead `new Cypher.Literal(["element 1", "element 2"])` to avoid verbose code.
 ====
 
 
 
 == Index
-With the method `.index` of a variable, you can create index access for lists:
+With the `.index` method of a variable, you can create index access for lists:
 
 
 [source, javascript]
@@ -49,9 +51,10 @@ var0[2]
 ----
 
 
-== List Comprehension
+== List comprehension
 
-link:https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher-list-comprehension[List Comprehensions] can be created with `new Cypher.ListComprehension` and passing a variable to be used in the comprehension. You also need an expression resulting in the original list to create a new list from:
+link:https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher-list-comprehension[List comprehension] can be created with `new Cypher.ListComprehension` and passing a variable to be used in the comprehension. 
+You also need an expression resulting in the original list to create a new list from:
 
 
 [source, javascript]
@@ -71,7 +74,7 @@ Alternatively, the original list expression can be passed with the method `.in`:
 const listComprehension = new Cypher.ListComprehension(variable).in(new Cypher.Literal([1,2]))
 ----
 
-Using the methods `where` and `map` you can construct the filter and mapping parts of the comprehension:
+By using the methods `where` and `map`, you can construct the filter and mapping parts of the comprehension:
 
 
 [source, javascript]
@@ -87,9 +90,9 @@ const listComprehension = new Cypher.ListComprehension(variable)
 [var0 IN $param1 WHERE var0 = $param0 | (var0 + 1)]
 ----
 
-== Pattern Comprehension
+== Pattern comprehension
 
-link:https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher-pattern-comprehension[Pattern Comprehensions] are created with `new Cypher.PatternComprehension`, passing a xref:../patterns.adoc#patterns[pattern] and a map expression if needed:
+link:https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher-pattern-comprehension[Pattern comprehension] can be created with `new Cypher.PatternComprehension`, passing a xref:patterns.adoc#patterns[pattern] and a map expression, if needed:
 
 
 

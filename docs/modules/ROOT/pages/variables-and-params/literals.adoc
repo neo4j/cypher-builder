@@ -17,7 +17,7 @@ const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleLiteral)).
 const {cypher, params} = query.build();
 ----
 
-_Cypher_
+.Cypher
 [source, cypher]
 ----
 MATCH (this0:Movie)
@@ -25,20 +25,21 @@ WHERE this0[this0] = "The Matrix"
 RETURN this0, "The Matrix"
 ----
 
-_Params_
+.Params
 [source, javascript]
 ----
 { }
 ----
 
 Note how the value `The Matrix` is not injected directly, but correctly serialized to a string in Cypher. 
+
 The following values are supported by `Literal`:
 
-* String: `Cypher.Literal("Hello")` -> `"Hello"`
+* *String:* `Cypher.Literal("Hello")` -> `"Hello"`
 * Number: `Cypher.Literal(5)` -> `5`
-* Boolean: `Cypher.Literal(true)` -> `true`
-* Array: `Cypher.Literal([5, "Hello"])` -> `[5, "Hello"]`
-* Null: `Cypher.Literal(null)` -> `NULL`
+* *Boolean:* `Cypher.Literal(true)` -> `true`
+* *Array:* `Cypher.Literal([5, "Hello"])` -> `[5, "Hello"]`
+* *Null:* `Cypher.Literal(null)` -> `NULL`
 
 
 [NOTE]
