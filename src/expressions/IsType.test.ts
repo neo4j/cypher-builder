@@ -187,5 +187,25 @@ WHERE this0.title IS :: STRING NOT NULL | BOOLEAN NOT NULL
 RETURN this0"
 `);
         });
+
+        test("isType with union type", () => {
+            const movie = new Cypher.Node({ labels: ["Movie"] });
+            const matchClause = new Cypher.Match(movie)
+                .where(
+                    Cypher.isType(movie.property("title"), [
+                        Cypher.TYPE.list([Cypher.TYPE.STRING, Cypher.TYPE.FLOAT]).notNull(),
+                        Cypher.TYPE.STRING,
+                    ])
+                )
+                .return(movie);
+
+            const { cypher } = matchClause.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+    "MATCH (this0:Movie)
+    WHERE this0.title IS :: LIST<STRING NOT NULL | FLOAT NOT NULL> | STRING
+    RETURN this0"
+    `);
+        });
     });
 });

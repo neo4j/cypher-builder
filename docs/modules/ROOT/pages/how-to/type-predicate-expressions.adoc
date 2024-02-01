@@ -75,6 +75,18 @@ Cypher.isType(new Cypher.Variable(), Cypher.TYPE.list(Cypher.TYPE.STRING));
 var0 IS :: LIST<STRING>
 ----
 
+Union types can also be used within a list:
+
+[source, javascript]
+----
+Cypher.isType(new Cypher.Variable(), Cypher.TYPE.list([Cypher.TYPE.STRING, Cypher.TYPE.INTEGER]));
+----
+
+[source, cypher]
+----
+var0 IS :: LIST<STRING | INTEGER>
+----
+
 
 == Type predicate expressions with NOT
 
@@ -92,7 +104,7 @@ var0 IS NOT :: INTEGER
 
 == Type predicate expressions for non-nullable types
 
-Type predicate expressions evaluate to `true` in Cypher for `NULL` values, unless a `NOT NULL` is appended. In Cypher Builder, this can be achieved using the `.notNull` method:
+Type predicate expressions evaluate to `true` in Cypher for `NULL` values unless a `NOT NULL` is appended. In Cypher Builder, this can be achieved using the `.notNull` method:
 
 [source, javascript]
 ----
@@ -102,4 +114,16 @@ Cypher.isType(new Cypher.Variable(), Cypher.TYPE.INTEGER).notNull();
 [source, cypher]
 ----
 var0 IS :: INTEGER NOT NULL
+----
+
+Non-nullable types can also be used within a List type:
+
+[source, javascript]
+----
+Cypher.isType(new Cypher.Variable(), Cypher.TYPE.list(Cypher.TYPE.STRING).notNull());
+----
+
+[source, cypher]
+----
+var0 IS :: LIST<STRING NOT NULL>
 ----

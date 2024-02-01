@@ -51,8 +51,8 @@ const BaseTypes = {
  * LIST<STRING>
  * ```
  */
-function list(type: Type): ListType {
-    return new ListType(type);
+function list(type: Type | Type[]): ListType {
+    return new ListType(asArray(type));
 }
 
 /**
@@ -89,29 +89,43 @@ export function isNotType(expr: Cypher.Expr, type: Type | Type[]): IsType {
 }
 
 class ListType {
-    private type: Type;
+    private types: Type[];
+    private _notNull: boolean = false;
 
-    constructor(type: Type) {
-        this.type = type;
+    constructor(type: Type[]) {
+        this.types = type;
+    }
+
+    public notNull(): this {
+        this._notNull = true;
+        return this;
     }
 
     public getCypher(env: Cypher.Environment): string {
-        const typeStr = compileType(this.type, env);
+        // Note that all types must be nullable or non nullable
+        const notNullStr = this._notNull ? " NOT NULL" : "";
+        const typesStr = this.types
+            .map((type) => {
+                const typeStr = compileType(type, env);
 
-        return `LIST<${typeStr}>`;
+                return `${typeStr}${notNullStr}`;
+            })
+            .join(" | ");
+
+        return `LIST<${typesStr}>`;
     }
 }
 
 export class IsType extends CypherASTNode {
     private expr: Cypher.Expr;
-    private type: Type[];
+    private types: Type[];
     private not: boolean;
     private _notNull: boolean = false;
 
     public constructor(expr: Cypher.Expr, type: Type[], not = false) {
         super();
         this.expr = expr;
-        this.type = type;
+        this.types = type;
         this.not = not;
     }
 
@@ -126,13 +140,15 @@ export class IsType extends CypherASTNode {
 
         // Note that all types must be nullable or non nullable
         const notNullStr = this._notNull ? " NOT NULL" : "";
-        const typesStr = this.type.map((type) => {
-            const typeStr = compileType(type, env);
+        const typesStr = this.types
+            .map((type) => {
+                const typeStr = compileType(type, env);
 
-            return `${typeStr}${notNullStr}`;
-        });
+                return `${typeStr}${notNullStr}`;
+            })
+            .join(" | ");
 
-        return `${exprCypher} ${isStr} :: ${Array.from(typesStr).join(" | ")}`;
+        return `${exprCypher} ${isStr} :: ${typesStr}`;
     }
 }
 
