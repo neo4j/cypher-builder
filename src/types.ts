@@ -21,6 +21,7 @@ import type { Raw, RawCypher } from ".";
 import type { CypherEnvironment } from "./Environment";
 import type { Case } from "./expressions/Case";
 import type { HasLabel } from "./expressions/HasLabel";
+import type { IsType } from "./expressions/IsType";
 import type { CypherFunction } from "./expressions/functions/CypherFunctions";
 import type { PredicateFunction } from "./expressions/functions/predicate";
 import type { ListComprehension } from "./expressions/list/ListComprehension";
@@ -69,7 +70,8 @@ export type Predicate =
     | PredicateFunction
     | Literal<boolean>
     | Case
-    | HasLabel;
+    | HasLabel
+    | IsType;
 
 export type CypherResult = {
     cypher: string;
