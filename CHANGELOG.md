@@ -1,5 +1,71 @@
 # @neo4j/cypher-builder
 
+## 1.11.0
+
+### Minor Changes
+
+- [#277](https://github.com/neo4j/cypher-builder/pull/277) [`f97c229`](https://github.com/neo4j/cypher-builder/commit/f97c2298939f2adab6305416ed105b0bcaae78e0) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for type predicate expressions with the functions `Cypher.isType` and `Cypher.isNotType`:
+
+  ```ts
+  const variable = new Cypher.Variable();
+  const unwindClause = new Cypher.Unwind([
+    new Cypher.Literal([42, true, "abc", null]),
+    variable,
+  ]).return(variable, Cypher.isType(variable, Cypher.TYPE.INTEGER));
+  ```
+
+  ```cypher
+  UNWIND [42, true, \\"abc\\", NULL] AS var0
+  RETURN var0, var0 IS :: INTEGER
+  ```
+
+### Patch Changes
+
+- [#283](https://github.com/neo4j/cypher-builder/pull/283) [`566e1d4`](https://github.com/neo4j/cypher-builder/commit/566e1d400c4639631989f9fe41d8ab8f94a02306) Thanks [@angrykoala](https://github.com/angrykoala)! - Prepends WITH on each UNION subquery when `.importWith` is set in parent CALL:
+
+  ```js
+  const returnVar = new Cypher.Variable();
+  const n1 = new Cypher.Node({ labels: ["Movie"] });
+  const query1 = new Cypher.Match(n1).return([n1, returnVar]);
+  const n2 = new Cypher.Node({ labels: ["Movie"] });
+  const query2 = new Cypher.Match(n2).return([n2, returnVar]);
+
+  const unionQuery = new Cypher.Union(query1, query2);
+  const callQuery = new Cypher.Call(unionQuery).importWith(
+    new Cypher.Variable(),
+  );
+  ```
+
+  The statement `WITH var0` will be added to each UNION subquery
+
+  ```cypher
+  CALL {
+      WITH var0
+      MATCH (this1:Movie)
+      RETURN this1 AS var2
+      UNION
+      WITH var0
+      MATCH (this3:Movie)
+      RETURN this3 AS var2
+  }
+  ```
+
+- [#283](https://github.com/neo4j/cypher-builder/pull/283) [`566e1d4`](https://github.com/neo4j/cypher-builder/commit/566e1d400c4639631989f9fe41d8ab8f94a02306) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate `Call.innerWith` in favor of `Call.importWith`
+
+- [#289](https://github.com/neo4j/cypher-builder/pull/289) [`b9a2ad6`](https://github.com/neo4j/cypher-builder/commit/b9a2ad60cb265dd675f544453067abb5b3481eb2) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates the second parameter of patternComprehensions in favor of new `.map` method:
+
+  _old_
+
+  ```javascript
+  new Cypher.PatternComprehension(pattern, expr);
+  ```
+
+  _new_
+
+  ```javascript
+  new Cypher.PatternComprehension(pattern).map(expr);
+  ```
+
 ## 1.10.3
 
 ### Patch Changes
