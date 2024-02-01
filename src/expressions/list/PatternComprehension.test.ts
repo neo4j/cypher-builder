@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Pattern comprehension", () => {
-    test("comprehension with filter", () => {
+    test("comprehension with map", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const andExpr = Cypher.eq(node.property("released"), new Cypher.Param(1999));
 
@@ -38,7 +38,7 @@ describe("Pattern comprehension", () => {
         `);
     });
 
-    test("comprehension without filter", () => {
+    test("comprehension without map", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const comprehension = new Cypher.PatternComprehension(node);
@@ -74,5 +74,27 @@ describe("Pattern comprehension", () => {
               "param0": 1999,
             }
         `);
+    });
+
+    test("comprehension with filter", () => {
+        const movie = new Cypher.Node({ labels: ["Movie"] });
+        const rel = new Cypher.Relationship({
+            type: "ACTED_IN",
+        });
+        const actor = new Cypher.Node({ labels: ["Actor"] });
+
+        const pattern = new Cypher.Pattern(movie).related(rel).to(actor);
+
+        const comprehension = new Cypher.PatternComprehension(pattern, actor.property("name")).where(
+            Cypher.contains(movie.property("title"), new Cypher.Literal("Matrix"))
+        );
+
+        const queryResult = new TestClause(comprehension).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(
+            `"[(this0:Movie)-[this2:ACTED_IN]->(this1:Actor) WHERE this0.title CONTAINS \\"Matrix\\" | this1.name]"`
+        );
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

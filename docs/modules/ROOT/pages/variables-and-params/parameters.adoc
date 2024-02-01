@@ -1,0 +1,98 @@
+[[parameters]]
+:description: This page describes how to use parameters in Cypher Builder.
+= Parameters
+
+A common challenge with dynamic queries is keeping track of parameters. 
+To solve this, you can use the class `Param` to create Cypher Builder parameters.
+
+Parameters behave similarly to variables, however, they contain a defined value that will automatically be returned as part of the parameters when the `.build()` method is called.
+For example:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const titleProp = movie.property(movie);
+
+const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, new Cypher.Param("The Matrix")));
+
+const { cypher, params } = query.build();
+----
+
+Returns the following Cypher:
+
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE this0[this0] = $param0
+----
+
+And the following parameters object:
+
+[source, javascript]
+----
+{
+    param0: "The Matrix"
+}
+----
+
+Parameters can also be reused, like variables:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const titleProp = movie.property(movie);
+const titleParam = new Cypher.Param("The Matrix");
+
+const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleParam)).return(titleParam);
+
+const {cypher, params} = query.build();
+----
+
+.Cypher
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE this0[this0] = $param0
+RETURN this0, $param0
+----
+
+.Params
+[source, javascript]
+----
+{
+    param0: "The Matrix"
+}
+----
+
+In such cases, Cypher Builder provides a name to the parameter and correctly links it to the `Param` object.
+
+Note that if two instances of `Param` are used, then two separate parameters should be returned, regardless of the value.
+For example:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const titleProp = movie.property(movie);
+const titleParam1 = new Cypher.Param("The Matrix");
+const titleParam2 = new Cypher.Param("The Matrix")
+
+const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleParam1)).return(titleParam2);
+
+const {cypher, params} = query.build();
+----
+
+.Cypher
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE this0[this0] = $param0
+RETURN this0, $param0
+----
+
+.Params
+[source, javascript]
+----
+{
+    param0: "The Matrix"
+}
+----

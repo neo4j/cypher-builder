@@ -1,0 +1,64 @@
+[[literals]]
+:description: This page shows how to add literal values in Cypher Builder.
+= Literals
+
+Literal values can be defined with `Cypher.Literal`. 
+Literals behave like parameters, but they will inject the value provided directly into the Cypher, serializing it as needed.
+For instance:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({ labels: ["Movie"] });
+const titleProp = movie.property(movie);
+const titleLiteral = new Cypher.Literal("The Matrix")
+
+const query = new Cypher.Match(movie).where(Cypher.eq(titleProp, titleLiteral)).return(titleLiteral);
+
+const {cypher, params} = query.build();
+----
+
+.Cypher
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE this0[this0] = "The Matrix"
+RETURN this0, "The Matrix"
+----
+
+.Params
+[source, javascript]
+----
+{ }
+----
+
+Note how the value `The Matrix` is not injected directly, but correctly serialized to a string in Cypher. 
+
+The following values are supported by `Literal`:
+
+* *String:* `Cypher.Literal("Hello")` -> `"Hello"`
+* Number: `Cypher.Literal(5)` -> `5`
+* *Boolean:* `Cypher.Literal(true)` -> `true`
+* *Array:* `Cypher.Literal([5, "Hello"])` -> `[5, "Hello"]`
+* *Null:* `Cypher.Literal(null)` -> `NULL`
+
+
+[NOTE]
+====
+Literals do not escape the values and code injection is a risk. 
+It is generally recommended to use `Cypher.Param` instead.
+====
+
+== `NULL`
+
+As a shortcut for `new Cypher.Literal(null)`, the constant `Cypher.Null` is available. 
+This will be translated to `NULL`:
+
+[source, javascript]
+----
+new Cypher.Return(Cypher.Null)
+----
+
+[source, cypher]
+----
+RETURN NULL
+----

@@ -8,7 +8,13 @@
 * xref:functions.adoc[]
 * xref:procedures.adoc[]
 * xref:patterns.adoc[]
-* xref:variables-and-params.adoc[]
+* Variables and parameters
+** xref:variables-and-params/variables.adoc[]
+** xref:variables-and-params/parameters.adoc[]
+** xref:variables-and-params/literals.adoc[]
+** xref:variables-and-params/aliasing.adoc[]
+** xref:variables-and-params/maps.adoc[]
+** xref:variables-and-params/lists.adoc[]
 * How-to guides
 ** xref:how-to/customize-cypher.adoc[]
 ** xref:how-to/use-change-data-capture.adoc[]
