@@ -36,7 +36,7 @@ export interface Create extends WithReturn, WithSet, WithPathAssign, WithWith, W
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
- * @group Clauses
+ * @category Clauses
  */
 @mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove, WithMerge)
 export class Create extends Clause {

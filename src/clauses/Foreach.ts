@@ -43,7 +43,7 @@ type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | Dele
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/foreach/)
- * @group Clauses
+ * @category Clauses
  */
 @mixin(WithWith, WithReturn, WithRemove, WithSet, WithDelete, WithCreate, WithMerge)
 export class Foreach extends Clause {

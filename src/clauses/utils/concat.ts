@@ -24,7 +24,7 @@ import { filterTruthy } from "../../utils/filter-truthy";
 import { Clause } from "../Clause";
 
 /** The result of multiple clauses concatenated with {@link concat}
- * @group Clauses
+ * @category Clauses
  */
 export class CompositeClause extends Clause {
     private _children: CypherASTNode[];
@@ -94,7 +94,7 @@ export class CompositeClause extends Clause {
 }
 
 /** Concatenates multiple {@link Clause | clauses} into a single clause
- * @group Clauses
+ * @category Clauses
  */
 export function concat(...clauses: Array<Clause | undefined>): CompositeClause {
     return new CompositeClause(clauses, "\n");
