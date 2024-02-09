@@ -240,10 +240,28 @@ const pattern = new Cypher.Pattern(person).related(actedIn).withLength("*").to(m
 MATCH (this0:Person)-[this1:ACTED_IN*]->(this2:Movie)
 ----
 
+
+=== `WHERE` predicates
+
+`WHERE` clauses can be used as predicates for both nodes and relationships in the pattern:
+
+[source, javascript]
+----
+const movie = new Cypher.Node({ labels: ["Movie"] });
+
+new Cypher.Pattern(movie).where(Cypher.eq(movie.property("title"), new Cypher.Literal("The Matrix")));
+----
+
+[source, cypher]
+----
+(this0:Movie WHERE this0.title = "The Matrix")
+----
+
+
 == Partial patterns
 
 All patterns begin and end with a Node. 
-However, it is possible to define a _partial pattern_ by using `.related` without `.to` afterwards:
+However, it is possible to define a _partial pattern_ by using `.related` without `.to`:
 
 [source, javascript]
 ----

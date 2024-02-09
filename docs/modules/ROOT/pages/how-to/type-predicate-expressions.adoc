@@ -20,7 +20,7 @@ movie.title IS :: STRING
 
 == `isType`
 
-Type predicate expressions can be constructed using `Cypher.isType` (distinct from the `.hasType` method in Relationship). The `isType` function takes a xref:variables-and-params.adoc[Cypher variable] and a type specified in `Cypher.TYPE`:
+Type predicate expressions can be constructed using `Cypher.isType` (distinct from the `.hasType` method in Relationship). The `isType` function takes a xref:variables-and-params/variables.adoc[Cypher variable] and a type specified in `Cypher.TYPE`:
 
 [source, javascript]
 ----

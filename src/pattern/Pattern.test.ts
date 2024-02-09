@@ -389,4 +389,76 @@ describe("Patterns", () => {
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
+
+    describe("Where predicate", () => {
+        it("Node pattern with where predicate", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node).where(
+                Cypher.eq(node.property("name"), new Cypher.Literal("Keanu"))
+            );
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel WHERE this0.name = \\"Keanu\\")"`);
+        });
+
+        it("Node pattern with where predicate and properties", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node)
+                .where(Cypher.eq(node.property("name"), new Cypher.Literal("Keanu")))
+                .withProperties({
+                    released: new Cypher.Literal(1999),
+                })
+                .related()
+                .to(new Cypher.Node());
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"(this0:TestLabel { released: 1999 } WHERE this0.name = \\"Keanu\\")-[this1]->(this2)"`
+            );
+        });
+
+        it("Node pattern with where predicate in target node", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+
+            const pattern = new Cypher.Pattern(node)
+                .related()
+                .to()
+                .where(Cypher.eq(node.property("name"), new Cypher.Literal("Keanu")));
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"(this0:TestLabel)-[this1]->(this2 WHERE this0.name = \\"Keanu\\")"`
+            );
+        });
+
+        it("Relationship pattern with where predicate", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+            const relationship = new Cypher.Relationship({ type: "ACTED_IN" });
+
+            const pattern = new Cypher.Pattern(node)
+                .related(relationship)
+                .where(Cypher.eq(relationship.property("role"), new Cypher.Literal("Neo")))
+                .to(new Cypher.Node());
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"(this0:TestLabel)-[this1:ACTED_IN WHERE this1.role = \\"Neo\\"]->(this2)"`
+            );
+        });
+
+        it("Relationship pattern with where predicate and properties", () => {
+            const node = new Cypher.Node({ labels: ["TestLabel"] });
+            const relationship = new Cypher.Relationship({ type: "ACTED_IN" });
+
+            const pattern = new Cypher.Pattern(node)
+                .related(relationship)
+                .where(Cypher.eq(relationship.property("role"), new Cypher.Literal("Neo")))
+                .withProperties({
+                    test: new Cypher.Literal("hello"),
+                })
+                .to(new Cypher.Node());
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"(this0:TestLabel)-[this1:ACTED_IN WHERE this1.role = \\"Neo\\" { test: \\"hello\\" }]->(this2)"`
+            );
+        });
+    });
 });

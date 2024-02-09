@@ -19,12 +19,17 @@
 
 import type { Environment, Variable } from "..";
 import type { CypherEnvironment } from "../Environment";
+import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
+import { mixin } from "../clauses/utils/mixin";
 import { LabelExpr } from "../expressions/labels/label-expressions";
 import { NodeRef } from "../references/NodeRef";
 import type { RelationshipProperties, RelationshipRef } from "../references/RelationshipRef";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { escapeType } from "../utils/escape";
 import { Pattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
+
+export interface PartialPattern extends WithWhere {}
 
 type LengthOption =
     | number
@@ -36,6 +41,8 @@ type LengthOption =
 /** Partial pattern, cannot be used until connected to a node
  * @group Patterns
  */
+
+@mixin(WithWhere)
 export class PartialPattern extends PatternElement<RelationshipRef> {
     private length: LengthOption | undefined;
     private withType = true;
@@ -96,13 +103,13 @@ export class PartialPattern extends PatternElement<RelationshipRef> {
         const relStr = this.withVariable ? `${this.element.getCypher(env)}` : "";
 
         const propertiesStr = this.properties ? this.serializeParameters(this.properties, env) : "";
-
+        const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: " " });
         const lengthStr = this.generateLengthStr();
 
         const leftArrow = this.direction === "left" ? "<-" : "-";
         const rightArrow = this.direction === "right" ? "->" : "-";
 
-        return `${prevStr}${leftArrow}[${relStr}${typeStr}${lengthStr}${propertiesStr}]${rightArrow}`;
+        return `${prevStr}${leftArrow}[${relStr}${typeStr}${lengthStr}${whereStr}${propertiesStr}]${rightArrow}`;
     }
 
     private generateLengthStr(): string {
