@@ -19,19 +19,25 @@
 
 import type { Expr } from "..";
 import type { CypherEnvironment } from "../Environment";
+import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
+import { mixin } from "../clauses/utils/mixin";
 import { LabelExpr } from "../expressions/labels/label-expressions";
 import type { NodeRef } from "../references/NodeRef";
 import { RelationshipRef } from "../references/RelationshipRef";
 import type { Variable } from "../references/Variable";
 import { addLabelToken } from "../utils/add-label-token";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { escapeLabel } from "../utils/escape";
 import { PartialPattern } from "./PartialPattern";
 import { PatternElement } from "./PatternElement";
+
+export interface Pattern extends WithWhere {}
 
 /** Represents a pattern of a single node or n-relationships to be used in clauses.
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns/)
  * @group Patterns
  */
+@mixin(WithWhere)
 export class Pattern extends PatternElement<NodeRef> {
     private withLabels = true;
     private withVariable = true;
@@ -81,7 +87,9 @@ export class Pattern extends PatternElement<NodeRef> {
         const propertiesStr = this.properties ? this.serializeParameters(this.properties, env) : "";
         const nodeLabelStr = this.withLabels ? this.getNodeLabelsString(this.element, env) : "";
 
-        return `${prevStr}(${nodeRefId}${nodeLabelStr}${propertiesStr})`;
+        const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: " " });
+
+        return `${prevStr}(${nodeRefId}${nodeLabelStr}${propertiesStr}${whereStr})`;
     }
 
     private getNodeLabelsString(node: NodeRef, env: CypherEnvironment): string {

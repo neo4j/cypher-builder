@@ -24,7 +24,6 @@ import type { Predicate } from "../../types";
 
 export class Where extends CypherASTNode {
     private wherePredicate: Predicate;
-    protected whereClause = "WHERE";
 
     constructor(parent: CypherASTNode | undefined, whereInput: Predicate) {
         super(parent);
