@@ -50,7 +50,7 @@ export interface Call
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
- * @group Clauses
+ * @category Clauses
  */
 @mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge)
 export class Call extends Clause {

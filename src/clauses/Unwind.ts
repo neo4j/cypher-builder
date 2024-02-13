@@ -44,7 +44,7 @@ export interface Unwind
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
- * @group Clauses
+ * @category Clauses
  */
 @mixin(WithWith, WithDelete, WithMatch, WithReturn, WithRemove, WithSet, WithCreate, WithMerge)
 export class Unwind extends Clause {

@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
+import type { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 import { Clause } from "./Clause";
-import type { CypherASTNode } from "../CypherASTNode";
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/5/clauses/use/)
- * @group Clauses
+ * @category Clauses
  */
 export class Use extends Clause {
     private graph: string;

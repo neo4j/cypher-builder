@@ -23,7 +23,7 @@ import { Clause } from "./Clause";
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/union/)
- * @group Clauses
+ * @category Clauses
  */
 export class Union extends Clause {
     private subqueries: CypherASTNode[] = [];

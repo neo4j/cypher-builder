@@ -49,7 +49,7 @@ export interface With
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
- * @group Clauses
+ * @category Clauses
  */
 @mixin(WithOrder, WithReturn, WithWhere, WithDelete, WithMatch, WithUnwind, WithCreate, WithMerge)
 export class With extends Clause {

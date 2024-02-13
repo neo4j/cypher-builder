@@ -48,7 +48,7 @@ export interface Match
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
- * @group Clauses
+ * @category Clauses
  */
 @mixin(
     WithReturn,
@@ -138,7 +138,7 @@ export class Match extends Clause {
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
- * @group Clauses
+ * @category Clauses
  */
 export class OptionalMatch extends Match {
     constructor(pattern: NodeRef | Pattern) {
