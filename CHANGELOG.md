@@ -1,5 +1,23 @@
 # @neo4j/cypher-builder
 
+## 1.12.0
+
+### Minor Changes
+
+- [#294](https://github.com/neo4j/cypher-builder/pull/294) [`07280b6`](https://github.com/neo4j/cypher-builder/commit/07280b675b8b75de6973cda1137893b6c4d0216f) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for WHERE predicates in patters:
+
+  ```javascript
+  const movie = new Cypher.Node({ labels: ["Movie"] });
+
+  new Cypher.Pattern(movie).where(
+    Cypher.eq(movie.property("title"), new Cypher.Literal("The Matrix")),
+  );
+  ```
+
+  ```cypher
+  (this0:Movie WHERE this0.title = "The Matrix")
+  ```
+
 ## 1.11.0
 
 ### Minor Changes
