@@ -33,6 +33,7 @@ import type { MapProjection } from "./expressions/map/MapProjection";
 import type { BooleanOp } from "./expressions/operations/boolean";
 import type { ComparisonOp } from "./expressions/operations/comparison";
 import type { MathOp } from "./expressions/operations/math";
+import type { Collect } from "./expressions/subquery/Collect";
 import type { Count } from "./expressions/subquery/Count";
 import type { Exists } from "./expressions/subquery/Exists";
 import type { Literal } from "./references/Literal";
@@ -57,7 +58,8 @@ export type Expr =
     | MapProjection // NOTE this cannot be set as a property in a node
     | ListExpr
     | ListIndex
-    | Case<ComparisonOp>;
+    | Case<ComparisonOp>
+    | Collect;
 
 /** Represents a predicate statement (i.e returns a boolean). Note that Raw is only added for compatibility */
 export type Predicate =
