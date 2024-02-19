@@ -21,17 +21,17 @@ import type { CypherEnvironment } from "../../Environment";
 import { padBlock } from "../../utils/pad-block";
 import { Subquery } from "./Subquery";
 
-/** COUNT subquery expression
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#count-subqueries)
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/collect/)
  * @group Other
  */
-export class Count extends Subquery {
+export class Collect extends Subquery {
     /**
      * @internal
      */
     public getCypher(env: CypherEnvironment): string {
         const subQueryStr = this.subquery.getCypher(env);
         const paddedSubQuery = padBlock(subQueryStr);
-        return `COUNT {\n${paddedSubQuery}\n}`;
+        return `COLLECT {\n${paddedSubQuery}\n}`;
     }
 }
