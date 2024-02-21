@@ -16,6 +16,7 @@
 ** xref:variables-and-params/maps.adoc[]
 ** xref:variables-and-params/lists.adoc[]
 * How-to guides
+** xref:how-to/concatenate-clauses.adoc[]
 ** xref:how-to/customize-cypher.adoc[]
 ** xref:how-to/use-change-data-capture.adoc[]
 ** xref:how-to/type-predicate-expressions.adoc[]

@@ -1,0 +1,58 @@
+[[concatenate-clauses]]
+:description: This page describes how to concatenate clauses.
+= Concatenate Clauses
+
+Normally, clauses can be concatenated by chained methods, for example:
+
+[source, javascript]
+----
+new Cypher.Match(myNode).return(myNode);
+----
+
+However, in some cases, clauses may need to be manually concatenated. This may be caused by:
+
+* Chained methods not being available.
+* Dynamic number of clauses in a query.
+* Compose clauses that have been generated separately.
+
+For these cases, the helper utility `Cypher.concat` can be used. This function accepts any number of clauses and concatenates them in the provided order. For example, the previous example could be written as:
+
+[source, javascript]
+----
+const matchClause = new Cypher.Match(myNode);
+const returnClause = new Cypher.Return(myNode);
+
+const clause = Cypher.concat(matchClause, returnClause);
+----
+
+The resulting Cypher will be identical to the first example.
+
+`Cypher.concat` can also be used to merge multiple clauses dynamically:
+
+[source, javascript]
+----
+const match1 = new Cypher.Match(new Cypher.Node());
+const match2 = new Cypher.Match(new Cypher.Node());
+const match3 = new Cypher.Match(new Cypher.Node());
+
+const clauses = [match1, match2, match3]
+
+const clause = Cypher.concat(...clauses);
+----
+
+To make this pattern easier, `concat` also accepts `undefined`, in this case, those values will be ignored. The following example will produce the same Cypher as before: 
+
+[source, javascript]
+----
+const clauses = [match1, match2, undefined, match3]
+
+const clause = Cypher.concat(...clauses);
+----
+
+Note that `Cypher.concat` accepts any clause and does not ensure that the resulting Cypher will be valid. 
+
+
+[WARNING]
+====
+Passing the same clause twice to `Cypher.concat` will fail. Make sure that every clause is a different instance of a Cypher Builder clause.
+====
