@@ -1,0 +1,65 @@
+[[call]]
+:description: This page describes how to create CALL subqueries with the Cypher Builder.
+= Call
+
+Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/[CALL subqueries] can be created with `new Cypher.Call()`, to do this, a valid query needs to be passed to `Call`. For example:
+
+[source, javascript]
+----
+const dog = new Cypher.Node({ labels: ["Dog"] });
+const person = new Cypher.Node({ labels: ["Person"] });
+
+const dogName=new Cypher.NamedVariable("dogName")
+
+const subquery = new Cypher.Match(
+    new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog)
+).return([dog.property("name"), dogName]);
+
+const classClause = new Cypher.Call(subquery).return(dogName);
+----
+
+[source, cypher]
+----
+CALL {
+    MATCH (this0:Person)-[this1:HAS_DOG]->(this2:Dog)
+    RETURN this2.name AS dogName
+}
+RETURN dogName
+----
+
+
+== Import With
+
+To add variables to a `CALL` subquery context, you need to add a `WITH` statement, which can be added by using the `.importWith` method:
+
+[source, javascript]
+----
+const dog = new Cypher.Node({ labels: ["Dog"] });
+const person = new Cypher.Node({ labels: ["Person"] });
+
+const dogName = new Cypher.NamedVariable("dogName");
+
+const subquery = new Cypher.Match(
+    new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog)
+).return([dog.property("name"), dogName]);
+
+const match = new Cypher.Match(person);
+
+const callSubquery = new Cypher.Call(subquery).importWith(person).return(dogName);
+----
+
+[source, cypher]
+----
+MATCH (this0:Person)
+CALL {
+    WITH this0
+    MATCH (this0:Person)-[this1:HAS_DOG]->(this2:Dog)
+    RETURN this2.name AS dogName
+}
+RETURN dogName
+----
+
+[NOTE]
+====
+Note how the previous example uses `.concat` to concatenate the first `MATCH` statement and the `CALL` clause.
+====

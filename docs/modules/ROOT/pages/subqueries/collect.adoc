@@ -1,0 +1,31 @@
+[[collect]]
+:description: This page describes how to create COLLECT subqueries with the Cypher Builder.
+= Collect
+
+Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/collect/[COLLECT subquery expressions] (not to confuse with `collect()` function) can be created with `new Cypher.Collect()`, to do this, a valid query needs to be passed to `Collect`. For example:
+
+[source, javascript]
+----
+const dog = new Cypher.Node({ labels: ["Dog"] });
+const person = new Cypher.Node({ labels: ["Person"] });
+
+const subquery = new Cypher.Match(
+    new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog)
+).return(dog.property("name"));
+
+const collectExpression = new Cypher.Collect(subquery)
+
+const match = new Cypher.Match(person)
+    .where(Cypher.in(new Cypher.Literal("Ozzy"), collectExpression))
+    .return(person);
+----
+
+[source, cypher]
+----
+MATCH (this0:Person)
+WHERE "Ozzy" IN COLLECT {
+    MATCH (this0:Person)-[this1:HAS_DOG]->(this2:Dog)
+    RETURN this2.name
+}
+RETURN this0
+----

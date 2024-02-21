@@ -1,0 +1,23 @@
+[[exists]]
+:description: This page describes how to create EXISTS subqueries with the Cypher Builder.
+= Exists
+
+Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/existential/[EXISTS subqueries] can be created with `new Cypher.Exists()`, to do this, a valid query needs to be passed to `Exists`. Count subqueries can be used as predicates in `WHERE` clauses. For example:
+
+[source, javascript]
+----
+const subquery = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).return("*");
+
+const existsExpression = new Cypher.Exists(subquery);
+const match = new Cypher.Match(new Cypher.Node()).where(existsExpression).return("*");
+----
+
+[source, cypher]
+----
+MATCH (this0)
+WHERE EXISTS {
+    MATCH (this1:Movie)
+    RETURN *
+}
+RETURN *
+----
