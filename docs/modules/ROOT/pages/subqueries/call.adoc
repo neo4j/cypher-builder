@@ -46,6 +46,8 @@ const subquery = new Cypher.Match(
 const match = new Cypher.Match(person);
 
 const callSubquery = new Cypher.Call(subquery).importWith(person).return(dogName);
+
+const clause = Cypher.concat(match, subquery);
 ----
 
 [source, cypher]
