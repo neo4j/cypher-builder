@@ -9,7 +9,7 @@ Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquer
 const dog = new Cypher.Node({ labels: ["Dog"] });
 const person = new Cypher.Node({ labels: ["Person"] });
 
-const dogName=new Cypher.NamedVariable("dogName")
+const dogName = new Cypher.NamedVariable("dogName")
 
 const subquery = new Cypher.Match(
     new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog)
