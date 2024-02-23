@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
-import { TestClause } from "../utils/TestClause";
+import Cypher from "../../src/";
+import { TestClause } from "../../src/utils/TestClause";
 
 describe("Patterns", () => {
     describe("node", () => {
@@ -43,7 +43,7 @@ describe("Patterns", () => {
         test("Node with properties and labels", () => {
             const node = new Cypher.Node({ labels: ["TestLabel"] });
 
-            const pattern = new Cypher.Pattern({ variable: node, properties: { name: new Cypher.Param("test") } });
+            const pattern = new Cypher.Pattern(node).withProperties({ name: new Cypher.Param("test") });
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel { name: $param0 })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
@@ -56,11 +56,8 @@ describe("Patterns", () => {
         test("Node with properties using expressions and labels", () => {
             const node = new Cypher.Node({ labels: ["TestLabel"] });
 
-            const pattern = new Cypher.Pattern({
-                variable: node,
-                properties: {
-                    name: Cypher.plus(new Cypher.Literal("The "), new Cypher.Literal("Matrix")),
-                },
+            const pattern = new Cypher.Pattern(node).withProperties({
+                name: Cypher.plus(new Cypher.Literal("The "), new Cypher.Literal("Matrix")),
             });
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
@@ -81,7 +78,7 @@ describe("Patterns", () => {
         test("Node with escaped parameters and labels", () => {
             const node = new Cypher.Node({ labels: ["TestLabel"] });
 
-            const pattern = new Cypher.Pattern({ variable: node, properties: { $_name: new Cypher.Param("test") } });
+            const pattern = new Cypher.Pattern(node).withProperties({ $_name: new Cypher.Param("test") });
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel { \`$_name\`: $param0 })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
@@ -94,7 +91,7 @@ describe("Patterns", () => {
         test("Node with empty properties and labels", () => {
             const node = new Cypher.Node({ labels: ["TestLabel"] });
 
-            const pattern = new Cypher.Pattern({ variable: node, properties: {} });
+            const pattern = new Cypher.Pattern(node).withProperties({});
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel)"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -157,8 +154,10 @@ describe("Patterns", () => {
             });
 
             const query = new TestClause(
-                new Cypher.Pattern({ variable: a, properties: aProperties })
-                    .related({ variable: rel, properties: { roles: new Cypher.Param(["neo"]) } })
+                new Cypher.Pattern(a)
+                    .withProperties(aProperties)
+                    .related(rel)
+                    .withProperties({ roles: new Cypher.Param(["neo"]) })
                     .to(b)
             );
             const queryResult = query.build();
@@ -189,11 +188,9 @@ describe("Patterns", () => {
 
             const query = new TestClause(
                 new Cypher.Pattern(a)
-                    .related({
-                        variable: rel,
-                        properties: {
-                            roles: Cypher.plus(new Cypher.Literal("The "), new Cypher.Literal("Matrix")),
-                        },
+                    .related(rel)
+                    .withProperties({
+                        roles: Cypher.plus(new Cypher.Literal("The "), new Cypher.Literal("Matrix")),
                     })
                     .to(b)
             );
@@ -407,13 +404,11 @@ describe("Patterns", () => {
         it("Node pattern with where predicate and properties", () => {
             const node = new Cypher.Node({ labels: ["TestLabel"] });
 
-            const pattern = new Cypher.Pattern({
-                variable: node,
-                properties: {
-                    released: new Cypher.Literal(1999),
-                },
-            })
+            const pattern = new Cypher.Pattern(node)
                 .where(Cypher.eq(node.property("name"), new Cypher.Literal("Keanu")))
+                .withProperties({
+                    released: new Cypher.Literal(1999),
+                })
                 .related()
                 .to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
@@ -454,36 +449,16 @@ describe("Patterns", () => {
             const relationship = new Cypher.Relationship({ type: "ACTED_IN" });
 
             const pattern = new Cypher.Pattern(node)
-                .related({
-                    variable: relationship,
-                    properties: {
-                        test: new Cypher.Literal("hello"),
-                    },
-                })
+                .related(relationship)
                 .where(Cypher.eq(relationship.property("role"), new Cypher.Literal("Neo")))
+                .withProperties({
+                    test: new Cypher.Literal("hello"),
+                })
                 .to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
                 `"(this0:TestLabel)-[this1:ACTED_IN WHERE this1.role = \\"Neo\\" { test: \\"hello\\" }]->(this2)"`
             );
         });
-    });
-});
-
-describe("New Pattern", () => {
-    test("Using variables and config", () => {
-        const a = new Cypher.Variable();
-        const b = new Cypher.Variable();
-        const rel = new Cypher.Variable();
-
-        const pattern = new Cypher.Pattern({ variable: a, labels: ["Movie"] })
-            .related({ variable: rel, type: "ACTED_IN" })
-            .to({ variable: b });
-
-        const query = new TestClause(pattern);
-        const queryResult = query.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"(var0:Movie)-[var1:ACTED_IN]->(var2)"`);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });
