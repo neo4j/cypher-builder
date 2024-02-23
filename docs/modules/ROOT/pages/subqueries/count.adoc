@@ -1,8 +1,12 @@
 [[count]]
 :description: This page describes how to create COUNT subqueries with the Cypher Builder.
-= Count
+= `Count`
 
-Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/count/[COUNT subqueries] can be created with `new Cypher.Count()`, to do this, a valid query needs to be passed to `Count`. Count subqueries can be used as predicates in `WHERE` clauses. For example:
+Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/count/[COUNT subqueries] can be created with `new Cypher.Count()`.
+To do this, a valid query needs to be passed to `Count`. 
+
+Note that count subqueries can also be used as predicates in `WHERE` clauses. 
+For example:
 
 [source, javascript]
 ----

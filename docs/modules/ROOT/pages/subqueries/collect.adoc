@@ -1,8 +1,9 @@
 [[collect]]
 :description: This page describes how to create COLLECT subqueries with the Cypher Builder.
-= Collect
+= `Collect`
 
-Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/collect/[COLLECT subquery expressions] (not to confuse with `collect()` function) can be created with `new Cypher.Collect()`, to do this, a valid query needs to be passed to `Collect`. For example:
+Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/collect/[`COLLECT` subquery expressions] (not to confuse with the `collect()` function) can be created with `new Cypher.Collect()`.
+To do this, a valid query needs to be passed to `Collect`, for example:
 
 [source, javascript]
 ----

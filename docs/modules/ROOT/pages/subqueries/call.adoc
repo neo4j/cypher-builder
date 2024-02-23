@@ -1,8 +1,9 @@
 [[call]]
 :description: This page describes how to create CALL subqueries with the Cypher Builder.
-= Call
+= `Call`
 
-Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/[CALL subqueries] can be created with `new Cypher.Call()`, to do this, a valid query needs to be passed to `Call`. For example:
+Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/[`CALL` subqueries] can be created with `new Cypher.Call()` in Cypher Builder.
+To do this, a valid query needs to be passed to `Call`, for example:
 
 [source, javascript]
 ----
@@ -28,9 +29,10 @@ RETURN dogName
 ----
 
 
-== Import With
+== `.importWith`
 
-To add variables to a `CALL` subquery context, you need to add a `WITH` statement, which can be added by using the `.importWith` method:
+To add variables to a `CALL` subquery context, you need to add a `WITH` statement.
+This can be achieved by using the `.importWith` method:
 
 [source, javascript]
 ----
