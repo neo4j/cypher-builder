@@ -9,6 +9,12 @@ Normally, clauses can be concatenated by chained methods, for example:
 new Cypher.Match(myNode).return(myNode);
 ----
 
+[source, cypher]
+----
+MATCH(this0)
+RETURN this0
+----
+
 However, in some cases, clauses may need to be manually concatenated. 
 This may be caused by:
 
@@ -28,7 +34,14 @@ const returnClause = new Cypher.Return(myNode);
 const clause = Cypher.concat(matchClause, returnClause);
 ----
 
-The resulting Cypher will be identical to the first example.
+The resulting Cypher will be identical to the first example:
+
+[source, cypher]
+----
+MATCH(this0)
+RETURN this0
+----
+
 
 `Cypher.concat` can also be used to merge multiple clauses dynamically:
 
