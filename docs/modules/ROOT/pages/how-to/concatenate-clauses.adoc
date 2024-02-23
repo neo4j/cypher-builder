@@ -1,6 +1,6 @@
 [[concatenate-clauses]]
 :description: This page describes how to concatenate clauses.
-= Concatenate Clauses
+= Concatenate clauses
 
 Normally, clauses can be concatenated by chained methods, for example:
 
@@ -9,13 +9,16 @@ Normally, clauses can be concatenated by chained methods, for example:
 new Cypher.Match(myNode).return(myNode);
 ----
 
-However, in some cases, clauses may need to be manually concatenated. This may be caused by:
+However, in some cases, clauses may need to be manually concatenated. 
+This may be caused by:
 
 * Chained methods not being available.
 * Dynamic number of clauses in a query.
-* Compose clauses that have been generated separately.
+* Composite clauses that have been generated separately.
 
-For these cases, the helper utility `Cypher.concat` can be used. This function accepts any number of clauses and concatenates them in the provided order. For example, the previous example could be written as:
+For these cases, the helper utility `Cypher.concat` can be used. 
+This function accepts any number of clauses and concatenates them in the provided order. 
+For example, the previous example could be written as:
 
 [source, javascript]
 ----
@@ -40,7 +43,8 @@ const clauses = [match1, match2, match3]
 const clause = Cypher.concat(...clauses);
 ----
 
-To make this pattern easier, `concat` also accepts `undefined`, in this case, those values will be ignored. The following example will produce the same Cypher as before: 
+Additionally, `concat` also accepts `undefined` and, in this case, those values will be ignored. 
+The following example will produce the same Cypher as before: 
 
 [source, javascript]
 ----
@@ -54,5 +58,6 @@ Note that `Cypher.concat` accepts any clause and does not ensure that the result
 
 [WARNING]
 ====
-Passing the same clause twice to `Cypher.concat` will fail. Make sure that every clause is a different instance of a Cypher Builder clause.
+It is not possible to pass the same clause twice to `Cypher.concat`.
+Make sure that every clause is a different instance of a Cypher Builder clause.
 ====
