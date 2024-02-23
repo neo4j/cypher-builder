@@ -63,7 +63,4 @@ CALL {
 RETURN dogName
 ----
 
-[NOTE]
-====
 Note how the previous example uses `.concat` to concatenate the first `MATCH` statement and the `CALL` clause.
-====
