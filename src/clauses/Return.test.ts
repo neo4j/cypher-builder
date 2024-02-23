@@ -39,6 +39,22 @@ describe("CypherBuilder Return", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
+    test("Return variable", () => {
+        const returnQuery = new Cypher.Return(new Cypher.Variable());
+
+        const queryResult = returnQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN var0"`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Return named variable", () => {
+        const returnQuery = new Cypher.Return(new Cypher.NamedVariable("result"));
+
+        const queryResult = returnQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN result"`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
     test("Alias with a variable", () => {
         const node = new Cypher.Node({
             labels: ["MyLabel"],

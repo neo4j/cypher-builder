@@ -1,0 +1,29 @@
+[[count]]
+:description: This page describes how to create COUNT subqueries with the Cypher Builder.
+= `Count`
+
+Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/count/[COUNT subqueries] can be created with `new Cypher.Count()`.
+To do this, a valid query needs to be passed to `Count`. 
+
+Note that count subqueries can also be used as predicates in `WHERE` clauses. 
+For example:
+
+[source, javascript]
+----
+const subquery = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).return("*");
+
+const countExpr = new Cypher.Count(subquery);
+const match = new Cypher.Match(new Cypher.Node())
+    .where(Cypher.gt(countExpr, new Cypher.Literal(10)))
+    .return("*");
+----
+
+[source, cypher]
+----
+MATCH (this0)
+WHERE COUNT {
+    MATCH (this1:Movie)
+    RETURN *
+} > 10
+RETURN *
+----

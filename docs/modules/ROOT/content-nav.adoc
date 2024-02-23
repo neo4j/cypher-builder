@@ -15,6 +15,11 @@
 ** xref:variables-and-params/aliasing.adoc[]
 ** xref:variables-and-params/maps.adoc[]
 ** xref:variables-and-params/lists.adoc[]
+* Subqueries
+** xref:subqueries/call.adoc[]
+** xref:subqueries/exists.adoc[]
+** xref:subqueries/count.adoc[]
+** xref:subqueries/collect.adoc[]
 * How-to guides
 ** xref:how-to/concatenate-clauses.adoc[]
 ** xref:how-to/customize-cypher.adoc[]

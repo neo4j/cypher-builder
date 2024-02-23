@@ -114,6 +114,7 @@ describe("CypherBuilder Call", () => {
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
     test("CALL with import with * and extra fields", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
@@ -363,5 +364,30 @@ DELETE this0"
   "param0": "bb",
 }
 `);
+    });
+
+    test("Call returns a variable", () => {
+        const idParam = new Cypher.Param("my-id");
+        const movieNode = new Cypher.Node({
+            labels: ["Movie"],
+        });
+
+        const variable = new Cypher.Variable();
+        const createQuery = new Cypher.Create(movieNode).set([movieNode.property("id"), idParam]).return(variable);
+        const queryResult = new Cypher.Call(createQuery).return(variable).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CALL {
+    CREATE (this0:Movie)
+    SET
+        this0.id = $param0
+    RETURN var1
+}
+RETURN var1"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "my-id",
+            }
+        `);
     });
 });
