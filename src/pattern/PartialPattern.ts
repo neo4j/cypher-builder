@@ -33,7 +33,7 @@ import { labelsToString } from "./labels-to-string";
 
 export interface PartialPattern extends WithWhere {}
 
-type LengthOption =
+export type LengthOption =
     | number
     | "*"
     | { min: number; max?: number }
@@ -49,7 +49,7 @@ export class PartialPattern extends PatternElement {
     private length: LengthOption | undefined;
     private withType = true;
     private withVariable = true;
-    private direction: "left" | "right" | "undirected" = "right";
+    private direction: "left" | "right" | "undirected";
     private previous: Pattern;
     private properties: RelationshipProperties | undefined;
 
@@ -58,9 +58,16 @@ export class PartialPattern extends PatternElement {
     constructor(relConfig: RelationshipPattern, previous: Pattern) {
         super(relConfig.variable ?? new RelationshipRef());
 
+        // Emulates not having a variable if the config option is passed without one
+        if (!relConfig.variable) {
+            this.withVariable = false;
+        }
+
         this.type = relConfig.type;
         this.properties = relConfig.properties;
         this.previous = previous;
+        this.direction = relConfig.direction ?? "right";
+        this.length = relConfig.length;
     }
 
     public to(node?: NodeRef | NodePattern): Pattern {
@@ -92,6 +99,7 @@ export class PartialPattern extends PatternElement {
         return this;
     }
 
+    /** @deprecated Use `length` field in `related` instead: `new Cypher.Pattern().related({variable: rel, length: "*"})` */
     public withLength(option: LengthOption): this {
         this.length = option;
         return this;
@@ -111,7 +119,6 @@ export class PartialPattern extends PatternElement {
     public getCypher(env: CypherEnvironment): string {
         const prevStr = this.previous.getCypher(env);
 
-        // const typeStr = this.withType ? this.getRelationshipTypesString(this.element, env) : "";
         const typeStr = this.getTypeStr(env);
         const relStr = this.withVariable ? `${this.element.getCypher(env)}` : "";
 

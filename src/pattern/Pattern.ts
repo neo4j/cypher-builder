@@ -26,6 +26,7 @@ import { RelationshipRef } from "../references/RelationshipRef";
 import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import type { LengthOption } from "./PartialPattern";
 import { PartialPattern } from "./PartialPattern";
 import { PatternElement } from "./PatternElement";
 import { labelsToString } from "./labels-to-string";
@@ -40,6 +41,8 @@ export type RelationshipPattern = {
     variable?: Variable;
     type?: string | LabelExpr;
     properties?: Record<string, Expr>;
+    direction?: "left" | "right" | "undirected";
+    length?: LengthOption;
 };
 
 export interface Pattern extends WithWhere {}
@@ -65,7 +68,7 @@ export class Pattern extends PatternElement {
         super(node);
 
         // Emulates not having a variable if the config option is passed without one
-        if (!node && nodeConfig) {
+        if (!(nodeConfig instanceof NodeRef) && !nodeConfig.variable) {
             this.withVariable = false;
         }
 
@@ -104,7 +107,12 @@ export class Pattern extends PatternElement {
                 this
             );
         } else {
-            return new PartialPattern(rel ?? {}, this);
+            return new PartialPattern(
+                rel ?? {
+                    variable: new RelationshipRef(), // Compatibility with previous behaviour, remove in version 2
+                },
+                this
+            );
         }
     }
 
