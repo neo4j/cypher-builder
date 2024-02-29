@@ -17,16 +17,16 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("String Functions", () => {
     // Functions with 1 argument
-    test.each(["lTrim", "rTrim", "toLower", "toString", "toStringOrNull", "toUpper", "trim"] as const)(
+    test.each(["lTrim", "rTrim", "toLower", "toString", "toStringOrNull", "toUpper", "trim", "normalize"] as const)(
         "%s",
         (value) => {
-            const toLowerFunction = Cypher[value](new Cypher.Param("Hello"));
-            const { cypher, params } = new TestClause(toLowerFunction).build();
+            const testFunction = Cypher[value](new Cypher.Param("Hello"));
+            const { cypher, params } = new TestClause(testFunction).build();
 
             expect(cypher).toBe(`${value}($param0)`);
 
@@ -38,8 +38,8 @@ describe("String Functions", () => {
 
     // Functions with 2 arguments
     test.each(["left", "right", "split"] as const)("%s", (value) => {
-        const toLowerFunction = Cypher[value](new Cypher.Param("Hello"), new Cypher.Literal("Hello"));
-        const { cypher, params } = new TestClause(toLowerFunction).build();
+        const testFunction = Cypher[value](new Cypher.Param("Hello"), new Cypher.Literal("Hello"));
+        const { cypher, params } = new TestClause(testFunction).build();
 
         expect(cypher).toBe(`${value}($param0, "Hello")`);
 
@@ -49,12 +49,12 @@ describe("String Functions", () => {
     });
 
     test("replace", () => {
-        const toLowerFunction = Cypher.replace(
+        const replaceFunction = Cypher.replace(
             new Cypher.Param("Helo"),
             new Cypher.Literal("lo"),
             new Cypher.Literal("llo")
         );
-        const { cypher, params } = new TestClause(toLowerFunction).build();
+        const { cypher, params } = new TestClause(replaceFunction).build();
 
         expect(cypher).toMatchInlineSnapshot(`"replace($param0, \\"lo\\", \\"llo\\")"`);
 
@@ -66,8 +66,8 @@ describe("String Functions", () => {
     });
 
     test("substring with 2 arguments", () => {
-        const toLowerFunction = Cypher.substring(new Cypher.Param("Hello"), new Cypher.Literal("lo"));
-        const { cypher, params } = new TestClause(toLowerFunction).build();
+        const substringFunction = Cypher.substring(new Cypher.Param("Hello"), new Cypher.Literal("lo"));
+        const { cypher, params } = new TestClause(substringFunction).build();
 
         expect(cypher).toMatchInlineSnapshot(`"substring($param0, \\"lo\\")"`);
 
@@ -79,12 +79,8 @@ describe("String Functions", () => {
     });
 
     test("substring with 3 arguments", () => {
-        const toLowerFunction = Cypher.substring(
-            new Cypher.Param("Hello"),
-            new Cypher.Literal("lo"),
-            new Cypher.Literal(2)
-        );
-        const { cypher, params } = new TestClause(toLowerFunction).build();
+        const substring = Cypher.substring(new Cypher.Param("Hello"), new Cypher.Literal("lo"), new Cypher.Literal(2));
+        const { cypher, params } = new TestClause(substring).build();
 
         expect(cypher).toMatchInlineSnapshot(`"substring($param0, \\"lo\\", 2)"`);
 
@@ -93,5 +89,28 @@ describe("String Functions", () => {
               "param0": "Hello",
             }
         `);
+    });
+
+    test.each(["NFC", "NFD", "NFKC", "NFKD"] as const)("normalize with normalForm '%s' parameter", (normalForm) => {
+        const normalizeFunction = Cypher.normalize(new Cypher.Param("Hello"), normalForm);
+        const { cypher, params } = new TestClause(normalizeFunction).build();
+
+        expect(cypher).toBe(`normalize($param0, "${normalForm}")`);
+
+        expect(params).toEqual({
+            param0: "Hello",
+        });
+    });
+
+    test("normalize with normalForm parameter as an expression", () => {
+        const normalizeFunction = Cypher.normalize(new Cypher.Param("Hello"), new Cypher.Param("NFC"));
+        const { cypher, params } = new TestClause(normalizeFunction).build();
+
+        expect(cypher).toBe(`normalize($param0, $param1)`);
+
+        expect(params).toEqual({
+            param0: "Hello",
+            param1: "NFC",
+        });
     });
 });
