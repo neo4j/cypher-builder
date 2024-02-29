@@ -80,6 +80,8 @@ export type CypherResult = {
     params: Record<string, unknown>;
 };
 
+export type NormalizationType = "NFC" | "NFD" | "NFKC" | "NFKD";
+
 /** Defines the interface for a class that can be compiled into Cypher */
 export interface CypherCompilable {
     getCypher(env: CypherEnvironment): string;

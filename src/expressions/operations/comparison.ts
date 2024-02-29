@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import type { Expr } from "../../types";
-import type { CypherEnvironment } from "../../Environment";
 import { CypherASTNode } from "../../CypherASTNode";
+import type { CypherEnvironment } from "../../Environment";
+import type { Expr, NormalizationType } from "../../types";
 
 type ComparisonOperator =
     | "="
@@ -34,15 +34,17 @@ type ComparisonOperator =
     | "CONTAINS"
     | "STARTS WITH"
     | "ENDS WITH"
-    | "=~";
+    | "=~"
+    | "IS NORMALIZED"
+    | "IS NOT NORMALIZED";
 
 /**
  *  @group Internal
  */
 export class ComparisonOp extends CypherASTNode {
-    private operator: ComparisonOperator;
-    private leftExpr: Expr;
-    private rightExpr: Expr | undefined;
+    protected operator: ComparisonOperator;
+    protected leftExpr: Expr;
+    protected rightExpr: Expr | undefined;
 
     constructor(operator: ComparisonOperator, left: Expr, right: Expr | undefined) {
         super();
@@ -59,6 +61,31 @@ export class ComparisonOp extends CypherASTNode {
         const rightStr = this.rightExpr ? ` ${this.rightExpr.getCypher(env)}` : "";
 
         return `${leftStr}${this.operator}${rightStr}`;
+    }
+}
+
+export class NormalizationOperator extends ComparisonOp {
+    private normalizationType: NormalizationType | undefined;
+
+    constructor(
+        operator: "IS NORMALIZED" | "IS NOT NORMALIZED",
+        left: Expr,
+        normalizationType: NormalizationType | undefined
+    ) {
+        super(operator, left, undefined);
+        this.normalizationType = normalizationType;
+    }
+
+    /**
+     * @hidden
+     */
+    public getCypher(env: CypherEnvironment): string {
+        const leftStr = `${this.leftExpr.getCypher(env)} `;
+
+        const notStr = this.operator === "IS NOT NORMALIZED" ? "NOT " : "";
+        const typeStr = this.normalizationType ? `${this.normalizationType} ` : "";
+
+        return `${leftStr}IS ${notStr}${typeStr}NORMALIZED`;
     }
 }
 
@@ -189,4 +216,22 @@ export function endsWith(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
  */
 export function matches(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
     return createOp("=~", leftExpr, rightExpr);
+}
+
+/** `IS NORMALIZED` operator
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @group Operators
+ * @category Comparison
+ */
+export function isNormalized(leftExpr: Expr, normalizationType?: NormalizationType): ComparisonOp {
+    return new NormalizationOperator("IS NORMALIZED", leftExpr, normalizationType);
+}
+
+/** `IS NOT NORMALIZED` operator
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @group Operators
+ * @category Comparison
+ */
+export function isNotNormalized(leftExpr: Expr, normalizationType?: NormalizationType): ComparisonOp {
+    return new NormalizationOperator("IS NOT NORMALIZED", leftExpr, normalizationType);
 }
