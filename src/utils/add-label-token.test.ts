@@ -19,29 +19,24 @@
 
 import { addLabelToken } from "./add-label-token";
 
-describe("addLabelToken", () => {
-    test("addLabelToken without labels", () => {
-        const result = addLabelToken(":");
+describe.each([":", "&"] as const)("addLabelToken", (operator) => {
+    test("addLabelToken without labels using operator %s", () => {
+        const result = addLabelToken(operator);
         expect(result).toBe("");
     });
 
-    test("addLabelToken with a single label", () => {
-        const result = addLabelToken(":", "Movie");
+    test("addLabelToken with a single label using operator %s", () => {
+        const result = addLabelToken(operator, "Movie");
         expect(result).toBe(":Movie");
     });
 
-    test("addLabelToken with a single label and & operator", () => {
-        const result = addLabelToken("&", "Movie");
-        expect(result).toBe(":Movie");
+    test("addLabelToken with two labels using operator %s", () => {
+        const result = addLabelToken(operator, "Movie", "Film");
+        expect(result).toBe(`:Movie${operator}Film`);
     });
 
-    test("addLabelToken with multiple labels", () => {
-        const result = addLabelToken(":", "Movie", "Film", "Video");
-        expect(result).toBe(":Movie:Film:Video");
-    });
-
-    test("addLabelToken with multiple labels and & operator", () => {
-        const result = addLabelToken("&", "Movie", "Film", "Video");
-        expect(result).toBe(":Movie&Film&Video");
+    test("addLabelToken with multiple labels using operator %s", () => {
+        const result = addLabelToken(operator, "Movie", "Film", "Video");
+        expect(result).toBe(`:Movie${operator}Film${operator}Video`);
     });
 });
