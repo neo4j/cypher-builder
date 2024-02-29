@@ -78,6 +78,8 @@ export {
     gt,
     gte,
     inOp as in,
+    isNormalized,
+    isNotNormalized,
     isNotNull,
     isNull,
     lt,
@@ -166,7 +168,7 @@ export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expres
 export type { BooleanOp } from "./expressions/operations/boolean";
 export type { ComparisonOp } from "./expressions/operations/comparison";
 export type { Yield } from "./procedures/Yield";
-export type { CypherResult, Expr, Operation, Predicate } from "./types";
+export type { CypherResult, Expr, NormalizationType, Operation, Predicate } from "./types";
 export type { InputArgument } from "./utils/normalize-variable";
 
 // utils
