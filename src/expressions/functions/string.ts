@@ -19,6 +19,7 @@
 
 import type { Expr } from "../../types";
 import { filterTruthy } from "../../utils/filter-truthy";
+import { normalizeExpr } from "../../utils/normalize-variable";
 
 import { CypherFunction } from "./CypherFunctions";
 
@@ -38,6 +39,18 @@ export function left(original: Expr, length: Expr): CypherFunction {
  */
 export function lTrim(original: Expr): CypherFunction {
     return new CypherFunction("lTrim", [original]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @group Cypher Functions
+ * @category String
+ * @param normalForm - A string with the normal form to use or a Cypher expression
+ * @example `Cypher.normalize(param, "NFC")`
+ */
+export function normalize(input: Expr, normalForm?: "NFC" | "NFD" | "NFKC" | "NFKD" | Expr): CypherFunction {
+    const normalFormExpr = normalForm ? normalizeExpr(normalForm) : undefined;
+    return new CypherFunction("normalize", filterTruthy([input, normalFormExpr]));
 }
 
 /**
