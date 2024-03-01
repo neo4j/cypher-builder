@@ -66,6 +66,17 @@ describe("CypherBuilder Return", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
+    test("Using addColumns", () => {
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+        const returnQuery = new Cypher.Return(node).addColumns(new Cypher.Literal(10), new Cypher.Literal(11));
+
+        const queryResult = returnQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN this0, 10, 11"`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
     describe("With order", () => {
         test("Return with order", () => {
             const movieNode = new Cypher.Node({
@@ -198,42 +209,42 @@ describe("CypherBuilder Return", () => {
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
+    });
 
-        describe("Return distinct", () => {
-            test("Return distinct", () => {
-                const node = new Cypher.Node({
-                    labels: ["MyLabel"],
-                });
-                const returnQuery = new Cypher.Return(node, new Cypher.Literal(10)).distinct();
+    describe("Return distinct", () => {
+        test("Return distinct", () => {
+            const node = new Cypher.Node({
+                labels: ["MyLabel"],
+            });
+            const returnQuery = new Cypher.Return(node, new Cypher.Literal(10)).distinct();
 
-                const queryResult = returnQuery.build();
-                expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN DISTINCT this0, 10"`);
-                expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+            const queryResult = returnQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN DISTINCT this0, 10"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Return distinct with order and limit param", () => {
+            const movieNode = new Cypher.Node({
+                labels: ["Movie"],
             });
 
-            test("Return distinct with order and limit param", () => {
-                const movieNode = new Cypher.Node({
-                    labels: ["Movie"],
-                });
+            const matchQuery = new Cypher.Return(movieNode)
+                .orderBy([movieNode.property("age")])
+                .limit(new Cypher.Param(5))
+                .distinct();
 
-                const matchQuery = new Cypher.Return(movieNode)
-                    .orderBy([movieNode.property("age")])
-                    .limit(new Cypher.Param(5))
-                    .distinct();
-
-                const queryResult = matchQuery.build();
-                expect(queryResult.cypher).toMatchInlineSnapshot(`
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
                     "RETURN DISTINCT this0
                     ORDER BY this0.age ASC
                     LIMIT $param0"
                 `);
 
-                expect(queryResult.params).toMatchInlineSnapshot(`
+            expect(queryResult.params).toMatchInlineSnapshot(`
                     {
                       "param0": 5,
                     }
                 `);
-            });
         });
     });
 });
