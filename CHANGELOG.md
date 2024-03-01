@@ -1,5 +1,37 @@
 # @neo4j/cypher-builder
 
+## 1.14.0
+
+### Minor Changes
+
+- [#312](https://github.com/neo4j/cypher-builder/pull/312) [`3060a56`](https://github.com/neo4j/cypher-builder/commit/3060a565a61519aa53ee9d0dd14d229ff0419f44) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `normalize` function:
+
+  ```
+  Cypher.normalize(new Cypher.Param("my string"), "NFC");
+  ```
+
+- [#314](https://github.com/neo4j/cypher-builder/pull/314) [`dbb6a4a`](https://github.com/neo4j/cypher-builder/commit/dbb6a4ad1e81b5f1cb85643db985fb331c3f29bd) Thanks [@angrykoala](https://github.com/angrykoala)! - Add `isNormalized` and `isNotNormalized` operators:
+
+  ```
+  const stringLiteral = new Cypher.Literal("the \\u212B char");
+  const query = new Cypher.Return([Cypher.isNormalized(stringLiteral, "NFC"), "normalized"]);
+  const { cypher } = query.build();
+  ```
+
+  ```
+  RETURN "the \u212B char" IS NFC NORMALIZED AS normalized
+  ```
+
+### Patch Changes
+
+- [#315](https://github.com/neo4j/cypher-builder/pull/315) [`e3a7505`](https://github.com/neo4j/cypher-builder/commit/e3a750521adb3af6a5653eb8093a3d69bd1d29b0) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate `Cypher.cdc` Procedures in favor of `Cypher.db.cdc`:
+
+  - `Cypher.cdc.current` in favor of `Cypher.db.cdc.current`
+  - `Cypher.cdc.earliest` in favor of `Cypher.db.cdc.earliest`
+  - `Cypher.cdc.query` in favor of `Cypher.db.cdc.query`
+
+  This new procedures also update the generated Cypher namespace to `db.cdc`
+
 ## 1.13.0
 
 ### Minor Changes

@@ -22,6 +22,7 @@ import { CypherProcedure } from "../../procedures/CypherProcedure";
 import type { Expr } from "../../types";
 import { normalizeExpr } from "../../utils/normalize-variable";
 
+export * as cdc from "./cdc";
 export * as index from "./dbIndex";
 
 /** Returns all labels in the database

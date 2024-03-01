@@ -4,10 +4,14 @@
 
 link:https://neo4j.com/docs/cdc/current/[Change Data Capture] (CDC) queries can be created with the Cypher Builder by using the Procedures in the `cdc` namespace:
 
-* `Cypher.cdc.current()`
-* `Cypher.cdc.earliest()`
-* `Cypher.cdc.query(from, selectors)`
+* `Cypher.db.cdc.current()`
+* `Cypher.db.cdc.earliest()`
+* `Cypher.db.cdc.query(from, selectors)`
 
+[WARNING]
+====
+Previous to Neo4j version 5.17, the namespace for cdc procedures is `cdc.x` instead of `db.cdc.x`, this namespace is available in Cypher Builder through the deprecated functions `Cypher.cdc.x`
+====
 
 == Examples
 
@@ -17,14 +21,14 @@ In order to query changes, you need to acquire a change identifier. This can be 
 
 [source, javascript]
 ----
-const query = Cypher.cdc.current().yield("id");
+const query = Cypher.db.cdc.current().yield("id");
 const { cypher } = query.build();
 ----
 
 
 [source, cypher]
 ----
-CALL cdc.current() YIELD id
+CALL db.cdc.current() YIELD id
 ----
 
 
@@ -34,13 +38,13 @@ To query changes in the graph, follow these instructions:
 
 [source, javascript]
 ----
-const query = Cypher.cdc.query(fromId);
+const query = Cypher.db.cdc.query(fromId);
 const { cypher } = query.build();
 ----
 
 [source, cypher]
 ----
-CALL cdc.query("cdc-id", [])
+CALL db.cdc.query("cdc-id", [])
 ----
 
 
@@ -58,13 +62,13 @@ const selector = new Cypher.Map({
 });
 
 
-const query = Cypher.cdc.query(fromId, [selector]);
+const query = Cypher.db.cdc.query(fromId, [selector]);
 const { cypher } = query.build();
 ----
 
 [source, cypher]
 ----
-CALL cdc.query("cdc-id", [{
+CALL db.cdc.query("cdc-id", [{
     select: "e",
     operation: "c",
     changesTo: ["name", "title"]

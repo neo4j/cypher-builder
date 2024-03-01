@@ -21,30 +21,30 @@ import Cypher from "../../index";
 
 describe("CDC procedures", () => {
     test("cdc.current", () => {
-        const query = Cypher.cdc.current();
+        const query = Cypher.db.cdc.current();
         const { cypher } = query.build();
 
-        expect(cypher).toMatchInlineSnapshot(`"CALL cdc.current()"`);
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.current()"`);
     });
 
     test("cdc.current with yield", () => {
-        const query = Cypher.cdc.current().yield("id");
+        const query = Cypher.db.cdc.current().yield("id");
         const { cypher } = query.build();
 
-        expect(cypher).toMatchInlineSnapshot(`"CALL cdc.current() YIELD id"`);
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.current() YIELD id"`);
     });
     test("cdc.earliest", () => {
-        const query = Cypher.cdc.earliest();
+        const query = Cypher.db.cdc.earliest();
         const { cypher } = query.build();
 
-        expect(cypher).toMatchInlineSnapshot(`"CALL cdc.earliest()"`);
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.earliest()"`);
     });
 
     test("cdc.earliest with yield", () => {
-        const query = Cypher.cdc.earliest().yield("id");
+        const query = Cypher.db.cdc.earliest().yield("id");
         const { cypher } = query.build();
 
-        expect(cypher).toMatchInlineSnapshot(`"CALL cdc.earliest() YIELD id"`);
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.earliest() YIELD id"`);
     });
 
     describe("cdc.query", () => {
@@ -55,26 +55,26 @@ describe("CDC procedures", () => {
         });
 
         test("with string", () => {
-            const query = Cypher.cdc.query("my-cursor");
+            const query = Cypher.db.cdc.query("my-cursor");
             const { cypher } = query.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL cdc.query(\\"my-cursor\\", [])"`);
+            expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.query(\\"my-cursor\\", [])"`);
         });
 
         test("with literal", () => {
-            const query = Cypher.cdc.query(new Cypher.Literal("my-cursor"));
+            const query = Cypher.db.cdc.query(new Cypher.Literal("my-cursor"));
             const { cypher } = query.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL cdc.query(\\"my-cursor\\", [])"`);
+            expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.query(\\"my-cursor\\", [])"`);
         });
 
         test("with selectors in array", () => {
-            const query = Cypher.cdc.query("my-cursor", [selector]);
+            const query = Cypher.db.cdc.query("my-cursor", [selector]);
 
             const { cypher } = query.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL cdc.query(\\"my-cursor\\", [{ select: \\"e\\", operation: \\"c\\", changesTo: [\\"name\\", \\"title\\"] }])"`
+                `"CALL db.cdc.query(\\"my-cursor\\", [{ select: \\"e\\", operation: \\"c\\", changesTo: [\\"name\\", \\"title\\"] }])"`
             );
         });
     });
