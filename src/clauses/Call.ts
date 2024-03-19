@@ -56,6 +56,7 @@ export interface Call
 export class Call extends Clause {
     private subquery: CypherASTNode;
     private _importWith: ImportWith | undefined;
+    private _inTransactions = false;
 
     // This is to preserve compatibility with innerWith and avoid breaking changes
     // Remove on 2.0.0
@@ -81,6 +82,11 @@ export class Call extends Clause {
         return this;
     }
 
+    public inTransactions(): this {
+        this._inTransactions = true;
+        return this;
+    }
+
     /** @deprecated Use {@link importWith} instead */
     public innerWith(...params: Array<Variable | "*">): this {
         if (this._importWith) throw new Error("Call import already set");
@@ -100,11 +106,12 @@ export class Call extends Clause {
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const inTransactionCypher = this._inTransactions ? " IN TRANSACTIONS" : "";
 
         const inCallBlock = `${importWithCypher}${subQueryStr}`;
         const nextClause = this.compileNextClause(env);
 
-        return `CALL {\n${padBlock(inCallBlock)}\n}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `CALL {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {

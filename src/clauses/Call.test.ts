@@ -390,4 +390,20 @@ RETURN var1"
             }
         `);
     });
+
+    test("Call in transaction", () => {
+        const node = new Cypher.Node();
+        const deleteSubquery = new Cypher.With(node).detachDelete(node);
+
+        const query = Cypher.concat(new Cypher.Match(node), new Cypher.Call(deleteSubquery).inTransactions());
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN TRANSACTIONS"
+`);
+    });
 });
