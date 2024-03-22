@@ -48,6 +48,11 @@ export interface Call
         WithCreate,
         WithMerge {}
 
+type InTransactionConfig = {
+    ofRows?: number;
+    onError?: "continue" | "break" | "fail";
+};
+
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
  * @category Clauses
@@ -56,7 +61,7 @@ export interface Call
 export class Call extends Clause {
     private subquery: CypherASTNode;
     private _importWith: ImportWith | undefined;
-    private _inTransactions = false;
+    private inTransactionsConfig?: InTransactionConfig | undefined;
 
     // This is to preserve compatibility with innerWith and avoid breaking changes
     // Remove on 2.0.0
@@ -82,8 +87,8 @@ export class Call extends Clause {
         return this;
     }
 
-    public inTransactions(): this {
-        this._inTransactions = true;
+    public inTransactions(config: InTransactionConfig = {}): this {
+        this.inTransactionsConfig = config;
         return this;
     }
 
@@ -106,7 +111,7 @@ export class Call extends Clause {
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
-        const inTransactionCypher = this._inTransactions ? " IN TRANSACTIONS" : "";
+        const inTransactionCypher = this.generateInTransactionStr();
 
         const inCallBlock = `${importWithCypher}${subQueryStr}`;
         const nextClause = this.compileNextClause(env);
@@ -121,5 +126,31 @@ export class Call extends Clause {
             return this.subquery.getCypher(env, importWithCypher);
         }
         return this.subquery.getCypher(env);
+    }
+
+    private generateInTransactionStr(): string {
+        if (!this.inTransactionsConfig) {
+            return "";
+        }
+
+        const rows = this.inTransactionsConfig.ofRows;
+        const error = this.inTransactionsConfig.onError;
+        const ofRowsStr = rows ? ` OF ${rows} ROWS` : "";
+        const onErrorStr = error ? ` ON ERROR ${this.getOnErrorStr(error)}` : "";
+
+        return ` IN TRANSACTIONS${ofRowsStr}${onErrorStr}`;
+    }
+
+    private getOnErrorStr(err: "continue" | "break" | "fail"): "CONTINUE" | "BREAK" | "FAIL" {
+        const errorMap = {
+            continue: "CONTINUE",
+            break: "BREAK",
+            fail: "FAIL",
+        } as const;
+
+        if (!errorMap) {
+            throw new Error(`Incorrect ON ERROR option ${err}`);
+        }
+        return errorMap[err];
     }
 }

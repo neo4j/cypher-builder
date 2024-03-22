@@ -90,3 +90,8 @@ CALL {
     DETACH DELETE this0
 } IN TRANSACTIONS
 ----
+
+The method `inTransaction` accepts an object with the following options:
+
+* `ofRows`: A number to define the batch of rows. Translates to `IN TRANSACTIONS OF 10 ROWS`
+* `onError`: A behavior for error handling. This can be `continue`, `break` or `fail`. Translates to `ON ERROR CONTINUE`
