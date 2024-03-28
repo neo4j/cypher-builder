@@ -48,6 +48,11 @@ export interface Call
         WithCreate,
         WithMerge {}
 
+type InTransactionConfig = {
+    ofRows?: number;
+    onError?: "continue" | "break" | "fail";
+};
+
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
  * @category Clauses
@@ -56,6 +61,7 @@ export interface Call
 export class Call extends Clause {
     private subquery: CypherASTNode;
     private _importWith: ImportWith | undefined;
+    private inTransactionsConfig?: InTransactionConfig | undefined;
 
     // This is to preserve compatibility with innerWith and avoid breaking changes
     // Remove on 2.0.0
@@ -81,6 +87,11 @@ export class Call extends Clause {
         return this;
     }
 
+    public inTransactions(config: InTransactionConfig = {}): this {
+        this.inTransactionsConfig = config;
+        return this;
+    }
+
     /** @deprecated Use {@link importWith} instead */
     public innerWith(...params: Array<Variable | "*">): this {
         if (this._importWith) throw new Error("Call import already set");
@@ -100,11 +111,12 @@ export class Call extends Clause {
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const inTransactionCypher = this.generateInTransactionStr();
 
         const inCallBlock = `${importWithCypher}${subQueryStr}`;
         const nextClause = this.compileNextClause(env);
 
-        return `CALL {\n${padBlock(inCallBlock)}\n}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `CALL {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
@@ -114,5 +126,31 @@ export class Call extends Clause {
             return this.subquery.getCypher(env, importWithCypher);
         }
         return this.subquery.getCypher(env);
+    }
+
+    private generateInTransactionStr(): string {
+        if (!this.inTransactionsConfig) {
+            return "";
+        }
+
+        const rows = this.inTransactionsConfig.ofRows;
+        const error = this.inTransactionsConfig.onError;
+        const ofRowsStr = rows ? ` OF ${rows} ROWS` : "";
+        const onErrorStr = error ? ` ON ERROR ${this.getOnErrorStr(error)}` : "";
+
+        return ` IN TRANSACTIONS${ofRowsStr}${onErrorStr}`;
+    }
+
+    private getOnErrorStr(err: "continue" | "break" | "fail"): "CONTINUE" | "BREAK" | "FAIL" {
+        const errorMap = {
+            continue: "CONTINUE",
+            break: "BREAK",
+            fail: "FAIL",
+        } as const;
+
+        if (!errorMap[err]) {
+            throw new Error(`Incorrect ON ERROR option ${err}`);
+        }
+        return errorMap[err];
     }
 }
