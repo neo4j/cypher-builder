@@ -114,13 +114,11 @@ SET
     });
 
     test("Merge relationship", () => {
-        const node1 = new Cypher.Node({
-            labels: ["MyLabel"],
-        });
+        const node1 = new Cypher.Node({});
         const node2 = new Cypher.Node({});
 
         const relationship = new Cypher.Relationship();
-        const pattern = new Cypher.Pattern(node1).withoutLabels().related(relationship).to(node2);
+        const pattern = new Cypher.Pattern(node1).related(relationship).to(node2);
         const query = new Cypher.Merge(pattern)
             .onCreateSet(
                 [node1.property("age"), new Cypher.Param(23)],
@@ -148,13 +146,11 @@ SET
     });
 
     test("Merge relationship with path assign", () => {
-        const node1 = new Cypher.Node({
-            labels: ["MyLabel"],
-        });
+        const node1 = new Cypher.Node({});
         const node2 = new Cypher.Node({});
 
         const relationship = new Cypher.Relationship();
-        const pattern = new Cypher.Pattern(node1).withoutLabels().related(relationship).to(node2);
+        const pattern = new Cypher.Pattern(node1).related(relationship).to(node2);
         const path = new Cypher.Path();
         const query = new Cypher.Merge(pattern)
             .assignToPath(path)

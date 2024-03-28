@@ -19,21 +19,16 @@
 
 import Cypher from "..";
 
-// MATCH (this1)-[this0:ACTED_IN]->(this2:`Person`)
-// WHERE (this2.name = $param0 AND (this1.year = $param1 OR this1.year = $param2))
-// RETURN this1.title
+// MATCH (var0:Movie)-[:ACTED_IN]->(var1:Person)
+// WHERE (var1.name = $param0 AND (var0.year = $param1 OR var0.year = $param2))
+// RETURN var0.title
 
-const movieNode = new Cypher.Node({
-    labels: ["Movie"],
-});
-const personNode = new Cypher.Node({
-    labels: ["Person"],
-});
+const movieNode = new Cypher.Variable();
+const personNode = new Cypher.Variable();
 
-const actedInRelationship = new Cypher.Pattern(movieNode)
-    .withoutLabels()
-    .related(new Cypher.Relationship({ type: "ACTED_IN" }))
-    .to(personNode);
+const actedInRelationship = new Cypher.Pattern({ variable: movieNode, labels: ["Movie"] })
+    .related({ type: "ACTED_IN" })
+    .to({ variable: personNode, labels: ["Person"] });
 
 const matchQuery = new Cypher.Match(actedInRelationship)
     .where(
