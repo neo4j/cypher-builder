@@ -64,3 +64,34 @@ RETURN dogName
 ----
 
 Note how the previous example uses `.concat` to concatenate the first `MATCH` statement and the `CALL` clause.
+
+
+== `.inTransactions`
+
+A `CALL` subquery can be executed in separate transactions by using the `inTransaction` method:
+
+[source, javascript]
+----
+const node = new Cypher.Node();
+
+const match = new Cypher.Match(node);
+const deleteSubquery = new Cypher.With(node).detachDelete(node);
+const callSubquery=new Cypher.Call(deleteSubquery).inTransactions();
+
+
+const query = Cypher.concat(match, callSubquery);
+----
+
+[source, cypher]
+----
+MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN TRANSACTIONS
+----
+
+The method `inTransaction` accepts an object with the following options:
+
+* `ofRows`: A number to define the batch of rows. Translates to `IN TRANSACTIONS OF 10 ROWS`
+* `onError`: A behavior for error handling. This can be `continue`, `break` or `fail`. Translates to `ON ERROR CONTINUE`
