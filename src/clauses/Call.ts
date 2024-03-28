@@ -148,7 +148,7 @@ export class Call extends Clause {
             fail: "FAIL",
         } as const;
 
-        if (!errorMap) {
+        if (!errorMap[err]) {
             throw new Error(`Incorrect ON ERROR option ${err}`);
         }
         return errorMap[err];
