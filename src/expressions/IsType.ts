@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type Cypher from "..";
+import type { Environment, Expr } from "..";
 import { CypherASTNode } from "../CypherASTNode";
 import { asArray } from "../utils/as-array";
 import type { ValueOf } from "../utils/type-helpers";
@@ -72,7 +72,7 @@ export const CypherTypes = {
  * val IS :: INTEGER
  * ```
  */
-export function isType(expr: Cypher.Expr, type: Type | Type[]): IsType {
+export function isType(expr: Expr, type: Type | Type[]): IsType {
     return new IsType(expr, asArray(type));
 }
 
@@ -84,7 +84,7 @@ export function isType(expr: Cypher.Expr, type: Type | Type[]): IsType {
  * val IS NOT :: INTEGER
  * ```
  */
-export function isNotType(expr: Cypher.Expr, type: Type | Type[]): IsType {
+export function isNotType(expr: Expr, type: Type | Type[]): IsType {
     return new IsType(expr, asArray(type), true);
 }
 
@@ -101,7 +101,7 @@ class ListType {
         return this;
     }
 
-    public getCypher(env: Cypher.Environment): string {
+    public getCypher(env: Environment): string {
         // Note that all types must be nullable or non nullable
         const notNullStr = this._notNull ? " NOT NULL" : "";
         const typesStr = this.types
@@ -117,12 +117,12 @@ class ListType {
 }
 
 export class IsType extends CypherASTNode {
-    private expr: Cypher.Expr;
+    private expr: Expr;
     private types: Type[];
     private not: boolean;
     private _notNull: boolean = false;
 
-    public constructor(expr: Cypher.Expr, type: Type[], not = false) {
+    public constructor(expr: Expr, type: Type[], not = false) {
         super();
         this.expr = expr;
         this.types = type;
@@ -134,7 +134,7 @@ export class IsType extends CypherASTNode {
         return this;
     }
 
-    public getCypher(env: Cypher.Environment): string {
+    public getCypher(env: Environment): string {
         const exprCypher = env.compile(this.expr);
         const isStr = this.not ? "IS NOT" : "IS";
 
@@ -154,7 +154,7 @@ export class IsType extends CypherASTNode {
 
 type Type = ValueOf<typeof BaseTypes> | ListType;
 
-function compileType(type: Type, env: Cypher.Environment): string {
+function compileType(type: Type, env: Environment): string {
     if (type instanceof ListType) {
         return env.compile(type);
     } else {
