@@ -140,7 +140,7 @@ describe("db procedures", () => {
             const { cypher, params } = vectorProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.vector.queryNodes(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD node AS this0"`
+                `"CALL db.index.vector.queryNodes(\\"my-vector-index\\", 10, $param0) YIELD node AS this0"`
             );
             expect(params).toMatchInlineSnapshot(`
                 {
@@ -148,20 +148,33 @@ describe("db procedures", () => {
                 }
             `);
         });
+        test("Simple vector", () => {
+            const nearestNeighbours = 5;
+            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const vectorProcedure = Cypher.db.index.vector
+                .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Literal("This is a lovely phrase literal"))
+                .yield(["node", targetNode]);
 
+            const { cypher, params } = vectorProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL db.index.vector.queryNodes(\\"my-vector-index\\", 5, \\"This is a lovely phrase literal\\") YIELD node AS this0"`
+            );
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
         test("vector with where and return", () => {
-            const nearestNeighbours = 10;
+            const nearestNeighbours = 15;
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const vectorProcedure = Cypher.db.index.vector
                 .queryNodes("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
                 .yield(["node", targetNode])
-                .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
+                .where(Cypher.eq(targetNode.property("title"), new Param("The Matrix")))
                 .return(targetNode);
 
             const { cypher, params } = vectorProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(`
-                "CALL db.index.vector.queryNodes(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD node AS this0
+                "CALL db.index.vector.queryNodes(\\"my-vector-index\\", 15, $param0) YIELD node AS this0
                 WHERE this0.title = $param1
                 RETURN this0"
             `);
@@ -184,7 +197,7 @@ describe("db procedures", () => {
             const { cypher, params } = vectorProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.vector.queryRelationships(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD relationship AS this0"`
+                `"CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 10, $param0) YIELD relationship AS this0"`
             );
             expect(params).toMatchInlineSnapshot(`
                 {
@@ -192,8 +205,26 @@ describe("db procedures", () => {
                 }
             `);
         });
-        test("vector with where and return", () => {
+        test("Simple vector using literal", () => {
             const nearestNeighbours = 10;
+            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const vectorProcedure = Cypher.db.index.vector
+                .queryRelationships(
+                    "my-vector-index",
+                    nearestNeighbours,
+                    new Cypher.Literal("This is a lovely phrase literal")
+                )
+                .yield(["relationship", targetNode]);
+
+            const { cypher, params } = vectorProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 10, \\"This is a lovely phrase literal\\") YIELD relationship AS this0"`
+            );
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+        test("vector with where and return", () => {
+            const nearestNeighbours = 5;
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const vectorProcedure = Cypher.db.index.vector
                 .queryRelationships("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
@@ -204,7 +235,7 @@ describe("db procedures", () => {
             const { cypher, params } = vectorProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(`
-                "CALL db.index.vector.queryRelationships(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD relationship AS this0
+                "CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 5, $param0) YIELD relationship AS this0
                 WHERE this0.title = $param1
                 RETURN this0"
             `);
