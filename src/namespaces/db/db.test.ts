@@ -129,7 +129,93 @@ describe("db procedures", () => {
             `);
         });
     });
+    describe("db.index.vector.queryNodes", () => {
+        test("Simple vector", () => {
+            const nearestNeighbours = 10;
+            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const vectorProcedure = Cypher.db.index.vector
+                .queryNodes("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
+                .yield(["node", targetNode]);
 
+            const { cypher, params } = vectorProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL db.index.vector.queryNodes(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD node AS this0"`
+            );
+            expect(params).toMatchInlineSnapshot(`
+                {
+                  "param0": "This is a lovely phrase",
+                }
+            `);
+        });
+
+        test("vector with where and return", () => {
+            const nearestNeighbours = 10;
+            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const vectorProcedure = Cypher.db.index.vector
+                .queryNodes("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
+                .yield(["node", targetNode])
+                .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
+                .return(targetNode);
+
+            const { cypher, params } = vectorProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+                "CALL db.index.vector.queryNodes(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD node AS this0
+                WHERE this0.title = $param1
+                RETURN this0"
+            `);
+            expect(params).toMatchInlineSnapshot(`
+                {
+                  "param0": "This is a lovely phrase",
+                  "param1": "The Matrix",
+                }
+            `);
+        });
+    });
+    describe("db.index.vector.queryRelationships", () => {
+        test("Simple vector", () => {
+            const nearestNeighbours = 10;
+            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const vectorProcedure = Cypher.db.index.vector
+                .queryRelationships("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
+                .yield(["relationship", targetNode]);
+
+            const { cypher, params } = vectorProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL db.index.vector.queryRelationships(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD relationship AS this0"`
+            );
+            expect(params).toMatchInlineSnapshot(`
+                {
+                  "param0": "This is a lovely phrase",
+                }
+            `);
+        });
+        test("vector with where and return", () => {
+            const nearestNeighbours = 10;
+            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const vectorProcedure = Cypher.db.index.vector
+                .queryRelationships("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
+                .yield(["relationship", targetNode])
+                .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
+                .return(targetNode);
+
+            const { cypher, params } = vectorProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+                "CALL db.index.vector.queryRelationships(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD node AS this0
+                WHERE this0.title = $param1
+                RETURN this0"
+            `);
+            expect(params).toMatchInlineSnapshot(`
+                {
+                  "param0": "This is a lovely phrase",
+                  "param1": "The Matrix",
+                }
+            `);
+        });
+    });
     describe("db.labels", () => {
         test("db.labels without yield", () => {
             const dbLabels = Cypher.db.labels();
