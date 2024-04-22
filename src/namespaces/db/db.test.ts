@@ -18,7 +18,6 @@
  */
 
 import Cypher from "../../index";
-import { Param } from "../../references/Param";
 import { TestClause } from "../../utils/TestClause";
 
 describe("db procedures", () => {
@@ -26,7 +25,7 @@ describe("db procedures", () => {
         test("Simple fulltext", () => {
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const fulltextProcedure = Cypher.db.index.fulltext
-                .queryNodes("my-text-index", new Param("This is a lovely phrase"))
+                .queryNodes("my-text-index", new Cypher.Param("This is a lovely phrase"))
                 .yield(["node", targetNode]);
 
             const { cypher, params } = fulltextProcedure.build();
@@ -44,7 +43,7 @@ describe("db procedures", () => {
         test("Fulltext with where and return", () => {
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const fulltextProcedure = Cypher.db.index.fulltext
-                .queryNodes("my-text-index", new Param("This is a lovely phrase"))
+                .queryNodes("my-text-index", new Cypher.Param("This is a lovely phrase"))
                 .yield(["node", targetNode])
                 .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
                 .return(targetNode);
@@ -67,10 +66,10 @@ describe("db procedures", () => {
         test("Fulltext with options", () => {
             const fulltextProcedure = Cypher.db.index.fulltext.queryNodes(
                 "my-text-index",
-                new Param("This is a lovely phrase"),
+                new Cypher.Param("This is a lovely phrase"),
                 {
                     skip: 5,
-                    analyser: new Param("whitespace"),
+                    analyser: new Cypher.Param("whitespace"),
                 }
             );
 
@@ -91,7 +90,7 @@ describe("db procedures", () => {
         test("Simple fulltext", () => {
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const fulltextProcedure = Cypher.db.index.fulltext
-                .queryRelationships("my-text-index", new Param("This is a lovely phrase"))
+                .queryRelationships("my-text-index", new Cypher.Param("This is a lovely phrase"))
                 .yield(["relationship", targetNode]);
 
             const { cypher, params } = fulltextProcedure.build();
@@ -109,10 +108,10 @@ describe("db procedures", () => {
         test("Fulltext with options", () => {
             const fulltextProcedure = Cypher.db.index.fulltext.queryRelationships(
                 "my-text-index",
-                new Param("This is a lovely phrase"),
+                new Cypher.Param("This is a lovely phrase"),
                 {
                     skip: 5,
-                    analyser: new Param("whitespace"),
+                    analyser: new Cypher.Param("whitespace"),
                 }
             );
 
@@ -134,7 +133,7 @@ describe("db procedures", () => {
             const nearestNeighbours = 10;
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const vectorProcedure = Cypher.db.index.vector
-                .queryNodes("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
+                .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
                 .yield(["node", targetNode]);
 
             const { cypher, params } = vectorProcedure.build();
@@ -166,9 +165,9 @@ describe("db procedures", () => {
             const nearestNeighbours = 15;
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const vectorProcedure = Cypher.db.index.vector
-                .queryNodes("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
+                .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
                 .yield(["node", targetNode])
-                .where(Cypher.eq(targetNode.property("title"), new Param("The Matrix")))
+                .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
                 .return(targetNode);
 
             const { cypher, params } = vectorProcedure.build();
@@ -191,7 +190,7 @@ describe("db procedures", () => {
             const nearestNeighbours = 10;
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const vectorProcedure = Cypher.db.index.vector
-                .queryRelationships("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
+                .queryRelationships("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
                 .yield(["relationship", targetNode]);
 
             const { cypher, params } = vectorProcedure.build();
@@ -227,7 +226,7 @@ describe("db procedures", () => {
             const nearestNeighbours = 5;
             const targetNode = new Cypher.Node({ labels: ["Movie"] });
             const vectorProcedure = Cypher.db.index.vector
-                .queryRelationships("my-vector-index", nearestNeighbours, new Param("This is a lovely phrase"))
+                .queryRelationships("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
                 .yield(["relationship", targetNode])
                 .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
                 .return(targetNode);
