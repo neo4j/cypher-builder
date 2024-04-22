@@ -204,7 +204,7 @@ describe("db procedures", () => {
             const { cypher, params } = vectorProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(`
-                "CALL db.index.vector.queryRelationships(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD node AS this0
+                "CALL db.index.vector.queryRelationships(\\"my-vector-index\\", ${nearestNeighbours}, $param0) YIELD relationship AS this0
                 WHERE this0.title = $param1
                 RETURN this0"
             `);
