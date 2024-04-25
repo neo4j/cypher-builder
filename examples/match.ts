@@ -23,16 +23,12 @@ import Cypher from "..";
 // WHERE (this1.name = $param0 AND this2.released = $param1)
 // RETURN this2.title, this2.released AS year
 
-const movieNode = new Cypher.Node({
-    labels: ["Movie"],
-});
-const personNode = new Cypher.Node({
-    labels: ["Person"],
-});
+const movieNode = new Cypher.Node();
+const personNode = new Cypher.Node();
 
-const actedInPattern = new Cypher.Pattern(movieNode)
-    .related(new Cypher.Relationship({ type: "ACTED_IN" }))
-    .to(personNode);
+const actedInPattern = new Cypher.Pattern({ variable: movieNode, labels: ["Movie"] })
+    .related({ type: "ACTED_IN" })
+    .to({ variable: personNode, labels: ["Person"] });
 
 const matchQuery = new Cypher.Match(actedInPattern)
     .where(personNode, { name: new Cypher.Param("Keanu Reeves") })

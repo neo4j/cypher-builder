@@ -23,8 +23,8 @@ import Cypher from "..";
 // WHERE this0.prop = $myParam
 // RETURN this0
 
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const match = new Cypher.Match(movie)
+const movie = new Cypher.Node();
+const match = new Cypher.Match(new Cypher.Pattern({ variable: movie, labels: ["Movie"] }))
     .where(
         new Cypher.Raw((env) => {
             const movieStr = env.compile(movie);

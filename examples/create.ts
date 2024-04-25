@@ -28,17 +28,19 @@ import Cypher from "..";
 
 const titleParam = new Cypher.Param("The Matrix");
 
-const movie1 = new Cypher.Node({
-    labels: ["Movie"],
-});
+const movie1 = new Cypher.Node();
 
-const movie2 = new Cypher.Node({
-    labels: ["Movie"],
-});
+const movie2 = new Cypher.Node();
 
 // Note that both nodes share the same param
-const create1 = new Cypher.Create(movie1).set([movie1.property("title"), titleParam]);
-const create2 = new Cypher.Create(movie2).set([movie2.property("title"), titleParam]);
+const create1 = new Cypher.Create(new Cypher.Pattern({ variable: movie1, labels: ["Movie"] })).set([
+    movie1.property("title"),
+    titleParam,
+]);
+const create2 = new Cypher.Create(new Cypher.Pattern({ variable: movie2, labels: ["Movie"] })).set([
+    movie2.property("title"),
+    titleParam,
+]);
 
 const { cypher, params } = Cypher.concat(create1, create2).build();
 
