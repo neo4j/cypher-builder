@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 1.15.0
+
+### Minor Changes
+
+- [#321](https://github.com/neo4j/cypher-builder/pull/321) [`0acf69b`](https://github.com/neo4j/cypher-builder/commit/0acf69be80bdb2539c11bfe8ac0288c5acb60b75) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `IN TRANSACTIONS` in CALL statements using the method `inTransactions()`
+
 ## 1.14.0
 
 ### Minor Changes

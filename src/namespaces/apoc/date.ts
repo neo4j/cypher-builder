@@ -17,7 +17,8 @@
  * limitations under the License.
  */
 
-import Cypher from "../..";
+import type { Expr } from "../..";
+import { Literal, toString } from "../..";
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 
 /**
@@ -32,14 +33,10 @@ import { CypherFunction } from "../../expressions/functions/CypherFunctions";
  * )
  *```
  */
-export function convertFormat(
-    temporalParam: Cypher.Expr,
-    currentFormat: string,
-    convertTo = "yyyy-MM-dd"
-): CypherFunction {
+export function convertFormat(temporalParam: Expr, currentFormat: string, convertTo = "yyyy-MM-dd"): CypherFunction {
     return new CypherFunction("apoc.date.convertFormat", [
-        Cypher.toString(temporalParam), // NOTE: should this be `toString` by default?
-        new Cypher.Literal(currentFormat),
-        new Cypher.Literal(convertTo),
+        toString(temporalParam), // NOTE: should this be `toString` by default?
+        new Literal(currentFormat),
+        new Literal(convertTo),
     ]);
 }

@@ -18,3 +18,4 @@
  */
 
 export * as fulltext from "./fulltext";
+export * as vector from "./vector";
