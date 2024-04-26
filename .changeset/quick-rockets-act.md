@@ -19,7 +19,5 @@ const a = new Cypher.Variable();
 const rel = new Cypher.Variable();
 const b = new Cypher.Variable();
 
-const pattern = new Cypher.Pattern({ variable: a, labels: ["Movie"] })
-    .related({ variable: rel, type: "ACTED_IN" })
-    .to({ variable: b });
+const pattern = new Cypher.Pattern(a, { labels: ["Movie"] }).related(rel, { type: "ACTED_IN" }).to(b);
 ```
