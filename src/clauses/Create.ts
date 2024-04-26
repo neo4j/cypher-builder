@@ -42,6 +42,9 @@ export interface Create extends WithReturn, WithSet, WithPathAssign, WithWith, W
 export class Create extends Clause {
     private pattern: Pattern;
 
+    constructor(pattern: Pattern);
+    /** @deprecated Use {@link Pattern} instead */
+    constructor(pattern: NodeRef | Pattern);
     constructor(pattern: NodeRef | Pattern) {
         super();
         if (pattern instanceof Pattern) {

@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
-import { TestClause } from "../utils/TestClause";
-import { HasLabel } from "./HasLabel";
+import Cypher from "../../src";
+import { HasLabel } from "../../src/expressions/HasLabel";
+import { TestClause } from "../../src/utils/TestClause";
 
 describe("HasLabel", () => {
     test("Fails if no labels are provided", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({ labels: ["Movie"] });
         expect(() => {
             new HasLabel(node, []);
         }).toThrow();
@@ -31,10 +31,8 @@ describe("HasLabel", () => {
 
     describe("node.hasLabel", () => {
         test("Filtering with HasLabel", () => {
-            const node = new Cypher.Node();
-            const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
-                node.hasLabel("Movie")
-            );
+            const node = new Cypher.Node({ labels: ["Movie"] });
+            const query = new Cypher.Match(node).where(node.hasLabel("Movie"));
 
             const queryResult = new TestClause(query).build();
 

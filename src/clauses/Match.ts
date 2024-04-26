@@ -66,6 +66,9 @@ export class Match extends Clause {
     private pattern: Pattern;
     private _optional = false;
 
+    constructor(pattern: Pattern);
+    /** @deprecated Use {@link Pattern} instead */
+    constructor(node: NodeRef | Pattern);
     constructor(pattern: NodeRef | Pattern) {
         super();
         if (pattern instanceof Pattern) {

@@ -46,6 +46,9 @@ export class Merge extends Clause {
     private onCreateClause: OnCreate;
     private onMatchClause: OnMatch;
 
+    constructor(pattern: Pattern);
+    /** @deprecated Use {@link Pattern} instead */
+    constructor(pattern: NodeRef | Pattern);
     constructor(pattern: NodeRef | Pattern) {
         super();
 
