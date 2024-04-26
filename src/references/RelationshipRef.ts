@@ -70,6 +70,9 @@ export class RelationshipRef extends Variable {
 export class NamedRelationship extends RelationshipRef implements NamedReference {
     public readonly id: string;
 
+    constructor(id: string);
+    /** @deprecated */
+    constructor(id: string, options?: RelationshipRefOptions);
     constructor(id: string, options?: RelationshipRefOptions) {
         super(options ?? {});
         this.id = id;

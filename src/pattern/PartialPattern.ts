@@ -55,7 +55,7 @@ export class PartialPattern extends PatternElement {
 
     private type: string | LabelExpr | undefined;
 
-    constructor(variable: Variable | undefined, options: RelationshipPattern = {}, previous: Pattern) {
+    constructor(variable: Variable | undefined, options: RelationshipPattern, previous: Pattern) {
         super(variable ?? new RelationshipRef());
 
         // Emulates not having a variable if the config option is passed without one

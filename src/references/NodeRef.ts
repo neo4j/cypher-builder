@@ -68,6 +68,9 @@ export class NodeRef extends Variable {
 export class NamedNode extends NodeRef implements NamedReference {
     public readonly id: string;
 
+    constructor(id: string);
+    /** @deprecated */
+    constructor(id: string, options?: NodeRefOptions);
     constructor(id: string, options?: NodeRefOptions) {
         super(options ?? {});
         this.id = id;
