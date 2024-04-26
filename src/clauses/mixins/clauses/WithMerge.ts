@@ -26,6 +26,7 @@ export abstract class WithMerge extends MixinClause {
     /** Add a {@link Merge} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
      */
+    public merge(clause: Merge): Merge;
     public merge(pattern: Pattern): Merge;
     /** @deprecated Use {@link Pattern} instead */
     public merge(pattern: NodeRef | Pattern): Merge;
