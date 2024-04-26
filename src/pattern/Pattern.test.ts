@@ -41,18 +41,21 @@ describe("Patterns", () => {
         });
 
         test("Simple node with default values", () => {
-            const node = new Cypher.Node({ labels: ["TestLabel"] });
+            const node = new Cypher.Node();
 
-            const pattern = new Cypher.Pattern(node);
+            const pattern = new Cypher.Pattern(node, { labels: ["TestLabel"] });
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel)"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("Node with properties and labels", () => {
-            const node = new Cypher.Node({ labels: ["TestLabel"] });
+            const node = new Cypher.Node();
 
-            const pattern = new Cypher.Pattern(node, { properties: { name: new Cypher.Param("test") } });
+            const pattern = new Cypher.Pattern(node, {
+                labels: ["TestLabel"],
+                properties: { name: new Cypher.Param("test") },
+            });
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel { name: $param0 })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
@@ -63,9 +66,10 @@ describe("Patterns", () => {
         });
 
         test("Node with properties using expressions and labels", () => {
-            const node = new Cypher.Node({ labels: ["TestLabel"] });
+            const node = new Cypher.Node();
 
             const pattern = new Cypher.Pattern(node, {
+                labels: ["TestLabel"],
                 properties: {
                     name: Cypher.plus(new Cypher.Literal("The "), new Cypher.Literal("Matrix")),
                 },
@@ -78,9 +82,9 @@ describe("Patterns", () => {
         });
 
         test("Simple node with label that needs normalization", () => {
-            const node = new Cypher.Node({ labels: ["Test&Label"] });
+            const node = new Cypher.Node();
 
-            const pattern = new Cypher.Pattern(node);
+            const pattern = new Cypher.Pattern(node, { labels: ["Test&Label"] });
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:\`Test&Label\`)"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -172,9 +176,7 @@ describe("Patterns", () => {
         });
 
         test("Simple Pattern with properties", () => {
-            const a = new Cypher.Node({
-                labels: ["Person", "Actor"],
-            });
+            const a = new Cypher.Node();
 
             const aProperties = {
                 name: new Cypher.Param("Arthur"),
@@ -184,7 +186,7 @@ describe("Patterns", () => {
             const rel = new Cypher.Relationship();
 
             const query = new TestClause(
-                new Cypher.Pattern(a, { properties: aProperties })
+                new Cypher.Pattern(a, { properties: aProperties, labels: ["Person", "Actor"] })
                     .related(rel, { type: "ACTED_IN", properties: { roles: new Cypher.Param(["neo"]) } })
                     .to(b)
             );
@@ -205,15 +207,15 @@ describe("Patterns", () => {
         });
 
         test("Simple Pattern with expressions in properties", () => {
-            const a = new Cypher.Node({
-                labels: ["Person", "Actor"],
-            });
+            const a = new Cypher.Node();
 
             const b = new Cypher.Node();
             const rel = new Cypher.Relationship();
 
             const query = new TestClause(
-                new Cypher.Pattern(a)
+                new Cypher.Pattern(a, {
+                    labels: ["Person", "Actor"],
+                })
                     .related(rel, {
                         type: "ACTED_IN",
                         properties: {
@@ -233,7 +235,7 @@ describe("Patterns", () => {
         test("Long relationship Pattern", () => {
             const a = new Cypher.Node();
             const b = new Cypher.Node();
-            const c = new Cypher.Node({ labels: ["TestLabel"] });
+            const c = new Cypher.Node();
 
             const rel1 = new Cypher.Relationship();
             const rel2 = new Cypher.Relationship();
@@ -243,7 +245,7 @@ describe("Patterns", () => {
                     .related(rel1, { type: "ACTED_IN" })
                     .to(b)
                     .related(rel2, { type: "ACTED_IN" })
-                    .to(c)
+                    .to(c, { labels: ["TestLabel"] })
             );
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
