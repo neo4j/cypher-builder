@@ -26,9 +26,9 @@ import Cypher from "..";
 const movieNode = new Cypher.Node();
 const personNode = new Cypher.Node();
 
-const actedInPattern = new Cypher.Pattern({ variable: movieNode, labels: ["Movie"] })
+const actedInPattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
     .related({ type: "ACTED_IN" })
-    .to({ variable: personNode, labels: ["Person"] });
+    .to(personNode, { labels: ["Person"] });
 
 const matchQuery = new Cypher.Match(actedInPattern)
     .where(personNode, { name: new Cypher.Param("Keanu Reeves") })

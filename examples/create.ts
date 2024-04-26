@@ -33,11 +33,11 @@ const movie1 = new Cypher.Node();
 const movie2 = new Cypher.Node();
 
 // Note that both nodes share the same param
-const create1 = new Cypher.Create(new Cypher.Pattern({ variable: movie1, labels: ["Movie"] })).set([
+const create1 = new Cypher.Create(new Cypher.Pattern(movie1, { labels: ["Movie"] })).set([
     movie1.property("title"),
     titleParam,
 ]);
-const create2 = new Cypher.Create(new Cypher.Pattern({ variable: movie2, labels: ["Movie"] })).set([
+const create2 = new Cypher.Create(new Cypher.Pattern(movie2, { labels: ["Movie"] })).set([
     movie2.property("title"),
     titleParam,
 ]);

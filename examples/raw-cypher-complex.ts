@@ -24,7 +24,7 @@ import Cypher from "..";
 // RETURN this0
 
 const movie = new Cypher.Node();
-const match = new Cypher.Match(new Cypher.Pattern({ variable: movie, labels: ["Movie"] }))
+const match = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
     .where(
         new Cypher.Raw((env) => {
             const movieStr = env.compile(movie);
