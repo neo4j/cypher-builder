@@ -1,5 +1,5 @@
 ---
-"@neo4j/cypher-builder": minor
+"@neo4j/cypher-builder": patch
 ---
 
 The following methods in `Pattern` class and chains are deprecated:
