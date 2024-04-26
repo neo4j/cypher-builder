@@ -27,6 +27,8 @@ export abstract class WithCreate extends MixinClause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
      */
     public create(clause: Create): Create;
+    public create(pattern: Pattern): Create;
+    /** @deprecated Use {@link Pattern} instead */
     public create(pattern: NodeRef | Pattern): Create;
     public create(clauseOrPattern: Create | NodeRef | Pattern): Create {
         if (clauseOrPattern instanceof Create) {
