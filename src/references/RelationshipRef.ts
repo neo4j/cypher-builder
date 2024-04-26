@@ -42,6 +42,9 @@ type RelationshipRefOptions = {
 export class RelationshipRef extends Variable {
     private _type: string | LabelExpr | undefined;
 
+    constructor();
+    /** @deprecated Relationship types should be defined in {@link Pattern} */
+    constructor(input: RelationshipRefOptions);
     constructor(input: RelationshipRefOptions = {}) {
         super();
         this.prefix = "this";

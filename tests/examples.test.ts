@@ -23,7 +23,7 @@ describe("Examples", () => {
     test("Readme example", () => {
         const movieNode = new Cypher.Node();
 
-        const matchQuery = new Cypher.Match(new Cypher.Pattern({ variable: movieNode, labels: ["Movie"] }))
+        const matchQuery = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
             .where(movieNode, {
                 title: new Cypher.Param("The Matrix"),
             })

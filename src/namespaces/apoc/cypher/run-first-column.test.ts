@@ -116,11 +116,11 @@ describe("apoc.cypher", () => {
         const node = new Cypher.Node();
         const param1 = new Cypher.Param("The Matrix");
 
-        const topQuery = new Cypher.Match(new Cypher.Pattern({ variable: node, labels: ["Movie"] })).where(
+        const topQuery = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
             Cypher.eq(node.property("title"), param1)
         );
 
-        const nestedPattern = new Cypher.Pattern({ variable: node });
+        const nestedPattern = new Cypher.Pattern(node);
         const releasedParam = new Cypher.Param(1999);
         const subQuery = new Cypher.Match(nestedPattern).set([node.property("released"), releasedParam]).return(node);
         const apocCall = Cypher.apoc.cypher.runFirstColumnMany(subQuery, [node, releasedParam]);

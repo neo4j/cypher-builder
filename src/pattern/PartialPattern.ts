@@ -55,24 +55,26 @@ export class PartialPattern extends PatternElement {
 
     private type: string | LabelExpr | undefined;
 
-    constructor(relConfig: RelationshipPattern, previous: Pattern) {
-        super(relConfig.variable ?? new RelationshipRef());
+    constructor(variable: Variable | undefined, options: RelationshipPattern = {}, previous: Pattern) {
+        super(variable ?? new RelationshipRef());
 
         // Emulates not having a variable if the config option is passed without one
-        if (!relConfig.variable) {
+        if (!variable) {
             this.withVariable = false;
         }
 
-        this.type = relConfig.type;
-        this.properties = relConfig.properties;
+        this.type = options.type;
+        this.properties = options.properties;
         this.previous = previous;
-        this.direction = relConfig.direction ?? "right";
-        this.length = relConfig.length;
+        this.direction = options.direction ?? "right";
+        this.length = options.length;
     }
 
-    public to(node?: NodeRef | NodePattern): Pattern {
+    public to(node: Variable, options?: NodePattern): Pattern;
+    public to(nodeConfig?: NodePattern): Pattern;
+    public to(node?: Variable | NodePattern, options?: NodePattern): Pattern {
         if (!node) node = new NodeRef();
-        return new Pattern(node, this);
+        return new Pattern(node, options, this);
     }
 
     /** @deprecated */
