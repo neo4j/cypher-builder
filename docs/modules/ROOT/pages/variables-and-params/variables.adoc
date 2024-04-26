@@ -88,21 +88,21 @@ RETURN var1
 
 == Nodes and relationships
 
-Nodes and relationships are variables holding extra data on nodes and relationships.
+Nodes and relationships are sugar syntax for variables.
 They can be used in xref:patterns.adoc[Patterns], for example:
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({labels: ["Movie"]});
-const relationship = new Cypher.Relationship({type: "ACTED_IN"});
+const movie = new Cypher.Node();
+const relationship = new Cypher.Relationship();
 
-const pattern = new Cypher.Pattern(movie).related(relationship).to();
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] }).related(relationship, { type: "ACTED_IN" }).to();
 const match = new Cypher.Match(pattern).return(movie);
 ----
 
 [source, cypher]
 ----
-MATCH (this0:Movie)-[this1:ACTED_IN]->(this2)
+MATCH (this0:Movie)-[this1:ACTED_IN]->()
 RETURN this0
 ----
 
@@ -112,33 +112,11 @@ In the translated Cypher, you can see how the node variable is translated to the
 These names are not defined in your JavaScript code, but are automatically generated when the query is built with `.build()`. 
 The labels and types passed to the `Node` and `Relationship` variables are used in the pattern.
 
-These are the parameters that can be passed to a `Node` class:
 
-* `labels`: an array containing the labels of that node.
-
-Parameters that can be passed to a relationship:
-
-* `type`: a string with the type of the relationship.
-
-
-== Escaping labels and types
-
-Labels and types will be automatically escaped if any uncommon character is detected. 
-For example:
-
-[source, javascript]
-----
-const movie = new Cypher.Node({labels: ["My Movie"]});
-const match = new Cypher.Match(movie).return(movie);
-----
-
-[source, cypher]
-----
-MATCH (this0:`My Movie`)
-RETURN this0
-----
-
-Note that `My Movie` is being surrounded in quotes to prevent code injection with dynamic labels.
+[NOTE]
+====
+Passing `labels` or `type` to Nodes and Relationships is deprecated. Currently, the classes `Node` and `Relationship` are just sugar syntax for `Variables` and can be used in the same places. The only difference is that variables will be automatically named `var` while nodes and relationships will be named `this`
+====
 
 == Path
 
@@ -175,8 +153,8 @@ These can be used in the same fashion as normal variables, but a name must be pr
 
 [source, javascript]
 ----
-const movie = new Cypher.NamedNode("n", {labels: ["Movie"]});
-const match = new Cypher.Match(movie).return(movie);
+const movie = new Cypher.NamedNode("n");
+const match = new Cypher.Match(movie, { labels: ["Movie"] }).return(movie);
 ----
 
 [source, cypher]
@@ -192,8 +170,8 @@ To access these properties in the generated Cypher, you can use the method `.pro
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({labels: ["Movie"]})
-const query = new Cypher.Match(movie).return(movie.property("title"));
+const movie = new Cypher.Node()
+const query = new Cypher.Match(movie, { labels: ["Movie"] }).return(movie.property("title"));
 ----
 
 [source, cypher]
@@ -225,10 +203,10 @@ Expressions can also be used as a property key to dynamically access properties:
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({labels: ["Movie"]})
+const movie = new Cypher.Node()
 
 const movieProperty = movie.property(Cypher.plus(new Cypher.Param("ti"), new Cypher.Literal("tle")))
-const query = new Cypher.Match(movie).return(movieProperty);
+const query = new Cypher.Match(movie, { labels: ["Movie"] }).return(movieProperty);
 ----
 
 The query automatically adds square brackets (`[]`) notation to safely execute the expression:

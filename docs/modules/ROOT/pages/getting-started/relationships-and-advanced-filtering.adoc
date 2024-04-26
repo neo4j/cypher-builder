@@ -34,20 +34,16 @@ For more complex `MATCH` statements, like the one in this tutorial, you should d
 
 == Pattern creation
 
-These are the steps you should follow to define a pattern:
+These are the steps you should follow to define a more complex pattern:
 
 . Define the elements of the pattern. 
 Relationships, just like nodes, are variables that can be created and reused across your query:
 +
 [source, javascript]
 ----
-const actedIn = new Cypher.Relationship({
-    type: "ACTED_IN",
-});
+const actedIn = new Cypher.Relationship();
 
-const personNode = new Cypher.Node({
-    labels: ["Person"],
-});
+const personNode = new Cypher.Node();
 ----
 +
 So far, the relationship is not connected to the nodes. 
@@ -57,7 +53,9 @@ This is because here you are creating a variable to hold the relationship matche
 +
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(movieNode).related(actedIn).to(personNode);
+const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
+    .related(actedIn, { type: "ACTED_IN" })
+    .to(personNode, { labels: ["Person"] });
 ----
 +
 Note that, in Cypher Builder, patterns work similarly to Cypher, with each element of the chain being either a relationship or a node.
@@ -91,11 +89,13 @@ For more information about creating patterns, refer to xref:patterns.adoc[Patter
 Despite changing the `MATCH` target in the previous steps, all the filters and relationships featured in the query are still pointing towards the correct variable: `this0`. 
 However, the pattern is incorrect -- instead of returning a `Person` acting in a `Movie`, there is a `Movie` acting on a `Person`.
 
-To change that, add `.withDirection("left")` to the pattern:
+To change that, add `direction: "left"` to the `related` options:
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(movieNode).related(actedIn).withDirection("left").to(people);
+const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
+    .related(actedIn, { type: "ACTED_IN", direction: "left" })
+    .to(people, { labels: ["Person"] });
 ----
 
 Any aspect of the pattern itself (cardinality, direction and properties) can be changed in the pattern declaration with the methods of each element in the "chain".
@@ -130,10 +130,10 @@ This advanced filter is composed of 3 basic comparisons:
 * `m.title CONTAINS "Matrix"`
 * `m.released < 2000`
 
-These comparisons use the logic operations `AND`, `NOT`, and `OR`, respectivelly.
+These comparisons use the logic operations `AND`, `NOT`, and `OR`, respectively.
 
 Still, as advanced queries grow, they can start to hinder maintenance.
-To avoid this scenario, it is advisable to split the query into more basic comparisons and compose it afterwards.
+To avoid this scenario, it is advisable to split the query into more basic comparisons and compose it afterward.
 
 The process is similar to how you would perform with nodes and patterns:
 
@@ -217,19 +217,13 @@ After going through all the steps previously described, your script should look 
 ----
 import Cypher from "@neo4j/cypher-builder";
 
-const movieNode = new Cypher.Node({
-    labels: ["Movie"],
-});
+const movieNode = new Cypher.Node();
+const actedIn = new Cypher.Relationship();
+const personNode = new Cypher.Node();
 
-const actedIn = new Cypher.Relationship({
-    type: "ACTED_IN",
-});
-
-const personNode = new Cypher.Node({
-    labels: ["Person"],
-});
-
-const pattern = new Cypher.Pattern(movieNode).related(actedIn).withDirection("left").to(personNode);
+const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
+    .related(actedIn, { type: "ACTED_IN", direction: "left" })
+    .to(personNode, { labels: ["Person"] });
 
 const titleProp = movieNode.property("title");
 const yearProp = movieNode.property("released");
@@ -243,8 +237,7 @@ const releasedBefore2000 = Cypher.lt(yearProp, new Cypher.Param(2000));
 const clause = new Cypher.Match(pattern)
     .where(Cypher.and(isKeanu, Cypher.or(Cypher.not(titleContainsMatrix), releasedBefore2000)))
     .return(titleProp, taglineProp, yearProp, [rolesProperty, "actingRoles"]);
-
-const { cypher, params } = clause.build();
+    
 console.log(cypher);
 console.log(params);
 ----

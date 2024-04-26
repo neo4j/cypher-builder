@@ -34,8 +34,8 @@ For example, this query:
 
 [source, javascript]
 ----
-const match1=new Cypher.Match(new Cypher.Node({ labels: ["Movie"] }))
-const match2=new Cypher.Match(new Cypher.Node({ labels: ["Person"] }))
+const match1=new Cypher.Match(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] }))
+const match2=new Cypher.Match(new Cypher.Pattern(new Cypher.Node(), { labels: ["Person"] }))
 
 const cypher=`
 ${match1.build()}
@@ -47,8 +47,8 @@ Generates the following Cypher:
 
 [source, cypher]
 ----
-MATCH(this0:Movie)
-MATCH(this0:Person)
+MATCH(:Movie)
+MATCH(:Person)
 ----
 
 In this query, the variable `this0` is used for both `MATCH` statements, thus causing variable name collision. 
@@ -112,8 +112,8 @@ For example, this query:
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const matchQuery = new Cypher.Match(movie).where(movie, { name: new Cypher.NamedParam("myParam") }).return(movie);
+const movie = new Cypher.Node();
+const matchQuery = new Cypher.Match(movie, { labels: ["Movie"]}).where(movie, { name: new Cypher.NamedParam("myParam") }).return(movie);
 ----
 
 Generates the following query:
@@ -130,8 +130,8 @@ To generate the parameter, pass a value in the same way as normal parameters:
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const matchQuery = new Cypher.Match(movie).where(movie, { name: new Cypher.NamedParam("myParam", "Keanu Reeves") }).return(movie);
+const movie = new Cypher.Node();
+const matchQuery = new Cypher.Match({movie,   labels: ["Movie"] }).where(movie, { name: new Cypher.NamedParam("myParam", "Keanu Reeves") }).return(movie);
 ----
 
 The resulting parameter is:
@@ -302,8 +302,8 @@ However, a custom `Raw` is being injected as part of the `WHERE` subclause:
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const match = new Cypher.Match(movie)
+const movie = new Cypher.Node();
+const match = new Cypher.Match(movie, { labels: ["Movie"] })
     .where(
         new Cypher.Raw((env) => {
             const movieStr = env.compile(movie);

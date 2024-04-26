@@ -25,7 +25,8 @@ Here is how you should proceed:
 +
 [source, javascript]
 ----
-const clause = new Cypher.Match(movieNode)
+const movieNode = new Cypher.Node()
+const clause = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
     .where()
     .return(movieNode);
 ----
@@ -61,7 +62,7 @@ Though it is possible to inject the string value into the query, it is good prac
 +
 [source, javascript]
 ----
-const clause = new Cypher.Match(movieNode)
+const clause = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
     .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
     .return(movieNode);
 ----
@@ -207,7 +208,7 @@ const titleProp = movieNode.property("title");
 const yearProp = movieNode.property("released");
 const taglineProp = movieNode.property("tagline");
 
-const clause = new Cypher.Match(movieNode)
+const clause = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
     .where(Cypher.eq(titleProp, new Cypher.Param("The Matrix")))
     .and(Cypher.lt(yearProp, new Cypher.Param(2000)))
     .return(titleProp, taglineProp, yearProp);

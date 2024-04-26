@@ -7,7 +7,7 @@ In these cases, you can directly call the provided functions to generate the equ
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({labels: ["Movie"]});
+const movie = new Cypher.Node();
 
 Cypher.coalesce(movie.property("title"), new Cypher.Param("The Matrix"));
 ----
