@@ -85,6 +85,8 @@ export class Merge extends Clause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
      */
     public merge(clause: Merge): Merge;
+    /** @deprecated Use {@link Pattern} instead */
+    public merge(pattern: Pattern): Merge;
     public merge(pattern: NodeRef | Pattern): Merge;
     public merge(clauseOrPattern: Merge | NodeRef | Pattern): Merge {
         if (clauseOrPattern instanceof Merge) {

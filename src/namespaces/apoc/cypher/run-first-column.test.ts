@@ -22,8 +22,8 @@ import { TestClause } from "../../../utils/TestClause";
 
 describe("apoc.cypher", () => {
     test("runFirstColumnSingle", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
-        const subquery = new Cypher.Match(node).return(node);
+        const node = new Cypher.Node();
+        const subquery = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return(node);
 
         const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery);
         const queryResult = new TestClause(apocRunFirstColum).build();
@@ -36,8 +36,8 @@ describe("apoc.cypher", () => {
     });
 
     test("runFirstColumnSingle with parameters", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
-        const subquery = new Cypher.Match(node).return(node);
+        const node = new Cypher.Node();
+        const subquery = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return(node);
 
         const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery, [node]);
         const queryResult = new TestClause(apocRunFirstColum).build();
@@ -50,8 +50,8 @@ describe("apoc.cypher", () => {
     });
 
     test("runFirstColumnMany", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
-        const subquery = new Cypher.Match(node).return(node);
+        const node = new Cypher.Node();
+        const subquery = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return(node);
 
         const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnMany(subquery);
         const queryResult = new TestClause(apocRunFirstColum).build();
@@ -64,8 +64,8 @@ describe("apoc.cypher", () => {
     });
 
     test("runFirstColumnMany with parameters", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
-        const subquery = new Cypher.Match(node).return(node);
+        const node = new Cypher.Node();
+        const subquery = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return(node);
 
         const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnMany(subquery, [node]);
         const queryResult = new TestClause(apocRunFirstColum).build();
@@ -78,7 +78,7 @@ describe("apoc.cypher", () => {
     });
 
     test("runFirstColumn with string", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
         const subquery = "MATCH (n:Film) RETURN n";
 
         const apocRunFirstColum = Cypher.apoc.cypher.runFirstColumnSingle(subquery, [node]);
@@ -91,7 +91,7 @@ describe("apoc.cypher", () => {
     });
 
     test("runFirstColumn with a map for parameters", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
         const subquery = "MATCH (n) RETURN n";
 
         const params = new Cypher.Map({
@@ -150,7 +150,7 @@ describe("apoc.cypher", () => {
     });
 
     test("runFirstColumn with an object for parameters", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
         const subquery = "MATCH (n) RETURN n";
 
         const params = {
@@ -172,9 +172,9 @@ describe("apoc.cypher", () => {
     });
 
     test("runFirstColumnSingle", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const nestedSubquery = new Cypher.Match(node).return(node);
+        const nestedSubquery = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return(node);
         const nestedRunFirstColumn = Cypher.apoc.cypher.runFirstColumnSingle(nestedSubquery);
 
         const subquery = new Cypher.Return([nestedRunFirstColumn, "result"]);

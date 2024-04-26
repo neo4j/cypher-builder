@@ -98,6 +98,8 @@ export class Match extends Clause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
      */
     public match(clause: Match): Match;
+    public match(pattern: Pattern): Match;
+    /** @deprecated Use {@link Pattern} instead */
     public match(pattern: NodeRef | Pattern): Match;
     public match(clauseOrPattern: Match | NodeRef | Pattern): Match {
         if (clauseOrPattern instanceof Match) {

@@ -96,9 +96,12 @@ describe("Patterns", () => {
         });
 
         test("Node with escaped parameters and labels", () => {
-            const node = new Cypher.Node({ labels: ["TestLabel"] });
+            const node = new Cypher.Node();
 
-            const pattern = new Cypher.Pattern(node, { properties: { $_name: new Cypher.Param("test") } });
+            const pattern = new Cypher.Pattern(node, {
+                labels: ["TestLabel"],
+                properties: { $_name: new Cypher.Param("test") },
+            });
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel { \`$_name\`: $param0 })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`
@@ -109,9 +112,9 @@ describe("Patterns", () => {
         });
 
         test("Node with empty properties and labels", () => {
-            const node = new Cypher.Node({ labels: ["TestLabel"] });
+            const node = new Cypher.Node();
 
-            const pattern = new Cypher.Pattern(node, { properties: {} });
+            const pattern = new Cypher.Pattern(node, { labels: ["TestLabel"], properties: {} });
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel)"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
