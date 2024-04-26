@@ -144,6 +144,9 @@ export class Match extends Clause {
  * @category Clauses
  */
 export class OptionalMatch extends Match {
+    constructor(pattern: Pattern);
+    /** @deprecated Use a {@link Pattern} instead */
+    constructor(pattern: NodeRef | Pattern);
     constructor(pattern: NodeRef | Pattern) {
         super(pattern);
         this.optional();
