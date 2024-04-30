@@ -35,6 +35,9 @@ type NodeRefOptions = {
 export class NodeRef extends Variable {
     public labels: string[] | LabelExpr;
 
+    constructor();
+    /** @deprecated Node labels should be defined in {@link Pattern} */
+    constructor(options: NodeRefOptions);
     constructor(options: NodeRefOptions = {}) {
         super();
         this.prefix = "this";
@@ -65,6 +68,9 @@ export class NodeRef extends Variable {
 export class NamedNode extends NodeRef implements NamedReference {
     public readonly id: string;
 
+    constructor(id: string);
+    /** @deprecated */
+    constructor(id: string, options?: NodeRefOptions);
     constructor(id: string, options?: NodeRefOptions) {
         super(options ?? {});
         this.id = id;

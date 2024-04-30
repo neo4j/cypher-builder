@@ -66,6 +66,9 @@ export class Match extends Clause {
     private pattern: Pattern;
     private _optional = false;
 
+    constructor(pattern: Pattern);
+    /** @deprecated Use {@link Pattern} instead */
+    constructor(node: NodeRef | Pattern);
     constructor(pattern: NodeRef | Pattern) {
         super();
         if (pattern instanceof Pattern) {
@@ -95,6 +98,8 @@ export class Match extends Clause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
      */
     public match(clause: Match): Match;
+    public match(pattern: Pattern): Match;
+    /** @deprecated Use {@link Pattern} instead */
     public match(pattern: NodeRef | Pattern): Match;
     public match(clauseOrPattern: Match | NodeRef | Pattern): Match {
         if (clauseOrPattern instanceof Match) {
@@ -111,6 +116,9 @@ export class Match extends Clause {
     /** Add an {@link OptionalMatch} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
      */
+    public optionalMatch(pattern: Pattern): OptionalMatch;
+    /** @deprecated Use {@link Pattern} instead */
+    public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch;
     public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch {
         const matchClause = new OptionalMatch(pattern);
         this.addNextClause(matchClause);
@@ -141,6 +149,9 @@ export class Match extends Clause {
  * @category Clauses
  */
 export class OptionalMatch extends Match {
+    constructor(pattern: Pattern);
+    /** @deprecated Use a {@link Pattern} instead */
+    constructor(pattern: NodeRef | Pattern);
     constructor(pattern: NodeRef | Pattern) {
         super(pattern);
         this.optional();

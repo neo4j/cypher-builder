@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
-import { TestClause } from "../utils/TestClause";
-import { HasLabel } from "./HasLabel";
+import Cypher from "../../src";
+import { HasLabel } from "../../src/expressions/HasLabel";
+import { TestClause } from "../../src/utils/TestClause";
 
 describe("HasLabel", () => {
     test("Fails if no labels are provided", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({ labels: ["Movie"] });
         expect(() => {
             new HasLabel(node, []);
         }).toThrow();
@@ -31,10 +31,8 @@ describe("HasLabel", () => {
 
     describe("node.hasLabel", () => {
         test("Filtering with HasLabel", () => {
-            const node = new Cypher.Node();
-            const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
-                node.hasLabel("Movie")
-            );
+            const node = new Cypher.Node({ labels: ["Movie"] });
+            const query = new Cypher.Match(node).where(node.hasLabel("Movie"));
 
             const queryResult = new TestClause(query).build();
 
@@ -47,10 +45,8 @@ describe("HasLabel", () => {
         });
 
         test("Filtering with multiple labels", () => {
-            const node = new Cypher.Node();
-            const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
-                node.hasLabels("Movie", "Film")
-            );
+            const node = new Cypher.Node({ labels: ["Movie"] });
+            const query = new Cypher.Match(node).where(node.hasLabels("Movie", "Film"));
 
             const queryResult = new TestClause(query).build();
 
@@ -63,10 +59,8 @@ describe("HasLabel", () => {
         });
 
         test("HasLabel with label expression &", () => {
-            const node = new Cypher.Node();
-            const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
-                node.hasLabel(Cypher.labelExpr.and("Movie", "Film"))
-            );
+            const node = new Cypher.Node({ labels: ["Movie"] });
+            const query = new Cypher.Match(node).where(node.hasLabel(Cypher.labelExpr.and("Movie", "Film")));
 
             const queryResult = new TestClause(query).build();
 
@@ -78,10 +72,8 @@ WHERE this0:(Movie&Film)"
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
         test("HasLabel with label expression |", () => {
-            const node = new Cypher.Node();
-            const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
-                node.hasLabel(Cypher.labelExpr.or("Movie", "Film"))
-            );
+            const node = new Cypher.Node({ labels: ["Movie"] });
+            const query = new Cypher.Match(node).where(node.hasLabel(Cypher.labelExpr.or("Movie", "Film")));
 
             const queryResult = new TestClause(query).build();
 
@@ -96,11 +88,11 @@ WHERE this0:(Movie|Film)"
 
     describe("relationship.hasType", () => {
         test("Filtering with hasType", () => {
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: ["Movie"] });
             const relationship = new Cypher.Relationship();
-            const query = new Cypher.Match(
-                new Cypher.Pattern(node, { labels: ["Movie"] }).related(relationship).to()
-            ).where(relationship.hasType("ACTED_IN"));
+            const query = new Cypher.Match(new Cypher.Pattern(node).related(relationship).to()).where(
+                relationship.hasType("ACTED_IN")
+            );
 
             const queryResult = new TestClause(query).build();
 
@@ -113,11 +105,11 @@ WHERE this1:ACTED_IN"
         });
 
         test("HasType with label expression |", () => {
-            const node = new Cypher.Node();
-            const relationship = new Cypher.Relationship();
-            const query = new Cypher.Match(
-                new Cypher.Pattern(node, { labels: ["Movie"] }).related(relationship, { type: "ACTED_IN" }).to()
-            ).where(relationship.hasType(Cypher.labelExpr.or("ACTED_IN", "STARRED_IN")));
+            const node = new Cypher.Node({ labels: ["Movie"] });
+            const relationship = new Cypher.Relationship({ type: "ACTED_IN" });
+            const query = new Cypher.Match(new Cypher.Pattern(node).related(relationship).to()).where(
+                relationship.hasType(Cypher.labelExpr.or("ACTED_IN", "STARRED_IN"))
+            );
 
             const queryResult = new TestClause(query).build();
 
