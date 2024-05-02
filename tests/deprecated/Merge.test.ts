@@ -17,17 +17,15 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../src";
 
 describe("CypherBuilder Merge", () => {
     test("Merge node onCreateSet", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
 
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node, {
-                labels: ["MyLabel"],
-            })
-        ).onCreateSet([node.property("age"), new Cypher.Param(23)]);
+        const query = new Cypher.Merge(node).onCreateSet([node.property("age"), new Cypher.Param(23)]);
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -43,13 +41,11 @@ describe("CypherBuilder Merge", () => {
     });
 
     test("Merge node with set and onCreate", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
 
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node, {
-                labels: ["MyLabel"],
-            })
-        )
+        const query = new Cypher.Merge(node)
             .set([node.property("age"), new Cypher.Param(10)])
             .onCreateSet([node.property("age"), new Cypher.Param(23)]);
 
@@ -70,13 +66,11 @@ SET
     });
 
     test("Merge node onCreate with escaped property", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
 
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node, {
-                labels: ["MyLabel"],
-            })
-        ).onCreateSet([node.property("$age"), new Cypher.Param(23)]);
+        const query = new Cypher.Merge(node).onCreateSet([node.property("$age"), new Cypher.Param(23)]);
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -92,18 +86,18 @@ SET
     });
 
     test("Merge node with parameters", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
 
         const nodeProps = {
             test: new Cypher.Param("test"),
         };
 
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node, {
-                labels: ["MyLabel"],
-                properties: nodeProps,
-            })
-        ).onCreateSet([node.property("age"), new Cypher.Param(23)]);
+        const query = new Cypher.Merge(new Cypher.Pattern(node).withProperties(nodeProps)).onCreateSet([
+            node.property("age"),
+            new Cypher.Param(23),
+        ]);
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -120,8 +114,8 @@ SET
     });
 
     test("Merge relationship", () => {
-        const node1 = new Cypher.Node();
-        const node2 = new Cypher.Node();
+        const node1 = new Cypher.Node({});
+        const node2 = new Cypher.Node({});
 
         const relationship = new Cypher.Relationship();
         const pattern = new Cypher.Pattern(node1).related(relationship).to(node2);
@@ -152,8 +146,8 @@ SET
     });
 
     test("Merge relationship with path assign", () => {
-        const node1 = new Cypher.Node();
-        const node2 = new Cypher.Node();
+        const node1 = new Cypher.Node({});
+        const node2 = new Cypher.Node({});
 
         const relationship = new Cypher.Relationship();
         const pattern = new Cypher.Pattern(node1).related(relationship).to(node2);
@@ -186,15 +180,11 @@ SET
     });
 
     test("Merge node, remove and delete", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
 
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node, {
-                labels: ["MyLabel"],
-            })
-        )
-            .remove(node.property("title"))
-            .delete(node);
+        const query = new Cypher.Merge(node).remove(node.property("title")).delete(node);
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -206,18 +196,14 @@ DELETE this0"
     });
 
     test("Chained Merge", () => {
-        const node1 = new Cypher.Node();
-        const node2 = new Cypher.Node();
+        const node1 = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+        const node2 = new Cypher.Node({
+            labels: ["MyOtherLabel"],
+        });
 
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node1, {
-                labels: ["MyLabel"],
-            })
-        ).merge(
-            new Cypher.Pattern(node2, {
-                labels: ["MyOtherLabel"],
-            })
-        );
+        const query = new Cypher.Merge(node1).merge(node2);
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -228,20 +214,14 @@ MERGE (this1:MyOtherLabel)"
     });
 
     test("Chained Merge with existing clause", () => {
-        const node1 = new Cypher.Node();
-        const node2 = new Cypher.Node();
+        const node1 = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
+        const node2 = new Cypher.Node({
+            labels: ["MyOtherLabel"],
+        });
 
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node1, {
-                labels: ["MyLabel"],
-            })
-        ).merge(
-            new Cypher.Merge(
-                new Cypher.Pattern(node2, {
-                    labels: ["MyOtherLabel"],
-                })
-            )
-        );
+        const query = new Cypher.Merge(node1).merge(new Cypher.Merge(node2));
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -252,13 +232,11 @@ MERGE (this1:MyOtherLabel)"
     });
 
     test("Merge node onMatchSet", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
 
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node, {
-                labels: ["MyLabel"],
-            })
-        ).onMatchSet([node.property("age"), new Cypher.Param(23)]);
+        const query = new Cypher.Merge(node).onMatchSet([node.property("age"), new Cypher.Param(23)]);
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -274,14 +252,12 @@ MERGE (this1:MyOtherLabel)"
     });
 
     test("Merge node with onMatch and onCreate", () => {
-        const node = new Cypher.Node();
+        const node = new Cypher.Node({
+            labels: ["MyLabel"],
+        });
 
         const countProp = node.property("count");
-        const query = new Cypher.Merge(
-            new Cypher.Pattern(node, {
-                labels: ["MyLabel"],
-            })
-        )
+        const query = new Cypher.Merge(node)
             .onCreateSet([countProp, new Cypher.Literal(1)])
             .onMatchSet([countProp, Cypher.plus(countProp, new Cypher.Literal(1))]);
 

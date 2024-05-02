@@ -17,13 +17,15 @@
  * limitations under the License.
  */
 
-import Cypher from "../src";
+import Cypher from "../../src";
 
 describe("Examples", () => {
     test("Readme example", () => {
-        const movieNode = new Cypher.Node();
+        const movieNode = new Cypher.Node({
+            labels: ["Movie"],
+        });
 
-        const matchQuery = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+        const matchQuery = new Cypher.Match(movieNode)
             .where(movieNode, {
                 title: new Cypher.Param("The Matrix"),
             })

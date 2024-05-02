@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../src";
 
 describe("NodeRef", () => {
     test("Generates node with labels", () => {

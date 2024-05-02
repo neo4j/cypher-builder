@@ -27,6 +27,8 @@ export abstract class WithMerge extends MixinClause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
      */
     public merge(clause: Merge): Merge;
+    public merge(pattern: Pattern): Merge;
+    /** @deprecated Use {@link Pattern} instead */
     public merge(pattern: NodeRef | Pattern): Merge;
     public merge(clauseOrPattern: Merge | NodeRef | Pattern): Merge {
         if (clauseOrPattern instanceof Merge) {

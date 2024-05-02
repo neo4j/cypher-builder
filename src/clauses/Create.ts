@@ -42,6 +42,9 @@ export interface Create extends WithReturn, WithSet, WithPathAssign, WithWith, W
 export class Create extends Clause {
     private pattern: Pattern;
 
+    constructor(pattern: Pattern);
+    /** @deprecated Use {@link Pattern} instead */
+    constructor(pattern: NodeRef | Pattern);
     constructor(pattern: NodeRef | Pattern) {
         super();
         if (pattern instanceof Pattern) {
@@ -57,6 +60,8 @@ export class Create extends Clause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
      */
     public create(clause: Create): Create;
+    public create(pattern: Pattern): Create;
+    /** @deprecated Use {@link Pattern} instead */
     public create(pattern: NodeRef | Pattern): Create;
     public create(clauseOrPattern: Create | NodeRef | Pattern): Create {
         if (clauseOrPattern instanceof Create) {

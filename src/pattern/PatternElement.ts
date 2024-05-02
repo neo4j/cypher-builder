@@ -18,8 +18,8 @@
  */
 
 import { CypherEnvironment } from "../Environment";
-import type { NodeProperties, NodeRef } from "../references/NodeRef";
-import type { RelationshipProperties, RelationshipRef } from "../references/RelationshipRef";
+import type { NodeProperties } from "../references/NodeRef";
+import type { RelationshipProperties } from "../references/RelationshipRef";
 import type { Variable } from "../references/Variable";
 import type { CypherCompilable } from "../types";
 import { padBlock } from "../utils/pad-block";
@@ -28,10 +28,10 @@ import { stringifyObject } from "../utils/stringify-object";
 
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 
-export abstract class PatternElement<T extends NodeRef | RelationshipRef> implements CypherCompilable {
-    protected element: T;
+export abstract class PatternElement implements CypherCompilable {
+    protected element: Variable;
 
-    constructor(element: T) {
+    constructor(element: Variable) {
         this.element = element;
     }
 

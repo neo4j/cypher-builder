@@ -46,6 +46,9 @@ export class Merge extends Clause {
     private onCreateClause: OnCreate;
     private onMatchClause: OnMatch;
 
+    constructor(pattern: Pattern);
+    /** @deprecated Use {@link Pattern} instead */
+    constructor(pattern: NodeRef | Pattern);
     constructor(pattern: NodeRef | Pattern) {
         super();
 
@@ -82,6 +85,8 @@ export class Merge extends Clause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
      */
     public merge(clause: Merge): Merge;
+    public merge(pattern: Pattern): Merge;
+    /** @deprecated Use {@link Pattern} instead */
     public merge(pattern: NodeRef | Pattern): Merge;
     public merge(clauseOrPattern: Merge | NodeRef | Pattern): Merge {
         if (clauseOrPattern instanceof Merge) {
