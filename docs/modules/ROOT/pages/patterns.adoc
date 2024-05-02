@@ -162,11 +162,11 @@ const movie = new Cypher.Node();
 const actedIn = new Cypher.Relationship();
 const directed = new Cypher.Relationship();
 
-    const pattern = new Cypher.Pattern(person, { labels: ["Person"] })
-        .related(actedIn, { type: "ACTED_IN" })
-        .to(movie, { labels: ["Movie"] })
-        .related(directed, { direction: "undirected", type: "DIRECTED" })
-        .to(actor)
+const pattern = new Cypher.Pattern(person, { labels: ["Person"] })
+    .related(actedIn, { type: "ACTED_IN" })
+    .to(movie, { labels: ["Movie"] })
+    .related(directed, { direction: "undirected", type: "DIRECTED" })
+    .to(actor);
 ----
 
 This translates to:

@@ -47,8 +47,8 @@ Generates the following Cypher:
 
 [source, cypher]
 ----
-MATCH(:Movie)
-MATCH(:Person)
+MATCH(this0:Movie)
+MATCH(this1:Person)
 ----
 
 In this query, the variable `this0` is used for both `MATCH` statements, thus causing variable name collision. 

@@ -237,7 +237,9 @@ const releasedBefore2000 = Cypher.lt(yearProp, new Cypher.Param(2000));
 const clause = new Cypher.Match(pattern)
     .where(Cypher.and(isKeanu, Cypher.or(Cypher.not(titleContainsMatrix), releasedBefore2000)))
     .return(titleProp, taglineProp, yearProp, [rolesProperty, "actingRoles"]);
-    
+
+const { cypher, params } = clause.build();
+
 console.log(cypher);
 console.log(params);
 ----
