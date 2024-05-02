@@ -154,6 +154,8 @@ export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } fr
 
 export * as db from "./namespaces/db/db";
 
+export * as genai from "./namespaces/genai/genAIIndex";
+
 // Types
 export type { CypherEnvironment as Environment } from "./Environment";
 export type { BuildConfig, Clause } from "./clauses/Clause";
