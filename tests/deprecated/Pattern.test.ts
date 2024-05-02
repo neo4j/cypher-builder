@@ -460,5 +460,12 @@ describe("Patterns", () => {
                 `"(this0:TestLabel)-[this1:ACTED_IN WHERE this1.role = \\"Neo\\" { test: \\"hello\\" }]->(this2)"`
             );
         });
+
+        test("Empty Pattern", () => {
+            const pattern = new Cypher.Pattern();
+            const queryResult = new TestClause(pattern).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
     });
 });

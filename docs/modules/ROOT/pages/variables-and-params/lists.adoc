@@ -98,13 +98,11 @@ link:https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const rel = new Cypher.Relationship({
-    type: "ACTED_IN",
-});
-const actor=new Cypher.Node({labels: ["Actor"]})
+const movie = new Cypher.Node();
+const rel = new Cypher.Relationship();
+const actor=new Cypher.Node()
 
-const pattern = new Cypher.Pattern(movie).related(re).to(actor)
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] }).related(rel, { type: "ACTED_IN" }).to(actor, { labels: ["Actor"] })
 
 
 const comprehension = new Cypher.PatternComprehension(pattern, actor.property("name"));
@@ -120,13 +118,11 @@ Filters can be added with the `.where` method:
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const rel = new Cypher.Relationship({
-    type: "ACTED_IN",
-});
-const actor = new Cypher.Node({ labels: ["Actor"] });
+const movie = new Cypher.Node();
+const rel = new Cypher.Relationship();
+const actor = new Cypher.Node();
 
-const pattern = new Cypher.Pattern(movie).related(rel).to(actor);
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] }).related(rel, { type: "ACTED_IN" }).to(actor, { labels: ["Actor"] });
 
 const comprehension = new Cypher.PatternComprehension(pattern, actor.property("name")).where(
     Cypher.contains(movie.property("title"), new Cypher.Literal("Matrix"))

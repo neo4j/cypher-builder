@@ -47,11 +47,14 @@ For instance, this query:
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const query = new Cypher.Match(movie).return([movie.property("title"), "title"]);
+const movie = new Cypher.Node();
+const query = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] })).return([
+    movie.property("title"),
+    "title",
+]);
 ----
 
-Will translate to:
+This will translate to:
 
 [source, cypher]
 ----
@@ -110,8 +113,11 @@ import neo4j from "neo4j-driver";
 
 const driver = neo4j.driver("neo4j://localhost", neo4j.auth.basic("neo4j", "password"));
 
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const query = new Cypher.Match(movie).return([movie.property("title"), "title"]);
+const movie = new Cypher.Node();
+const query = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] })).return([
+    movie.property("title"),
+    "title",
+]);
 
 const { cypher, params } = query.build();
 const { records } = await driver.executeQuery(cypher, params);

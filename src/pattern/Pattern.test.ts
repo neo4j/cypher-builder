@@ -247,6 +247,7 @@ describe("Patterns", () => {
                     .related(rel2, { type: "ACTED_IN" })
                     .to(c, { labels: ["TestLabel"] })
             );
+
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
                 `"(this0)-[this1:ACTED_IN]->(this2)-[this3:ACTED_IN]->(this4:TestLabel)"`

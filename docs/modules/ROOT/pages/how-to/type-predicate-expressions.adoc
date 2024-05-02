@@ -36,13 +36,13 @@ Type predicate expressions can be used in a `WHERE` statement, for example:
 
 [source, javascript]
 ----
-const movie = new Cypher.Node({ labels: ["Movie"] });
-const matchClause = new Cypher.Match(movie).where(Cypher.isType(movie.property("title"), Cypher.TYPE.STRING)).return(movie);
+const node = new Cypher.Node();
+const matchClause = new Cypher.Match(node).where(Cypher.isType(node.property("title"), Cypher.TYPE.STRING)).return(node);
 ----
 
 [source, cypher]
 ----
-MATCH (this0:Movie)
+MATCH (this0)
 WHERE this0.title IS :: STRING
 RETURN this0
 ----

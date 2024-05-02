@@ -16,16 +16,22 @@ RETURN m
 +
 [source, javascript]
 ----
-const movieNode = new Cypher.Node({
-  labels: ["Movie"]
-});
+const movieNode = new Cypher.Node();
 ----
 
-. Create a `MATCH` clause and pass the node variable as an argument:
+. Create the pattern to be matched against with `Cypher.Pattern`:
 +
 [source, javascript]
 ----
-const clause = new Cypher.Match(movieNode);
+const matchPattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] });
+----
+
+
+. Create a `MATCH` clause and pass the pattern as an argument:
++
+[source, javascript]
+----
+const clause = new Cypher.Match(matchPattern);
 ----
 
 . To `RETURN` the Node variables, use the `.return` method in the `MATCH` clause:
@@ -39,7 +45,7 @@ clause.return(movieNode);
 +
 [source, javascript]
 ----
-const clause = new Cypher.Match(movieNode).return(movieNode);
+const clause = new Cypher.Match(matchPattern).return(movieNode);
 ----
 
 . After the query is ready, it is time to build it. 
@@ -60,11 +66,11 @@ Altogether, your script should look like this:
 ----
 import Cypher from "@neo4j/cypher-builder";
 
-const movieNode = new Cypher.Node({
-  labels: ["Movie"]
-});
+const movieNode = new Cypher.Node();
 
-const clause = new Cypher.Match(movieNode).return(movieNode);
+const matchPattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] });
+
+const clause = new Cypher.Match(matchPattern).return(movieNode);
 
 const { cypher } = clause.build();
 

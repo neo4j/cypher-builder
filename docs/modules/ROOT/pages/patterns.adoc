@@ -19,9 +19,9 @@ The first step is to define the variables that are referenced in the pattern:
 
 [source, javascript]
 ----
-const person = new Cypher.Node({labels: ["Person"]});
-const movie = new Cypher.Node({labels: ["Movie"]});
-const actedIn = new Cypher.Relationship({type: "ACTED_IN"});
+const person = new Cypher.Node();
+const movie = new Cypher.Node();
+const actedIn = new Cypher.Relationship();
 ----
 
 == Basic patterns
@@ -31,7 +31,7 @@ By using the variables defined previously, the pattern can be defined as follows
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(person).related(actedIn).to(movie);
+const pattern = new Cypher.Pattern(person, { labels: ["Person"] }).related(actedIn, { type: "ACTED_IN" }).to(movie, { labels: ["Movie"] });
 ----
 
 This pattern can now be used anywhere where a pattern can be used, for example, in a `MATCH` clause:
@@ -49,21 +49,23 @@ MATCH (this0:Person)-[this1:ACTED_IN]->(this2:Movie)
 === Relationship direction
 
 By default, a relationship in a pattern is created as a left-to-right pattern. 
-The direction can be changed when defining the relationship in the pattern using the method `withDirection`:
+The direction can be changed when defining the relationship in the pattern using the property `direction`:
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(person).related(actedIn).withDirection("left").to(movie);
+const pattern = new Cypher.Pattern(person)
+    .related(actedIn, { type: "ACTED_IN", direction: "left" })
+    .to(movie);
 ----
 
 This translates to the following pattern:
 
 [source, cypher]
 ----
-(this0:Person)<-[this1:ACTED_IN]-(this2:Movie)
+(this0)<-[this1:ACTED_IN]-(this2)
 ----
 
-The options for `withDirection` are:
+The options for `direction` are:
 
 * `right` (default): a left-to-right (`()-[]->()`) pattern.
 * `left`: a right-to-left (`()<-[]-()`) pattern.
@@ -71,67 +73,51 @@ The options for `withDirection` are:
 
 === Remove variable names
 
-By default, a pattern renders all variable names of the node and relationship variables, but it is possible to hide them from particular elements of the pattern with the method `withoutVariable`:
+Variables for nodes and relationships are optional in the pattern, by not passing a variable it will not be rendered in Cypher:
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(person).related(actedIn).withoutVariable().to(movie).withoutVariable();
+const pattern = new Cypher.Pattern(person, { labels: ["Person"] }).related({type: "ACTED_IN"}).to({labels: ["Movie"]});
 ----
 
 This translates to:
 
 [source, cypher]
 ----
-(this0:Person)-[:ACTED_IN]->(Movie)
+(this0:Person)-[:ACTED_IN]->(:Movie)
 ----
 
 === Remove labels and types
 
-Labels can be hidden from nodes with the method `withoutLabels`:
+Labels and types are optional in the pattern:
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(person).withoutLabels().related(actedIn).to(movie);
+const pattern = new Cypher.Pattern(person).related(actedIn).to(movie, { labels: ["Movie"] });
 ----
 
 [source, cypher]
 ----
-(this0)-[this1:ACTED_IN]->(this1:Movie)
-----
-
-For relationships, however, you must use `withoutType`:
-
-[source, javascript]
-----
-const pattern = new Cypher.Pattern(person).related(actedIn).withoutType().to(movie);
-----
-
-This translates to:
-
-[source, cypher]
-----
-(this0:Person)-[this1]->(this1:Movie)
+(this0)-[this1]->(this1:Movie)
 ----
 
 [NOTE]
 ====
-Labels and types are optional when defining a node or a relationship. 
-Unless you need to reuse the same variable, you can skip defining the labels altogether.
+Labels and types can be also defined in `Cypher.Node` and `Cypher.Relationship`, this behavior is deprecated and will be removed in the future
 ====
 
 === Properties
 
 Patterns may contain properties to match both nodes and relationships. 
-These can be added using the `withProperties` method:
+These can be added using the `properties` argument:
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(person)
-            .withProperties({
-                name: new Cypher.Param("Person")
-            })
-            .related(actedIn)
-            .to(movie);
+const pattern = new Cypher.Pattern(person, {
+    labels: ["Person"],
+    properties: { name: new Cypher.Param("Person") },
+}).related(actedIn, { type: "ACTED_IN" })
+  .to(movie, { labels: ["Movie"] });
 ----
 
 [source, cypher]
@@ -139,7 +125,7 @@ const pattern = new Cypher.Pattern(person)
 (this0:Person { name: $param0 })-[this1:ACTED_IN]->(this2:Movie)
 ----
 
-The `withProperties` method takes an object with the properties to match and the param objects to be used as the expected values of the pattern. 
+The `properties` argument takes an object with the properties to match and the param objects to be used as the expected values of the pattern. 
 It can be used in both node and relationship elements.
 
 == Advanced patterns
@@ -153,14 +139,14 @@ For example:
 
 [source, javascript]
 ----
-const user = new Cypher.Node({labels: ["User"]});
+const user = new Cypher.Node();
 
-const pattern = new Cypher.Pattern(person).related(actedIn).to(movie).related().withDirection("left").to(user);
+const pattern = new Cypher.Pattern({labels: ["Person"]}).related({type: "ACTED_IN"}).to().related({direction: "left"}).to(user, { labels: ["User"] });
 ----
 
 [source, cypher]
 ----
-(this0:Person)-[this1:ACTED_IN]->(this2:Movie)<-[this3]-(this4:User)
+(:Person)-[:ACTED_IN]->()<-[]-(this1:User)
 ----
 
 === Cycles
@@ -170,13 +156,17 @@ To achieve this, you can reuse the same variables:
 
 [source, javascript]
 ----
-const actor = new Cypher.Node({labels: ["Actor"]});
-const movie = new Cypher.Node({labels: ["Movie"]});
+const actor = new Cypher.Node();
+const movie = new Cypher.Node();
 
-const actedIn = new Cypher.Relationship({type: "ACTED_IN"});
-const directed = new Cypher.Relationship({type: "DIRECTED"});
+const actedIn = new Cypher.Relationship();
+const directed = new Cypher.Relationship();
 
-const pattern = new Cypher.Pattern(person).related(actedIn).to(movie).related(directed).withDirection("undirected").to(actor).withoutLabels();
+const pattern = new Cypher.Pattern(person, { labels: ["Person"] })
+    .related(actedIn, { type: "ACTED_IN" })
+    .to(movie, { labels: ["Movie"] })
+    .related(directed, { direction: "undirected", type: "DIRECTED" })
+    .to(actor);
 ----
 
 This translates to:
@@ -187,11 +177,11 @@ This translates to:
 ----
 
 Note how the initial node in the pattern (`this0`) is the same as the one referenced in the last element. 
-This matches actors that also directed the same movie.
+This matches actors who also directed the same movie.
 
 === Length
 
-The length (or hops) of a relationship can be defined with the `withLength` method.
+The length (or hops) of a relationship can be defined with the `length` property.
 
 ==== Exact length
 
@@ -199,12 +189,12 @@ The exact length can be defined by passing a number:
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(person).related(actedIn).withLength(3).to(movie);
+const pattern = new Cypher.Pattern({}).related(actedIn, { type: "ACTED_IN", length: 3 }).to();
 ----
 
 [source, cypher]
 ----
-MATCH (this0:Person)-[this1:ACTED_IN*3]->(this2:Movie)
+MATCH ()-[this1:ACTED_IN*3]->()
 ----
 
 ==== Min and max length
@@ -218,12 +208,12 @@ For example:
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(person).related(actedIn).withLength({min: 2, max: 10}).to(movie);
+const pattern = new Cypher.Pattern({}).related(actedIn, { type: "ACTED_IN", length: {min: 2, max: 10} }).to();
 ----
 
 [source, cypher]
 ----
-MATCH (this0:Person)-[this1:ACTED_IN*2..10]->(this2:Movie)
+MATCH ()-[this1:ACTED_IN*2..10]->()
 ----
 
 ==== Any length
@@ -232,12 +222,12 @@ By using the string `"*"`, a relationship with any length will be matched:
 
 [source, javascript]
 ----
-const pattern = new Cypher.Pattern(person).related(actedIn).withLength("*").to(movie);
+const pattern = new Cypher.Pattern({}).related(actedIn, { type: "ACTED_IN", length: "*" }).to();
 ----
 
 [source, cypher]
 ----
-MATCH (this0:Person)-[this1:ACTED_IN*]->(this2:Movie)
+MATCH ()-[this1:ACTED_IN*]->()
 ----
 
 
@@ -249,13 +239,33 @@ MATCH (this0:Person)-[this1:ACTED_IN*]->(this2:Movie)
 ----
 const movie = new Cypher.Node({ labels: ["Movie"] });
 
-new Cypher.Pattern(movie).where(Cypher.eq(movie.property("title"), new Cypher.Literal("The Matrix")));
+new Cypher.Pattern(movie, { labels: ["Movie"] }).where(Cypher.eq(movie.property("title"), new Cypher.Literal("The Matrix")));
 ----
 
 [source, cypher]
 ----
 (this0:Movie WHERE this0.title = "The Matrix")
 ----
+
+== Escaping labels and types
+
+Labels and types will be automatically escaped if any uncommon character is detected. 
+For example:
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const match = new Cypher.Match(movie, { labels: ["My Movie"] }).return(movie);
+----
+
+[source, cypher]
+----
+MATCH (this0:`My Movie`)
+RETURN this0
+----
+
+Note that `My Movie` is being surrounded in quotes to prevent code injection with dynamic labels.
+
 
 
 == Partial patterns
