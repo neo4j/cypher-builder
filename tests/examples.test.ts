@@ -22,8 +22,9 @@ import Cypher from "../src";
 describe("Examples", () => {
     test("Readme example", () => {
         const movieNode = new Cypher.Node();
+        const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] });
 
-        const matchQuery = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+        const matchQuery = new Cypher.Match(pattern)
             .where(movieNode, {
                 title: new Cypher.Param("The Matrix"),
             })

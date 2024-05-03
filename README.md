@@ -12,11 +12,10 @@ Cypher Builder is a JavaScript programmatic API to create [Cypher](https://neo4j
 ```typescript
 import Cypher from "@neo4j/cypher-builder";
 
-const movieNode = new Cypher.Node({
-    labels: ["Movie"],
-});
+const movieNode = new Cypher.Node();
+const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] });
 
-const matchQuery = new Cypher.Match(movieNode)
+const matchQuery = new Cypher.Match(pattern)
     .where(movieNode, {
         title: new Cypher.Param("The Matrix"),
     })
