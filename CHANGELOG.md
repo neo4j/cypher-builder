@@ -1,5 +1,62 @@
 # @neo4j/cypher-builder
 
+## 1.16.0
+
+### Minor Changes
+
+- [#333](https://github.com/neo4j/cypher-builder/pull/333) [`2593296`](https://github.com/neo4j/cypher-builder/commit/2593296b885715a944bb2dcf79074babcccfa4bc) Thanks [@mjfwebb](https://github.com/mjfwebb)! - Adds support for genai function `genai.vector.encode()` and procedure ` genai.vector.encodeBatch()`
+
+- [#328](https://github.com/neo4j/cypher-builder/pull/328) [`628ec62`](https://github.com/neo4j/cypher-builder/commit/628ec6238d19ae3835c6223be70e2fb00b4171ff) Thanks [@mjfwebb](https://github.com/mjfwebb)! - Adds support for vector index functions `db.index.vector.queryNodes()` and ` db.index.vector.queryRelationships()`
+
+- [#310](https://github.com/neo4j/cypher-builder/pull/310) [`13fd317`](https://github.com/neo4j/cypher-builder/commit/13fd31777c6873f615d2f333cbbaabb90f7aaba5) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for arbitrary variables in Patterns instead of only Node and Relationship:
+
+### Patch Changes
+
+- [#310](https://github.com/neo4j/cypher-builder/pull/310) [`13fd317`](https://github.com/neo4j/cypher-builder/commit/13fd31777c6873f615d2f333cbbaabb90f7aaba5) Thanks [@angrykoala](https://github.com/angrykoala)! - The following methods in `Pattern` class and chains are deprecated:
+
+  - `withoutLabels`
+  - `withoutVariable`
+  - `withProperties`
+  - `getVariables`
+  - `withoutType`
+  - `withDirection`
+  - `withLength`
+
+  Instead, these properties should be passed as an object, for example:
+
+  ```js
+  const a = new Cypher.Variable();
+  const rel = new Cypher.Variable();
+  const b = new Cypher.Variable();
+
+  const pattern = new Cypher.Pattern(a, { labels: ["Movie"] })
+    .related(rel, { type: "ACTED_IN" })
+    .to(b);
+  ```
+
+- [#310](https://github.com/neo4j/cypher-builder/pull/310) [`98a8b2f`](https://github.com/neo4j/cypher-builder/commit/98a8b2f32ef79d98c49fc5d448f9a637abd4ed60) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate using Node directly on Match, Create and Merge clauses. Use a Pattern instead
+
+- [#310](https://github.com/neo4j/cypher-builder/pull/310) [`7574aee`](https://github.com/neo4j/cypher-builder/commit/7574aee5e3263e79afb617bff4ee16f0d8a33aa2) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate setting up labels and types in Node and Relationship. The following examples are now deprecated:
+
+  ```js
+  new Cypher.Node({ labels: ["Movie"] });
+  ```
+
+  ```js
+  new Cypher.Relationship({ type: "ACTED_IN" });
+  ```
+
+  Instead, Nodes and Relationships should be created without parameters. Labels and types should be set in a Pattern:
+
+  ```js
+  const n = new Cypher.Node();
+  const r = new Cypher.Relationship();
+
+  const pattern = new Cypher.Pattern(n, { labels: ["Movie"] })
+    .related(r, { type: "ACTED_IN" })
+    .to();
+  ```
+
 ## 1.15.0
 
 ### Minor Changes
