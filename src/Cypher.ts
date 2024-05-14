@@ -60,6 +60,10 @@ export * as apoc from "./namespaces/apoc/apoc";
 // --CDC
 export * as cdc from "./namespaces/cdc/cdc";
 
+export * as db from "./namespaces/db/db";
+export * as genai from "./namespaces/genai/genai";
+export * as vector from "./namespaces/vector/vector";
+
 // --Lists
 export { ListComprehension } from "./expressions/list/ListComprehension";
 export { ListExpr as List } from "./expressions/list/ListExpr";
@@ -151,10 +155,6 @@ export { all, any, exists, isEmpty, none, single } from "./expressions/functions
 
 // Procedures
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
-
-export * as db from "./namespaces/db/db";
-
-export * as genai from "./namespaces/genai/genai";
 
 // Types
 export type { CypherEnvironment as Environment } from "./Environment";
