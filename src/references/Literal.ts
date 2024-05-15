@@ -38,7 +38,8 @@ export class Literal<T extends LiteralValue = LiteralValue> implements CypherCom
 
     private formatLiteralValue(value: LiteralValue): string {
         if (typeof value === "string") {
-            return `"${value}"`;
+            const escaped = this.escapeStringValue(value)
+            return `"${escaped}"`;
         }
         if (value === null) {
             return "NULL";
@@ -48,6 +49,10 @@ export class Literal<T extends LiteralValue = LiteralValue> implements CypherCom
             return `[${serializedValues.join(", ")}]`;
         }
         return `${value}`;
+    }
+
+    private escapeStringValue(value: string) {
+        return value.replace(/"/g, '\\"');
     }
 }
 
