@@ -17,5 +17,5 @@
  * limitations under the License.
  */
 
-export * as fulltext from "./fulltext";
-export * as vector from "./vector";
+export * as fulltext from "../index/fulltext";
+export * as vector from "../index/vector";

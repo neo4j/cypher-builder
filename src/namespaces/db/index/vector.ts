@@ -17,10 +17,10 @@
  * limitations under the License.
  */
 
-import type { Literal } from "../../Cypher";
-import { CypherProcedure } from "../../procedures/CypherProcedure";
-import type { Expr } from "../../types";
-import { normalizeVariable } from "../../utils/normalize-variable";
+import type { Literal } from "../../../Cypher";
+import { CypherProcedure } from "../../../procedures/CypherProcedure";
+import type { Expr } from "../../../types";
+import { normalizeVariable } from "../../../utils/normalize-variable";
 
 /** Returns all labels in the database
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_index_vector_queryNodes)

@@ -23,7 +23,7 @@ import type { Expr } from "../../types";
 import { normalizeExpr } from "../../utils/normalize-variable";
 
 export * as cdc from "./cdc";
-export * as index from "./dbIndex";
+export * as index from "./index/dbIndex";
 
 /** Returns all labels in the database
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/5/reference/procedures/#procedure_db_labels)
