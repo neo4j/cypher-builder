@@ -24,6 +24,7 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
 import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
@@ -34,13 +35,21 @@ import { OnCreate } from "./sub-clauses/OnCreate";
 import { OnMatch } from "./sub-clauses/OnMatch";
 import { mixin } from "./utils/mixin";
 
-export interface Merge extends WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate {}
+export interface Merge
+    extends WithReturn,
+        WithSet,
+        WithPathAssign,
+        WithDelete,
+        WithRemove,
+        WithWith,
+        WithCreate,
+        WithFinish {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
  * @category Clauses
  */
-@mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate)
+@mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate, WithFinish)
 export class Merge extends Clause {
     private pattern: Pattern;
     private onCreateClause: OnCreate;

@@ -20,6 +20,7 @@
 // Clauses
 export { Call } from "./clauses/Call";
 export { Create } from "./clauses/Create";
+export { Finish } from "./clauses/Finish";
 export { Foreach } from "./clauses/Foreach";
 export { Match, OptionalMatch } from "./clauses/Match";
 export { Merge } from "./clauses/Merge";
