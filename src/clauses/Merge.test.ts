@@ -295,4 +295,29 @@ ON CREATE SET
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Merge node onCreateSet with Finish", () => {
+        const node = new Cypher.Node();
+
+        const query = new Cypher.Merge(
+            new Cypher.Pattern(node, {
+                labels: ["MyLabel"],
+            })
+        )
+            .onCreateSet([node.property("age"), new Cypher.Param(23)])
+            .finish();
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MERGE (this0:MyLabel)
+ON CREATE SET
+    this0.age = $param0
+FINISH"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": 23,
+            }
+        `);
+    });
 });
