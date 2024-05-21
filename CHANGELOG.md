@@ -1,5 +1,26 @@
 # @neo4j/cypher-builder
 
+## 1.17.0
+
+### Minor Changes
+
+- [#340](https://github.com/neo4j/cypher-builder/pull/340) [`b1b7acf`](https://github.com/neo4j/cypher-builder/commit/b1b7acfe7c1584671c051bd0764d672bf09350f8) Thanks [@angrykoala](https://github.com/angrykoala)! - Add vector similarity functions:
+
+  ```js
+  Cypher.vector.similarity.euclidean(param1, param2);
+  Cypher.vector.similarity.cosine(param1, param2);
+  ```
+
+- [#342](https://github.com/neo4j/cypher-builder/pull/342) [`5bba4b5`](https://github.com/neo4j/cypher-builder/commit/5bba4b58b1502f67175f3de30c93106dcb143ab8) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for FINISH clauses:
+
+  ```js
+  new Cypher.Finish()
+
+  new Cypher.Match(...).finish()
+  new Cypher.Create(...).finish()
+  new Cypher.Merge(...).finish()
+  ```
+
 ## 1.16.0
 
 ### Minor Changes
