@@ -276,4 +276,28 @@ MERGE (this0:Movie)"
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
+
+    describe("Chained Procedure", () => {
+        test("With * and cypher procedure", () => {
+            const withQuery = new Cypher.With("*").callProcedure(Cypher.db.labels()).yield("label");
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH *
+CALL db.labels() YIELD label"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("With * and cypher void procedure", () => {
+            const withQuery = new Cypher.With("*").callProcedure(Cypher.apoc.util.validate(Cypher.true, "message"));
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH *
+CALL apoc.util.validate(true, \\"message\\", [0])"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+    });
 });

@@ -23,6 +23,7 @@ import type { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
+import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithMerge } from "./mixins/clauses/WithMerge";
@@ -46,7 +47,8 @@ export interface Match
         WithUnwind,
         WithCreate,
         WithMerge,
-        WithFinish {}
+        WithFinish,
+        WithCallProcedure {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
@@ -63,7 +65,8 @@ export interface Match
     WithUnwind,
     WithCreate,
     WithMerge,
-    WithFinish
+    WithFinish,
+    WithCallProcedure
 )
 export class Match extends Clause {
     private pattern: Pattern;

@@ -23,6 +23,7 @@ import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
+import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
@@ -45,13 +46,14 @@ export interface With
         WithMatch,
         WithUnwind,
         WithCreate,
-        WithMerge {}
+        WithMerge,
+        WithCallProcedure {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
  * @category Clauses
  */
-@mixin(WithOrder, WithReturn, WithWhere, WithDelete, WithMatch, WithUnwind, WithCreate, WithMerge)
+@mixin(WithOrder, WithReturn, WithWhere, WithDelete, WithMatch, WithUnwind, WithCreate, WithMerge, WithCallProcedure)
 export class With extends Clause {
     private projection: Projection;
     private isDistinct = false;
@@ -72,20 +74,6 @@ export class With extends Clause {
         return this;
     }
 
-    /** @internal */
-    public getCypher(env: CypherEnvironment): string {
-        const projectionStr = this.projection.getCypher(env);
-        const orderByStr = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
-        const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
-        const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
-        const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const distinctStr = this.isDistinct ? " DISTINCT" : "";
-
-        const nextClause = this.compileNextClause(env);
-
-        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${nextClause}`;
-    }
-
     // Cannot be part of WithWith due to dependency cycles
     /** Add a {@link With} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
@@ -99,5 +87,19 @@ export class With extends Clause {
             this.addChildren(this.withStatement);
         }
         return this.withStatement;
+    }
+
+    /** @internal */
+    public getCypher(env: CypherEnvironment): string {
+        const projectionStr = this.projection.getCypher(env);
+        const orderByStr = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
+        const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
+        const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
+        const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const distinctStr = this.isDistinct ? " DISTINCT" : "";
+
+        const nextClause = this.compileNextClause(env);
+
+        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${nextClause}`;
     }
 }

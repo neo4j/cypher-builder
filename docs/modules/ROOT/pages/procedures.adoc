@@ -21,6 +21,14 @@ const { cypher, params } = dbLabels.build();
 
 Cypher Builder has several built-in procedures such as `db.*` procedures that can be called as JavaScript functions. 
 
+You can add procedures following other clauses using the `callProcedure` method:
+
+[source, javascript]
+----
+const withQuery = new Cypher.With("*").callProcedure(Cypher.db.labels()).yield("label");
+const { cypher, params } = withQuery.build();
+----
+
 == Custom Procedures
 
 Most procedures depend on the Neo4j setup, and such need to be defined with the `Procedure` class:
