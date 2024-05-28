@@ -681,4 +681,34 @@ WHERE this0.title = $param1"
 `);
         });
     });
+
+    describe("Match.callProcedure", () => {
+        test("Match.match()", () => {
+            const movie1 = new Cypher.Node({
+                labels: ["Movie"],
+            });
+
+            const labels = new Cypher.Variable();
+
+            const matchQuery = new Cypher.Match(movie1)
+                .where(Cypher.eq(movie1.property("title"), new Cypher.Param("movie1")))
+                .callProcedure(new Cypher.Procedure("db.labels"))
+                .yield(["label", labels])
+                .return(labels);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+WHERE this0.title = $param0
+CALL db.labels() YIELD label AS var1
+RETURN var1"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "movie1",
+}
+`);
+        });
+    });
 });
