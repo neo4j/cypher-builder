@@ -199,7 +199,7 @@ MATCH ()-[this1:ACTED_IN*3]->()
 
 ==== Min and max length
 
-Bounds can be optinally added by passing an object with the following options:
+Bounds can be optionally added by passing an object with the following options:
 
 * `min`: defines the minimum length of the relationship.
 * `max`: defines the maximum length of the relationship.
