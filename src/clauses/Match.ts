@@ -19,7 +19,8 @@
 
 import type { CypherEnvironment } from "../Environment";
 import { Pattern } from "../pattern/Pattern";
-import type { NodeRef } from "../references/NodeRef";
+import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifierPath";
+import { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
@@ -69,19 +70,27 @@ export interface Match
     WithCallProcedure
 )
 export class Match extends Clause {
-    private pattern: Pattern;
+    private pattern: Pattern | QuantifiedPath;
     private _optional = false;
 
-    constructor(pattern: Pattern);
+    constructor(pattern: Pattern | QuantifiedPath);
     /** @deprecated Use {@link Pattern} instead */
-    constructor(node: NodeRef | Pattern);
-    constructor(pattern: NodeRef | Pattern) {
+    constructor(node: NodeRef | Pattern | QuantifiedPath);
+    constructor(pattern: NodeRef | Pattern | QuantifiedPath) {
         super();
-        if (pattern instanceof Pattern) {
-            this.pattern = pattern;
-        } else {
+
+        // NOTE: deprecated behaviour
+        if (pattern instanceof NodeRef) {
             this.pattern = new Pattern(pattern);
+        } else {
+            this.pattern = pattern;
         }
+
+        // if (pattern instanceof Pattern || pattern) {
+        //     this.pattern = pattern;
+        // } else {
+        //     this.pattern = new Pattern(pattern);
+        // }
     }
 
     /** Makes the clause an OPTIONAL MATCH
