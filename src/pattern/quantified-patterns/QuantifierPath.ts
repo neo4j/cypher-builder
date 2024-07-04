@@ -27,11 +27,6 @@ export class QuantifiedPath implements CypherCompilable {
         }
 
         return firstPattern;
-        // const newLineStr = patternsStrings.length > 0 ? "\n" : "";
-
-        // const remainingPatternsStr = patternsStrings.join("\n");
-
-        // return `${firstPattern}${newLineStr}${padBlock(remainingPatternsStr, 6)}`;
     }
 
     private getRemainingPatternsString(patternStrings: string[]): string {
