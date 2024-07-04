@@ -7,8 +7,8 @@ export type Quantifier =
     | "*"
     | "+"
     | {
-          min: number;
-          max: number;
+          min?: number;
+          max?: number;
       };
 
 /** Represents a quantified path pattern as a {@link Pattern} with at least one relationship and a quantifier of the form {1,2}
@@ -40,7 +40,7 @@ export class QuantifiedPattern implements CypherCompilable {
         } else if (typeof this.quantifier === "string") {
             return this.quantifier;
         } else {
-            return `{${this.quantifier.min},${this.quantifier.max}}`;
+            return `{${this.quantifier.min ?? ""},${this.quantifier.max ?? ""}}`;
         }
     }
 }

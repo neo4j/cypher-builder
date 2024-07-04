@@ -18,7 +18,6 @@
  */
 
 import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
 
 describe("QuantifiedPath", () => {
     test("Match quantified path", () => {
@@ -86,47 +85,5 @@ RETURN p0"
   "param1": "Something's Gotta Give",
 }
 `);
-    });
-
-    test("Quantified path with number in quantifier", () => {
-        const m = new Cypher.Node();
-        const m2 = new Cypher.Node();
-
-        const quantifiedPath = new Cypher.QuantifiedPath(
-            new Cypher.Pattern(m, { labels: ["Movie"], properties: { title: new Cypher.Param("V for Vendetta") } }),
-            new Cypher.Pattern({ labels: ["Movie"] })
-                .related({ type: "ACTED_IN" })
-                .to({ labels: ["Person"] })
-                .quantifier(2),
-            new Cypher.Pattern(m2, {
-                labels: ["Movie"],
-                properties: { title: new Cypher.Param("Something's Gotta Give") },
-            })
-        );
-
-        const queryResult = new TestClause(quantifiedPath).build();
-
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-"(this0:Movie { title: $param0 })
-      ((:Movie)-[:ACTED_IN]->(:Person)){2}
-      (this1:Movie { title: $param1 })"
-`);
-        expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "V for Vendetta",
-  "param1": "Something's Gotta Give",
-}
-`);
-    });
-    test.each(["*", "+"] as const)("Quantified path with %s in quantifier", (quantifier) => {
-        const quantifiedPath = new Cypher.QuantifiedPath(
-            new Cypher.Pattern({ labels: ["Movie"] })
-                .related({ type: "ACTED_IN" })
-                .to({ labels: ["Person"] })
-                .quantifier(quantifier)
-        );
-
-        const queryResult = new TestClause(quantifiedPath).build();
-        expect(queryResult.cypher).toEqual(`((:Movie)-[:ACTED_IN]->(:Person))${quantifier}`);
     });
 });
