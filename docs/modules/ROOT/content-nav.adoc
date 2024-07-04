@@ -5,6 +5,9 @@
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
 ** xref:getting-started/connecting-to-neo4j.adoc[]
+* Clauses
+** xref:clauses/match.adoc[]
+** xref:clauses/union.adoc[]
 * xref:functions.adoc[]
 * xref:procedures.adoc[]
 * xref:patterns.adoc[]

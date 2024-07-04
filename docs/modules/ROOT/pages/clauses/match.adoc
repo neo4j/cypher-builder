@@ -1,0 +1,62 @@
+[[match]]
+:description: This page describes how to create `MATCH` clauses.
+= Match
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/match/[`MATCH`] clause with the `Cypher.Match` class.
+
+To create `MATCH` clause, you need to first create a valid pattern using the xref:/patterns.adoc[Pattern] class:
+
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] });
+
+const matchQuery = new Cypher.Match(pattern);
+----
+
+This would generate the following `MATCH` clause:
+
+[source, cypher]
+----
+MATCH (this:Movie)
+----
+
+Afterwards, other clauses can be added for example:
+
+[source, javascript]
+----
+const matchQuery = new Cypher.Match(pattern)
+    .where(Cypher.eq(movie.property("name"), new Cypher.Param("my-movie")))
+    .return(movie);
+----
+
+Match clauses can also be chained:
+
+[source, javascript]
+----
+const matchQuery = new Cypher.Match(pattern).match(pattern2).return(movie)
+----
+
+
+== Optional match
+
+The clause link:https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/[`OPTIONAL MATCH`] can be created in the same manner as `MATCH` by using the class `Cypher.OptionalMatch`:
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] });
+
+const matchQuery = new Cypher.OptionalMatch(pattern);
+----
+
+Alternatively, an existing `Match` instance can be transformed into an `OptionalMatch` with the method `.optional`:
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] });
+
+const matchQuery = new Cypher.Match(pattern).optional();
+----

@@ -1,0 +1,6 @@
+[[union]]
+:description: This page describes how to create `UNION` clauses.
+= Union
+
+This page describes how to create link:https://neo4j.com/docs/cypher-manual/current/clauses/union/[`UNION`] clauses with the `Cypher.Union` class.
+
