@@ -113,6 +113,7 @@ export {
 export * as graph from "./expressions/functions/graph";
 export * from "./expressions/functions/list";
 export {
+    ROUND_PRECISION_MODE,
     abs,
     acos,
     asin,
