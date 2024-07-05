@@ -1,0 +1,68 @@
+[[return]]
+:description: This page describes how to create `RETURN` clauses.
+= Return
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/return/[`RETURN`] clause with the `Cypher.Return` class.
+
+Return clauses can be created with `new Cypher.Return`, but more often they are created after existing clause, such as `MATCH` by using the method `.return`. In both cases, the return variables can be passed as parameters: 
+
+[source, javascript]
+----
+const node = new Cypher.Node();
+const returnQuery = new Cypher.Return(node, new Cypher.Literal(10));
+----
+
+This would generate the following `RETURN` clause:
+
+[source, cypher]
+----
+RETURN this0, 10
+----
+
+Any expression can be passed to return, such as functions:
+
+[source, javascript]
+----
+const returnQuery = new Cypher.Return(Cypher.round(new Cypher.Param(2.3)));
+----
+
+Which would translate to:
+
+[source, cypher]
+----
+RETURN round($param1)
+----
+
+## Aliasing results
+
+Results can be aliased by using an array with 2 elements, the variable, and the aliased name, which can be a string or variable:
+
+[source, javascript]
+----
+const node = new Cypher.Node();
+const returnQuery = new Cypher.Return([node, "my-node"]);
+----
+
+This would generate the following clause:
+
+[source, cypher]
+----
+RETURN this0 AS my-node
+----
+
+## Unique results
+
+`DISTINCT` can be added to `RETURN` by using the `.distinct` method:
+
+[source, javascript]
+----
+const returnQuery = new Cypher.Return(node).distinct();
+----
+
+This would generate the following clause:
+
+[source, cypher]
+----
+RETURN DISTINCT this0
+----
+

@@ -4,7 +4,7 @@
 
 This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/match/[`MATCH`] clause with the `Cypher.Match` class.
 
-To create `MATCH` clause, you need to first create a valid pattern using the xref:/patterns.adoc[Pattern] class:
+To create a `MATCH` clause, you need to first create a valid pattern using the xref:/patterns.adoc[Pattern] class:
 
 
 [source, javascript]
