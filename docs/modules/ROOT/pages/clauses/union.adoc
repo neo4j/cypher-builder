@@ -19,7 +19,7 @@ const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).r
 const unionQuery = new Cypher.Union(query1, query2, query3);
 ----
 
-This would generate the following `UNION` clause:
+This generates the following `UNION` clause:
 
 [source, cypher]
 ----
@@ -33,11 +33,12 @@ MATCH (this3:Movie)
 RETURN this3 AS var1
 ----
 
-Note that in this example, we are using the extra variable `returnVar` to make sure that all the queries return the same variable name.
+Note that this example uses the extra variable `returnVar` to make sure that all the queries return the same variable name.
 
 == Union all
 
-Unions by default remove duplicates, to keep all the results, you need to use the `.all` method to create a `UNION ALL` clause instead:
+Unions remove duplicates by default.
+To keep all the results, use the `.all()` method to create a `UNION ALL` clause instead:
 
 [source, javascript]
 ----
@@ -52,7 +53,7 @@ const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).r
 const unionQuery = new Cypher.Union(query1, query2, query3).all();
 ----
 
-This would generate the following `UNION` clause:
+This generates the following `UNION` clause:
 
 [source, cypher]
 ----
