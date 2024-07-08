@@ -22,12 +22,12 @@ import * as Cypher from "../Cypher";
 describe("CypherBuilder UNION", () => {
     test("Union Movies", () => {
         const returnVar = new Cypher.Variable();
-        const n1 = new Cypher.Node({ labels: ["Movie"] });
-        const query1 = new Cypher.Match(n1).return([n1, returnVar]);
-        const n2 = new Cypher.Node({ labels: ["Movie"] });
-        const query2 = new Cypher.Match(n2).return([n2, returnVar]);
-        const n3 = new Cypher.Node({ labels: ["Movie"] });
-        const query3 = new Cypher.Match(n3).return([n3, returnVar]);
+        const n1 = new Cypher.Node();
+        const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return([n1, returnVar]);
+        const n2 = new Cypher.Node();
+        const query2 = new Cypher.Match(new Cypher.Pattern(n2, { labels: ["Movie"] })).return([n2, returnVar]);
+        const n3 = new Cypher.Node();
+        const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).return([n3, returnVar]);
 
         const unionQuery = new Cypher.Union(query1, query2, query3);
         const queryResult = unionQuery.build();
@@ -46,12 +46,12 @@ describe("CypherBuilder UNION", () => {
 
     test("Union ALL Movies", () => {
         const returnVar = new Cypher.Variable();
-        const n1 = new Cypher.Node({ labels: ["Movie"] });
-        const query1 = new Cypher.Match(n1).return([n1, returnVar]);
-        const n2 = new Cypher.Node({ labels: ["Movie"] });
-        const query2 = new Cypher.Match(n2).return([n2, returnVar]);
-        const n3 = new Cypher.Node({ labels: ["Movie"] });
-        const query3 = new Cypher.Match(n3).return([n3, returnVar]);
+        const n1 = new Cypher.Node();
+        const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return([n1, returnVar]);
+        const n2 = new Cypher.Node();
+        const query2 = new Cypher.Match(new Cypher.Pattern(n2, { labels: ["Movie"] })).return([n2, returnVar]);
+        const n3 = new Cypher.Node();
+        const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).return([n3, returnVar]);
 
         const unionQuery = new Cypher.Union(query1, query2, query3).all();
         const queryResult = unionQuery.build();
@@ -69,12 +69,12 @@ describe("CypherBuilder UNION", () => {
 
     test("Union in CALL statement with import with", () => {
         const returnVar = new Cypher.Variable();
-        const n1 = new Cypher.Node({ labels: ["Movie"] });
-        const query1 = new Cypher.Match(n1).return([n1, returnVar]);
-        const n2 = new Cypher.Node({ labels: ["Movie"] });
-        const query2 = new Cypher.Match(n2).return([n2, returnVar]);
-        const n3 = new Cypher.Node({ labels: ["Movie"] });
-        const query3 = new Cypher.Match(n3).return([n3, returnVar]);
+        const n1 = new Cypher.Node();
+        const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return([n1, returnVar]);
+        const n2 = new Cypher.Node();
+        const query2 = new Cypher.Match(new Cypher.Pattern(n2, { labels: ["Movie"] })).return([n2, returnVar]);
+        const n3 = new Cypher.Node();
+        const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).return([n3, returnVar]);
 
         const unionQuery = new Cypher.Union(query1, query2, query3);
         const callQuery = new Cypher.Call(unionQuery).importWith(new Cypher.Variable());
@@ -98,12 +98,12 @@ describe("CypherBuilder UNION", () => {
     });
     test("Union in concat in CALL statement with import with", () => {
         const returnVar = new Cypher.Variable();
-        const n1 = new Cypher.Node({ labels: ["Movie"] });
-        const query1 = new Cypher.Match(n1).return([n1, returnVar]);
-        const n2 = new Cypher.Node({ labels: ["Movie"] });
-        const query2 = new Cypher.Match(n2).return([n2, returnVar]);
-        const n3 = new Cypher.Node({ labels: ["Movie"] });
-        const query3 = new Cypher.Match(n3).return([n3, returnVar]);
+        const n1 = new Cypher.Node();
+        const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return([n1, returnVar]);
+        const n2 = new Cypher.Node();
+        const query2 = new Cypher.Match(new Cypher.Pattern(n2, { labels: ["Movie"] })).return([n2, returnVar]);
+        const n3 = new Cypher.Node();
+        const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).return([n3, returnVar]);
 
         const unionQuery = new Cypher.Union(query1, query2, query3);
         const callQuery = new Cypher.Call(Cypher.concat(unionQuery)).importWith(new Cypher.Variable());
@@ -128,12 +128,12 @@ describe("CypherBuilder UNION", () => {
 
     test("Union in nested CALL statement should not append top import with", () => {
         const returnVar = new Cypher.Variable();
-        const n1 = new Cypher.Node({ labels: ["Movie"] });
-        const query1 = new Cypher.Match(n1).return([n1, returnVar]);
-        const n2 = new Cypher.Node({ labels: ["Movie"] });
-        const query2 = new Cypher.Match(n2).return([n2, returnVar]);
-        const n3 = new Cypher.Node({ labels: ["Movie"] });
-        const query3 = new Cypher.Match(n3).return([n3, returnVar]);
+        const n1 = new Cypher.Node();
+        const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return([n1, returnVar]);
+        const n2 = new Cypher.Node();
+        const query2 = new Cypher.Match(new Cypher.Pattern(n2, { labels: ["Movie"] })).return([n2, returnVar]);
+        const n3 = new Cypher.Node();
+        const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).return([n3, returnVar]);
 
         const unionQuery = new Cypher.Union(query1, query2, query3);
         const callQuery = new Cypher.Call(new Cypher.Call(unionQuery)).importWith(new Cypher.Variable());

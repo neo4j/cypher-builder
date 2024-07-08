@@ -5,9 +5,10 @@
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
 ** xref:getting-started/connecting-to-neo4j.adoc[]
-* xref:functions.adoc[]
-* xref:procedures.adoc[]
-* xref:patterns.adoc[]
+* Clauses
+** xref:clauses/match.adoc[]
+** xref:clauses/union.adoc[]
+** xref:clauses/return.adoc[]
 * Variables and parameters
 ** xref:variables-and-params/variables.adoc[]
 ** xref:variables-and-params/parameters.adoc[]
@@ -15,6 +16,9 @@
 ** xref:variables-and-params/aliasing.adoc[]
 ** xref:variables-and-params/maps.adoc[]
 ** xref:variables-and-params/lists.adoc[]
+* xref:patterns.adoc[]
+* xref:functions.adoc[]
+* xref:procedures.adoc[]
 * Subqueries
 ** xref:subqueries/call.adoc[]
 ** xref:subqueries/exists.adoc[]

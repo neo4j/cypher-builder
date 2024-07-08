@@ -1,6 +1,6 @@
 [[type-predicate-expressions]]
 :description: This page describes how to build type predicate expressions.
-= Build Type Predicate Expressions
+= Build type predicate expressions
 
 This section outlines the process of creating link:https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/[type predicate expressions] within your queries using Cypher Builder.
 
