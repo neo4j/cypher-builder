@@ -85,12 +85,6 @@ export class Match extends Clause {
         } else {
             this.pattern = pattern;
         }
-
-        // if (pattern instanceof Pattern || pattern) {
-        //     this.pattern = pattern;
-        // } else {
-        //     this.pattern = new Pattern(pattern);
-        // }
     }
 
     /** Makes the clause an OPTIONAL MATCH
