@@ -277,6 +277,36 @@ describe("db procedures", () => {
             }).toThrow("Empty projection in CALL ... YIELD");
         });
     });
+
+    test("db.info", () => {
+        const dbInfo = Cypher.db.info().yield("id", "creationDate");
+
+        const { cypher } = dbInfo.build();
+
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.info() YIELD id, creationDate"`);
+    });
+
+    test.each(["createLabel", "createProperty", "createRelationshipType"] as const)(
+        "%s with string parameter",
+        (procedureName) => {
+            const procedure = Cypher.db[procedureName]("param");
+
+            const { cypher } = procedure.build();
+
+            expect(cypher).toEqual(`CALL db.${procedureName}("param")`);
+        }
+    );
+
+    test.each(["createLabel", "createProperty", "createRelationshipType"] as const)(
+        "%s with Expr parameter",
+        (procedureName) => {
+            const procedure = Cypher.db[procedureName](new Cypher.Literal("param"));
+
+            const { cypher } = procedure.build();
+
+            expect(cypher).toEqual(`CALL db.${procedureName}("param")`);
+        }
+    );
 });
 
 describe("db functions", () => {

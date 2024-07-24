@@ -18,12 +18,14 @@
  */
 
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
+import type { VoidCypherProcedure } from "../../procedures/CypherProcedure";
 import { CypherProcedure } from "../../procedures/CypherProcedure";
 import type { Expr } from "../../types";
 import { normalizeExpr } from "../../utils/normalize-variable";
 
 export * as cdc from "./cdc";
 export * as index from "./index/dbIndex";
+export * as schema from "./schema";
 
 /** Returns all labels in the database
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/5/reference/procedures/#procedure_db_labels)
@@ -40,4 +42,39 @@ export function labels(): CypherProcedure<"label"> {
 export function nameFromElementId(dbName: Expr | string): CypherFunction {
     const dbNameExpr = normalizeExpr(dbName);
     return new CypherFunction("db.nameFromElementId", [dbNameExpr]);
+}
+
+/**
+ * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_info)
+ * @group Procedures
+ */
+export function info(): CypherProcedure<"id" | "creationDate"> {
+    return new CypherProcedure("db.info");
+}
+
+/**
+ * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_createlabel)
+ * @group Procedures
+ */
+export function createLabel(newLabel: Expr | string): VoidCypherProcedure {
+    const newLabelExpr = normalizeExpr(newLabel);
+    return new CypherProcedure("db.createLabel", [newLabelExpr]);
+}
+
+/**
+ * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_createproperty)
+ * @group Procedures
+ */
+export function createProperty(newProperty: Expr | string): VoidCypherProcedure {
+    const newPropertyExpr = normalizeExpr(newProperty);
+    return new CypherProcedure("db.createProperty", [newPropertyExpr]);
+}
+
+/**
+ * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_createrelationshiptype)
+ * @group Procedures
+ */
+export function createRelationshipType(newRelationshipType: Expr | string): VoidCypherProcedure {
+    const newRelationshipTypeExpr = normalizeExpr(newRelationshipType);
+    return new CypherProcedure("db.createRelationshipType", [newRelationshipTypeExpr]);
 }
