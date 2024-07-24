@@ -19,7 +19,7 @@
 
 import Cypher from "../../index";
 
-describe("CDC procedures", () => {
+describe("db.cdc procedures", () => {
     test("cdc.current", () => {
         const query = Cypher.db.cdc.current();
         const { cypher } = query.build();
