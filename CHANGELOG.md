@@ -1,5 +1,22 @@
 # @neo4j/cypher-builder
 
+## 1.17.2
+
+### Patch Changes
+
+-   [#355](https://github.com/neo4j/cypher-builder/pull/355) [`acddbc3`](https://github.com/neo4j/cypher-builder/commit/acddbc365d50390d152e180a8f0f6a04827ce7e1) Thanks [@angrykoala](https://github.com/angrykoala)! - Add the following procedures:
+
+    -   `db.nameFromElementId`
+    -   `db.info`
+    -   `db.createLabel`
+    -   `db.createProperty`
+    -   `db.createRelationshipType`
+    -   `db.schema.nodeTypeProperties`
+    -   `db.schema.relTypeProperties`
+    -   `db.schema.visualization`
+
+-   [#351](https://github.com/neo4j/cypher-builder/pull/351) [`ef73177`](https://github.com/neo4j/cypher-builder/commit/ef73177f73359b033e7364741605ffbd8eb1f42d) Thanks [@angrykoala](https://github.com/angrykoala)! - Exports type ROUND_PRECISION_MODE
+
 ## 1.17.1
 
 ### Patch Changes
