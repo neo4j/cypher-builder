@@ -18,7 +18,7 @@
  */
 
 import type { Literal, Param, Variable } from "../../../Cypher";
-import { CypherProcedure } from "../../../procedures/CypherProcedure";
+import { CypherProcedure, VoidCypherProcedure } from "../../../procedures/CypherProcedure";
 import type { Expr } from "../../../types";
 import type { InputArgument } from "../../../utils/normalize-variable";
 import { normalizeMap, normalizeVariable } from "../../../utils/normalize-variable";
@@ -27,7 +27,7 @@ type FulltextPhrase = string | Literal<string> | Param | Variable;
 
 const FULLTEXT_NAMESPACE = "db.index.fulltext";
 
-/** Returns all labels in the database
+/**
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_index_fulltext_querynodes)
  * @group Procedures
  */
@@ -41,7 +41,7 @@ export function queryNodes(
     return new CypherProcedure("queryNodes", procedureArgs, FULLTEXT_NAMESPACE);
 }
 
-/** Returns all labels in the database
+/**
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_index_fulltext_queryrelationships)
  * @group Procedures
  */
@@ -53,6 +53,22 @@ export function queryRelationships(
     const procedureArgs = getFulltextArguments(indexName, queryString, options);
 
     return new CypherProcedure("queryRelationships", procedureArgs, FULLTEXT_NAMESPACE);
+}
+
+/**
+ * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_index_fulltext_awaiteventuallyconsistentindexrefresh)
+ * @group Procedures
+ */
+export function awaitEventuallyConsistentIndexRefresh(): VoidCypherProcedure {
+    return new VoidCypherProcedure("awaitEventuallyConsistentIndexRefresh", [], FULLTEXT_NAMESPACE);
+}
+
+/**
+ * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_index_fulltext_listavailableanalyzers)
+ * @group Procedures
+ */
+export function listAvailableAnalyzers(): CypherProcedure<"analyzer" | "description" | "stopwords"> {
+    return new CypherProcedure("queryRelationships", [], FULLTEXT_NAMESPACE);
 }
 
 function getFulltextArguments(
