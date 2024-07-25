@@ -22,19 +22,27 @@ import { TestClause } from "../../utils/TestClause";
 
 describe("String Functions", () => {
     // Functions with 1 argument
-    test.each(["lTrim", "rTrim", "toLower", "toString", "toStringOrNull", "toUpper", "trim", "normalize"] as const)(
-        "%s",
-        (value) => {
-            const testFunction = Cypher[value](new Cypher.Param("Hello"));
-            const { cypher, params } = new TestClause(testFunction).build();
+    test.each([
+        "lTrim",
+        "rTrim",
+        "toLower",
+        "toString",
+        "toStringOrNull",
+        "toUpper",
+        "trim",
+        "normalize",
+        "lower",
+        "upper",
+    ] as const)("%s", (value) => {
+        const testFunction = Cypher[value](new Cypher.Param("Hello"));
+        const { cypher, params } = new TestClause(testFunction).build();
 
-            expect(cypher).toBe(`${value}($param0)`);
+        expect(cypher).toBe(`${value}($param0)`);
 
-            expect(params).toEqual({
-                param0: "Hello",
-            });
-        }
-    );
+        expect(params).toEqual({
+            param0: "Hello",
+        });
+    });
 
     // Functions with 2 arguments
     test.each(["left", "right", "split"] as const)("%s", (value) => {
