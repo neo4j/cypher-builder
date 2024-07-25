@@ -20,12 +20,14 @@
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 import type { Expr } from "../../types";
 
+const VECTOR_SIMILARITY_NAMESPACE = "vector.similarity";
+
 /** Returns a FLOAT representing the similarity between the argument vectors based on their Euclidean distance.
  * @see [Neo4j Documentation](https://neo4j.com/docs/cypher-manual/current/functions/vector/#functions-similarity-euclidean)
  * @group Procedures
  */
 export function euclidean(a: Expr, b: Expr): CypherFunction {
-    return new CypherFunction("vector.similarity.euclidean", [a, b]);
+    return new CypherFunction("euclidean", [a, b], VECTOR_SIMILARITY_NAMESPACE);
 }
 
 /** Returns a FLOAT representing the similarity between the argument vectors based on their cosine.
@@ -33,5 +35,5 @@ export function euclidean(a: Expr, b: Expr): CypherFunction {
  * @group Procedures
  */
 export function cosine(a: Expr, b: Expr): CypherFunction {
-    return new CypherFunction("vector.similarity.cosine", [a, b]);
+    return new CypherFunction("cosine", [a, b], VECTOR_SIMILARITY_NAMESPACE);
 }

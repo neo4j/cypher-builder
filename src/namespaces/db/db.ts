@@ -27,12 +27,14 @@ export * as cdc from "./cdc";
 export * as index from "./index/dbIndex";
 export * as schema from "./schema";
 
+const DB_NAMESPACE = "db";
+
 /** Returns all labels in the database
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/5/reference/procedures/#procedure_db_labels)
  * @group Procedures
  */
 export function labels(): CypherProcedure<"label"> {
-    return new CypherProcedure("db.labels");
+    return new CypherProcedure("labels", [], DB_NAMESPACE);
 }
 
 /**
@@ -41,7 +43,7 @@ export function labels(): CypherProcedure<"label"> {
  */
 export function nameFromElementId(dbName: Expr | string): CypherFunction {
     const dbNameExpr = normalizeExpr(dbName);
-    return new CypherFunction("db.nameFromElementId", [dbNameExpr]);
+    return new CypherFunction("nameFromElementId", [dbNameExpr], DB_NAMESPACE);
 }
 
 /**
@@ -49,7 +51,7 @@ export function nameFromElementId(dbName: Expr | string): CypherFunction {
  * @group Procedures
  */
 export function info(): CypherProcedure<"id" | "creationDate"> {
-    return new CypherProcedure("db.info");
+    return new CypherProcedure("info", [], DB_NAMESPACE);
 }
 
 /**
@@ -58,7 +60,7 @@ export function info(): CypherProcedure<"id" | "creationDate"> {
  */
 export function createLabel(newLabel: Expr | string): VoidCypherProcedure {
     const newLabelExpr = normalizeExpr(newLabel);
-    return new CypherProcedure("db.createLabel", [newLabelExpr]);
+    return new CypherProcedure("createLabel", [newLabelExpr], DB_NAMESPACE);
 }
 
 /**
@@ -67,7 +69,7 @@ export function createLabel(newLabel: Expr | string): VoidCypherProcedure {
  */
 export function createProperty(newProperty: Expr | string): VoidCypherProcedure {
     const newPropertyExpr = normalizeExpr(newProperty);
-    return new CypherProcedure("db.createProperty", [newPropertyExpr]);
+    return new CypherProcedure("createProperty", [newPropertyExpr], DB_NAMESPACE);
 }
 
 /**
@@ -76,5 +78,5 @@ export function createProperty(newProperty: Expr | string): VoidCypherProcedure 
  */
 export function createRelationshipType(newRelationshipType: Expr | string): VoidCypherProcedure {
     const newRelationshipTypeExpr = normalizeExpr(newRelationshipType);
-    return new CypherProcedure("db.createRelationshipType", [newRelationshipTypeExpr]);
+    return new CypherProcedure("createRelationshipType", [newRelationshipTypeExpr], DB_NAMESPACE);
 }

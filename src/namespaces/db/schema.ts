@@ -19,6 +19,8 @@
 
 import { CypherProcedure } from "../../procedures/CypherProcedure";
 
+const SCHEMA_NAMESPACE = "db.schema";
+
 /**
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_schema_nodetypeproperties)
  * @group Procedures
@@ -26,7 +28,7 @@ import { CypherProcedure } from "../../procedures/CypherProcedure";
 export function nodeTypeProperties(): CypherProcedure<
     "nodeType" | "nodeLabels" | "propertyName" | "propertyTypes" | "mandatory"
 > {
-    return new CypherProcedure("db.schema.nodeTypeProperties");
+    return new CypherProcedure("nodeTypeProperties", [], SCHEMA_NAMESPACE);
 }
 
 /**
@@ -34,12 +36,12 @@ export function nodeTypeProperties(): CypherProcedure<
  * @group Procedures
  */
 export function relTypeProperties(): CypherProcedure<"relType" | "propertyName" | "propertyTypes" | "mandatory"> {
-    return new CypherProcedure("db.schema.relTypeProperties");
+    return new CypherProcedure("relTypeProperties", [], SCHEMA_NAMESPACE);
 }
 /**
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_schema_visualization)
  * @group Procedures
  */
 export function visualization(): CypherProcedure<"nodes" | "relationships"> {
-    return new CypherProcedure("db.schema.visualization");
+    return new CypherProcedure("visualization", [], SCHEMA_NAMESPACE);
 }
