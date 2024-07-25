@@ -63,6 +63,7 @@ export * as cdc from "./namespaces/cdc/cdc";
 
 export * as db from "./namespaces/db/db";
 export * as genai from "./namespaces/genai/genai";
+export * as tx from "./namespaces/tx";
 export * as vector from "./namespaces/vector/vector";
 
 // --Lists
