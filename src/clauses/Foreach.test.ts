@@ -24,8 +24,11 @@ describe("Foreach", () => {
         const list = new Cypher.Literal([1, 2, 3]);
         const variable = new Cypher.Variable();
 
-        const movieNode = new Cypher.Node({ labels: ["Movie"] });
-        const createMovie = new Cypher.Create(movieNode).set([movieNode.property("id"), variable]);
+        const movieNode = new Cypher.Node();
+        const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] })).set([
+            movieNode.property("id"),
+            variable,
+        ]);
 
         const foreachClause = new Cypher.Foreach(variable, list, createMovie).with("*");
 
@@ -46,8 +49,8 @@ describe("Foreach", () => {
         const list = new Cypher.Literal([1, 2, 3]);
         const variable = new Cypher.Variable();
 
-        const movieNode = new Cypher.Node({ labels: ["Movie"] });
-        const createMovie = new Cypher.Create(movieNode);
+        const movieNode = new Cypher.Node();
+        const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] }));
 
         const foreachClause = new Cypher.Foreach(variable, list, createMovie)
             .remove(movieNode.property("title"))
@@ -74,8 +77,8 @@ WITH *"
         const list = new Cypher.Literal([1, 2, 3]);
         const variable = new Cypher.Variable();
 
-        const movieNode = new Cypher.Node({ labels: ["Movie"] });
-        const createMovie = new Cypher.Create(movieNode);
+        const movieNode = new Cypher.Node();
+        const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] }));
 
         const foreachClause = new Cypher.Foreach(variable, list, createMovie).detachDelete(movieNode).with("*");
 

@@ -22,11 +22,11 @@ import Cypher from "..";
 describe("CypherBuilder Call", () => {
     test("Wraps query inside Call", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
-        const createQuery = new Cypher.Create(movieNode).set([movieNode.property("id"), idParam]).return(movieNode);
+        const createQuery = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+            .set([movieNode.property("id"), idParam])
+            .return(movieNode);
         const queryResult = new Cypher.Call(createQuery).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CALL {
@@ -45,11 +45,11 @@ describe("CypherBuilder Call", () => {
 
     test("Nested Call", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
-        const createQuery = new Cypher.Create(movieNode).set([movieNode.property("id"), idParam]).return(movieNode);
+        const createQuery = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+            .set([movieNode.property("id"), idParam])
+            .return(movieNode);
         const nestedCall = new Cypher.Call(createQuery);
         const call = new Cypher.Call(nestedCall);
         const queryResult = call.build();
@@ -72,9 +72,9 @@ describe("CypherBuilder Call", () => {
     });
 
     test("CALL with import with", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
@@ -98,9 +98,12 @@ describe("CypherBuilder Call", () => {
     });
 
     test("CALL with import with *", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node).return([node.property("title"), "movie"]);
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return([
+            node.property("title"),
+            "movie",
+        ]);
 
         const clause = new Cypher.Call(matchClause).importWith("*");
         const queryResult = clause.build();
@@ -116,9 +119,12 @@ describe("CypherBuilder Call", () => {
     });
 
     test("CALL with import with * and extra fields", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node).return([node.property("title"), "movie"]);
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return([
+            node.property("title"),
+            "movie",
+        ]);
 
         const clause = new Cypher.Call(matchClause).importWith(node, "*");
         const queryResult = clause.build();
@@ -134,9 +140,9 @@ describe("CypherBuilder Call", () => {
     });
 
     test("CALL with import with without parameters", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
@@ -159,9 +165,9 @@ describe("CypherBuilder Call", () => {
     });
 
     test("CALL with import with multiple parameters", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
@@ -185,9 +191,9 @@ describe("CypherBuilder Call", () => {
     });
 
     test("CALL with import with fails if import with is already set", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
@@ -198,9 +204,9 @@ describe("CypherBuilder Call", () => {
     });
 
     test("CALL with external with", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
@@ -224,9 +230,9 @@ describe("CypherBuilder Call", () => {
     });
 
     test("CALL with external with, set and remove", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return(node);
 
@@ -257,9 +263,9 @@ WITH *"
     });
 
     test("CALL with external with clause", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), "movie"]);
 
@@ -283,10 +289,10 @@ WITH *"
     });
 
     test("CALL with unwind", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
         const movie = new Cypher.Variable();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), movie]);
 
@@ -311,10 +317,10 @@ WITH *"
     });
 
     test("CALL with unwind passed as a clause", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
         const movie = new Cypher.Variable();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
             .return([node.property("title"), movie]);
 
@@ -341,9 +347,9 @@ WITH *"
     });
 
     test("CALL with delete", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const matchClause = new Cypher.Match(node)
+        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
             .where(Cypher.eq(node.property("title"), new Cypher.Param("bb")))
             .return(node);
 
@@ -368,12 +374,12 @@ DELETE this0"
 
     test("Call returns a variable", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const variable = new Cypher.Variable();
-        const createQuery = new Cypher.Create(movieNode).set([movieNode.property("id"), idParam]).return(variable);
+        const createQuery = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+            .set([movieNode.property("id"), idParam])
+            .return(variable);
         const queryResult = new Cypher.Call(createQuery).return(variable).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL {
@@ -415,7 +421,7 @@ CALL {
 
         test("Call in transaction of rows", () => {
             const query = Cypher.concat(
-                new Cypher.Match(node),
+                new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions({
                     ofRows: 10,
                 })
@@ -433,7 +439,7 @@ CALL {
 
         test("Call in transaction on error fail", () => {
             const query = Cypher.concat(
-                new Cypher.Match(node),
+                new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions({
                     onError: "fail",
                 })
@@ -450,7 +456,7 @@ CALL {
         });
         test("Call in transaction on error break", () => {
             const query = Cypher.concat(
-                new Cypher.Match(node),
+                new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions({
                     onError: "break",
                 })
@@ -468,7 +474,7 @@ CALL {
 
         test("Call in transaction on error continue", () => {
             const query = Cypher.concat(
-                new Cypher.Match(node),
+                new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions({
                     onError: "continue",
                 })
@@ -489,7 +495,7 @@ CALL {
             const deleteSubquery = new Cypher.With(node).detachDelete(node);
 
             const query = Cypher.concat(
-                new Cypher.Match(node),
+                new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(deleteSubquery).inTransactions({
                     ofRows: 10,
                     onError: "fail",

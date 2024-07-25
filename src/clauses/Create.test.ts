@@ -22,14 +22,15 @@ import Cypher from "..";
 describe("CypherBuilder Create", () => {
     test("Create Node", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const createQuery = new Cypher.Create(
-            new Cypher.Pattern(movieNode).withProperties({
-                test: new Cypher.Param("test-value"),
-                id: idParam,
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
             })
         )
             .set(
@@ -62,15 +63,18 @@ describe("CypherBuilder Create", () => {
         const testParam = new Cypher.Param(null);
         const nullStringParam = new Cypher.Param("null");
 
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const properties = {
             id: idParam,
         };
 
-        const createQuery = new Cypher.Create(new Cypher.Pattern(movieNode).withProperties(properties))
+        const createQuery = new Cypher.Create(
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties,
+            })
+        )
             .set([movieNode.property("test"), testParam], [movieNode.property("nullStr"), nullStringParam])
             .return(movieNode);
 
@@ -95,15 +99,22 @@ describe("CypherBuilder Create", () => {
         const testParam = new Cypher.Param(null);
         const nullStringParam = new Cypher.Param("null");
 
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const properties = {
             id: idParam,
         };
         const path = new Cypher.Path();
-        const createQuery = new Cypher.Create(new Cypher.Pattern(movieNode).withProperties(properties))
+        const createQuery = new Cypher.Create(
+            new Cypher.Pattern(
+                movieNode,
+
+                {
+                    labels: ["Movie"],
+                    properties,
+                }
+            )
+        )
             .assignToPath(path)
             .set([movieNode.property("test"), testParam], [movieNode.property("nullStr"), nullStringParam])
             .return(movieNode);
@@ -126,14 +137,15 @@ describe("CypherBuilder Create", () => {
 
     test("Create Node with empty set", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const createQuery = new Cypher.Create(
-            new Cypher.Pattern(movieNode).withProperties({
-                test: new Cypher.Param("test-value"),
-                id: idParam,
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
             })
         )
             .set()
@@ -155,14 +167,15 @@ describe("CypherBuilder Create", () => {
 
     test("Create with delete", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const createQuery = new Cypher.Create(
-            new Cypher.Pattern(movieNode).withProperties({
-                test: new Cypher.Param("test-value"),
-                id: idParam,
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
             })
         )
             .set(
@@ -192,14 +205,15 @@ DELETE this0"
 
     test("Create with detach delete", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const createQuery = new Cypher.Create(
-            new Cypher.Pattern(movieNode).withProperties({
-                test: new Cypher.Param("test-value"),
-                id: idParam,
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
             })
         )
             .set(
@@ -229,14 +243,15 @@ DETACH DELETE this0"
 
     test("Create with noDetach delete", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const createQuery = new Cypher.Create(
-            new Cypher.Pattern(movieNode).withProperties({
-                test: new Cypher.Param("test-value"),
-                id: idParam,
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
             })
         )
             .set(
@@ -266,14 +281,15 @@ NODETACH DELETE this0"
 
     test("Create with remove", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const createQuery = new Cypher.Create(
-            new Cypher.Pattern(movieNode).withProperties({
-                test: new Cypher.Param("test-value"),
-                id: idParam,
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
             })
         )
             .set(
@@ -308,9 +324,12 @@ REMOVE this0.title"
         });
 
         const createQuery = new Cypher.Create(
-            new Cypher.Pattern(movieNode).withProperties({
-                test: new Cypher.Param("test-value"),
-                id: idParam,
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
             })
         )
             .set(
@@ -342,16 +361,17 @@ RETURN this0"
 
     test("Chained create with existing create Clause", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const secondCreate = new Cypher.Create(new Cypher.Node({ labels: ["Actor"] }));
 
         const createQuery = new Cypher.Create(
-            new Cypher.Pattern(movieNode).withProperties({
-                test: new Cypher.Param("test-value"),
-                id: idParam,
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
             })
         )
             .set(
