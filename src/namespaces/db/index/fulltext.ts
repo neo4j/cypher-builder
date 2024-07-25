@@ -25,6 +25,8 @@ import { normalizeMap, normalizeVariable } from "../../../utils/normalize-variab
 
 type FulltextPhrase = string | Literal<string> | Param | Variable;
 
+const FULLTEXT_NAMESPACE = "db.index.fulltext";
+
 /** Returns all labels in the database
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_index_fulltext_querynodes)
  * @group Procedures
@@ -36,7 +38,7 @@ export function queryNodes(
 ): CypherProcedure<"node" | "score"> {
     const procedureArgs = getFulltextArguments(indexName, queryString, options);
 
-    return new CypherProcedure("db.index.fulltext.queryNodes", procedureArgs);
+    return new CypherProcedure("queryNodes", procedureArgs, FULLTEXT_NAMESPACE);
 }
 
 /** Returns all labels in the database
@@ -50,7 +52,7 @@ export function queryRelationships(
 ): CypherProcedure<"relationship" | "score"> {
     const procedureArgs = getFulltextArguments(indexName, queryString, options);
 
-    return new CypherProcedure("db.index.fulltext.queryRelationships", procedureArgs);
+    return new CypherProcedure("queryRelationships", procedureArgs, FULLTEXT_NAMESPACE);
 }
 
 function getFulltextArguments(

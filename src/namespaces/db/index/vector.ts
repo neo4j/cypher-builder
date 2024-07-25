@@ -22,6 +22,8 @@ import { CypherProcedure } from "../../../procedures/CypherProcedure";
 import type { Expr } from "../../../types";
 import { normalizeVariable } from "../../../utils/normalize-variable";
 
+const VECTOR_NAMESPACE = "db.index.vector";
+
 /** Returns all labels in the database
  * @see [Neo4j Documentation](https://neo4j.com/docs/operations-manual/current/reference/procedures/#procedure_db_index_vector_queryNodes)
  * @group Procedures
@@ -33,7 +35,7 @@ export function queryNodes(
 ): CypherProcedure<"node" | "score"> {
     const procedureArgs = getVectorArguments(indexName, numberOfNearestNeighbours, query);
 
-    return new CypherProcedure("db.index.vector.queryNodes", procedureArgs);
+    return new CypherProcedure("queryNodes", procedureArgs, VECTOR_NAMESPACE);
 }
 
 /** Returns all labels in the database
@@ -47,7 +49,7 @@ export function queryRelationships(
 ): CypherProcedure<"relationship" | "score"> {
     const procedureArgs = getVectorArguments(indexName, numberOfNearestNeighbours, query);
 
-    return new CypherProcedure("db.index.vector.queryRelationships", procedureArgs);
+    return new CypherProcedure("queryRelationships", procedureArgs, VECTOR_NAMESPACE);
 }
 
 function getVectorArguments(

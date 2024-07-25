@@ -21,12 +21,14 @@ import type { Expr } from "../..";
 import { CypherProcedure } from "../../procedures/CypherProcedure";
 import { normalizeExpr, normalizeList } from "../../utils/normalize-variable";
 
+const CDC_NAMESPACE = "db.cdc";
+
 /** Acquire a change identifier for the last committed transaction
  * @see [Neo4j Documentation](https://neo4j.com/docs/cdc/current/procedures/current/)
  * @group Procedures
  */
 export function current(): CypherProcedure<"id"> {
-    return new CypherProcedure("db.cdc.current");
+    return new CypherProcedure("current", [], CDC_NAMESPACE);
 }
 
 /** Acquire a change identifier for the earliest available change
@@ -34,7 +36,7 @@ export function current(): CypherProcedure<"id"> {
  * @group Procedures
  */
 export function earliest(): CypherProcedure<"id"> {
-    return new CypherProcedure("db.cdc.earliest");
+    return new CypherProcedure("earliest", [], CDC_NAMESPACE);
 }
 
 /** Query the database for captured changes
@@ -47,5 +49,5 @@ export function query(
 ): CypherProcedure<"id" | "txId" | "seq" | "metadata" | "event"> {
     const fromExpr = normalizeExpr(from);
     const selectorsExpr = normalizeList(selectors);
-    return new CypherProcedure("db.cdc.query", [fromExpr, selectorsExpr]);
+    return new CypherProcedure("query", [fromExpr, selectorsExpr], CDC_NAMESPACE);
 }

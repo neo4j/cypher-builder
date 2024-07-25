@@ -33,9 +33,9 @@ export class VoidCypherProcedure extends Clause {
     protected name: string;
     private params: Array<Expr>;
 
-    constructor(name: string, params: Array<Expr> = []) {
+    constructor(name: string, params: Array<Expr> = [], namespace?: string) {
         super();
-        this.name = name;
+        this.name = namespace ? `${namespace}.${name}` : name;
         this.params = params;
         for (const param of params) {
             if (param instanceof CypherASTNode) {

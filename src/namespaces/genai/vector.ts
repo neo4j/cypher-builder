@@ -23,6 +23,8 @@ import { CypherProcedure } from "../../procedures/CypherProcedure";
 import type { Expr } from "../../types";
 import { normalizeMap, normalizeVariable } from "../../utils/normalize-variable";
 
+const GENAI_VECTOR_NAMESPACE = "genai.vector";
+
 /** Encode a given resource as a vector using the named provider.
  * @see [Neo4j Documentation](https://neo4j.com/docs/cypher-manual/current/functions/#header-query-functions-genai)
  * @group Functions
@@ -32,11 +34,11 @@ export function encode(
     provider: string | Literal<string> | Param,
     configuration: Record<string, string | number | Literal | Param>
 ): CypherFunction {
-    return new CypherFunction("genai.vector.encode", [
-        resource,
-        normalizeVariable(provider),
-        normalizeMap(configuration),
-    ]);
+    return new CypherFunction(
+        "encode",
+        [resource, normalizeVariable(provider), normalizeMap(configuration)],
+        GENAI_VECTOR_NAMESPACE
+    );
 }
 
 /** Encode a given batch of resources as vectors using the named provider.
@@ -48,9 +50,9 @@ export function encodeBatch(
     provider: string | Literal<string> | Param,
     configuration: Record<string, string | number | Literal | Param>
 ): CypherProcedure<"index" | "resource" | "vector"> {
-    return new CypherProcedure("genai.vector.encodeBatch", [
-        resources,
-        normalizeVariable(provider),
-        normalizeMap(configuration),
-    ]);
+    return new CypherProcedure(
+        "encodeBatch",
+        [resources, normalizeVariable(provider), normalizeMap(configuration)],
+        GENAI_VECTOR_NAMESPACE
+    );
 }

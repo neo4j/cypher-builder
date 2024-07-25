@@ -37,9 +37,9 @@ export class CypherFunction extends CypherASTNode {
     protected name: string;
     private params: Array<Expr> = [];
 
-    constructor(name: string, params: Array<Expr> = []) {
+    constructor(name: string, params: Array<Expr> = [], namespace?: string) {
         super();
-        this.name = name;
+        this.name = namespace ? `${namespace}.${name}` : name;
         for (const param of params) {
             this.addParam(param);
         }
