@@ -511,5 +511,49 @@ CALL {
 } IN TRANSACTIONS OF 10 ROWS ON ERROR FAIL"
 `);
         });
+
+        test("Call in concurrent transaction", () => {
+            const node = new Cypher.Node();
+            const deleteSubquery = new Cypher.With(node).detachDelete(node);
+
+            const query = Cypher.concat(
+                new Cypher.Match(new Cypher.Pattern(node)),
+                new Cypher.Call(deleteSubquery).inTransactions({
+                    concurrentTransactions: 3,
+                })
+            );
+
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN 3 CONCURRENT TRANSACTIONS"
+`);
+        });
+
+        test("Call in concurrent transaction of rows and error", () => {
+            const node = new Cypher.Node();
+            const deleteSubquery = new Cypher.With(node).detachDelete(node);
+
+            const query = Cypher.concat(
+                new Cypher.Match(new Cypher.Pattern(node)),
+                new Cypher.Call(deleteSubquery).inTransactions({
+                    ofRows: 10,
+                    onError: "fail",
+                    concurrentTransactions: 5,
+                })
+            );
+
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN 5 CONCURRENT TRANSACTIONS OF 10 ROWS ON ERROR FAIL"
+`);
+        });
     });
 });

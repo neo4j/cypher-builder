@@ -51,6 +51,7 @@ export interface Call
 type InTransactionConfig = {
     ofRows?: number;
     onError?: "continue" | "break" | "fail";
+    concurrentTransactions?: number;
 };
 
 /**
@@ -138,7 +139,11 @@ export class Call extends Clause {
         const ofRowsStr = rows ? ` OF ${rows} ROWS` : "";
         const onErrorStr = error ? ` ON ERROR ${this.getOnErrorStr(error)}` : "";
 
-        return ` IN TRANSACTIONS${ofRowsStr}${onErrorStr}`;
+        const concurrentTransactions = this.inTransactionsConfig.concurrentTransactions;
+        const concurrentTransactionsStr =
+            typeof concurrentTransactions === "number" ? ` ${concurrentTransactions} CONCURRENT` : "";
+
+        return ` IN${concurrentTransactionsStr} TRANSACTIONS${ofRowsStr}${onErrorStr}`;
     }
 
     private getOnErrorStr(err: "continue" | "break" | "fail"): "CONTINUE" | "BREAK" | "FAIL" {
