@@ -33,6 +33,15 @@ export function left(original: Expr, length: Expr): CypherFunction {
 }
 
 /**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-lower)
+ * @group Cypher Functions
+ * @category String
+ */
+export function lower(original: Expr): CypherFunction {
+    return new CypherFunction("lower", [original]);
+}
+
+/**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
  * @group Cypher Functions
  * @category String
@@ -142,4 +151,13 @@ export function toUpper(original: Expr): CypherFunction {
  */
 export function trim(original: Expr): CypherFunction {
     return new CypherFunction("trim", [original]);
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-upper)
+ * @group Cypher Functions
+ * @category String
+ */
+export function upper(original: Expr): CypherFunction {
+    return new CypherFunction("upper", [original]);
 }
