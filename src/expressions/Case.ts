@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-import type { CypherEnvironment } from "../Environment";
 import { CypherASTNode } from "../CypherASTNode";
-import { padBlock } from "../utils/pad-block";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import type { CypherEnvironment } from "../Environment";
 import type { Expr, Predicate } from "../types";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { padBlock } from "../utils/pad-block";
 
 /** Case statement
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#query-syntax-case)
@@ -37,8 +37,9 @@ export class Case<C extends Expr | undefined = undefined> extends CypherASTNode 
         this.comparator = comparator;
     }
 
-    public when(expr: C extends Expr ? Expr : Predicate): When<C> {
-        const whenClause = new When(this, expr);
+    // public when(expr: C extends Expr ? Expr : Predicate): When<C> {
+    public when(...exprs: C extends Expr ? Expr[] : [Predicate]): When<C> {
+        const whenClause = new When(this, exprs);
         this.whenClauses.push(whenClause);
         return whenClause;
     }
@@ -62,13 +63,13 @@ export class Case<C extends Expr | undefined = undefined> extends CypherASTNode 
 
 class When<T extends Expr | undefined> extends CypherASTNode {
     protected parent: Case<T>;
-    private predicate: Expr;
+    private predicates: Expr[];
     private result: Expr | undefined;
 
-    constructor(parent: Case<T>, predicate: Expr) {
+    constructor(parent: Case<T>, predicate: Expr[]) {
         super();
         this.parent = parent;
-        this.predicate = predicate;
+        this.predicates = predicate;
     }
 
     public then(expr: Expr): Case<T> {
@@ -80,7 +81,7 @@ class When<T extends Expr | undefined> extends CypherASTNode {
      * @internal
      */
     public getCypher(env: CypherEnvironment): string {
-        const predicateStr = this.predicate.getCypher(env);
+        const predicateStr = this.predicates.map((p) => p.getCypher(env)).join(", ");
         if (!this.result) throw new Error("Cannot generate CASE ... WHEN statement without THEN");
         const resultStr = this.result.getCypher(env);
 
