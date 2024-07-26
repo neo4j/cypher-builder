@@ -1,5 +1,45 @@
 # @neo4j/cypher-builder
 
+## 1.18.0
+
+### Minor Changes
+
+-   [#365](https://github.com/neo4j/cypher-builder/pull/365) [`6f20b0a`](https://github.com/neo4j/cypher-builder/commit/6f20b0a5a477c72708674e5428b04e0ea76bc007) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `CALL { …​ } IN CONCURRENT TRANSACTIONS`:
+
+    ```js
+    new Cypher.Call(subquery).inTransactions({
+        concurrentTransactions: 3,
+    });
+    ```
+
+    ```cypher
+    CALL {
+        // Subquery
+    } IN 3 CONCURRENT TRANSACTIONS
+    ```
+
+### Patch Changes
+
+-   [#357](https://github.com/neo4j/cypher-builder/pull/357) [`22f87f3`](https://github.com/neo4j/cypher-builder/commit/22f87f370508ebbad3ad6effc09756105cb61b55) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for procedures in the tx namespace:
+
+    -   `tx.getMetaData`
+    -   `tx.setMetaData`
+
+-   [#363](https://github.com/neo4j/cypher-builder/pull/363) [`47ee1ef`](https://github.com/neo4j/cypher-builder/commit/47ee1ef9b3f687e789eae307486d1e320f183329) Thanks [@angrykoala](https://github.com/angrykoala)! - Add functions `lower` and `upper`
+
+-   [#361](https://github.com/neo4j/cypher-builder/pull/361) [`e769f61`](https://github.com/neo4j/cypher-builder/commit/e769f612f1f3e904467209e7c477b23a1d086b0c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for missing fulltext procedures:
+
+    -   `db.index.fulltext.awaitEventuallyConsistentIndexRefresh`
+    -   `db.index.fulltext.listAvailableAnalyzers`
+
+-   [#361](https://github.com/neo4j/cypher-builder/pull/361) [`e769f61`](https://github.com/neo4j/cypher-builder/commit/e769f612f1f3e904467209e7c477b23a1d086b0c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for missing db procedures:
+
+    -   `db.ping`
+    -   `db.propertyKeys`
+    -   `db.relationshipTypes`
+    -   `db.resampleIndex`
+    -   `db.resampleOutdatedIndexes`
+
 ## 1.17.2
 
 ### Patch Changes
