@@ -21,231 +21,51 @@ import Cypher from "../../index";
 import { TestClause } from "../../utils/TestClause";
 
 describe("db procedures", () => {
-    describe("db.index.fulltext.queryNodes", () => {
-        test("Simple fulltext", () => {
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const fulltextProcedure = Cypher.db.index.fulltext
-                .queryNodes("my-text-index", new Cypher.Param("This is a lovely phrase"))
-                .yield(["node", targetNode]);
+    test("db.awaitIndex", () => {
+        const procedure = Cypher.db.awaitIndex("name", 123);
 
-            const { cypher, params } = fulltextProcedure.build();
+        const { cypher } = procedure.build();
 
-            expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0) YIELD node AS this0"`
-            );
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                }
-            `);
-        });
-
-        test("Fulltext with where and return", () => {
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const fulltextProcedure = Cypher.db.index.fulltext
-                .queryNodes("my-text-index", new Cypher.Param("This is a lovely phrase"))
-                .yield(["node", targetNode])
-                .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
-                .return(targetNode);
-
-            const { cypher, params } = fulltextProcedure.build();
-
-            expect(cypher).toMatchInlineSnapshot(`
-                "CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0) YIELD node AS this0
-                WHERE this0.title = $param1
-                RETURN this0"
-            `);
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                  "param1": "The Matrix",
-                }
-            `);
-        });
-
-        test("Fulltext with options", () => {
-            const fulltextProcedure = Cypher.db.index.fulltext.queryNodes(
-                "my-text-index",
-                new Cypher.Param("This is a lovely phrase"),
-                {
-                    skip: 5,
-                    analyser: new Cypher.Param("whitespace"),
-                }
-            );
-
-            const { cypher, params } = fulltextProcedure.build();
-
-            expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0, { skip: 5, analyser: $param1 })"`
-            );
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                  "param1": "whitespace",
-                }
-            `);
-        });
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.awaitIndex(\\"name\\", 123)"`);
     });
-    describe("db.index.fulltext.queryRelationships", () => {
-        test("Simple fulltext", () => {
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const fulltextProcedure = Cypher.db.index.fulltext
-                .queryRelationships("my-text-index", new Cypher.Param("This is a lovely phrase"))
-                .yield(["relationship", targetNode]);
+    test("db.awaitIndexes", () => {
+        const procedure = Cypher.db.awaitIndexes(123);
 
-            const { cypher, params } = fulltextProcedure.build();
+        const { cypher } = procedure.build();
 
-            expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.fulltext.queryRelationships(\\"my-text-index\\", $param0) YIELD relationship AS this0"`
-            );
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                }
-            `);
-        });
-
-        test("Fulltext with options", () => {
-            const fulltextProcedure = Cypher.db.index.fulltext.queryRelationships(
-                "my-text-index",
-                new Cypher.Param("This is a lovely phrase"),
-                {
-                    skip: 5,
-                    analyser: new Cypher.Param("whitespace"),
-                }
-            );
-
-            const { cypher, params } = fulltextProcedure.build();
-
-            expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.fulltext.queryRelationships(\\"my-text-index\\", $param0, { skip: 5, analyser: $param1 })"`
-            );
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                  "param1": "whitespace",
-                }
-            `);
-        });
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.awaitIndex(123)"`);
     });
-    describe("db.index.vector.queryNodes", () => {
-        test("Simple vector", () => {
-            const nearestNeighbours = 10;
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const vectorProcedure = Cypher.db.index.vector
-                .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
-                .yield(["node", targetNode]);
 
-            const { cypher, params } = vectorProcedure.build();
+    test.each(["createLabel", "createProperty", "createRelationshipType"] as const)(
+        "%s with string parameter",
+        (procedureName) => {
+            const procedure = Cypher.db[procedureName]("param");
 
-            expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.vector.queryNodes(\\"my-vector-index\\", 10, $param0) YIELD node AS this0"`
-            );
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                }
-            `);
-        });
-        test("Simple vector", () => {
-            const nearestNeighbours = 5;
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const vectorProcedure = Cypher.db.index.vector
-                .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Literal("This is a lovely phrase literal"))
-                .yield(["node", targetNode]);
+            const { cypher } = procedure.build();
 
-            const { cypher, params } = vectorProcedure.build();
+            expect(cypher).toEqual(`CALL db.${procedureName}("param")`);
+        }
+    );
 
-            expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.vector.queryNodes(\\"my-vector-index\\", 5, \\"This is a lovely phrase literal\\") YIELD node AS this0"`
-            );
-            expect(params).toMatchInlineSnapshot(`{}`);
-        });
-        test("vector with where and return", () => {
-            const nearestNeighbours = 15;
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const vectorProcedure = Cypher.db.index.vector
-                .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
-                .yield(["node", targetNode])
-                .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
-                .return(targetNode);
+    test.each(["createLabel", "createProperty", "createRelationshipType"] as const)(
+        "%s with Expr parameter",
+        (procedureName) => {
+            const procedure = Cypher.db[procedureName](new Cypher.Literal("param"));
 
-            const { cypher, params } = vectorProcedure.build();
+            const { cypher } = procedure.build();
 
-            expect(cypher).toMatchInlineSnapshot(`
-                "CALL db.index.vector.queryNodes(\\"my-vector-index\\", 15, $param0) YIELD node AS this0
-                WHERE this0.title = $param1
-                RETURN this0"
-            `);
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                  "param1": "The Matrix",
-                }
-            `);
-        });
+            expect(cypher).toEqual(`CALL db.${procedureName}("param")`);
+        }
+    );
+
+    test("db.info", () => {
+        const dbInfo = Cypher.db.info().yield("id", "creationDate");
+
+        const { cypher } = dbInfo.build();
+
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.info() YIELD id, creationDate"`);
     });
-    describe("db.index.vector.queryRelationships", () => {
-        test("Simple vector", () => {
-            const nearestNeighbours = 10;
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const vectorProcedure = Cypher.db.index.vector
-                .queryRelationships("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
-                .yield(["relationship", targetNode]);
 
-            const { cypher, params } = vectorProcedure.build();
-
-            expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 10, $param0) YIELD relationship AS this0"`
-            );
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                }
-            `);
-        });
-        test("Simple vector using literal", () => {
-            const nearestNeighbours = 10;
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const vectorProcedure = Cypher.db.index.vector
-                .queryRelationships(
-                    "my-vector-index",
-                    nearestNeighbours,
-                    new Cypher.Literal("This is a lovely phrase literal")
-                )
-                .yield(["relationship", targetNode]);
-
-            const { cypher, params } = vectorProcedure.build();
-
-            expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 10, \\"This is a lovely phrase literal\\") YIELD relationship AS this0"`
-            );
-            expect(params).toMatchInlineSnapshot(`{}`);
-        });
-        test("vector with where and return", () => {
-            const nearestNeighbours = 5;
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
-            const vectorProcedure = Cypher.db.index.vector
-                .queryRelationships("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
-                .yield(["relationship", targetNode])
-                .where(Cypher.eq(targetNode.property("title"), new Cypher.Param("The Matrix")))
-                .return(targetNode);
-
-            const { cypher, params } = vectorProcedure.build();
-
-            expect(cypher).toMatchInlineSnapshot(`
-                "CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 5, $param0) YIELD relationship AS this0
-                WHERE this0.title = $param1
-                RETURN this0"
-            `);
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "This is a lovely phrase",
-                  "param1": "The Matrix",
-                }
-            `);
-        });
-    });
     describe("db.labels", () => {
         test("db.labels without yield", () => {
             const dbLabels = Cypher.db.labels();
@@ -278,35 +98,40 @@ describe("db procedures", () => {
         });
     });
 
-    test("db.info", () => {
-        const dbInfo = Cypher.db.info().yield("id", "creationDate");
+    test("db.ping", () => {
+        const procedure = Cypher.db.ping().yield("success");
+        const { cypher } = procedure.build();
 
-        const { cypher } = dbInfo.build();
-
-        expect(cypher).toMatchInlineSnapshot(`"CALL db.info() YIELD id, creationDate"`);
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.ping() YIELD success"`);
     });
 
-    test.each(["createLabel", "createProperty", "createRelationshipType"] as const)(
-        "%s with string parameter",
-        (procedureName) => {
-            const procedure = Cypher.db[procedureName]("param");
+    test("db.propertyKeys", () => {
+        const procedure = Cypher.db.propertyKeys().yield("propertyKey");
+        const { cypher } = procedure.build();
 
-            const { cypher } = procedure.build();
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.propertyKeys() YIELD propertyKey"`);
+    });
 
-            expect(cypher).toEqual(`CALL db.${procedureName}("param")`);
-        }
-    );
+    test("db.relationshipTypes", () => {
+        const procedure = Cypher.db.relationshipTypes().yield("relationshipType");
+        const { cypher } = procedure.build();
 
-    test.each(["createLabel", "createProperty", "createRelationshipType"] as const)(
-        "%s with Expr parameter",
-        (procedureName) => {
-            const procedure = Cypher.db[procedureName](new Cypher.Literal("param"));
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.relationshipTypes() YIELD relationshipType"`);
+    });
 
-            const { cypher } = procedure.build();
+    test("db.resampleIndex", () => {
+        const procedure = Cypher.db.resampleIndex().yield("indexName");
+        const { cypher } = procedure.build();
 
-            expect(cypher).toEqual(`CALL db.${procedureName}("param")`);
-        }
-    );
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.resampleIndex() YIELD indexName"`);
+    });
+
+    test("db.resampleOutdatedIndexes", () => {
+        const procedure = Cypher.db.resampleOutdatedIndexes();
+        const { cypher } = procedure.build();
+
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.resampleOutdatedIndexes()"`);
+    });
 });
 
 describe("db functions", () => {
