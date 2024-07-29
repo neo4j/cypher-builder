@@ -9,6 +9,7 @@
 ** xref:clauses/match.adoc[]
 ** xref:clauses/union.adoc[]
 ** xref:clauses/return.adoc[]
+** xref:clauses/load-csv.adoc[]
 * Variables and parameters
 ** xref:variables-and-params/variables.adoc[]
 ** xref:variables-and-params/parameters.adoc[]
