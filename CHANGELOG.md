@@ -1,5 +1,18 @@
 # @neo4j/cypher-builder
 
+## 1.18.1
+
+### Patch Changes
+
+-   [#366](https://github.com/neo4j/cypher-builder/pull/366) [`5fa3f51`](https://github.com/neo4j/cypher-builder/commit/5fa3f516b19672df3a15bbfa88d7902a8f7f990e) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for multiple expressions on the simple CASE:
+
+    ```js
+    matchClause.return(
+        new Cypher.Case(person.property("eyes"))
+            .when(new Cypher.Literal("brown"), new Cypher.Literal("hazel"))
+            .then(new Cypher.Literal(2))
+    ```
+
 ## 1.18.0
 
 ### Minor Changes
