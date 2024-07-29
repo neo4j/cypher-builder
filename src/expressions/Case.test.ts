@@ -84,18 +84,21 @@ END"
         }).toThrow("Cannot generate CASE ... WHEN statement without THEN");
     });
 
-    test("doc example 1", () => {
+    test("doc example simple", () => {
         const person = new Cypher.Node();
         const matchClause = new Cypher.Match(new Cypher.Pattern(person, { labels: ["Person"] }));
 
         matchClause.return(
-            new Cypher.Case(person.property("eyes"))
-                .when(new Cypher.Literal("blue"))
-                .then(new Cypher.Literal(1))
-                .when(new Cypher.Literal("brown"), new Cypher.Literal("hazel"))
-                .then(new Cypher.Literal(2))
-                .else(new Cypher.Literal(3))
-                .endAs(new Cypher.Variable(), person.property("eyes"))
+            [
+                new Cypher.Case(person.property("eyes"))
+                    .when(new Cypher.Literal("blue"))
+                    .then(new Cypher.Literal(1))
+                    .when(new Cypher.Literal("brown"), new Cypher.Literal("hazel"))
+                    .then(new Cypher.Literal(2))
+                    .else(new Cypher.Literal(3)),
+                "result",
+            ],
+            [person.property("eyes"), "eyes"]
         );
 
         const { cypher } = new TestClause(matchClause).build();
@@ -106,7 +109,36 @@ RETURN CASE this0.eyes
     WHEN \\"blue\\" THEN 1
     WHEN \\"brown\\", \\"hazel\\" THEN 2
     ELSE 3
-END AS var1, this0.eyes"
+END AS result, this0.eyes AS eyes"
+`);
+    });
+
+    test("doc example generic", () => {
+        const person = new Cypher.Node();
+        const matchClause = new Cypher.Match(new Cypher.Pattern(person, { labels: ["Person"] }));
+
+        matchClause.return(
+            [
+                new Cypher.Case()
+                    .when(Cypher.eq(person.property("eyes"), new Cypher.Literal("blue")))
+                    .then(new Cypher.Literal(1))
+                    .when(Cypher.lt(person.property("age"), new Cypher.Literal(40)))
+                    .then(new Cypher.Literal(2))
+                    .else(new Cypher.Literal(3)),
+                "result",
+            ],
+            [person.property("eyes"), "eyes"]
+        );
+
+        const { cypher } = new TestClause(matchClause).build();
+
+        expect(cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Person)
+RETURN CASE
+    WHEN this0.eyes = \\"blue\\" THEN 1
+    WHEN this0.age < 40 THEN 2
+    ELSE 3
+END AS result, this0.eyes AS eyes"
 `);
     });
 });

@@ -7,7 +7,7 @@ This page describes how to create link:https://neo4j.com/docs/cypher-manual/curr
 
 == Simple CASE
 
-THe simple `CASE` form compares a single expressions against multiple values. It can be constructed with the `Case` class by passing the expression to be compared the constructor:
+The simple `CASE` form compares a single expressions against multiple values. It can be constructed with the `Case` class by passing the expression to be compared the constructor:
 
 
 [source, javascript]
@@ -17,7 +17,6 @@ new Cypher.Case(person.property("eyes"))
     .when(new Cypher.Literal("blue")).then(new Cypher.Literal(1))
     .when(new Cypher.Literal("brown"), new Cypher.Literal("hazel")).then(new Cypher.Literal(2))
     .else(new Cypher.Literal(3))
-    .endAs(new Cypher.Variable(), person.property("eyes"))
 ----
 
 The resulting Cypher, note that `END` is added automatically:
@@ -28,5 +27,32 @@ CASE n.eyes
   WHEN 'blue'  THEN 1
   WHEN 'brown', 'hazel' THEN 2
   ELSE 3
-END AS var1, this0.eyes
+END
+----
+
+
+== Generic CASE
+
+The generic `CASE` expression with conditional statements can be constructed with the `Case` class by ignoring the constructor parameter:
+
+[source, javascript]
+----
+const person = new Cypher.Node();
+new Cypher.Case()
+    .when(Cypher.eq(person.property("eyes"), new Cypher.Literal("blue")))
+    .then(new Cypher.Literal(1))
+    .when(Cypher.lt(person.property("age"), new Cypher.Literal(40)))
+    .then(new Cypher.Literal(2))
+    .else(new Cypher.Literal(3))
+----
+
+The resulting Cypher, note that `END` is added automatically:
+
+[source, cypher]
+----
+CASE
+  WHEN n.eyes = 'blue' THEN 1
+  WHEN n.age < 40      THEN 2
+  ELSE 3
+END
 ----
