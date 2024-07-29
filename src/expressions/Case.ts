@@ -17,8 +17,10 @@
  * limitations under the License.
  */
 
+import type { ProjectionColumn, Variable } from "..";
 import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
+import { Projection } from "../clauses/sub-clauses/Projection";
 import type { Expr, Predicate } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
@@ -31,6 +33,8 @@ export class Case<C extends Expr | undefined = undefined> extends CypherASTNode 
     private comparator: Expr | undefined;
     private whenClauses: When<C>[] = [];
     private default: Expr | undefined;
+
+    private endAsProjection: Projection | undefined;
 
     constructor(comparator?: C) {
         super();
@@ -49,15 +53,23 @@ export class Case<C extends Expr | undefined = undefined> extends CypherASTNode 
         return this;
     }
 
-    /** @internal */
+    public endAs(variable: Variable, ...expr: ProjectionColumn[]): this {
+        this.endAsProjection = new Projection([variable, ...expr]);
+        return this;
+    }
+
+    /**
+     * @internal
+     */
     public getCypher(env: CypherEnvironment): string {
         const comparatorStr = compileCypherIfExists(this.comparator, env, { prefix: " " });
         const whenStr = this.whenClauses.map((c) => c.getCypher(env)).join("\n");
         const defaultStr = compileCypherIfExists(this.default, env, { prefix: "\nELSE " });
+        const endAsStr = compileCypherIfExists(this.endAsProjection, env, { prefix: " AS " });
 
         const innerStr = padBlock(`${whenStr}${defaultStr}`);
 
-        return `CASE${comparatorStr}\n${innerStr}\nEND`;
+        return `CASE${comparatorStr}\n${innerStr}\nEND${endAsStr}`;
     }
 }
 
@@ -67,7 +79,7 @@ class When<T extends Expr | undefined> extends CypherASTNode {
     private result: Expr | undefined;
 
     constructor(parent: Case<T>, predicate: Expr[]) {
-        super();
+        super(parent);
         this.parent = parent;
         this.predicates = predicate;
     }

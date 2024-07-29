@@ -95,6 +95,7 @@ END"
                 .when(new Cypher.Literal("brown"), new Cypher.Literal("hazel"))
                 .then(new Cypher.Literal(2))
                 .else(new Cypher.Literal(3))
+                .endAs(new Cypher.Variable(), person.property("eyes"))
         );
 
         const { cypher } = new TestClause(matchClause).build();
@@ -105,7 +106,7 @@ RETURN CASE this0.eyes
     WHEN \\"blue\\" THEN 1
     WHEN \\"brown\\", \\"hazel\\" THEN 2
     ELSE 3
-END"
+END AS var1, this0.eyes"
 `);
     });
 });

@@ -4,7 +4,7 @@
 
 Add support for multiple expressions on the simple CASE:
 
-```cypher
+```js
 matchClause.return(
     new Cypher.Case(person.property("eyes"))
         .when(new Cypher.Literal("brown"), new Cypher.Literal("hazel"))
