@@ -116,6 +116,7 @@ export {
 } from "./expressions/functions/aggregation";
 export * as graph from "./expressions/functions/graph";
 export * from "./expressions/functions/list";
+export { file, linenumber } from "./expressions/functions/load-csv";
 export {
     ROUND_PRECISION_MODE,
     abs,
@@ -144,6 +145,7 @@ export {
     tan,
 } from "./expressions/functions/math";
 export * from "./expressions/functions/path";
+export { all, any, exists, isEmpty, none, single } from "./expressions/functions/predicate";
 export * from "./expressions/functions/scalar";
 export * from "./expressions/functions/spatial";
 export * from "./expressions/functions/string";
@@ -156,8 +158,6 @@ export {
     cypherLocalTime as localtime,
     cypherTime as time,
 } from "./expressions/functions/temporal";
-
-export { all, any, exists, isEmpty, none, single } from "./expressions/functions/predicate";
 
 // Procedures
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
