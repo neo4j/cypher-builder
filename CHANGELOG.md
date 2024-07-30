@@ -1,5 +1,53 @@
 # @neo4j/cypher-builder
 
+## 1.19.0
+
+### Minor Changes
+
+-   [#369](https://github.com/neo4j/cypher-builder/pull/369) [`3514bdd`](https://github.com/neo4j/cypher-builder/commit/3514bdd6574a43f05c1eed7da1359a2e327bc047) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for LOAD CSV:
+
+    ```js
+    const row = new Cypher.Variable();
+    const loadClause = new Cypher.LoadCSV("https://data.neo4j.com/bands/artists.csv", row).return(row);
+    ```
+
+-   [#354](https://github.com/neo4j/cypher-builder/pull/354) [`ef49a96`](https://github.com/neo4j/cypher-builder/commit/ef49a96ec8a88676fa731f4d17030e7e01718b77) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for quantifier patterns:
+
+    ```js
+    const m = new Cypher.Node();
+    const m2 = new Cypher.Node();
+
+    const quantifiedPath = new Cypher.QuantifiedPath(
+        new Cypher.Pattern(m, { labels: ["Movie"], properties: { title: new Cypher.Param("V for Vendetta") } }),
+        new Cypher.Pattern({ labels: ["Movie"] })
+            .related({ type: "ACTED_IN" })
+            .to({ labels: ["Person"] })
+            .quantifier({ min: 1, max: 2 }),
+        new Cypher.Pattern(m2, {
+            labels: ["Movie"],
+            properties: { title: new Cypher.Param("Something's Gotta Give") },
+        })
+    );
+
+    const query = new Cypher.Match(quantifiedPath).return(m2);
+    ```
+
+    _Cypher_
+
+    ```cypher
+    MATCH (this0:Movie { title: $param0 })
+          ((:Movie)-[:ACTED_IN]->(:Person)){1,2}
+          (this1:Movie { title: $param1 })
+    RETURN this1
+    ```
+
+### Patch Changes
+
+-   [#371](https://github.com/neo4j/cypher-builder/pull/371) [`6d1b0c4`](https://github.com/neo4j/cypher-builder/commit/6d1b0c44d0c7d8862dbbcf7e1c29897cb2e17c5c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add `LOAD CSV` related functions:
+
+    -   `file()`
+    -   `linenumber()`
+
 ## 1.18.1
 
 ### Patch Changes
