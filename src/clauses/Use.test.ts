@@ -21,8 +21,8 @@ import * as Cypher from "../Cypher";
 
 describe("CypherBuilder USE", () => {
     test("USE before clause", () => {
-        const n1 = new Cypher.Node({ labels: ["Movie"] });
-        const query1 = new Cypher.Match(n1).return(n1);
+        const n1 = new Cypher.Node();
+        const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return(n1);
 
         const useQuery = new Cypher.Use("mydb", query1);
         const queryResult = useQuery.build();
@@ -35,8 +35,8 @@ describe("CypherBuilder USE", () => {
     });
 
     test("USE in CALL", () => {
-        const n1 = new Cypher.Node({ labels: ["Movie"] });
-        const query1 = new Cypher.Match(n1).return(n1);
+        const n1 = new Cypher.Node();
+        const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return(n1);
 
         const callQuery = new Cypher.Call(new Cypher.Use("mydb", query1));
         const queryResult = callQuery.build();
@@ -51,10 +51,10 @@ describe("CypherBuilder USE", () => {
     });
 
     test("USE in UNION", () => {
-        const n1 = new Cypher.Node({ labels: ["Movie"] });
-        const query1 = new Cypher.Match(n1).return(n1);
-        const n2 = new Cypher.Node({ labels: ["Movie"] });
-        const query2 = new Cypher.Match(n2).return(n2);
+        const n1 = new Cypher.Node();
+        const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return(n1);
+        const n2 = new Cypher.Node();
+        const query2 = new Cypher.Match(new Cypher.Pattern(n2, { labels: ["Movie"] })).return(n2);
 
         const callQuery = new Cypher.Union(new Cypher.Use("mydb", query1), query2);
         const queryResult = callQuery.build();

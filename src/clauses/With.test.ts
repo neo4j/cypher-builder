@@ -29,9 +29,7 @@ describe("CypherBuilder With", () => {
     });
 
     test("With nodes", () => {
-        const node = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const node = new Cypher.Node();
         const withQuery = new Cypher.With(node);
 
         const queryResult = withQuery.build();
@@ -40,9 +38,7 @@ describe("CypherBuilder With", () => {
     });
 
     test("With distinct", () => {
-        const node = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const node = new Cypher.Node();
         const withQuery = new Cypher.With(node).distinct();
 
         const queryResult = withQuery.build();
@@ -51,9 +47,7 @@ describe("CypherBuilder With", () => {
     });
 
     test("With clause after with", () => {
-        const node = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const node = new Cypher.Node();
         const withQuery = new Cypher.With(node);
 
         const nestedWith = withQuery.with(node);
@@ -68,9 +62,7 @@ describe("CypherBuilder With", () => {
     });
 
     test("With clause after chained with", () => {
-        const node = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const node = new Cypher.Node();
         const withQuery = new Cypher.With(node).with(node).with("*");
 
         const queryResult = withQuery.build();
@@ -83,9 +75,7 @@ describe("CypherBuilder With", () => {
     });
 
     test("With clause ignores multiple *", () => {
-        const node = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const node = new Cypher.Node();
         const withQuery = new Cypher.With(node, "*", "*");
 
         const queryResult = withQuery.build();
@@ -94,9 +84,7 @@ describe("CypherBuilder With", () => {
     });
 
     test("With multiple variables", () => {
-        const node = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const node = new Cypher.Node();
         const variable = new Cypher.Variable();
         const param = new Cypher.Param("Matrix");
 
@@ -113,9 +101,7 @@ describe("CypherBuilder With", () => {
 
     describe("With alias", () => {
         test("With variable aliased", () => {
-            const node = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const node = new Cypher.Node();
             const alias = new Cypher.Variable();
             const withQuery = new Cypher.With([node, alias]);
 
@@ -125,9 +111,7 @@ describe("CypherBuilder With", () => {
         });
 
         test("With a string alias", () => {
-            const node = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const node = new Cypher.Node();
             const withQuery = new Cypher.With([node, "my-alias"]);
 
             const queryResult = withQuery.build();
@@ -151,9 +135,7 @@ describe("CypherBuilder With", () => {
         });
 
         test("With alias and delete", () => {
-            const node = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const node = new Cypher.Node();
             const alias = new Cypher.Variable();
             const withQuery = new Cypher.With([node, alias]).detachDelete(alias);
 
@@ -194,7 +176,7 @@ describe("CypherBuilder With", () => {
 
     describe("Chained Match", () => {
         test("chained match", () => {
-            const withQuery = new Cypher.With("*").match(new Cypher.Node());
+            const withQuery = new Cypher.With("*").match(new Cypher.Pattern(new Cypher.Node()));
 
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -205,7 +187,7 @@ MATCH (this0)"
         });
 
         test("chained optional match", () => {
-            const withQuery = new Cypher.With("*").optionalMatch(new Cypher.Node());
+            const withQuery = new Cypher.With("*").optionalMatch(new Cypher.Pattern(new Cypher.Node()));
 
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -216,7 +198,7 @@ OPTIONAL MATCH (this0)"
         });
 
         test("chained match with existing clause", () => {
-            const withQuery = new Cypher.With("*").match(new Cypher.Match(new Cypher.Node()));
+            const withQuery = new Cypher.With("*").match(new Cypher.Match(new Cypher.Pattern(new Cypher.Node())));
 
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -229,7 +211,7 @@ MATCH (this0)"
 
     describe("Chained Create", () => {
         test("With * and create", () => {
-            const withQuery = new Cypher.With("*").create(new Cypher.Node({ labels: ["Movie"] }));
+            const withQuery = new Cypher.With("*").create(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] }));
 
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -240,7 +222,7 @@ CREATE (this0:Movie)"
         });
 
         test("With * and existing create clause", () => {
-            const createClause = new Cypher.Create(new Cypher.Node({ labels: ["Movie"] }));
+            const createClause = new Cypher.Create(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] }));
             const withQuery = new Cypher.With("*").create(createClause);
 
             const queryResult = withQuery.build();
@@ -254,7 +236,7 @@ CREATE (this0:Movie)"
 
     describe("Chained Merge", () => {
         test("With * and merge", () => {
-            const withQuery = new Cypher.With("*").merge(new Cypher.Node({ labels: ["Movie"] }));
+            const withQuery = new Cypher.With("*").merge(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] }));
 
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -265,7 +247,7 @@ MERGE (this0:Movie)"
         });
 
         test("With * and existing merge clause", () => {
-            const mergeClause = new Cypher.Merge(new Cypher.Node({ labels: ["Movie"] }));
+            const mergeClause = new Cypher.Merge(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] }));
             const withQuery = new Cypher.With("*").merge(mergeClause);
 
             const queryResult = withQuery.build();
