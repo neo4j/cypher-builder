@@ -247,6 +247,50 @@ new Cypher.Pattern(movie, { labels: ["Movie"] }).where(Cypher.eq(movie.property(
 (this0:Movie WHERE this0.title = "The Matrix")
 ----
 
+== Quantified path patterns
+
+link:https://neo4j.com/docs/cypher-manual/current/patterns/variable-length-patterns/#quantified-path-patterns[Quantified path patterns] can be defined with the class `Cypher.QuantifiedPath`.
+
+A QuantifiedPath represents an union of quantified or normal patterns. For example:
+
+[source, javascript]
+----
+const m = new Cypher.Node();
+const m2 = new Cypher.Node();
+
+const quantifiedPath = new Cypher.QuantifiedPath(
+    new Cypher.Pattern(m, { labels: ["Movie"], properties: { title: new Cypher.Param("V for Vendetta") } }),
+    new Cypher.Pattern({ labels: ["Movie"] })
+        .related({ type: "ACTED_IN" })
+        .to({ labels: ["Person"] })
+        .quantifier({ min: 1, max: 2 }),
+    new Cypher.Pattern(m2, {
+        labels: ["Movie"],
+        properties: { title: new Cypher.Param("Something's Gotta Give") },
+    })
+);
+
+const query = new Cypher.Match(quantifiedPath).return(m2);
+----
+
+Generates the following Cypher:
+[source, cypher]
+----
+MATCH (this0:Movie { title: $param0 })
+      ((:Movie)-[:ACTED_IN]->(:Person)){1,2}
+      (this1:Movie { title: $param1 })
+RETURN this1
+----
+
+Note that the `QuantifiedPath` requires at least one of the patterns to have a quantifier. This can be done with the `.quantifier` method of the normal `Pattern` class. This methods turns a pattern such as `(:Movie)-[:ACTED_IN]->(:Person)` into a quantified pattern: `((:Movie)-[:ACTED_IN]->(:Person)){1,2}`.
+
+The method `quantifier` accepts a single parameter, which can be one of the following:
+
+* A number, defining the exact length.
+* An object with the optional properties `min`, `max`.
+* The strings `+` or `*`.
+
+
 == Escaping labels and types
 
 Labels and types will be automatically escaped if any uncommon character is detected. 
