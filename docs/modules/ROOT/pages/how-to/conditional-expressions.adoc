@@ -1,6 +1,6 @@
 [[conditional-expressions]]
 :description: This page describes how to create conditional expressions with CASE.
-= Conditional Expressions (CASE)
+= Conditional Expressions (`CASE`)
 
 This page describes how to create link:https://neo4j.com/docs/cypher-manual/current/queries/case/[`CASE`] expressions in Cypher with Cypher Builder.
 

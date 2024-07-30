@@ -22,6 +22,7 @@ export { Call } from "./clauses/Call";
 export { Create } from "./clauses/Create";
 export { Finish } from "./clauses/Finish";
 export { Foreach } from "./clauses/Foreach";
+export { LoadCSV } from "./clauses/LoadCSV";
 export { Match, OptionalMatch } from "./clauses/Match";
 export { Merge } from "./clauses/Merge";
 export { Raw, RawCypher } from "./clauses/Raw";
