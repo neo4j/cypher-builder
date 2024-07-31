@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../..";
+import Cypher from "../../src";
 
 describe("CypherBuilder concat", () => {
     test("concatenates Match and Return", () => {

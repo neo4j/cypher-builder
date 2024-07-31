@@ -95,6 +95,7 @@ export class CompositeClause extends Clause {
 
 /** Concatenates multiple {@link Clause | clauses} into a single clause
  * @category Clauses
+ * @deprecated Use `Cypher.utils.concat` instead
  */
 export function concat(...clauses: Array<Clause | undefined>): CompositeClause {
     return new CompositeClause(clauses, "\n");
