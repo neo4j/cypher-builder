@@ -33,6 +33,7 @@ describe("String Functions", () => {
         "normalize",
         "lower",
         "upper",
+        "btrim",
     ] as const)("%s", (value) => {
         const testFunction = Cypher[value](new Cypher.Param("Hello"));
         const { cypher, params } = new TestClause(testFunction).build();
@@ -45,7 +46,7 @@ describe("String Functions", () => {
     });
 
     // Functions with 2 arguments
-    test.each(["left", "right", "split"] as const)("%s", (value) => {
+    test.each(["left", "right", "split", "btrim"] as const)("%s", (value) => {
         const testFunction = Cypher[value](new Cypher.Param("Hello"), new Cypher.Literal("Hello"));
         const { cypher, params } = new TestClause(testFunction).build();
 
@@ -54,6 +55,15 @@ describe("String Functions", () => {
         expect(params).toEqual({
             param0: "Hello",
         });
+    });
+
+    test.each(["btrim"] as const)("%s with string parameter", (value) => {
+        const testFunction = Cypher[value]("Hello");
+        const { cypher, params } = new TestClause(testFunction).build();
+
+        expect(cypher).toBe(`${value}("Hello")`);
+
+        expect(params).toEqual({});
     });
 
     test("replace", () => {

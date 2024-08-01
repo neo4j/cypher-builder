@@ -28,6 +28,17 @@ import { CypherFunction } from "./CypherFunctions";
  * @group Cypher Functions
  * @category String
  */
+export function btrim(original: string | Expr, trimCharacter?: string | Expr): CypherFunction {
+    const normalizedOriginal = normalizeExpr(original);
+    const normalizedTrimCharacter = trimCharacter ? normalizeExpr(trimCharacter) : undefined;
+    return new CypherFunction("btrim", filterTruthy([normalizedOriginal, normalizedTrimCharacter]));
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @group Cypher Functions
+ * @category String
+ */
 export function left(original: Expr, length: Expr): CypherFunction {
     return new CypherFunction("left", [original, length]);
 }
