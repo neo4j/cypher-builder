@@ -17,9 +17,12 @@
  * limitations under the License.
  */
 
-// Note: This file exists for exported utils to the user
+import type { Clause } from "../clauses/Clause";
+import { CompositeClause } from "../clauses/utils/concat";
 
-export { compileCypher } from "./compile-cypher";
-export { concat } from "./concat";
-export { escapeLabel, escapeProperty, escapeType, escapeVariable } from "./escape";
-export { toCypherParams } from "./to-cypher-params";
+/** Concatenates multiple {@link Clause | clauses} into a single clause
+ * @category Clauses
+ */
+export function concat(...clauses: Array<Clause | undefined>): CompositeClause {
+    return new CompositeClause(clauses, "\n");
+}
