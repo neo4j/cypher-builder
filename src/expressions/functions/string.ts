@@ -24,7 +24,18 @@ import { normalizeExpr } from "../../utils/normalize-variable";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-btrim)
+ * @group Cypher Functions
+ * @category String
+ */
+export function btrim(original: string | Expr, trimCharacter?: string | Expr): CypherFunction {
+    const normalizedOriginal = normalizeExpr(original);
+    const normalizedTrimCharacter = trimCharacter ? normalizeExpr(trimCharacter) : undefined;
+    return new CypherFunction("btrim", filterTruthy([normalizedOriginal, normalizedTrimCharacter]));
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-left)
  * @group Cypher Functions
  * @category String
  */
@@ -42,7 +53,7 @@ export function lower(original: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-ltrim)
  * @group Cypher Functions
  * @category String
  */
