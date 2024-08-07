@@ -336,7 +336,7 @@ REMOVE this0.title"
                 [movieNode.property("title"), new Cypher.Param("The Matrix")],
                 [movieNode.property("runtime"), new Cypher.Param(120)]
             )
-            .create(new Cypher.Node({ labels: ["Actor"] }))
+            .create(new Cypher.Pattern(new Cypher.Node(), { labels: ["Actor"] }))
             .return(movieNode);
 
         const queryResult = createQuery.build();

@@ -21,9 +21,7 @@ import Cypher from "..";
 
 describe("CypherBuilder Return", () => {
     test("Return columns", () => {
-        const node = new Cypher.Node({
-            labels: ["MyLabel"],
-        });
+        const node = new Cypher.Node();
         const returnQuery = new Cypher.Return(node, new Cypher.Literal(10));
 
         const queryResult = returnQuery.build();
@@ -56,9 +54,7 @@ describe("CypherBuilder Return", () => {
     });
 
     test("Alias with a variable", () => {
-        const node = new Cypher.Node({
-            labels: ["MyLabel"],
-        });
+        const node = new Cypher.Node();
         const returnQuery = new Cypher.Return([node, new Cypher.Variable()]);
 
         const queryResult = returnQuery.build();
@@ -67,9 +63,7 @@ describe("CypherBuilder Return", () => {
     });
 
     test("Using addColumns", () => {
-        const node = new Cypher.Node({
-            labels: ["MyLabel"],
-        });
+        const node = new Cypher.Node();
         const returnQuery = new Cypher.Return(node).addColumns(new Cypher.Literal(10), new Cypher.Literal(11));
 
         const queryResult = returnQuery.build();
@@ -79,9 +73,7 @@ describe("CypherBuilder Return", () => {
 
     describe("With order", () => {
         test("Return with order", () => {
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age"), "DESC"]);
 
@@ -95,9 +87,7 @@ describe("CypherBuilder Return", () => {
         });
 
         test("Return with order with default sorting order", () => {
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Return(movieNode).orderBy(movieNode.property("age"));
 
@@ -111,9 +101,7 @@ describe("CypherBuilder Return", () => {
         });
 
         test("Return with order and skip", () => {
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age")]).skip(10);
 
@@ -128,9 +116,7 @@ describe("CypherBuilder Return", () => {
         });
 
         test("Return with order and skip param", () => {
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Return(movieNode)
                 .orderBy([movieNode.property("age")])
@@ -151,9 +137,7 @@ describe("CypherBuilder Return", () => {
         });
 
         test("Return with order and limit", () => {
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age")]).limit(5);
 
@@ -168,9 +152,7 @@ describe("CypherBuilder Return", () => {
         });
 
         test("Return with order and limit param", () => {
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Return(movieNode)
                 .orderBy([movieNode.property("age")])
@@ -191,9 +173,7 @@ describe("CypherBuilder Return", () => {
         });
 
         test("Return with skip and limit expressions and no order", () => {
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Return(movieNode)
                 .limit(Cypher.plus(new Cypher.Literal(5), new Cypher.Literal(5)))
@@ -213,9 +193,7 @@ describe("CypherBuilder Return", () => {
 
     describe("Return distinct", () => {
         test("Return distinct", () => {
-            const node = new Cypher.Node({
-                labels: ["MyLabel"],
-            });
+            const node = new Cypher.Node();
             const returnQuery = new Cypher.Return(node, new Cypher.Literal(10)).distinct();
 
             const queryResult = returnQuery.build();
@@ -224,9 +202,7 @@ describe("CypherBuilder Return", () => {
         });
 
         test("Return distinct with order and limit param", () => {
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Return(movieNode)
                 .orderBy([movieNode.property("age")])
