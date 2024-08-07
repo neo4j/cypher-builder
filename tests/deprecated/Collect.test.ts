@@ -17,20 +17,18 @@
  * limitations under the License.
  */
 
-import Cypher from "../..";
+import Cypher from "../../src";
 
 describe("Collect Subquery", () => {
     test("Collect expression with subclause", () => {
-        const dog = new Cypher.Node();
-        const person = new Cypher.Node();
+        const dog = new Cypher.Node({ labels: ["Dog"] });
+        const person = new Cypher.Node({ labels: ["Person"] });
 
         const subquery = new Cypher.Match(
-            new Cypher.Pattern(person, { labels: ["Person"] })
-                .related(new Cypher.Relationship(), { type: "HAS_DOG" })
-                .to(dog, { labels: ["Dog"] })
+            new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog)
         ).return(dog.property("name"));
 
-        const match = new Cypher.Match(new Cypher.Pattern(person, { labels: ["Person"] }))
+        const match = new Cypher.Match(person)
             .where(Cypher.in(new Cypher.Literal("Ozzy"), new Cypher.Collect(subquery)))
             .return(person);
 
@@ -49,27 +47,20 @@ RETURN this0"
     });
 
     test("Return collect subquery with an union", () => {
-        const dog = new Cypher.Node();
-        const cat = new Cypher.Node();
-        const person = new Cypher.Node();
+        const dog = new Cypher.Node({ labels: ["Dog"] });
+        const cat = new Cypher.Node({ labels: ["Cat"] });
+        const person = new Cypher.Node({ labels: ["Person"] });
 
         const matchDog = new Cypher.Match(
-            new Cypher.Pattern(person, { labels: ["Person"] })
-                .related(new Cypher.Relationship(), { type: "HAS_DOG" })
-                .to(dog, { labels: ["Dog"] })
+            new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog)
         ).return([dog.property("name"), "petName"]);
         const matchCat = new Cypher.Match(
-            new Cypher.Pattern(person, { labels: ["Person"] })
-                .related(new Cypher.Relationship(), { type: "HAS_CAT" })
-                .to(cat, { labels: ["Cat"] })
+            new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_CAT" })).to(cat)
         ).return([cat.property("name"), "petName"]);
 
         const subquery = new Cypher.Union(matchDog, matchCat);
 
-        const match = new Cypher.Match(new Cypher.Pattern(person, { labels: ["Person"] })).return(person, [
-            new Cypher.Collect(subquery),
-            "petNames",
-        ]);
+        const match = new Cypher.Match(person).return(person, [new Cypher.Collect(subquery), "petNames"]);
 
         const queryResult = match.build();
 

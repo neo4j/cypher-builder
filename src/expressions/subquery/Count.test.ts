@@ -21,10 +21,10 @@ import Cypher from "../..";
 
 describe("Count Subquery", () => {
     test("Count predicate with subclause", () => {
-        const subquery = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).return("*");
+        const subquery = new Cypher.Match(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] })).return("*");
 
         const countExpr = new Cypher.Count(subquery);
-        const match = new Cypher.Match(new Cypher.Node())
+        const match = new Cypher.Match(new Cypher.Pattern(new Cypher.Node()))
             .where(Cypher.gt(countExpr, new Cypher.Literal(10)))
             .return("*");
 

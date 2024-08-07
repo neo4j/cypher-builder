@@ -319,9 +319,7 @@ REMOVE this0.title"
 
     test("Chained create", () => {
         const idParam = new Cypher.Param("my-id");
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const createQuery = new Cypher.Create(
             new Cypher.Pattern(movieNode, {
@@ -362,8 +360,9 @@ RETURN this0"
     test("Chained create with existing create Clause", () => {
         const idParam = new Cypher.Param("my-id");
         const movieNode = new Cypher.Node();
+        const actorNode = new Cypher.Node();
 
-        const secondCreate = new Cypher.Create(new Cypher.Node({ labels: ["Actor"] }));
+        const secondCreate = new Cypher.Create(new Cypher.Pattern(actorNode, { labels: ["Actor"] }));
 
         const createQuery = new Cypher.Create(
             new Cypher.Pattern(movieNode, {
