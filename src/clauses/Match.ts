@@ -19,7 +19,7 @@
 
 import type { CypherEnvironment } from "../Environment";
 import { Pattern } from "../pattern/Pattern";
-import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifierPath";
+import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
 import { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";

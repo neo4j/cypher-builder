@@ -118,6 +118,7 @@ export class Pattern extends PatternElement {
         }
     }
 
+    /** Adds a quantifier to the pattern such as `{1,3}`, to be used as part of a {@link QuantifiedPath} */
     public quantifier(quantifier: Quantifier): QuantifiedPattern {
         return new QuantifiedPattern(this, quantifier);
     }
