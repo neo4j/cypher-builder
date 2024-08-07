@@ -1,5 +1,17 @@
 # @neo4j/cypher-builder
 
+## 1.19.1
+
+### Patch Changes
+
+-   [#373](https://github.com/neo4j/cypher-builder/pull/373) [`99eb375`](https://github.com/neo4j/cypher-builder/commit/99eb375b8a6b154e1b89612fc6a5e05788067aa5) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `new Union().distinct()`
+
+-   [#378](https://github.com/neo4j/cypher-builder/pull/378) [`51ae499`](https://github.com/neo4j/cypher-builder/commit/51ae4993c0aa4fa015ec40c65d3a923eb06cf8e4) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for trimCharacter on rtrim and ltrim
+
+-   [#377](https://github.com/neo4j/cypher-builder/pull/377) [`d4c790e`](https://github.com/neo4j/cypher-builder/commit/d4c790e82b42fb28e21e385b086a2f991e642d50) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `btrim`
+
+-   [#378](https://github.com/neo4j/cypher-builder/pull/378) [`51ae499`](https://github.com/neo4j/cypher-builder/commit/51ae4993c0aa4fa015ec40c65d3a923eb06cf8e4) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates `lTrim` and `rTrim` in favour of `ltrim` and `rtrim`
+
 ## 1.19.0
 
 ### Minor Changes
