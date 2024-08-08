@@ -57,8 +57,10 @@ RETURN var0, var0 IS :: INTEGER"
         Cypher.TYPE.ZONED_DATETIME,
         Cypher.TYPE.ZONED_TIME,
     ] as const)("isType '%s'", (type) => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const matchClause = new Cypher.Match(movie).where(Cypher.isType(movie.property("title"), type)).return(movie);
+        const movie = new Cypher.Node();
+        const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
+            .where(Cypher.isType(movie.property("title"), type))
+            .return(movie);
 
         const { cypher } = matchClause.build();
 
@@ -68,8 +70,8 @@ RETURN this0`);
     });
 
     test("isType 'List<STRING>'", () => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const matchClause = new Cypher.Match(movie)
+        const movie = new Cypher.Node();
+        const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
             .where(Cypher.isType(movie.property("title"), Cypher.TYPE.list(Cypher.TYPE.STRING)))
             .return(movie);
 
@@ -83,8 +85,8 @@ RETURN this0"
     });
 
     test("isType 'List<List<STRING>>'", () => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const matchClause = new Cypher.Match(movie)
+        const movie = new Cypher.Node();
+        const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
             .where(Cypher.isType(movie.property("title"), Cypher.TYPE.list(Cypher.TYPE.list(Cypher.TYPE.STRING))))
             .return(movie);
 
@@ -98,8 +100,8 @@ RETURN this0"
     });
 
     test("isType with union type", () => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const matchClause = new Cypher.Match(movie)
+        const movie = new Cypher.Node();
+        const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
             .where(Cypher.isType(movie.property("title"), [Cypher.TYPE.list(Cypher.TYPE.STRING), Cypher.TYPE.STRING]))
             .return(movie);
 
@@ -113,8 +115,8 @@ RETURN this0"
     });
 
     test("isType in NOT", () => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const matchClause = new Cypher.Match(movie)
+        const movie = new Cypher.Node();
+        const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
             .where(Cypher.not(Cypher.isType(movie.property("title"), Cypher.TYPE.STRING)))
             .return(movie);
 
@@ -128,8 +130,8 @@ RETURN this0"
     });
 
     test("isNotType", () => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const matchClause = new Cypher.Match(movie)
+        const movie = new Cypher.Node();
+        const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
             .where(Cypher.isNotType(movie.property("title"), Cypher.TYPE.STRING))
             .return(movie);
 
@@ -144,8 +146,8 @@ RETURN this0"
 
     describe("notNull", () => {
         test("isType.notNull", () => {
-            const movie = new Cypher.Node({ labels: ["Movie"] });
-            const matchClause = new Cypher.Match(movie)
+            const movie = new Cypher.Node();
+            const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
                 .where(Cypher.isType(movie.property("title"), Cypher.TYPE.STRING).notNull())
                 .return(movie);
 
@@ -159,8 +161,8 @@ RETURN this0"
         });
 
         test("isNotType.notNull", () => {
-            const movie = new Cypher.Node({ labels: ["Movie"] });
-            const matchClause = new Cypher.Match(movie)
+            const movie = new Cypher.Node();
+            const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
                 .where(Cypher.isNotType(movie.property("title"), Cypher.TYPE.STRING).notNull())
                 .return(movie);
 
@@ -174,8 +176,8 @@ RETURN this0"
         });
 
         test("isType.notNull with union type", () => {
-            const movie = new Cypher.Node({ labels: ["Movie"] });
-            const matchClause = new Cypher.Match(movie)
+            const movie = new Cypher.Node();
+            const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
                 .where(Cypher.isType(movie.property("title"), [Cypher.TYPE.STRING, Cypher.TYPE.BOOLEAN]).notNull())
                 .return(movie);
 
@@ -189,8 +191,8 @@ RETURN this0"
         });
 
         test("isType with union type", () => {
-            const movie = new Cypher.Node({ labels: ["Movie"] });
-            const matchClause = new Cypher.Match(movie)
+            const movie = new Cypher.Node();
+            const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
                 .where(
                     Cypher.isType(movie.property("title"), [
                         Cypher.TYPE.list([Cypher.TYPE.STRING, Cypher.TYPE.FLOAT]).notNull(),

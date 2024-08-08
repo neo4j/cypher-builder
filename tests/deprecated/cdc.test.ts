@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../../src/index";
+import Cypher from "../../src";
 
 describe("CDC procedures", () => {
     test("cdc.current", () => {

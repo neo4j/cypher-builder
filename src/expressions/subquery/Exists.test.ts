@@ -21,10 +21,10 @@ import Cypher from "../..";
 
 describe("Exists subquery", () => {
     test("Exists predicate with subclause", () => {
-        const subquery = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).return("*");
+        const subquery = new Cypher.Match(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] })).return("*");
 
         const existsExpression = new Cypher.Exists(subquery);
-        const match = new Cypher.Match(new Cypher.Node()).where(existsExpression).return("*");
+        const match = new Cypher.Match(new Cypher.Pattern(new Cypher.Node())).where(existsExpression).return("*");
 
         const queryResult = match.build();
 

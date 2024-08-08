@@ -21,9 +21,11 @@ import Cypher from "../..";
 
 describe("CypherBuilder concat", () => {
     test("concatenates Match and Return", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const clause = new Cypher.Match(node).where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")));
+        const clause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
+            Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb"))
+        );
         const returnClause = new Cypher.Return([node.property("title"), "movie"]);
 
         const query = Cypher.concat(clause, returnClause);
@@ -113,18 +115,22 @@ describe("CypherBuilder concat", () => {
     });
 
     test("Non-Empty composite clause", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const clause = new Cypher.Match(node).where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")));
+        const clause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
+            Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb"))
+        );
         const compositeClause = Cypher.concat(clause);
         expect(compositeClause.empty).toBeFalse();
         expect(compositeClause.children).toHaveLength(1);
     });
 
     test("Nested concatenation flattens the tree if composite clause has 1 element", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const clause = new Cypher.Match(node).where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")));
+        const clause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
+            Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb"))
+        );
         const returnClause = new Cypher.Return([node.property("title"), "movie"]);
 
         const nestedConcat = Cypher.concat(clause);

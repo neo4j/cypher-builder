@@ -22,12 +22,11 @@ import Cypher from "..";
 
 describe("CypherBuilder Match", () => {
     test("Match node", () => {
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const matchQuery = new Cypher.Match(
             new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
                 properties: {
                     test: new Cypher.Param("test-value"),
                 },
@@ -115,11 +114,10 @@ describe("CypherBuilder Match", () => {
     });
 
     test("Optional match", () => {
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const pattern = new Cypher.Pattern(movieNode, {
+            labels: ["Movie"],
             properties: {
                 test: new Cypher.Param("test-value"),
             },
@@ -175,11 +173,13 @@ RETURN this1"
     describe("Assign to path variable", () => {
         const a = new Cypher.Node();
         const b = new Cypher.Node();
-        const rel = new Cypher.Relationship({
-            type: "ACTED_IN",
-        });
+        const rel = new Cypher.Relationship();
 
-        const pattern = new Cypher.Pattern(a).related(rel).to(b);
+        const pattern = new Cypher.Pattern(a)
+            .related(rel, {
+                type: "ACTED_IN",
+            })
+            .to(b);
 
         test("with unique id", () => {
             const path = new Cypher.Path();
@@ -214,12 +214,11 @@ RETURN this1"
             const nameParam = new Cypher.Param("my-name");
             const ageParam = new Cypher.Param(5);
 
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Match(
                 new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
                     properties: {
                         test: new Cypher.Param("test-value"),
                     },
@@ -250,12 +249,11 @@ RETURN this1"
             const nameParam = new Cypher.Param("my-name");
             const ageParam = new Cypher.Param(5);
 
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Match(
                 new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
                     properties: {
                         test: new Cypher.Param("test-value"),
                     },
@@ -286,12 +284,11 @@ RETURN this1"
             const idParam = new Cypher.Param("my-id");
             const nameParam = new Cypher.Param("my-name");
 
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Match(
                 new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
                     properties: {
                         test: new Cypher.Param("test-value"),
                     },
@@ -319,13 +316,14 @@ RETURN this1"
         test("Match with null values", () => {
             const testParam = new Cypher.Param(null);
 
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
             const matchQuery = new Cypher.Match(
-                new Cypher.Pattern(movieNode).withProperties({
-                    test: testParam,
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: testParam,
+                    },
                 })
             )
                 .where(Cypher.isNull(movieNode.property("name")))
@@ -342,10 +340,10 @@ RETURN this1"
         });
 
         test("Match Where with complex operation", () => {
-            const node = new Cypher.Node({ labels: ["Movie"] });
+            const node = new Cypher.Node();
 
             const param = new Cypher.Param(1);
-            const clause = new Cypher.Match(node)
+            const clause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
                 .where(
                     Cypher.and(
                         Cypher.or(Cypher.gt(param, new Cypher.Param(2)), Cypher.lt(param, new Cypher.Param(4))),
@@ -395,11 +393,13 @@ RETURN this1"
         test("Match node with simple NOT", () => {
             const nameParam = new Cypher.Param("my-name");
 
-            const movieNode = new Cypher.Node({
-                labels: ["Movie"],
-            });
+            const movieNode = new Cypher.Node();
 
-            const matchQuery = new Cypher.Match(movieNode)
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                })
+            )
                 .where(Cypher.not(Cypher.eq(movieNode.property("name"), nameParam)))
                 .return(movieNode);
 
