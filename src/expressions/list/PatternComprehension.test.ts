@@ -22,10 +22,12 @@ import { TestClause } from "../../utils/TestClause";
 
 describe("Pattern comprehension", () => {
     test("comprehension with map", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
         const andExpr = Cypher.eq(node.property("released"), new Cypher.Param(1999));
 
-        const comprehension = new Cypher.PatternComprehension(node).map(andExpr);
+        const comprehension = new Cypher.PatternComprehension(new Cypher.Pattern(node, { labels: ["Movie"] })).map(
+            andExpr
+        );
 
         const queryResult = new TestClause(comprehension).build();
 
@@ -39,9 +41,9 @@ describe("Pattern comprehension", () => {
     });
 
     test("comprehension without map", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
-        const comprehension = new Cypher.PatternComprehension(node);
+        const comprehension = new Cypher.PatternComprehension(new Cypher.Pattern(node, { labels: ["Movie"] }));
 
         const queryResult = new TestClause(comprehension).build();
 
@@ -53,11 +55,13 @@ describe("Pattern comprehension", () => {
     test("comprehension from relationship pattern", () => {
         const a = new Cypher.Node();
         const b = new Cypher.Node();
-        const rel = new Cypher.Relationship({
-            type: "ACTED_IN",
-        });
+        const rel = new Cypher.Relationship();
 
-        const pattern = new Cypher.Pattern(a).related(rel).to(b);
+        const pattern = new Cypher.Pattern(a)
+            .related(rel, {
+                type: "ACTED_IN",
+            })
+            .to(b);
 
         const andExpr = Cypher.eq(rel.property("released"), new Cypher.Param(1999));
 
@@ -77,13 +81,15 @@ describe("Pattern comprehension", () => {
     });
 
     test("comprehension with filter", () => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const rel = new Cypher.Relationship({
-            type: "ACTED_IN",
-        });
-        const actor = new Cypher.Node({ labels: ["Actor"] });
+        const movie = new Cypher.Node();
+        const rel = new Cypher.Relationship();
+        const actor = new Cypher.Node();
 
-        const pattern = new Cypher.Pattern(movie).related(rel).to(actor);
+        const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] })
+            .related(rel, {
+                type: "ACTED_IN",
+            })
+            .to(actor, { labels: ["Actor"] });
 
         const comprehension = new Cypher.PatternComprehension(pattern)
             .map(actor.property("name"))

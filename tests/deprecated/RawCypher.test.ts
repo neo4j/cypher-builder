@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("RawCypher", () => {
+describe("RawCypher - Deprecated", () => {
     test("Return a simple string as a clause", () => {
         const rawQuery = new Cypher.RawCypher(() => {
             const cypherStr = "RETURN $myParam as title";

@@ -20,7 +20,7 @@
 import Cypher from "../../src/";
 import { TestClause } from "../../src/utils/TestClause";
 
-describe("Patterns", () => {
+describe("Patterns - Deprecated", () => {
     describe("node", () => {
         test("Simple node", () => {
             const node = new Cypher.Node({ labels: ["TestLabel"] });
