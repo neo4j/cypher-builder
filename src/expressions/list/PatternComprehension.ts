@@ -26,7 +26,7 @@ import type { NodeRef } from "../../references/NodeRef";
 import type { Expr } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PatternComprehension extends WithWhere {}
 
 /** Represents a Pattern comprehension
