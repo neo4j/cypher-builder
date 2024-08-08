@@ -21,7 +21,7 @@ import Cypher from "..";
 
 describe("Procedures", () => {
     test("Custom Procedure without yield", () => {
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const customProcedure = new Cypher.Procedure("customProcedure", [targetNode]);
 
         const { cypher, params } = customProcedure.build();
@@ -31,7 +31,7 @@ describe("Procedures", () => {
     });
 
     test("Custom Procedure with yield", () => {
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const customProcedure = new Cypher.Procedure("customProcedure", [targetNode]).yield("result1", "result2");
 
         const { cypher, params } = customProcedure.build();
@@ -41,7 +41,7 @@ describe("Procedures", () => {
     });
 
     test("Custom Procedure with * yield", () => {
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const customProcedure = new Cypher.Procedure("customProcedure", [targetNode]).yield("*");
 
         const { cypher, params } = customProcedure.build();
@@ -51,7 +51,7 @@ describe("Procedures", () => {
     });
 
     test("Custom Procedure with yield and alias", () => {
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const customProcedure = new Cypher.Procedure("customProcedure", [targetNode]).yield(
             "result1",
             ["result2", new Cypher.Literal("aliased")],
@@ -67,7 +67,7 @@ describe("Procedures", () => {
     });
 
     test("Custom Procedure with explicit yield", () => {
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const customProcedure = new Cypher.Procedure<"result1" | "result2">("customProcedure", [targetNode]).yield(
             "result1",
             "result2"
@@ -80,7 +80,7 @@ describe("Procedures", () => {
     });
 
     test("Custom VoidProcedure without yield", () => {
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const customProcedure = new Cypher.VoidProcedure("customProcedure", [targetNode]);
 
         const { cypher, params } = customProcedure.build();
@@ -185,7 +185,7 @@ UNWIND var0 AS var1"
         it("Procedure with Merge", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
-            procedure.merge(new Cypher.Node());
+            procedure.merge(new Cypher.Pattern(new Cypher.Node()));
             const { cypher, params } = procedure.build();
 
             expect(cypher).toMatchInlineSnapshot(`
@@ -198,7 +198,7 @@ MERGE (this0)"
         it("Procedure with Create", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
-            procedure.create(new Cypher.Node());
+            procedure.create(new Cypher.Pattern(new Cypher.Node()));
             const { cypher, params } = procedure.build();
 
             expect(cypher).toMatchInlineSnapshot(`

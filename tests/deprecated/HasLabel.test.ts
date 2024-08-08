@@ -21,7 +21,7 @@ import Cypher from "../../src";
 import { HasLabel } from "../../src/expressions/HasLabel";
 import { TestClause } from "../../src/utils/TestClause";
 
-describe("HasLabel", () => {
+describe("HasLabel - Deprecated", () => {
     test("Fails if no labels are provided", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         expect(() => {

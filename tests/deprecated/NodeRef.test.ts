@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("NodeRef", () => {
+describe("NodeRef - Deprecated", () => {
     test("Generates node with labels", () => {
         const node = new Cypher.Node({
             labels: ["Movie", "Film"],

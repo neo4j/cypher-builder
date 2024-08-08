@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("CypherBuilder Match", () => {
+describe("CypherBuilder Match - Deprecated", () => {
     test("Match node", () => {
         const movieNode = new Cypher.Node({
             labels: ["Movie"],

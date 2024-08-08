@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("apoc.cypher", () => {
+describe("apoc.cypher - Deprecated", () => {
     test("Complex subQuery with scoped env and params", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const param1 = new Cypher.Param("The Matrix");

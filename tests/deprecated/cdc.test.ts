@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("CDC procedures", () => {
+describe("CDC procedures - Deprecated", () => {
     test("cdc.current", () => {
         const query = Cypher.cdc.current();
         const { cypher } = query.build();

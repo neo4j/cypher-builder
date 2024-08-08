@@ -22,7 +22,7 @@ import { TestClause } from "../../utils/TestClause";
 
 describe("List Functions", () => {
     test.each(["keys", "labels"] as const)("%s()", (value) => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
         const labelsFn = Cypher[value](node);
 
         const queryResult = new TestClause(labelsFn).build();

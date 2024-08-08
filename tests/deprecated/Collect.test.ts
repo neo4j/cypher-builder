@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("Collect Subquery", () => {
+describe("Collect Subquery - Deprecated", () => {
     test("Collect expression with subclause", () => {
         const dog = new Cypher.Node({ labels: ["Dog"] });
         const person = new Cypher.Node({ labels: ["Person"] });

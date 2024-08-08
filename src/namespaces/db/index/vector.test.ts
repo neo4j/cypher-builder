@@ -22,7 +22,7 @@ import Cypher from "../../../index";
 describe("db.index.vector.queryNodes", () => {
     test("Simple vector", () => {
         const nearestNeighbours = 10;
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const vectorProcedure = Cypher.db.index.vector
             .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
             .yield(["node", targetNode]);
@@ -40,7 +40,7 @@ describe("db.index.vector.queryNodes", () => {
     });
     test("Simple vector", () => {
         const nearestNeighbours = 5;
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const vectorProcedure = Cypher.db.index.vector
             .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Literal("This is a lovely phrase literal"))
             .yield(["node", targetNode]);
@@ -54,7 +54,7 @@ describe("db.index.vector.queryNodes", () => {
     });
     test("vector with where and return", () => {
         const nearestNeighbours = 15;
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const vectorProcedure = Cypher.db.index.vector
             .queryNodes("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
             .yield(["node", targetNode])
@@ -79,7 +79,7 @@ describe("db.index.vector.queryNodes", () => {
 describe("db.index.vector.queryRelationships", () => {
     test("Simple vector", () => {
         const nearestNeighbours = 10;
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const vectorProcedure = Cypher.db.index.vector
             .queryRelationships("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
             .yield(["relationship", targetNode]);
@@ -97,7 +97,7 @@ describe("db.index.vector.queryRelationships", () => {
     });
     test("Simple vector using literal", () => {
         const nearestNeighbours = 10;
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const vectorProcedure = Cypher.db.index.vector
             .queryRelationships(
                 "my-vector-index",
@@ -115,7 +115,7 @@ describe("db.index.vector.queryRelationships", () => {
     });
     test("vector with where and return", () => {
         const nearestNeighbours = 5;
-        const targetNode = new Cypher.Node({ labels: ["Movie"] });
+        const targetNode = new Cypher.Node();
         const vectorProcedure = Cypher.db.index.vector
             .queryRelationships("my-vector-index", nearestNeighbours, new Cypher.Param("This is a lovely phrase"))
             .yield(["relationship", targetNode])

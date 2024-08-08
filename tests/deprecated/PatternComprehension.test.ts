@@ -25,7 +25,7 @@ describe("Pattern comprehension - Deprecated", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
         const andExpr = Cypher.eq(node.property("released"), new Cypher.Param(1999));
 
-        const comprehension = new Cypher.PatternComprehension(node, andExpr);
+        const comprehension = new Cypher.PatternComprehension(node).map(andExpr);
 
         const queryResult = new TestClause(comprehension).build();
 
@@ -36,6 +36,18 @@ describe("Pattern comprehension - Deprecated", () => {
               "param0": 1999,
             }
         `);
+    });
+
+    test("comprehension without map", () => {
+        const node = new Cypher.Node({ labels: ["Movie"] });
+
+        const comprehension = new Cypher.PatternComprehension(node);
+
+        const queryResult = new TestClause(comprehension).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"[(this0:Movie)]"`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("comprehension from relationship pattern", () => {
@@ -49,7 +61,7 @@ describe("Pattern comprehension - Deprecated", () => {
 
         const andExpr = Cypher.eq(rel.property("released"), new Cypher.Param(1999));
 
-        const comprehension = new Cypher.PatternComprehension(pattern, andExpr);
+        const comprehension = new Cypher.PatternComprehension(pattern).map(andExpr);
 
         const queryResult = new TestClause(comprehension).build();
 
@@ -73,9 +85,9 @@ describe("Pattern comprehension - Deprecated", () => {
 
         const pattern = new Cypher.Pattern(movie).related(rel).to(actor);
 
-        const comprehension = new Cypher.PatternComprehension(pattern, actor.property("name")).where(
-            Cypher.contains(movie.property("title"), new Cypher.Literal("Matrix"))
-        );
+        const comprehension = new Cypher.PatternComprehension(pattern)
+            .map(actor.property("name"))
+            .where(Cypher.contains(movie.property("title"), new Cypher.Literal("Matrix")));
 
         const queryResult = new TestClause(comprehension).build();
 

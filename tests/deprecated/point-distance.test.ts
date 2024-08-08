@@ -20,7 +20,7 @@
 import Cypher from "../../src";
 import { TestClause } from "../../src/utils/TestClause";
 
-describe("Spatial Functions", () => {
+describe("Spatial Functions - Deprecated", () => {
     test("point.distance", () => {
         const leftExpr = new Cypher.Variable();
         const rightExpr = new Cypher.Variable();

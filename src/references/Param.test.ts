@@ -30,7 +30,7 @@ describe("Params", () => {
             labels: ["Movie"],
         });
 
-        const query = new Cypher.Create(movieNode).set(
+        const query = new Cypher.Create(new Cypher.Pattern(movieNode)).set(
             [movieNode.property("released"), param1] // Explicitly defines the node property
         );
 

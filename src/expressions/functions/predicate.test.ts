@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Predicate Functions", () => {
     test("exists", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
-        const existsFn = Cypher.exists(new Cypher.Pattern(node));
+        const node = new Cypher.Node();
+        const existsFn = Cypher.exists(new Cypher.Pattern(node, { labels: ["Movie"] }));
 
         const queryResult = new TestClause(existsFn).build();
 
@@ -55,14 +55,14 @@ describe("Predicate Functions", () => {
     });
 
     test("Using functions as predicates", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
+        const node = new Cypher.Node();
 
         const variable = new Cypher.Variable();
         const exprVariable = new Cypher.Param([1, 2, 5]);
         const filter = Cypher.eq(variable, new Cypher.Literal(5));
 
         const anyFn = Cypher.all(variable, exprVariable, filter);
-        const existsFn = Cypher.exists(new Cypher.Pattern(node));
+        const existsFn = Cypher.exists(new Cypher.Pattern(node, { labels: ["Movie"] }));
 
         const andExpr = Cypher.and(anyFn, existsFn);
 
