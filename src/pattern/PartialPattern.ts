@@ -31,6 +31,7 @@ import { Pattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
 import { labelsToString } from "./labels-to-string";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PartialPattern extends WithWhere {}
 
 export type LengthOption =

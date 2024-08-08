@@ -17,15 +17,15 @@
  * limitations under the License.
  */
 
-import { WithWhere } from "../../clauses/mixins/sub-clauses/WithWhere";
-import { mixin } from "../../clauses/utils/mixin";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
+import { WithWhere } from "../../clauses/mixins/sub-clauses/WithWhere";
+import { mixin } from "../../clauses/utils/mixin";
+import type { Variable } from "../../references/Variable";
 import type { Expr } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
-import type { Variable } from "../../references/Variable";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ListComprehension extends WithWhere {}
 
 /** Represents a List comprehension
