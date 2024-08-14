@@ -48,7 +48,7 @@ describe("Map Projection", () => {
     });
 
     test("Project map with properties in projection and extra values", () => {
-        const node = new Cypher.Node({});
+        const node = new Cypher.Node();
 
         const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), ["title", "name"], {
             namedValue: Cypher.count(node),
@@ -62,7 +62,7 @@ describe("Map Projection", () => {
 
     test("Map Projection in return", () => {
         const mapVar = new Cypher.Variable();
-        const node = new Cypher.Node({});
+        const node = new Cypher.Node();
 
         const mapProjection = new Cypher.MapProjection(mapVar, ["title", "name"], {
             namedValue: Cypher.count(node),
@@ -78,7 +78,7 @@ describe("Map Projection", () => {
     });
 
     test("Convert to map with properties in projection and extra values", () => {
-        const node = new Cypher.Node({});
+        const node = new Cypher.Node();
 
         const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), ["title", "name"], {
             namedValue: Cypher.count(node),

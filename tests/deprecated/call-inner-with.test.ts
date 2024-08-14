@@ -19,8 +19,8 @@
 
 import Cypher from "../../src";
 
-describe("CypherBuilder Call", () => {
-    test("CALL with inner with", () => {
+describe("CypherBuilder Call - Deprecated", () => {
+    test("CALL with inner with - Deprecated", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)

@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import Cypher from "../..";
+import Cypher from "../../src";
 
-describe("CypherBuilder concat", () => {
+describe("CypherBuilder concat - Deprecated", () => {
     test("concatenates Match and Return", () => {
         const node = new Cypher.Node();
 
@@ -49,19 +49,17 @@ describe("CypherBuilder concat", () => {
     test("Create two nodes by concatenating clauses", () => {
         const titleParam = new Cypher.Param("The Matrix");
 
-        const movie1 = new Cypher.Node();
+        const movie1 = new Cypher.Node({
+            labels: ["Movie"],
+        });
 
-        const movie2 = new Cypher.Node();
+        const movie2 = new Cypher.Node({
+            labels: ["Movie"],
+        });
 
         // Note that both nodes share the same param
-        const create1 = new Cypher.Create(new Cypher.Pattern(movie1, { labels: ["Movie"] })).set([
-            movie1.property("title"),
-            titleParam,
-        ]);
-        const create2 = new Cypher.Create(new Cypher.Pattern(movie2, { labels: ["Movie"] })).set([
-            movie2.property("title"),
-            titleParam,
-        ]);
+        const create1 = new Cypher.Create(movie1).set([movie1.property("title"), titleParam]);
+        const create2 = new Cypher.Create(movie2).set([movie2.property("title"), titleParam]);
 
         const queryResult = Cypher.concat(create1, create2).build();
 
@@ -103,10 +101,7 @@ describe("CypherBuilder concat", () => {
 
     test("Nested composite clause with multiple elements", () => {
         const compositeClause = Cypher.concat(
-            Cypher.concat(
-                new Cypher.Match(new Cypher.Pattern(new Cypher.Node())),
-                new Cypher.Match(new Cypher.Pattern(new Cypher.Node()))
-            )
+            Cypher.concat(new Cypher.Match(new Cypher.Node()), new Cypher.Match(new Cypher.Node()))
         );
         expect(compositeClause.empty).toBeFalse();
         expect(compositeClause.children).toHaveLength(1);

@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("Examples", () => {
+describe("Examples - Deprecated", () => {
     test("Readme example", () => {
         const movieNode = new Cypher.Node({
             labels: ["Movie"],

@@ -20,7 +20,7 @@
 import Cypher from "../../src";
 import { TestClause } from "../../src/utils/TestClause";
 
-describe("String Functions", () => {
+describe("String Functions - Deprecated", () => {
     // Functions with 1 argument
     test.each(["lTrim", "rTrim"] as const)("%s", (value) => {
         const testFunction = Cypher[value](new Cypher.Param("Hello"));
