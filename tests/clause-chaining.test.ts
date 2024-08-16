@@ -22,7 +22,7 @@ import Cypher from "../src";
 // TODO: Implement missing methods in clauses
 describe("Clause chaining", () => {
     describe("Match", () => {
-        const clause = new Cypher.Match(new Cypher.Node());
+        const clause = new Cypher.Match(new Cypher.Pattern(new Cypher.Node()));
 
         it.each([
             "where",
@@ -45,7 +45,7 @@ describe("Clause chaining", () => {
     });
 
     describe("Create", () => {
-        const clause = new Cypher.Create(new Cypher.Node());
+        const clause = new Cypher.Create(new Cypher.Pattern(new Cypher.Node()));
 
         it.each([
             "return",
@@ -63,7 +63,7 @@ describe("Clause chaining", () => {
     });
 
     describe("Call", () => {
-        const clause = new Cypher.Call(new Cypher.Match(new Cypher.Node()));
+        const clause = new Cypher.Call(new Cypher.Match(new Cypher.Pattern(new Cypher.Node())));
 
         it.each([
             "return",
@@ -88,7 +88,7 @@ describe("Clause chaining", () => {
         const variable = new Cypher.Variable();
 
         const movieNode = new Cypher.Node();
-        const createMovie = new Cypher.Create(movieNode).set([movieNode.property("id"), variable]);
+        const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode)).set([movieNode.property("id"), variable]);
 
         const clause = new Cypher.Foreach(variable, list, createMovie);
 
@@ -101,7 +101,7 @@ describe("Clause chaining", () => {
     });
 
     describe("Merge", () => {
-        const clause = new Cypher.Merge(new Cypher.Node());
+        const clause = new Cypher.Merge(new Cypher.Pattern(new Cypher.Node()));
 
         it.each([
             "return",

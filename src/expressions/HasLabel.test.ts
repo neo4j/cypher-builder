@@ -18,8 +18,8 @@
  */
 
 import Cypher from "..";
-import { HasLabel } from "../../HasLabel";
 import { TestClause } from "../utils/TestClause";
+import { HasLabel } from "./HasLabel";
 
 describe("HasLabel", () => {
     test("Fails if no labels are provided", () => {

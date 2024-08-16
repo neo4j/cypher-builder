@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { HasLabel } from "../../HasLabel";
+import { HasLabel } from "../expressions/HasLabel";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";

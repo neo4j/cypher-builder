@@ -160,13 +160,13 @@ export {
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
 
 // Types
-export type { HasLabel } from "../HasLabel";
 export type { CypherEnvironment as Environment } from "./Environment";
 export type { BuildConfig, Clause } from "./clauses/Clause";
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
 export type { CompositeClause } from "./clauses/utils/concat";
+export type { HasLabel } from "./expressions/HasLabel";
 export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation";
 export type { PredicateFunction } from "./expressions/functions/predicate";
 export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
