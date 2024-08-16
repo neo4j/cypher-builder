@@ -210,11 +210,11 @@ describe("Clause chaining", () => {
 
     describe("Invalid Chaining", () => {
         test("Multiple top-level clauses should fail", () => {
-            const match = new Cypher.Match(new Cypher.Node());
+            const match = new Cypher.Match(new Cypher.Pattern(new Cypher.Node()));
             match.return("*");
             expect(() => {
                 match.return("*");
-            }).toThrow("Cannot chain 2 top-level clauses to the same clause");
+            }).toThrow("Cannot add <Clause Return> to <Clause Match> because Match it is not the last clause.");
         });
     });
 });

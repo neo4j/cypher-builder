@@ -56,9 +56,3 @@ export class Raw extends Clause {
         return () => str;
     }
 }
-
-/** Allows for a raw string to be used as a clause
- * @group Other
- * @deprecated Use {@link Raw} instead
- */
-export class RawCypher extends Raw {}

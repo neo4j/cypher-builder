@@ -93,16 +93,6 @@ export class Call extends Clause {
         return this;
     }
 
-    /** @deprecated Use {@link importWith} instead */
-    public innerWith(...params: Array<Variable | "*">): this {
-        if (this._importWith) throw new Error("Call import already set");
-        if (params.length > 0) {
-            this._importWith = new ImportWith(this, [...params]);
-            this.addChildren(this._importWith);
-        }
-        return this;
-    }
-
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const importWithCypher = compileCypherIfExists(this._importWith, env, { suffix: "\n" });

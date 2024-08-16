@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type { Raw, RawCypher } from ".";
+import type { Exists, Raw } from ".";
 import type { CypherEnvironment } from "./Environment";
 import type { Case } from "./expressions/Case";
 import type { HasLabel } from "./expressions/HasLabel";
@@ -35,7 +35,6 @@ import type { ComparisonOp } from "./expressions/operations/comparison";
 import type { MathOp } from "./expressions/operations/math";
 import type { Collect } from "./expressions/subquery/Collect";
 import type { Count } from "./expressions/subquery/Count";
-import type { Exists } from "./expressions/subquery/Exists";
 import type { Literal } from "./references/Literal";
 import type { PropertyRef } from "./references/PropertyRef";
 import type { Variable } from "./references/Variable";
@@ -66,7 +65,6 @@ export type Predicate =
     | BooleanOp
     | ComparisonOp
     | Raw
-    | RawCypher
     | Exists
     | Count
     | PredicateFunction

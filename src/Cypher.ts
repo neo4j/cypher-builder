@@ -25,7 +25,7 @@ export { Foreach } from "./clauses/Foreach";
 export { LoadCSV } from "./clauses/LoadCSV";
 export { Match, OptionalMatch } from "./clauses/Match";
 export { Merge } from "./clauses/Merge";
-export { Raw, RawCypher } from "./clauses/Raw";
+export { Raw } from "./clauses/Raw";
 export { Return } from "./clauses/Return";
 export { Union } from "./clauses/Union";
 export { Unwind } from "./clauses/Unwind";
