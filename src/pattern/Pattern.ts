@@ -44,7 +44,9 @@ export type RelationshipPattern = {
     length?: LengthOption;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Pattern extends WithWhere {}
+
 /** Represents a pattern of a single node or n-relationships to be used in clauses.
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns/)
  * @group Patterns
