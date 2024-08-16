@@ -19,7 +19,6 @@
 
 import Cypher from "../src";
 
-// TODO: Implement missing methods in clauses
 describe("Clause chaining", () => {
     describe("Match", () => {
         const clause = new Cypher.Match(new Cypher.Pattern(new Cypher.Node()));
