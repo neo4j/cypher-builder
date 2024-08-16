@@ -407,7 +407,10 @@ RETURN var1"
         });
 
         test("Call in transaction", () => {
-            const query = Cypher.concat(new Cypher.Match(node), new Cypher.Call(subquery).inTransactions());
+            const query = Cypher.concat(
+                new Cypher.Match(new Cypher.Pattern(node)),
+                new Cypher.Call(subquery).inTransactions()
+            );
 
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`

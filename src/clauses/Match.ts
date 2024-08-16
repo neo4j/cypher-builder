@@ -18,9 +18,8 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { Pattern } from "../pattern/Pattern";
+import type { Pattern } from "../pattern/Pattern";
 import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
-import { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
@@ -73,18 +72,9 @@ export class Match extends Clause {
     private pattern: Pattern | QuantifiedPath;
     private _optional = false;
 
-    constructor(pattern: Pattern | QuantifiedPath);
-    /** @deprecated Use {@link Pattern} instead */
-    constructor(node: NodeRef | Pattern | QuantifiedPath);
-    constructor(pattern: NodeRef | Pattern | QuantifiedPath) {
+    constructor(pattern: Pattern | QuantifiedPath) {
         super();
-
-        // NOTE: deprecated behaviour
-        if (pattern instanceof NodeRef) {
-            this.pattern = new Pattern(pattern);
-        } else {
-            this.pattern = pattern;
-        }
+        this.pattern = pattern;
     }
 
     /** Makes the clause an OPTIONAL MATCH
@@ -106,11 +96,7 @@ export class Match extends Clause {
     /** Add a {@link Match} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
      */
-    public match(clause: Match): Match;
-    public match(pattern: Pattern): Match;
-    /** @deprecated Use {@link Pattern} instead */
-    public match(pattern: NodeRef | Pattern): Match;
-    public match(clauseOrPattern: Match | NodeRef | Pattern): Match {
+    public match(clauseOrPattern: Match | Pattern): Match {
         if (clauseOrPattern instanceof Match) {
             this.addNextClause(clauseOrPattern);
             return clauseOrPattern;
@@ -125,10 +111,7 @@ export class Match extends Clause {
     /** Add an {@link OptionalMatch} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
      */
-    public optionalMatch(pattern: Pattern): OptionalMatch;
-    /** @deprecated Use {@link Pattern} instead */
-    public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch;
-    public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch {
+    public optionalMatch(pattern: Pattern): OptionalMatch {
         const matchClause = new OptionalMatch(pattern);
         this.addNextClause(matchClause);
 
@@ -158,10 +141,7 @@ export class Match extends Clause {
  * @category Clauses
  */
 export class OptionalMatch extends Match {
-    constructor(pattern: Pattern);
-    /** @deprecated Use a {@link Pattern} instead */
-    constructor(pattern: NodeRef | Pattern);
-    constructor(pattern: NodeRef | Pattern) {
+    constructor(pattern: Pattern) {
         super(pattern);
         this.optional();
     }

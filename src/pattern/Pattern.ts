@@ -21,7 +21,6 @@ import type { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
-import { NodeRef } from "../references/NodeRef";
 import { RelationshipRef } from "../references/RelationshipRef";
 import { Variable } from "../references/Variable";
 import type { Expr } from "../types";
@@ -116,8 +115,6 @@ export class Pattern extends PatternElement {
     private getLabelsStr(env: CypherEnvironment): string {
         if (this.labels) {
             return labelsToString(this.labels, env);
-        } else if (this.variable instanceof NodeRef) {
-            return labelsToString(this.variable.labels, env);
         }
         return "";
     }

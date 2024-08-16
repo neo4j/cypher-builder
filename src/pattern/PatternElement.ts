@@ -18,10 +18,8 @@
  */
 
 import { CypherEnvironment } from "../Environment";
-import type { NodeProperties } from "../references/NodeRef";
-import type { RelationshipProperties } from "../references/RelationshipRef";
 import type { Variable } from "../references/Variable";
-import type { CypherCompilable } from "../types";
+import type { CypherCompilable, Expr } from "../types";
 import { padBlock } from "../utils/pad-block";
 import { padLeft } from "../utils/pad-left";
 import { stringifyObject } from "../utils/stringify-object";
@@ -37,7 +35,7 @@ export abstract class PatternElement implements CypherCompilable {
 
     public abstract getCypher(env: CypherEnvironment): string;
 
-    protected serializeParameters(parameters: NodeProperties | RelationshipProperties, env: CypherEnvironment): string {
+    protected serializeParameters(parameters: Record<string, Expr>, env: CypherEnvironment): string {
         if (Object.keys(parameters).length === 0) return "";
         const paramValues = Object.entries(parameters).reduce((acc: Record<string, string>, [key, param]) => {
             acc[key] = param.getCypher(env);

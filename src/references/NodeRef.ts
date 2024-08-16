@@ -17,31 +17,18 @@
  * limitations under the License.
  */
 
-import type { Expr } from "..";
-import { HasLabel } from "../expressions/HasLabel";
-import { LabelExpr } from "../expressions/labels/label-expressions";
+import { HasLabel } from "../../HasLabel";
+import type { LabelExpr } from "../expressions/labels/label-expressions";
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
-
-export type NodeProperties = Record<string, Expr>;
-
-type NodeRefOptions = {
-    labels?: Set<string> | Array<string> | LabelExpr;
-};
 
 /** Represents a node reference
  * @group Variables
  */
 export class NodeRef extends Variable {
-    public labels: string[] | LabelExpr;
-
-    constructor();
-    /** @deprecated Node labels should be defined in {@link Pattern} */
-    constructor(options: NodeRefOptions);
-    constructor(options: NodeRefOptions = {}) {
+    constructor() {
         super();
         this.prefix = "this";
-        this.labels = this.parseLabels(options.labels);
     }
 
     public hasLabels(...labels: string[]): HasLabel {
@@ -55,11 +42,6 @@ export class NodeRef extends Variable {
             return new HasLabel(this, label);
         }
     }
-
-    private parseLabels(labelsOption: NodeRefOptions["labels"]): string[] | LabelExpr {
-        if (labelsOption instanceof LabelExpr) return labelsOption;
-        return Array.from(labelsOption ?? []);
-    }
 }
 
 /** Represents a node reference with a given name
@@ -68,11 +50,8 @@ export class NodeRef extends Variable {
 export class NamedNode extends NodeRef implements NamedReference {
     public readonly id: string;
 
-    constructor(id: string);
-    /** @deprecated */
-    constructor(id: string, options?: NodeRefOptions);
-    constructor(id: string, options?: NodeRefOptions) {
-        super(options ?? {});
+    constructor(id: string) {
+        super();
         this.id = id;
     }
 

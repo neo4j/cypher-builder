@@ -26,8 +26,8 @@ describe.each([":", "&"] as const)("Config.labelOperator", (labelOperator) => {
     };
 
     test("Pattern", () => {
-        const node = new Cypher.Node({ labels: ["Movie", "Film"] });
-        const query = new Cypher.Match(node);
+        const node = new Cypher.Node();
+        const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie", "Film"] }));
 
         const queryResult = new TestClause(query).build(undefined, {}, config);
 
@@ -35,8 +35,10 @@ describe.each([":", "&"] as const)("Config.labelOperator", (labelOperator) => {
     });
 
     test("hasLabel", () => {
-        const node = new Cypher.Node({ labels: ["Movie"] });
-        const query = new Cypher.Match(node).where(node.hasLabels("Movie", "Film"));
+        const node = new Cypher.Node();
+        const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
+            node.hasLabels("Movie", "Film")
+        );
 
         const queryResult = new TestClause(query).build(undefined, {}, config);
 

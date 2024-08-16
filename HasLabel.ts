@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
-import type { LabelExpr } from "..";
-import { CypherASTNode } from "../CypherASTNode";
-import type { CypherEnvironment } from "../Environment";
-import type { NodeRef } from "../references/NodeRef";
-import type { RelationshipRef } from "../references/RelationshipRef";
-import { addLabelToken } from "../utils/add-label-token";
-import { escapeLabel } from "../utils/escape";
+import type { LabelExpr } from "./src";
+import { CypherASTNode } from "./src/CypherASTNode";
+import type { CypherEnvironment } from "./src/Environment";
+import type { NodeRef } from "./src/references/NodeRef";
+import type { RelationshipRef } from "./src/references/RelationshipRef";
+import { addLabelToken } from "./src/utils/add-label-token";
+import { escapeLabel } from "./src/utils/escape";
 
 /** Generates a predicate to check if a node has a label or a relationship has a type
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/where/#filter-on-node-label)

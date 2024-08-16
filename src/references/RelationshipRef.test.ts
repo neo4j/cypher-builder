@@ -29,9 +29,6 @@ describe("RelationshipRef", () => {
 
         const queryResult = testClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"this0this1"`);
-
-        expect(rel1.type).toBeUndefined();
-        expect(rel2.type).toBeUndefined();
     });
 
     test("Create named relationship", () => {

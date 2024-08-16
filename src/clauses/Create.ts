@@ -19,7 +19,6 @@
 
 import type { CypherEnvironment } from "../Environment";
 import { Pattern } from "../pattern/Pattern";
-import type { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
@@ -51,10 +50,7 @@ export interface Create
 export class Create extends Clause {
     private pattern: Pattern;
 
-    constructor(pattern: Pattern);
-    /** @deprecated Use {@link Pattern} instead */
-    constructor(pattern: NodeRef | Pattern);
-    constructor(pattern: NodeRef | Pattern) {
+    constructor(pattern: Pattern) {
         super();
         if (pattern instanceof Pattern) {
             this.pattern = pattern;
@@ -68,11 +64,7 @@ export class Create extends Clause {
     /** Add a {@link Create} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
      */
-    public create(clause: Create): Create;
-    public create(pattern: Pattern): Create;
-    /** @deprecated Use {@link Pattern} instead */
-    public create(pattern: NodeRef | Pattern): Create;
-    public create(clauseOrPattern: Create | NodeRef | Pattern): Create {
+    public create(clauseOrPattern: Create | Pattern): Create {
         if (clauseOrPattern instanceof Create) {
             this.addNextClause(clauseOrPattern);
             return clauseOrPattern;

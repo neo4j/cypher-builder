@@ -17,13 +17,12 @@
  * limitations under the License.
  */
 
+import type { Expr } from "..";
 import type { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
 import { NodeRef } from "../references/NodeRef";
-import type { RelationshipProperties } from "../references/RelationshipRef";
-import { RelationshipRef } from "../references/RelationshipRef";
 import type { Variable } from "../references/Variable";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { NodePattern, RelationshipPattern } from "./Pattern";
@@ -50,7 +49,7 @@ export class PartialPattern extends PatternElement {
     private length: LengthOption | undefined;
     private direction: "left" | "right" | "undirected";
     private previous: Pattern;
-    private properties: RelationshipProperties | undefined;
+    private properties: Record<string, Expr> | undefined;
 
     private type: string | LabelExpr | undefined;
 
@@ -104,8 +103,6 @@ export class PartialPattern extends PatternElement {
     private getTypeStr(env: CypherEnvironment): string {
         if (this.type) {
             return labelsToString(this.type, env);
-        } else if (this.variable instanceof RelationshipRef) {
-            return labelsToString(this.variable.type ?? [], env);
         }
         return "";
     }

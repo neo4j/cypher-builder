@@ -18,9 +18,9 @@
  */
 
 import type { Exists, Raw } from ".";
+import type { HasLabel } from "../HasLabel";
 import type { CypherEnvironment } from "./Environment";
 import type { Case } from "./expressions/Case";
-import type { HasLabel } from "./expressions/HasLabel";
 import type { IsType } from "./expressions/IsType";
 import type { CypherFunction } from "./expressions/functions/CypherFunctions";
 import type { PredicateFunction } from "./expressions/functions/predicate";

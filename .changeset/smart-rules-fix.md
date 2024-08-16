@@ -23,3 +23,6 @@ Removes the following deprecated features:
 -   `Pattern.related().withDirection`
 -   `Pattern.related().withLength`
 -   `Pattern.related().getVariables`
+-   `Relationship.type`
+-   Labels, types and properties in `Node` and `Relationship` classes
+-   Using `Node` directly in constructor of clauses
