@@ -26,7 +26,7 @@ describe("apoc.cypher - Deprecated", () => {
 
         const topQuery = new Cypher.Match(node).where(Cypher.eq(node.property("title"), param1));
 
-        const nestedPattern = new Cypher.Pattern(node).withoutLabels();
+        const nestedPattern = new Cypher.Pattern(node);
         const releasedParam = new Cypher.Param(1999);
         const subQuery = new Cypher.Match(nestedPattern).set([node.property("released"), releasedParam]).return(node);
         const apocCall = Cypher.apoc.cypher.runFirstColumnMany(subQuery, [node, releasedParam]);
@@ -42,7 +42,7 @@ describe("apoc.cypher - Deprecated", () => {
         expect(cypherResult.cypher).toMatchInlineSnapshot(`
             "MATCH (this0:Movie)
             WHERE this0.title = $param0
-            RETURN { result: apoc.cypher.runFirstColumnMany(\\"MATCH (this0)
+            RETURN { result: apoc.cypher.runFirstColumnMany(\\"MATCH (this0:Movie)
             SET
                 this0.released = $param1
             RETURN this0\\", { this0: this0, param1: $param1 }) }"

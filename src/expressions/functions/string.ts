@@ -53,18 +53,6 @@ export function lower(original: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-ltrim)
- * @group Cypher Functions
- * @category String
- * @deprecated Use {@link ltrim} instead
- */
-export function lTrim(original: Expr | string, trimCharacter?: string | Expr): CypherFunction {
-    const normalizedOriginal = normalizeExpr(original);
-    const normalizedTrimCharacter = trimCharacter ? normalizeExpr(trimCharacter) : undefined;
-    return new CypherFunction("lTrim", filterTruthy([normalizedOriginal, normalizedTrimCharacter]));
-}
-
-/**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
  * @group Cypher Functions
  * @category String
@@ -104,18 +92,6 @@ export function replace(original: Expr, search: Expr, replace: Expr): CypherFunc
  */
 export function right(original: Expr, length: Expr): CypherFunction {
     return new CypherFunction("right", [original, length]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
- * @group Cypher Functions
- * @category String
- * @deprecated Use {@link rtrim} instead
- */
-export function rTrim(original: Expr | string, trimCharacter?: string | Expr): CypherFunction {
-    const normalizedOriginal = normalizeExpr(original);
-    const normalizedTrimCharacter = trimCharacter ? normalizeExpr(trimCharacter) : undefined;
-    return new CypherFunction("rTrim", filterTruthy([normalizedOriginal, normalizedTrimCharacter]));
 }
 
 /**

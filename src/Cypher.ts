@@ -61,9 +61,6 @@ export { Exists } from "./expressions/subquery/Exists";
 // --Apoc
 export * as apoc from "./namespaces/apoc/apoc";
 
-// --CDC
-export * as cdc from "./namespaces/cdc/cdc";
-
 export * as db from "./namespaces/db/db";
 export * as genai from "./namespaces/genai/genai";
 export * as tx from "./namespaces/tx";

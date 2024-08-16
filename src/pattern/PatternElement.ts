@@ -29,19 +29,13 @@ import { stringifyObject } from "../utils/stringify-object";
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 
 export abstract class PatternElement implements CypherCompilable {
-    protected element: Variable;
+    protected variable: Variable | undefined;
 
-    constructor(element: Variable) {
-        this.element = element;
+    constructor(element: Variable | undefined) {
+        this.variable = element;
     }
 
     public abstract getCypher(env: CypherEnvironment): string;
-
-    /**
-     * Returns the ordered variables of the Pattern
-     * Note that even unnamed variables will be returned
-     */
-    public abstract getVariables(): Variable[];
 
     protected serializeParameters(parameters: NodeProperties | RelationshipProperties, env: CypherEnvironment): string {
         if (Object.keys(parameters).length === 0) return "";

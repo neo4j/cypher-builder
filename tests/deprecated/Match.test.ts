@@ -220,8 +220,10 @@ describe("CypherBuilder Match - Deprecated", () => {
             });
 
             const matchQuery = new Cypher.Match(
-                new Cypher.Pattern(movieNode).withProperties({
-                    test: testParam,
+                new Cypher.Pattern(movieNode, {
+                    properties: {
+                        test: testParam,
+                    },
                 })
             )
                 .where(Cypher.isNull(movieNode.property("name")))

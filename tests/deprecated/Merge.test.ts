@@ -85,34 +85,6 @@ SET
         `);
     });
 
-    test("Merge node with parameters", () => {
-        const node = new Cypher.Node({
-            labels: ["MyLabel"],
-        });
-
-        const nodeProps = {
-            test: new Cypher.Param("test"),
-        };
-
-        const query = new Cypher.Merge(new Cypher.Pattern(node).withProperties(nodeProps)).onCreateSet([
-            node.property("age"),
-            new Cypher.Param(23),
-        ]);
-
-        const queryResult = query.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MERGE (this0:MyLabel { test: $param0 })
-            ON CREATE SET
-                this0.age = $param1"
-        `);
-        expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": "test",
-              "param1": 23,
-            }
-        `);
-    });
-
     test("Merge relationship", () => {
         const node1 = new Cypher.Node({});
         const node2 = new Cypher.Node({});
