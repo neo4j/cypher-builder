@@ -37,13 +37,19 @@ export abstract class Clause extends CypherASTNode {
     protected nextClause: Clause | undefined;
 
     /** Compiles a clause into Cypher and params */
-    public build(
-        prefix?: string | EnvPrefix | undefined,
-        extraParams: Record<string, unknown> = {},
-        config?: BuildConfig
-    ): CypherResult {
+    public build({
+        prefix,
+        extraParams = {},
+        labelOperator = ":",
+    }: {
+        prefix?: string | EnvPrefix | undefined;
+        extraParams?: Record<string, unknown>;
+        labelOperator?: ":" | "&";
+    } = {}): CypherResult {
         if (this.isRoot) {
-            const env = this.getEnv(prefix, config);
+            const env = this.getEnv(prefix, {
+                labelOperator,
+            });
             const cypher = this.getCypher(env);
 
             const cypherParams = toCypherParams(extraParams);
@@ -55,7 +61,7 @@ export abstract class Clause extends CypherASTNode {
         }
         const root = this.getRoot();
         if (root instanceof Clause) {
-            return root.build(prefix, extraParams);
+            return root.build({ prefix, extraParams, labelOperator });
         }
         throw new Error(`Cannot build root: ${root.constructor.name}`);
     }

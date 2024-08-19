@@ -66,7 +66,7 @@ describe("Variable escaping", () => {
         const movie = new Cypher.Node();
         const match = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["My Movie"] })).return(movie);
 
-        const { cypher, params } = match.build("my prefix");
+        const { cypher, params } = match.build({ prefix: "my prefix" });
 
         expect(cypher).toMatchInlineSnapshot(`
             "MATCH (\`my prefixthis0\`:\`My Movie\`)
