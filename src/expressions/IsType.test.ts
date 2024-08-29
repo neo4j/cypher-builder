@@ -56,6 +56,10 @@ RETURN var0, var0 IS :: INTEGER"
         Cypher.TYPE.STRING,
         Cypher.TYPE.ZONED_DATETIME,
         Cypher.TYPE.ZONED_TIME,
+        Cypher.TYPE.TIMESTAMP_WITHOUT_TIME_ZONE,
+        Cypher.TYPE.TIME_WITHOUT_TIME_ZONE,
+        Cypher.TYPE.TIMESTAMP_WITH_TIME_ZONE,
+        Cypher.TYPE.TIME_WITH_TIME_ZONE,
     ] as const)("isType '%s'", (type) => {
         const movie = new Cypher.Node();
         const matchClause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
