@@ -200,7 +200,7 @@ describe("CypherBuilder Call", () => {
         const clause = new Cypher.Call(matchClause).importWith(node);
         expect(() => {
             clause.importWith(node);
-        }).toThrow("Call import already set");
+        }).toThrow(`Call import "WITH" already set`);
     });
 
     test("CALL with external with", () => {
@@ -554,6 +554,88 @@ CALL {
     DETACH DELETE this0
 } IN 5 CONCURRENT TRANSACTIONS OF 10 ROWS ON ERROR FAIL"
 `);
+        });
+    });
+
+    describe("Variable scope clause", () => {
+        test("Call with variable scope", () => {
+            const movieNode = new Cypher.Node();
+            const actorNode = new Cypher.Node();
+
+            const match = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] })).match(
+                new Cypher.Pattern(actorNode, { labels: ["Actor"] })
+            );
+            const clause = new Cypher.Call(new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)), [
+                movieNode,
+                actorNode,
+            ]).return(movieNode);
+
+            const queryResult = Cypher.concat(match, clause).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+MATCH (this1:Actor)
+CALL (this0, this1) {
+    CREATE (this0)-[this2]->(this1)
+}
+RETURN this0"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("ImportWith fails when variable scope is set", () => {
+            const movieNode = new Cypher.Node();
+
+            const call = new Cypher.Call(
+                new Cypher.Create(new Cypher.Pattern(movieNode).related().to(new Cypher.Node())),
+                [movieNode]
+            );
+
+            expect(() => {
+                call.importWith("*");
+            }).toThrow(`Call import cannot be used along with scope clauses "Call (<variable>)"`);
+        });
+
+        test("Call with empty variable scope", () => {
+            const movieNode = new Cypher.Node();
+            const actorNode = new Cypher.Node();
+
+            const clause = new Cypher.Call(
+                new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)),
+                []
+            ).return(movieNode);
+
+            const queryResult = clause.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CALL () {
+    CREATE (this0)-[this1]->(this2)
+}
+RETURN this0"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Call with * variable scope", () => {
+            const movieNode = new Cypher.Node();
+            const actorNode = new Cypher.Node();
+
+            const match = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] })).match(
+                new Cypher.Pattern(actorNode, { labels: ["Actor"] })
+            );
+            const clause = new Cypher.Call(
+                new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)),
+                "*"
+            ).return(movieNode);
+
+            const queryResult = Cypher.concat(match, clause).build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+MATCH (this1:Actor)
+CALL (*) {
+    CREATE (this0)-[this2]->(this1)
+}
+RETURN this0"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
 });

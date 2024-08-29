@@ -142,7 +142,7 @@ describe("CypherBuilder Call - Deprecated", () => {
         const clause = new Cypher.Call(matchClause).innerWith(node);
         expect(() => {
             clause.innerWith(node);
-        }).toThrow("Call import already set");
+        }).toThrow(`Call import "WITH" already set`);
     });
 
     test("Union in CALL statement with inner with", () => {
