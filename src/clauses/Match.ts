@@ -74,7 +74,7 @@ export class Match extends Clause {
     private _optional = false;
 
     constructor(pattern: Pattern | QuantifiedPath);
-    /** @deprecated Use {@link Pattern} instead */
+    /** @deprecated Use {@link Pattern} instead of node: `new Cypher.Match(new Cypher.Pattern(node))` */
     constructor(node: NodeRef | Pattern | QuantifiedPath);
     constructor(pattern: NodeRef | Pattern | QuantifiedPath) {
         super();
