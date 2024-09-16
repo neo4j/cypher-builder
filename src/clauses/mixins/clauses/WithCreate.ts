@@ -19,18 +19,14 @@
 
 import type { Pattern } from "../../..";
 import { Create } from "../../..";
-import type { NodeRef } from "../../../references/NodeRef";
 import { MixinClause } from "../Mixin";
 
 export abstract class WithCreate extends MixinClause {
     /** Add a {@link Create} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
      */
-    public create(clause: Create): Create;
-    public create(pattern: Pattern): Create;
-    /** @deprecated Use {@link Pattern} instead */
-    public create(pattern: NodeRef | Pattern): Create;
-    public create(clauseOrPattern: Create | NodeRef | Pattern): Create {
+
+    public create(clauseOrPattern: Create | Pattern): Create {
         if (clauseOrPattern instanceof Create) {
             this.addNextClause(clauseOrPattern);
             return clauseOrPattern;

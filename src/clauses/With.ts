@@ -78,15 +78,12 @@ export class With extends Clause {
     /** Add a {@link With} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
      */
-    public with(...columns: ("*" | WithProjection)[]): With {
-        if (this.withStatement) {
-            // This behaviour of `.with` is deprecated, use `.addColumns` instead
-            this.withStatement.addColumns(...columns);
-        } else {
-            this.withStatement = new With(...columns);
-            this.addChildren(this.withStatement);
-        }
-        return this.withStatement;
+    public with(clause: With): With;
+    public with(...columns: Array<"*" | WithProjection>): With;
+    public with(clauseOrColumn: With | "*" | WithProjection, ...columns: Array<"*" | WithProjection>): With {
+        const withClause = this.getWithClause(clauseOrColumn, columns);
+        this.addNextClause(withClause);
+        return withClause;
     }
 
     /** @internal */
@@ -101,5 +98,13 @@ export class With extends Clause {
         const nextClause = this.compileNextClause(env);
 
         return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${nextClause}`;
+    }
+
+    private getWithClause(clauseOrColumn: With | "*" | WithProjection, columns: Array<"*" | WithProjection>): With {
+        if (clauseOrColumn instanceof With) {
+            return clauseOrColumn;
+        } else {
+            return new With(clauseOrColumn, ...columns);
+        }
     }
 }

@@ -89,9 +89,8 @@ describe("Scalar Functions", () => {
 
     test("size() applied to pattern comprehension", () => {
         const patternComprehension = new Cypher.PatternComprehension(
-            new Cypher.Pattern(new Cypher.Node()).related().to(),
-            new Cypher.Variable()
-        );
+            new Cypher.Pattern(new Cypher.Node()).related().to()
+        ).map(new Cypher.Variable());
         const cypherFunction = Cypher.size(patternComprehension);
         const queryResult = new TestClause(cypherFunction).build();
 
