@@ -19,8 +19,8 @@
 
 import Cypher from "../../src";
 
-describe("CypherBuilder Call", () => {
-    test("CALL with inner with", () => {
+describe("CypherBuilder Call - Deprecated", () => {
+    test("CALL with inner with - Deprecated", () => {
         const node = new Cypher.Node({ labels: ["Movie"] });
 
         const matchClause = new Cypher.Match(node)
@@ -142,7 +142,7 @@ describe("CypherBuilder Call", () => {
         const clause = new Cypher.Call(matchClause).innerWith(node);
         expect(() => {
             clause.innerWith(node);
-        }).toThrow("Call import already set");
+        }).toThrow(`Call import "WITH" already set`);
     });
 
     test("Union in CALL statement with inner with", () => {

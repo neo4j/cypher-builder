@@ -28,8 +28,54 @@ CALL {
 RETURN dogName
 ----
 
+== Variable scope
+
+The variable scope can be set with the second parameter of `new Cypher.Call()`, by passing an array of variables:
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+const actorNode = new Cypher.Node();
+
+const clause = new Cypher.Call(new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)), [
+    movieNode,
+    actorNode,
+]);
+----
+
+This will add the two variables `movieNode` and `actorNode` to the `CALL` scope:
+
+[source, cypher]
+----
+CALL (this0, this1) {
+    CREATE (this0)-[this2]->(this1)
+}
+----
+
+To import all variables from the outer scope, the second parameter can be set to the string `"*"`:
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+const actorNode = new Cypher.Node();
+
+const clause = new Cypher.Call(new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)), "*");
+----
+
+[source, cypher]
+----
+CALL (*) {
+    CREATE (this0)-[this2]->(this1)
+}
+----
 
 == `.importWith`
+
+[WARNING]
+====
+Import with cannot be used if scope variables are defined and will throw an error
+====
+
 
 To add variables to a `CALL` subquery context, you need to add a `WITH` statement.
 This can be achieved by using the `.importWith` method:
@@ -64,7 +110,6 @@ RETURN dogName
 ----
 
 Note how the previous example uses `.concat` to concatenate the first `MATCH` statement and the `CALL` clause.
-
 
 == `.inTransactions`
 

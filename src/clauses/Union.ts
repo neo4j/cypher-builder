@@ -27,7 +27,8 @@ import { Clause } from "./Clause";
  */
 export class Union extends Clause {
     private subqueries: CypherASTNode[] = [];
-    private includeAll = false;
+
+    private unionType: "ALL" | "DISTINCT" | undefined;
 
     constructor(...subqueries: Clause[]) {
         super();
@@ -36,7 +37,12 @@ export class Union extends Clause {
     }
 
     public all(): this {
-        this.includeAll = true;
+        this.unionType = "ALL";
+        return this;
+    }
+
+    public distinct(): this {
+        this.unionType = "DISTINCT";
         return this;
     }
 
@@ -46,8 +52,8 @@ export class Union extends Clause {
      */
     public getCypher(env: CypherEnvironment, importWithCypher?: string): string {
         const subqueriesStr = this.subqueries.map((s) => s.getCypher(env));
-        const unionStr = this.includeAll ? "UNION ALL" : "UNION";
+        const unionTypeStr = this.unionType ? ` ${this.unionType}` : "";
 
-        return subqueriesStr.join(`\n${unionStr}\n${importWithCypher ?? ""}`);
+        return subqueriesStr.join(`\nUNION${unionTypeStr}\n${importWithCypher ?? ""}`);
     }
 }

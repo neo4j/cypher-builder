@@ -33,13 +33,13 @@ describe("apoc.util", () => {
 
     describe("ValidatePredicate", () => {
         test("Simple validatePredicate", () => {
-            const node = new Cypher.Node({ labels: ["Movie"] });
+            const node = new Cypher.Node();
             const validatePredicate = Cypher.apoc.util.validatePredicate(
                 Cypher.eq(new Cypher.Literal(1), new Cypher.Literal(2)),
                 "That's not how math works"
             );
 
-            const query = new Cypher.Match(node);
+            const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }));
             query.where(validatePredicate).return(node);
 
             const { cypher, params } = query.build();

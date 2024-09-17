@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("CypherBuilder Merge", () => {
+describe("CypherBuilder Merge - Deprecated", () => {
     test("Merge node onCreate", () => {
         const node = new Cypher.Node({
             labels: ["MyLabel"],

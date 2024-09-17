@@ -23,9 +23,7 @@ import { OrderBy } from "./OrderBy";
 
 describe("CypherBuilder OrderBy", () => {
     test("OrderBy with skip and limit", () => {
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const orderBy = new OrderBy();
         orderBy.addOrderElements([
@@ -47,9 +45,7 @@ describe("CypherBuilder OrderBy", () => {
     });
 
     test("OrderBy with skip and limit using params", () => {
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const orderBy = new OrderBy();
         orderBy.addOrderElements([
@@ -76,9 +72,7 @@ describe("CypherBuilder OrderBy", () => {
     });
 
     test("OrderBy with skip and limit using expressions", () => {
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
         const orderBy = new OrderBy();
         orderBy.addOrderElements([

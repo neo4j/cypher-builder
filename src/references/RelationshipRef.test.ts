@@ -22,7 +22,7 @@ import { TestClause } from "../utils/TestClause";
 
 describe("RelationshipRef", () => {
     test("Create relationships", () => {
-        const rel1 = new Cypher.Relationship({ type: "ACTED_IN" });
+        const rel1 = new Cypher.Relationship();
         const rel2 = new Cypher.Relationship();
 
         const testClause = new TestClause(rel1, rel2);
@@ -30,48 +30,17 @@ describe("RelationshipRef", () => {
         const queryResult = testClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"this0this1"`);
 
-        expect(rel1.type).toBe("ACTED_IN");
+        expect(rel1.type).toBeUndefined();
         expect(rel2.type).toBeUndefined();
     });
 
-    test("Create relationships with label expression", () => {
-        const rel1 = new Cypher.Relationship({ type: Cypher.labelExpr.or("ACTED_IN", "DIRECTED") });
-        const testClause = new TestClause(rel1);
-
-        const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"this0"`);
-
-        expect(rel1.type).toEqual({ labels: ["ACTED_IN", "DIRECTED"], operator: "|" });
-    });
-
     test("Create named relationship", () => {
-        const rel1 = new Cypher.NamedRelationship("myRel", { type: "ACTED_IN" });
-
-        const testClause = new TestClause(rel1);
-
-        const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"myRel"`);
-        expect(rel1.type).toBe("ACTED_IN");
-        expect(rel1.name).toBe("myRel");
-    });
-
-    test("Create named relationship without type", () => {
         const rel1 = new Cypher.NamedRelationship("myRel");
 
         const testClause = new TestClause(rel1);
 
         const queryResult = testClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"myRel"`);
-        expect(rel1.type).toBeUndefined();
-    });
-
-    test("Create named relationship with a LabelExp", () => {
-        const rel1 = new Cypher.NamedRelationship("myRel", { type: Cypher.labelExpr.or("ACTED_IN", "DIRECTED") });
-        const testClause = new TestClause(rel1);
-
-        const queryResult = testClause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"myRel"`);
-
-        expect(rel1.type).toEqual({ labels: ["ACTED_IN", "DIRECTED"], operator: "|" });
+        expect(rel1.name).toBe("myRel");
     });
 });

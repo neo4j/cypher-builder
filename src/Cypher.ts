@@ -37,8 +37,8 @@ export { concat } from "./clauses/utils/concat";
 // Patterns
 export { labelExpr } from "./expressions/labels/label-expressions";
 export { Pattern } from "./pattern/Pattern";
+export { QuantifiedPath } from "./pattern/quantified-patterns/QuantifiedPath";
 export { type QuantifiedPattern, type Quantifier } from "./pattern/quantified-patterns/QuantifiedPattern";
-export { QuantifiedPath } from "./pattern/quantified-patterns/QuantifierPath";
 
 // Variables and references
 export { Literal, CypherNull as Null, CypherFalse as false, CypherTrue as true } from "./references/Literal";

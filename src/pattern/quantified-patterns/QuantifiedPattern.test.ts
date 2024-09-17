@@ -20,7 +20,7 @@
 import Cypher from "../..";
 import { TestClause } from "../../utils/TestClause";
 
-describe("QuantifiedPath", () => {
+describe("QuantifiedPattern", () => {
     test.each(["*", "+"] as const)("Quantified pattern with %s in quantifier", (quantifier) => {
         const quantifiedPattern = new Cypher.Pattern({ labels: ["Movie"] })
             .related({ type: "ACTED_IN" })

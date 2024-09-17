@@ -19,11 +19,12 @@
 
 import type { CypherEnvironment } from "../Environment";
 import { Pattern } from "../pattern/Pattern";
-import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifierPath";
+import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
 import { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
+import { WithCall } from "./mixins/clauses/WithCall";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFinish } from "./mixins/clauses/WithFinish";
@@ -49,7 +50,8 @@ export interface Match
         WithCreate,
         WithMerge,
         WithFinish,
-        WithCallProcedure {}
+        WithCallProcedure,
+        WithCall {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
@@ -67,14 +69,15 @@ export interface Match
     WithCreate,
     WithMerge,
     WithFinish,
-    WithCallProcedure
+    WithCallProcedure,
+    WithCall
 )
 export class Match extends Clause {
     private pattern: Pattern | QuantifiedPath;
     private _optional = false;
 
     constructor(pattern: Pattern | QuantifiedPath);
-    /** @deprecated Use {@link Pattern} instead */
+    /** @deprecated Use {@link Pattern} instead of node: `new Cypher.Match(new Cypher.Pattern(node))` */
     constructor(node: NodeRef | Pattern | QuantifiedPath);
     constructor(pattern: NodeRef | Pattern | QuantifiedPath) {
         super();

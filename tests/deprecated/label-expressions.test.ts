@@ -17,79 +17,79 @@
  * limitations under the License.
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../src";
+import { TestClause } from "../../src/utils/TestClause";
 
-describe("Label Expressions", () => {
+describe("Label Expressions  - Deprecated", () => {
     describe("node", () => {
         test("Simple label expression: &", () => {
             const labelExpr = Cypher.labelExpr.and("A", "B");
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:(A&B))`);
         });
 
         test("Simple label expression: |", () => {
             const labelExpr = Cypher.labelExpr.or("A", "B");
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:(A|B))`);
         });
 
         test("Multiple labels with expression: &", () => {
             const labelExpr = Cypher.labelExpr.and(...["A", "B", "C"]);
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:(A&B&C))`);
         });
 
         test("Multiple labels with expression: |", () => {
             const labelExpr = Cypher.labelExpr.or(...["A", "B", "C"]);
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:(A|B|C))`);
         });
 
         test("No labels with expression: &", () => {
             const labelExpr = Cypher.labelExpr.and();
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)`);
         });
 
         test("No labels with expression: |", () => {
             const labelExpr = Cypher.labelExpr.or();
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)`);
         });
 
         test("Simple label expression: !", () => {
             const labelExpr = Cypher.labelExpr.not("A");
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:!A)`);
         });
 
         test("Label wildcard", () => {
             const labelExpr = Cypher.labelExpr.wildcard;
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:%)`);
         });
@@ -100,9 +100,9 @@ describe("Label Expressions", () => {
                 Cypher.labelExpr.not(Cypher.labelExpr.or("B", Cypher.labelExpr.wildcard))
             );
 
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:((A&B)&!(B|%)))`);
         });
@@ -110,9 +110,9 @@ describe("Label Expressions", () => {
         test("Not Not expression", () => {
             const labelExpr = Cypher.labelExpr.not(Cypher.labelExpr.not("A"));
 
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:!!A)`);
         });
@@ -120,9 +120,9 @@ describe("Label Expressions", () => {
         test("Wildcard with escaped label", () => {
             const labelExpr = Cypher.labelExpr.and(Cypher.labelExpr.wildcard, "%");
 
-            const node = new Cypher.Node();
+            const node = new Cypher.Node({ labels: labelExpr });
 
-            const pattern = new Cypher.Pattern(node, { labels: labelExpr });
+            const pattern = new Cypher.Pattern(node);
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0:(%&\`%\`))`);
         });
@@ -131,52 +131,44 @@ describe("Label Expressions", () => {
     describe("relationship", () => {
         test("Simple label expression: &", () => {
             const labelExpr = Cypher.labelExpr.and("A", "B");
-            const relationship = new Cypher.Relationship();
+            const relationship = new Cypher.Relationship({
+                type: labelExpr,
+            });
 
-            const pattern = new Cypher.Pattern(new Cypher.Node())
-                .related(relationship, {
-                    type: labelExpr,
-                })
-                .to(new Cypher.Node());
+            const pattern = new Cypher.Pattern(new Cypher.Node()).related(relationship).to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)-[this1:(A&B)]->(this2)`);
         });
 
         test("Simple label expression: |", () => {
             const labelExpr = Cypher.labelExpr.or("A", "B");
-            const relationship = new Cypher.Relationship();
+            const relationship = new Cypher.Relationship({
+                type: labelExpr,
+            });
 
-            const pattern = new Cypher.Pattern(new Cypher.Node())
-                .related(relationship, {
-                    type: labelExpr,
-                })
-                .to(new Cypher.Node());
+            const pattern = new Cypher.Pattern(new Cypher.Node()).related(relationship).to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)-[this1:(A|B)]->(this2)`);
         });
 
         test("Simple label expression: !", () => {
             const labelExpr = Cypher.labelExpr.not("A");
-            const relationship = new Cypher.Relationship();
+            const relationship = new Cypher.Relationship({
+                type: labelExpr,
+            });
 
-            const pattern = new Cypher.Pattern(new Cypher.Node())
-                .related(relationship, {
-                    type: labelExpr,
-                })
-                .to(new Cypher.Node());
+            const pattern = new Cypher.Pattern(new Cypher.Node()).related(relationship).to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)-[this1:!A]->(this2)`);
         });
 
         test("Label wildcard", () => {
             const labelExpr = Cypher.labelExpr.wildcard;
-            const relationship = new Cypher.Relationship();
+            const relationship = new Cypher.Relationship({
+                type: labelExpr,
+            });
 
-            const pattern = new Cypher.Pattern(new Cypher.Node())
-                .related(relationship, {
-                    type: labelExpr,
-                })
-                .to(new Cypher.Node());
+            const pattern = new Cypher.Pattern(new Cypher.Node()).related(relationship).to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)-[this1:%]->(this2)`);
         });
@@ -187,13 +179,11 @@ describe("Label Expressions", () => {
                 Cypher.labelExpr.not(Cypher.labelExpr.or("B", Cypher.labelExpr.wildcard))
             );
 
-            const relationship = new Cypher.Relationship();
+            const relationship = new Cypher.Relationship({
+                type: labelExpr,
+            });
 
-            const pattern = new Cypher.Pattern(new Cypher.Node())
-                .related(relationship, {
-                    type: labelExpr,
-                })
-                .to(new Cypher.Node());
+            const pattern = new Cypher.Pattern(new Cypher.Node()).related(relationship).to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)-[this1:((A&B)&!(B|%))]->(this2)`);
         });
@@ -201,13 +191,11 @@ describe("Label Expressions", () => {
         test("Not Not expression", () => {
             const labelExpr = Cypher.labelExpr.not(Cypher.labelExpr.not("A"));
 
-            const relationship = new Cypher.Relationship();
+            const relationship = new Cypher.Relationship({
+                type: labelExpr,
+            });
 
-            const pattern = new Cypher.Pattern(new Cypher.Node())
-                .related(relationship, {
-                    type: labelExpr,
-                })
-                .to(new Cypher.Node());
+            const pattern = new Cypher.Pattern(new Cypher.Node()).related(relationship).to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)-[this1:!!A]->(this2)`);
         });
@@ -215,13 +203,11 @@ describe("Label Expressions", () => {
         test("Wildcard with escaped label", () => {
             const labelExpr = Cypher.labelExpr.and(Cypher.labelExpr.wildcard, "%");
 
-            const relationship = new Cypher.Relationship();
+            const relationship = new Cypher.Relationship({
+                type: labelExpr,
+            });
 
-            const pattern = new Cypher.Pattern(new Cypher.Node())
-                .related(relationship, {
-                    type: labelExpr,
-                })
-                .to(new Cypher.Node());
+            const pattern = new Cypher.Pattern(new Cypher.Node()).related(relationship).to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
             expect(queryResult.cypher).toBe(`(this0)-[this1:(%&\`%\`)]->(this2)`);
         });

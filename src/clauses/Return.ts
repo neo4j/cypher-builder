@@ -25,7 +25,7 @@ import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Return extends WithOrder {}
 
 /**

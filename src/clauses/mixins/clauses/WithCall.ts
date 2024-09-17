@@ -17,18 +17,18 @@
  * limitations under the License.
  */
 
-import Cypher from "../../src";
-import { TestClause } from "../../src/utils/TestClause";
+import type { Clause, Variable } from "../../..";
+import { Call } from "../../..";
+import { MixinClause } from "../Mixin";
 
-describe("Spatial Functions - Deprecated", () => {
-    test("point.distance", () => {
-        const leftExpr = new Cypher.Variable();
-        const rightExpr = new Cypher.Variable();
-        const pointDistanceFn = Cypher.pointDistance(leftExpr, rightExpr);
+export abstract class WithCall extends MixinClause {
+    /** Add a {@link Call} clause
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/)
+     */
+    public call(subquery: Clause, variableScope?: Variable[] | "*"): Call {
+        const callClause = new Call(subquery, variableScope);
+        this.addNextClause(callClause);
 
-        const queryResult = new TestClause(pointDistanceFn).build();
-
-        expect(queryResult.cypher).toBe(`point.distance(var0, var1)`);
-        expect(queryResult.params).toEqual({});
-    });
-});
+        return callClause;
+    }
+}

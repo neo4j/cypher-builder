@@ -44,7 +44,9 @@ export type RelationshipPattern = {
     length?: LengthOption;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Pattern extends WithWhere {}
+
 /** Represents a pattern of a single node or n-relationships to be used in clauses.
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns/)
  * @group Patterns
@@ -118,6 +120,7 @@ export class Pattern extends PatternElement {
         }
     }
 
+    /** Adds a quantifier to the pattern such as `{1,3}`, to be used as part of a {@link QuantifiedPath} */
     public quantifier(quantifier: Quantifier): QuantifiedPattern {
         return new QuantifiedPattern(this, quantifier);
     }

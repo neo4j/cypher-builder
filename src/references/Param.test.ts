@@ -26,11 +26,9 @@ describe("Params", () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const param2 = new Cypher.Param(2000); // Param created but not used by cypher builder
 
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
-        const query = new Cypher.Create(movieNode).set(
+        const query = new Cypher.Create(new Cypher.Pattern(movieNode)).set(
             [movieNode.property("released"), param1] // Explicitly defines the node property
         );
 

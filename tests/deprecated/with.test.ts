@@ -19,7 +19,7 @@
 
 import Cypher from "../../src";
 
-describe("CypherBuilder With", () => {
+describe("CypherBuilder With - Deprecated", () => {
     test("With clause after with", () => {
         const node = new Cypher.Node({
             labels: ["Movie"],

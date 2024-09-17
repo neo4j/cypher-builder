@@ -23,10 +23,12 @@ import { TestClause } from "../../utils/TestClause";
 describe("math operators", () => {
     test("Match node with mathematical operator", () => {
         const yearParam = new Cypher.Param(2000);
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
-        const matchQuery = new Cypher.Match(movieNode)
+        const movieNode = new Cypher.Node();
+        const matchQuery = new Cypher.Match(
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+            })
+        )
             .where(Cypher.eq(movieNode.property("released"), Cypher.plus(new Cypher.Literal(10), yearParam)))
             .return(movieNode);
 

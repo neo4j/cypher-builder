@@ -22,7 +22,7 @@ import Cypher from "../../../index";
 describe("db.index.fulltext", () => {
     describe("db.index.fulltext.queryNodes", () => {
         test("Simple fulltext", () => {
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const targetNode = new Cypher.Node();
             const fulltextProcedure = Cypher.db.index.fulltext
                 .queryNodes("my-text-index", new Cypher.Param("This is a lovely phrase"))
                 .yield(["node", targetNode]);
@@ -40,7 +40,7 @@ describe("db.index.fulltext", () => {
         });
 
         test("Fulltext with where and return", () => {
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const targetNode = new Cypher.Node();
             const fulltextProcedure = Cypher.db.index.fulltext
                 .queryNodes("my-text-index", new Cypher.Param("This is a lovely phrase"))
                 .yield(["node", targetNode])
@@ -88,7 +88,7 @@ describe("db.index.fulltext", () => {
 
     describe("db.index.fulltext.queryRelationships", () => {
         test("Simple fulltext", () => {
-            const targetNode = new Cypher.Node({ labels: ["Movie"] });
+            const targetNode = new Cypher.Node();
             const fulltextProcedure = Cypher.db.index.fulltext
                 .queryRelationships("my-text-index", new Cypher.Param("This is a lovely phrase"))
                 .yield(["relationship", targetNode]);

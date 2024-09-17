@@ -1,5 +1,64 @@
 # @neo4j/cypher-builder
 
+## 1.20.0
+
+### Minor Changes
+
+-   [#399](https://github.com/neo4j/cypher-builder/pull/399) [`02c7e99`](https://github.com/neo4j/cypher-builder/commit/02c7e9957d80498c3af7ceaf4ef84b330ed1e89e) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for variable scope in CALL:
+
+    ```js
+    const movieNode = new Cypher.Node();
+    const actorNode = new Cypher.Node();
+
+    const clause = new Cypher.Call(new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)), [
+        movieNode,
+        actorNode,
+    ]);
+    ```
+
+    ```cypher
+    CALL (this0, this1) {
+        CREATE (this0)-[this2]->(this1)
+    }
+    ```
+
+### Patch Changes
+
+-   [#403](https://github.com/neo4j/cypher-builder/pull/403) [`eed7686`](https://github.com/neo4j/cypher-builder/commit/eed7686112341207a005bb9f3e40ed006889e3e5) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for adding `Call` clauses to `Match` and `With`:
+
+    ```js
+    const match = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+        .call(new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)), [movieNode])
+        .return(movieNode);
+    ```
+
+    ```cypher
+    MATCH (this0:Movie)
+    CALL (this0) {
+        CREATE (this0)-[this2]->(this1)
+    }
+    RETURN this0
+    ```
+
+-   [#396](https://github.com/neo4j/cypher-builder/pull/396) [`f39056f`](https://github.com/neo4j/cypher-builder/commit/f39056f11a68b384df763470b39909efe56da20f) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for GQL type aliases introduced in Neo4j 5.23:
+
+    -   `Cypher.TYPE.TIMESTAMP_WITHOUT_TIME_ZONE`
+    -   `Cypher.TYPE.TIME_WITHOUT_TIME_ZONE`
+    -   `Cypher.TYPE.TIMESTAMP_WITH_TIME_ZONE`
+    -   `Cypher.TYPE.TIME_WITH_TIME_ZONE`
+
+## 1.19.1
+
+### Patch Changes
+
+-   [#373](https://github.com/neo4j/cypher-builder/pull/373) [`99eb375`](https://github.com/neo4j/cypher-builder/commit/99eb375b8a6b154e1b89612fc6a5e05788067aa5) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `new Union().distinct()`
+
+-   [#378](https://github.com/neo4j/cypher-builder/pull/378) [`51ae499`](https://github.com/neo4j/cypher-builder/commit/51ae4993c0aa4fa015ec40c65d3a923eb06cf8e4) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for trimCharacter on rtrim and ltrim
+
+-   [#377](https://github.com/neo4j/cypher-builder/pull/377) [`d4c790e`](https://github.com/neo4j/cypher-builder/commit/d4c790e82b42fb28e21e385b086a2f991e642d50) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `btrim`
+
+-   [#378](https://github.com/neo4j/cypher-builder/pull/378) [`51ae499`](https://github.com/neo4j/cypher-builder/commit/51ae4993c0aa4fa015ec40c65d3a923eb06cf8e4) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates `lTrim` and `rTrim` in favour of `ltrim` and `rtrim`
+
 ## 1.19.0
 
 ### Minor Changes
