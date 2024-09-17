@@ -22,4 +22,4 @@ const predicates = [Cypher.true, Cypher.false];
 const andPredicate = Cypher.and(...predicates); // type Cypher.Predicate | undefined
 ```
 
-Passing parameters without spread
+Passing parameters without spread will still return a defined type
