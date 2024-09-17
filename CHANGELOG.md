@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 1.20.1
+
+### Patch Changes
+
+-   [#374](https://github.com/neo4j/cypher-builder/pull/374) [`721fb85`](https://github.com/neo4j/cypher-builder/commit/721fb85a5658c37c8490c8cc9b8d8932b7fd762a) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates `Cypher.concat` in favor of `Cypher.utils.concat`
+
 ## 1.20.0
 
 ### Minor Changes
