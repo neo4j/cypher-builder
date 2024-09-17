@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type { CypherEnvironment } from "../Environment";
+import { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
@@ -25,6 +25,7 @@ import { RelationshipRef } from "../references/RelationshipRef";
 import { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { padBlock } from "../utils/pad-block";
 import type { LengthOption } from "./PartialPattern";
 import { PartialPattern } from "./PartialPattern";
 import { PatternElement } from "./PatternElement";
@@ -52,21 +53,17 @@ export interface Pattern extends WithWhere {}
  */
 @mixin(WithWhere)
 export class Pattern extends PatternElement {
-    private previous: PartialPattern | undefined;
     private properties: Record<string, Expr> | undefined;
 
     private labels: string | string[] | LabelExpr | undefined;
+    protected previous: PartialPattern | undefined;
 
+    constructor(nodeConfig?: NodePattern);
     constructor(node: Variable, options?: NodePattern);
-    constructor(nodeConfig: NodePattern);
-    /** @internal */
-    constructor(nodeVariable?: Variable | NodePattern, options?: NodePattern, previous?: PartialPattern);
-    constructor(nodeVariable?: Variable | NodePattern, options: NodePattern = {}, previous?: PartialPattern) {
+    constructor(nodeVariable: Variable | NodePattern | undefined, options: NodePattern = {}) {
         const firstArgumentIsVar = nodeVariable instanceof Variable;
         const variable = firstArgumentIsVar ? nodeVariable : undefined;
         super(variable);
-
-        this.previous = previous;
 
         if (!firstArgumentIsVar) {
             options = nodeVariable ?? {};
@@ -117,5 +114,22 @@ export class Pattern extends PatternElement {
             return labelsToString(this.labels, env);
         }
         return "";
+    }
+}
+
+// This exists to support a "previous" parameter without exposing this to the user
+export class NestedPattern extends Pattern {
+    constructor(nodeVariable?: Variable | NodePattern, options: NodePattern = {}, previous?: PartialPattern) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        super(nodeVariable as any, options);
+        this.previous = previous;
+    }
+
+    /** Overrides custom string to `Pattern` instead of `NestedPattern`
+     * @hidden
+     */
+    public toString() {
+        const cypher = padBlock(this.getCypher(new CypherEnvironment()));
+        return `<Pattern> """\n${cypher}\n"""`;
     }
 }

@@ -17,16 +17,15 @@
  * limitations under the License.
  */
 
-import type { Expr } from "..";
 import type { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
 import { NodeRef } from "../references/NodeRef";
 import type { Variable } from "../references/Variable";
+import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import type { NodePattern, RelationshipPattern } from "./Pattern";
-import { Pattern } from "./Pattern";
+import { NestedPattern, type NodePattern, type Pattern, type RelationshipPattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
 import { labelsToString } from "./labels-to-string";
 
@@ -67,7 +66,7 @@ export class PartialPattern extends PatternElement {
     public to(nodeConfig?: NodePattern): Pattern;
     public to(node?: Variable | NodePattern, options?: NodePattern): Pattern {
         if (!node) node = new NodeRef();
-        return new Pattern(node, options, this);
+        return new NestedPattern(node, options, this);
     }
 
     /**
