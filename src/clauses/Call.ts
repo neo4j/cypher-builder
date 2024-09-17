@@ -63,23 +63,30 @@ export class Call extends Clause {
     private subquery: CypherASTNode;
     private _importWith?: ImportWith;
     private inTransactionsConfig?: InTransactionConfig;
+    private variableScope?: Variable[] | "*";
 
     // This is to preserve compatibility with innerWith and avoid breaking changes
     // Remove on 2.0.0
     private _usingImportWith = false;
 
-    constructor(subquery: Clause) {
+    constructor(subquery: Clause, variableScope?: Variable[] | "*") {
         super();
         const rootQuery = subquery.getRoot();
         this.addChildren(rootQuery);
         this.subquery = rootQuery;
+        this.variableScope = variableScope;
     }
 
     /** Adds a `WITH` statement inside `CALL {`, this `WITH` can is used to import variables outside of the subquery
      *  @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#call-importing-variables)
      */
     public importWith(...params: Array<Variable | "*">): this {
-        if (this._importWith) throw new Error("Call import already set");
+        if (this._importWith) {
+            throw new Error(`Call import "WITH" already set`);
+        }
+        if (this.variableScope) {
+            throw new Error(`Call import cannot be used along with scope clauses "Call (<variable>)"`);
+        }
         if (params.length > 0) {
             this._importWith = new ImportWith(this, [...params]);
             this.addChildren(this._importWith);
@@ -105,9 +112,10 @@ export class Call extends Clause {
         const inTransactionCypher = this.generateInTransactionStr();
 
         const inCallBlock = `${importWithCypher}${subQueryStr}`;
+        const variableScopeStr = this.generateVariableScopeStr(env);
         const nextClause = this.compileNextClause(env);
 
-        return `CALL {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
@@ -117,6 +125,19 @@ export class Call extends Clause {
             return this.subquery.getCypher(env, importWithCypher);
         }
         return this.subquery.getCypher(env);
+    }
+
+    private generateVariableScopeStr(env: CypherEnvironment): string {
+        if (!this.variableScope) {
+            return "";
+        }
+
+        if (this.variableScope === "*") {
+            return ` (*)`;
+        }
+
+        const variablesString = this.variableScope.map((variable) => variable.getCypher(env));
+        return ` (${variablesString.join(", ")})`;
     }
 
     private generateInTransactionStr(): string {

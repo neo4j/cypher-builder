@@ -282,4 +282,25 @@ CALL apoc.util.validate(true, \\"message\\", [0])"
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
     });
+
+    describe("Match.call", () => {
+        test("Match.Call with variable scope", () => {
+            const movieNode = new Cypher.Node();
+            const actorNode = new Cypher.Node();
+
+            const match = new Cypher.With(movieNode)
+                .call(new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)), [movieNode])
+                .return(actorNode);
+
+            const { cypher, params } = match.build();
+            expect(cypher).toMatchInlineSnapshot(`
+"WITH this0
+CALL (this0) {
+    CREATE (this0)-[this1]->(this2)
+}
+RETURN this2"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+    });
 });
