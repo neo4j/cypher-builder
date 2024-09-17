@@ -32,8 +32,6 @@ export { Unwind } from "./clauses/Unwind";
 export { Use } from "./clauses/Use";
 export { With } from "./clauses/With";
 
-export { concat } from "./clauses/utils/concat";
-
 // Patterns
 export { labelExpr } from "./expressions/labels/label-expressions";
 export { Pattern } from "./pattern/Pattern";
