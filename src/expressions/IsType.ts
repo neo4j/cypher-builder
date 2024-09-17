@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
-import type { Environment, Expr } from "..";
 import { CypherASTNode } from "../CypherASTNode";
+import type { CypherEnvironment } from "../Environment";
+import type { Expr } from "../types";
 import { asArray } from "../utils/as-array";
 import type { ValueOf } from "../utils/type-helpers";
 
@@ -105,7 +106,7 @@ class ListType {
         return this;
     }
 
-    public getCypher(env: Environment): string {
+    public getCypher(env: CypherEnvironment): string {
         // Note that all types must be nullable or non nullable
         const notNullStr = this._notNull ? " NOT NULL" : "";
         const typesStr = this.types
@@ -138,7 +139,7 @@ export class IsType extends CypherASTNode {
         return this;
     }
 
-    public getCypher(env: Environment): string {
+    public getCypher(env: CypherEnvironment): string {
         const exprCypher = env.compile(this.expr);
         const isStr = this.not ? "IS NOT" : "IS";
 
@@ -158,7 +159,7 @@ export class IsType extends CypherASTNode {
 
 type Type = ValueOf<typeof BaseTypes> | ListType;
 
-function compileType(type: Type, env: Environment): string {
+function compileType(type: Type, env: CypherEnvironment): string {
     if (type instanceof ListType) {
         return env.compile(type);
     } else {

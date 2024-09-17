@@ -18,10 +18,11 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
+import type { CypherCompilable } from "../types";
 import { toCypherParams } from "../utils/to-cypher-params";
 import { Clause } from "./Clause";
 
-type RawCypherCallback = (env: CypherEnvironment) => [string, Record<string, unknown>] | string | undefined;
+type RawCypherCallback = (context: RawCypherContext) => [string, Record<string, unknown>] | string | undefined;
 
 /** Allows for a raw string to be used as a clause
  * @group Other
@@ -37,7 +38,7 @@ export class Raw extends Clause {
     }
 
     public getCypher(env: CypherEnvironment): string {
-        const cbResult = this.callback(env);
+        const cbResult = this.callback(new RawCypherContext(env));
         if (!cbResult) return "";
         let query: string;
         let params = {};
@@ -54,5 +55,18 @@ export class Raw extends Clause {
 
     private stringToCallback(str: string): RawCypherCallback {
         return () => str;
+    }
+}
+
+export class RawCypherContext {
+    private env: CypherEnvironment;
+
+    constructor(env: CypherEnvironment) {
+        this.env = env;
+    }
+
+    /** Compiles a Cypher element in the current context */
+    public compile(element: CypherCompilable): string {
+        return this.env.compile(element);
     }
 }

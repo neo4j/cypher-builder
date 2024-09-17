@@ -44,7 +44,7 @@ describe("Raw Cypher", () => {
     test("Create a custom query with Raw callback", () => {
         const releasedParam = new Cypher.Param(1999);
 
-        const rawCypher = new Cypher.Raw((env: Cypher.Environment) => {
+        const rawCypher = new Cypher.Raw((env) => {
             const releasedParamId = env.compile(releasedParam); // Gets the raw Cypher for the param
 
             const customCypher = `MATCH(n) WHERE n.title=$title_param AND n.released=${releasedParamId}`;
