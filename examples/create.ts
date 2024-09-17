@@ -42,7 +42,7 @@ const create2 = new Cypher.Create(new Cypher.Pattern(movie2, { labels: ["Movie"]
     titleParam,
 ]);
 
-const { cypher, params } = Cypher.concat(create1, create2).build();
+const { cypher, params } = Cypher.utils.concat(create1, create2).build();
 
 console.log("Cypher");
 console.log(cypher);

@@ -48,7 +48,7 @@ describe("Params", () => {
         const clause1 = new TestClause(param1, var1);
         const var2 = new Cypher.Variable();
         const clause2 = new TestClause(param1, var2);
-        const { cypher, params } = Cypher.concat(clause1, clause2).build();
+        const { cypher, params } = Cypher.utils.concat(clause1, clause2).build();
 
         expect(cypher).toMatchInlineSnapshot(`
             "$authvar0

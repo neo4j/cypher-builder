@@ -95,7 +95,7 @@ const match = new Cypher.Match(person);
 
 const callSubquery = new Cypher.Call(subquery).importWith(person).return(dogName);
 
-const clause = Cypher.concat(match, subquery);
+const clause = Cypher.utils.concat(match, subquery);
 ----
 
 [source, cypher]
@@ -124,7 +124,7 @@ const deleteSubquery = new Cypher.With(node).detachDelete(node);
 const callSubquery=new Cypher.Call(deleteSubquery).inTransactions();
 
 
-const query = Cypher.concat(match, callSubquery);
+const query = Cypher.utils.concat(match, callSubquery);
 ----
 
 [source, cypher]

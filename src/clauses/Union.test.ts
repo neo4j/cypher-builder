@@ -129,7 +129,7 @@ describe("CypherBuilder UNION", () => {
         const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).return([n3, returnVar]);
 
         const unionQuery = new Cypher.Union(query1, query2, query3);
-        const callQuery = new Cypher.Call(Cypher.concat(unionQuery)).importWith(new Cypher.Variable());
+        const callQuery = new Cypher.Call(Cypher.utils.concat(unionQuery)).importWith(new Cypher.Variable());
         const queryResult = callQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL {

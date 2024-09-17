@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import Cypher from "../..";
+import Cypher from "../../src";
 
-describe("CypherBuilder concat", () => {
+describe("CypherBuilder utils.concat", () => {
     test("concatenates Match and Return", () => {
         const node = new Cypher.Node();
 
@@ -28,7 +28,7 @@ describe("CypherBuilder concat", () => {
         );
         const returnClause = new Cypher.Return([node.property("title"), "movie"]);
 
-        const query = Cypher.concat(clause, returnClause);
+        const query = Cypher.utils.concat(clause, returnClause);
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -54,16 +54,18 @@ describe("CypherBuilder concat", () => {
         const movie2 = new Cypher.Node();
 
         // Note that both nodes share the same param
-        const create1 = new Cypher.Create(new Cypher.Pattern(movie1, { labels: ["Movie"] })).set([
-            movie1.property("title"),
-            titleParam,
-        ]);
-        const create2 = new Cypher.Create(new Cypher.Pattern(movie2, { labels: ["Movie"] })).set([
-            movie2.property("title"),
-            titleParam,
-        ]);
+        const create1 = new Cypher.Create(
+            new Cypher.Pattern(movie1, {
+                labels: ["Movie"],
+            })
+        ).set([movie1.property("title"), titleParam]);
+        const create2 = new Cypher.Create(
+            new Cypher.Pattern(movie2, {
+                labels: ["Movie"],
+            })
+        ).set([movie2.property("title"), titleParam]);
 
-        const queryResult = Cypher.concat(create1, create2).build();
+        const queryResult = Cypher.utils.concat(create1, create2).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
             "CREATE (this0:Movie)
@@ -82,7 +84,7 @@ describe("CypherBuilder concat", () => {
     });
 
     test("Empty composite clause", () => {
-        const compositeClause = Cypher.concat(undefined);
+        const compositeClause = Cypher.utils.concat(undefined);
         expect(compositeClause.empty).toBeTrue();
         expect(compositeClause.children).toHaveLength(0);
 
@@ -92,7 +94,7 @@ describe("CypherBuilder concat", () => {
     });
 
     test("Empty nested composite clause", () => {
-        const compositeClause = Cypher.concat(Cypher.concat());
+        const compositeClause = Cypher.utils.concat(Cypher.utils.concat());
         expect(compositeClause.empty).toBeTrue();
         expect(compositeClause.children).toHaveLength(0);
 
@@ -102,8 +104,8 @@ describe("CypherBuilder concat", () => {
     });
 
     test("Nested composite clause with multiple elements", () => {
-        const compositeClause = Cypher.concat(
-            Cypher.concat(
+        const compositeClause = Cypher.utils.concat(
+            Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(new Cypher.Node())),
                 new Cypher.Match(new Cypher.Pattern(new Cypher.Node()))
             )
@@ -125,7 +127,7 @@ describe("CypherBuilder concat", () => {
         const clause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).where(
             Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb"))
         );
-        const compositeClause = Cypher.concat(clause);
+        const compositeClause = Cypher.utils.concat(clause);
         expect(compositeClause.empty).toBeFalse();
         expect(compositeClause.children).toHaveLength(1);
     });
@@ -138,9 +140,9 @@ describe("CypherBuilder concat", () => {
         );
         const returnClause = new Cypher.Return([node.property("title"), "movie"]);
 
-        const nestedConcat = Cypher.concat(clause);
+        const nestedConcat = Cypher.utils.concat(clause);
 
-        const topLevelConcat = Cypher.concat(nestedConcat, returnClause);
+        const topLevelConcat = Cypher.utils.concat(nestedConcat, returnClause);
 
         const queryResult = topLevelConcat.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
