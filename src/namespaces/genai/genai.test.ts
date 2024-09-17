@@ -53,7 +53,7 @@ describe("genai functions", () => {
                 dimensions: 512,
             });
 
-            const result = Cypher.concat(
+            const result = Cypher.utils.concat(
                 new Cypher.With([new Cypher.Literal("embeddings are cool"), asQueryString]),
                 new Cypher.With([encodeFunction, asQueryVector]),
                 vectorQueryNodesCall

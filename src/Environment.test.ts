@@ -123,7 +123,7 @@ describe("Environment", () => {
                 return env.compile(secondMatch);
             });
 
-            const query = Cypher.concat(matchClause, raw);
+            const query = Cypher.utils.concat(matchClause, raw);
             const { cypher, params } = query.build();
             expect(cypher).toMatchInlineSnapshot(`
                 "MATCH (this0:Movie)
