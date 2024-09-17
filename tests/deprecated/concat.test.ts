@@ -101,7 +101,10 @@ describe("CypherBuilder concat - Deprecated", () => {
 
     test("Nested composite clause with multiple elements", () => {
         const compositeClause = Cypher.concat(
-            Cypher.concat(new Cypher.Match(new Cypher.Node()), new Cypher.Match(new Cypher.Node()))
+            Cypher.concat(
+                new Cypher.Match(new Cypher.Pattern(new Cypher.Node())),
+                new Cypher.Match(new Cypher.Pattern(new Cypher.Node()))
+            )
         );
         expect(compositeClause.empty).toBeFalse();
         expect(compositeClause.children).toHaveLength(1);

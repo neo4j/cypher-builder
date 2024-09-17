@@ -54,7 +54,7 @@ MATCH(this1:Person)
 In this query, the variable `this0` is used for both `MATCH` statements, thus causing variable name collision. 
 This happens because both queries (`match1` and `match2`) are built separately.
 
-If merging these queries before executing `.build()` (e.g. using `Cypher.concat`) is not a viable solution, a "prefix" string can be passed to `.build()` to avoid name collision:
+If merging these queries before executing `.build()` (e.g. using `Cypher.utils.concat`) is not a viable solution, a "prefix" string can be passed to `.build()` to avoid name collision:
 
 [source, javascript]
 ----
@@ -282,7 +282,7 @@ const customReturn = new Cypher.Raw(`10 as ${returnVar}`);
 const returnClause = new Cypher.Return(customReturn);
 ----
 
-Additionally, `Raw` can also be used in `Cypher.concat` to attach an arbitrary string to any Cypher Builder element. 
+Additionally, `Raw` can also be used in `Cypher.utils.concat` to attach an arbitrary string to any Cypher Builder element. 
 
 === Using a callback
 

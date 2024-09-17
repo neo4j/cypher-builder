@@ -22,7 +22,7 @@ This may be caused by:
 * Dynamic number of clauses in a query.
 * Composite clauses that have been generated separately.
 
-For these cases, the helper utility `Cypher.concat` can be used. 
+For these cases, the helper utility `Cypher.utils.concat` can be used. 
 This function accepts any number of clauses and concatenates them in the provided order. 
 For example, the previous example could be written as:
 
@@ -31,7 +31,7 @@ For example, the previous example could be written as:
 const matchClause = new Cypher.Match(myNode);
 const returnClause = new Cypher.Return(myNode);
 
-const clause = Cypher.concat(matchClause, returnClause);
+const clause = Cypher.utils.concat(matchClause, returnClause);
 ----
 
 The resulting Cypher will be identical to the first example:
@@ -43,7 +43,7 @@ RETURN this0
 ----
 
 
-`Cypher.concat` can also be used to merge multiple clauses dynamically:
+`Cypher.utils.concat` can also be used to merge multiple clauses dynamically:
 
 [source, javascript]
 ----
@@ -53,24 +53,24 @@ const match3 = new Cypher.Match(new Cypher.Node());
 
 const clauses = [match1, match2, match3]
 
-const clause = Cypher.concat(...clauses);
+const clause = Cypher.utils.concat(...clauses);
 ----
 
-Additionally, `concat` also accepts `undefined` and, in this case, those values will be ignored. 
+Additionally, `utils.concat` also accepts `undefined` and, in this case, those values will be ignored. 
 The following example will produce the same Cypher as before: 
 
 [source, javascript]
 ----
 const clauses = [match1, match2, undefined, match3]
 
-const clause = Cypher.concat(...clauses);
+const clause = Cypher.utils.concat(...clauses);
 ----
 
-Note that `Cypher.concat` accepts any clause and does not ensure that the resulting Cypher will be valid. 
+Note that `Cypher.utils.concat` accepts any clause and does not ensure that the resulting Cypher will be valid. 
 
 
 [WARNING]
 ====
-It is not possible to pass the same clause twice to `Cypher.concat`.
+It is not possible to pass the same clause twice to `Cypher.utils.concat`.
 Make sure that every clause is a different instance of a Cypher Builder clause.
 ====

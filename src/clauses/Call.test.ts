@@ -407,7 +407,7 @@ RETURN var1"
         });
 
         test("Call in transaction", () => {
-            const query = Cypher.concat(
+            const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions()
             );
@@ -423,7 +423,7 @@ CALL {
         });
 
         test("Call in transaction of rows", () => {
-            const query = Cypher.concat(
+            const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions({
                     ofRows: 10,
@@ -441,7 +441,7 @@ CALL {
         });
 
         test("Call in transaction on error fail", () => {
-            const query = Cypher.concat(
+            const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions({
                     onError: "fail",
@@ -458,7 +458,7 @@ CALL {
 `);
         });
         test("Call in transaction on error break", () => {
-            const query = Cypher.concat(
+            const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions({
                     onError: "break",
@@ -476,7 +476,7 @@ CALL {
         });
 
         test("Call in transaction on error continue", () => {
-            const query = Cypher.concat(
+            const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions({
                     onError: "continue",
@@ -497,7 +497,7 @@ CALL {
             const node = new Cypher.Node();
             const deleteSubquery = new Cypher.With(node).detachDelete(node);
 
-            const query = Cypher.concat(
+            const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(deleteSubquery).inTransactions({
                     ofRows: 10,
@@ -519,7 +519,7 @@ CALL {
             const node = new Cypher.Node();
             const deleteSubquery = new Cypher.With(node).detachDelete(node);
 
-            const query = Cypher.concat(
+            const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(deleteSubquery).inTransactions({
                     concurrentTransactions: 3,
@@ -540,7 +540,7 @@ CALL {
             const node = new Cypher.Node();
             const deleteSubquery = new Cypher.With(node).detachDelete(node);
 
-            const query = Cypher.concat(
+            const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(deleteSubquery).inTransactions({
                     ofRows: 10,
@@ -573,7 +573,7 @@ CALL {
                 actorNode,
             ]).return(movieNode);
 
-            const queryResult = Cypher.concat(match, clause).build();
+            const queryResult = Cypher.utils.concat(match, clause).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
@@ -629,7 +629,7 @@ RETURN this0"
                 "*"
             ).return(movieNode);
 
-            const queryResult = Cypher.concat(match, clause).build();
+            const queryResult = Cypher.utils.concat(match, clause).build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
