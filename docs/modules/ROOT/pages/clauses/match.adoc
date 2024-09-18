@@ -60,3 +60,37 @@ const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] });
 
 const matchQuery = new Cypher.Match(pattern).optional();
 ----
+
+== Shortest paths
+
+link:https://neo4j.com/docs/cypher-manual/current/patterns/shortest-paths/#shortest[Shortest paths] and its variations can be added in a Match clause with the following methods in `Cypher.Match`:
+
+* `.shortest(k)`
+* `.shortestGroups(k)`
+* `.allShortest`
+* `.any`
+
+For example:
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(
+    new Cypher.Pattern(movieNode, {
+        labels: ["Movie"]
+    })
+        .related()
+        .to(new Cypher.Node(), {
+            labels: ["Person"],
+        })
+)
+    .shortestGroups(2)
+    .return(movieNode);
+----
+
+[source, cypher]
+----
+MATCH SHORTEST 2 GROUPS (this0:Movie)-[this1]->(this2:Person)
+RETURN this0
+----

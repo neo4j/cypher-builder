@@ -869,11 +869,11 @@ RETURN this0"
                 })
             );
 
-            const query = new Cypher.Match(quantifiedPath).return(m2);
+            const query = new Cypher.Match(quantifiedPath).shortest(2).return(m2);
             const queryResult = query.build();
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-    "MATCH (this0:Movie { title: $param0 })
+    "MATCH SHORTEST 2 (this0:Movie { title: $param0 })
           ((:Movie)-[:ACTED_IN]->(:Person)){1,2}
           (this1:Movie { title: $param1 })
     RETURN this1"
