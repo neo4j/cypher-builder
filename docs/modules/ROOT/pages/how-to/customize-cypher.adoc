@@ -127,7 +127,7 @@ WHERE this0.name = $myParam
 RETURN this0
 ----
 
-Note that `$myParam` does not return as a param by `.build()`, as its value has not been defined. 
+Note that `$myParam` is not returned as a param by `.build()`, as its value has not been defined. 
 To generate the parameter, pass a value in the same way as normal parameters:
 
 [source, javascript]
