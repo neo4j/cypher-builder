@@ -6,7 +6,7 @@ This page describes how to customize Cypher queries using Cypher Builder.
 Such a scenario could occur if you:
 
 * Need to embed Cypher strings into existing Cypher queries.
-* Use Cypher Builder within a larger Cypher query that may not use Cypher Builder .
+* Use Cypher Builder as part of a larger Cypher query that might not use Cypher Builder.
 * Need to use features that are not supported in the current version of the Cypher Builder.
 * Use custom functions or procedures.
 
