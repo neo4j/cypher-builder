@@ -138,7 +138,7 @@ const matchQuery = new Cypher.Match({movie,labels: ["Movie"] })
     .return(movie);
 ----
 
-The resulting parameters are:
+The resulting set of parameters returned by `.build()` are:
 
 [source, javascript]
 ----
