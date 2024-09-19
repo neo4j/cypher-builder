@@ -39,10 +39,16 @@ export function escapeVariable(varName: string): string {
     return escapeIfNeeded(varName);
 }
 
+/** Escapes a literal string */
+export function escapeLiteralString(str: string): string {
+    return str.replaceAll(`"`, `\\"`);
+}
+
 function escapeIfNeeded(str: string): string {
     const normalizedStr = normalizeString(str);
     if (needsEscape(normalizedStr)) {
-        return escapeString(normalizedStr);
+        const escapedLabel = normalizedStr.replace(ESCAPE_SYMBOL_REGEX, "``");
+        return `\`${escapedLabel}\``;
     }
     return normalizedStr;
 }
@@ -55,9 +61,4 @@ function needsEscape(str: string): boolean {
     if (!str) return false;
     const validStr = /^[a-z_][0-9a-z_]*$/i;
     return !validStr.test(str);
-}
-
-function escapeString(normalizedStr: string): string {
-    const escapedLabel = normalizedStr.replace(ESCAPE_SYMBOL_REGEX, "``");
-    return `\`${escapedLabel}\``;
 }
