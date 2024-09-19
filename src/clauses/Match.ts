@@ -53,6 +53,11 @@ export interface Match
         WithCallProcedure,
         WithCall {}
 
+type ShortestStatement = {
+    type: "ALL SHORTEST" | "SHORTEST" | "ANY" | "SHORTEST_GROUPS";
+    k?: number;
+};
+
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
  * @category Clauses
@@ -75,6 +80,7 @@ export interface Match
 export class Match extends Clause {
     private pattern: Pattern | QuantifiedPath;
     private _optional = false;
+    private shortestStatement: ShortestStatement | undefined;
 
     constructor(pattern: Pattern | QuantifiedPath);
     /** @deprecated Use {@link Pattern} instead of node: `new Cypher.Match(new Cypher.Pattern(node))` */
@@ -138,6 +144,33 @@ export class Match extends Clause {
         return matchClause;
     }
 
+    public shortest(k: number): this {
+        this.shortestStatement = {
+            type: "SHORTEST",
+            k,
+        };
+        return this;
+    }
+    public shortestGroups(k: number): this {
+        this.shortestStatement = {
+            type: "SHORTEST_GROUPS",
+            k,
+        };
+        return this;
+    }
+    public allShortest(): this {
+        this.shortestStatement = {
+            type: "ALL SHORTEST",
+        };
+        return this;
+    }
+    public any(): this {
+        this.shortestStatement = {
+            type: "ANY",
+        };
+        return this;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathAssignStr = this.compilePath(env);
@@ -151,8 +184,25 @@ export class Match extends Clause {
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const optionalMatch = this._optional ? "OPTIONAL " : "";
+        const shortestStatement = this.getShortestStatement();
 
-        return `${optionalMatch}MATCH ${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `${optionalMatch}MATCH ${shortestStatement}${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+    }
+
+    private getShortestStatement(): string {
+        if (!this.shortestStatement) {
+            return "";
+        }
+        switch (this.shortestStatement.type) {
+            case "SHORTEST":
+                return `SHORTEST ${this.shortestStatement.k} `;
+            case "ALL SHORTEST":
+                return "ALL SHORTEST ";
+            case "SHORTEST_GROUPS":
+                return `SHORTEST ${this.shortestStatement.k} GROUPS `;
+            case "ANY":
+                return "ANY ";
+        }
     }
 }
 
