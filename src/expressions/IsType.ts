@@ -140,7 +140,7 @@ export class IsType extends CypherASTNode {
     }
 
     public getCypher(env: CypherEnvironment): string {
-        const exprCypher = env.compile(this.expr);
+        const exprCypher = this.expr.getCypher(env);
         const isStr = this.not ? "IS NOT" : "IS";
 
         // Note that all types must be nullable or non nullable
@@ -161,7 +161,7 @@ type Type = ValueOf<typeof BaseTypes> | ListType;
 
 function compileType(type: Type, env: CypherEnvironment): string {
     if (type instanceof ListType) {
-        return env.compile(type);
+        return type.getCypher(env);
     } else {
         return type;
     }

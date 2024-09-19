@@ -19,8 +19,6 @@
 
 import { Param } from "./references/Param";
 import type { NamedReference, Variable } from "./references/Variable";
-import type { CypherCompilable } from "./types";
-import { isCypherCompilable } from "./utils/is-cypher-compilable";
 
 export type EnvPrefix = {
     params?: string;
@@ -66,13 +64,6 @@ export class CypherEnvironment {
             ...defaultConfig,
             ...config,
         };
-    }
-
-    public compile(element: CypherCompilable): string {
-        if (!isCypherCompilable(element))
-            throw new Error("Can't compile. Passing a non Cypher Builder element to env.compile");
-
-        return element.getCypher(this);
     }
 
     public getReferenceId(reference: Variable | NamedReference): string {

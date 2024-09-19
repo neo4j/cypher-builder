@@ -19,6 +19,7 @@
 
 import type { CypherEnvironment } from "../Environment";
 import type { CypherCompilable } from "../types";
+import { isCypherCompilable } from "../utils/is-cypher-compilable";
 import { toCypherParams } from "../utils/to-cypher-params";
 import { Clause } from "./Clause";
 
@@ -67,6 +68,9 @@ export class RawCypherContext {
 
     /** Compiles a Cypher element in the current context */
     public compile(element: CypherCompilable): string {
-        return this.env.compile(element);
+        if (!isCypherCompilable(element))
+            throw new Error("Can't build. Passing a non Cypher Builder element to context.compile in RawCypher");
+
+        return element.getCypher(this.env);
     }
 }
