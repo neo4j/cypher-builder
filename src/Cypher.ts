@@ -25,7 +25,7 @@ export { Foreach } from "./clauses/Foreach";
 export { LoadCSV } from "./clauses/LoadCSV";
 export { Match, OptionalMatch } from "./clauses/Match";
 export { Merge } from "./clauses/Merge";
-export { Raw } from "./clauses/Raw";
+export { Raw, type RawCypherContext } from "./clauses/Raw";
 export { Return } from "./clauses/Return";
 export { Union } from "./clauses/Union";
 export { Unwind } from "./clauses/Unwind";
@@ -158,7 +158,6 @@ export {
 export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
 
 // Types
-export type { CypherEnvironment as Environment } from "./Environment";
 export type { BuildConfig, Clause } from "./clauses/Clause";
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
