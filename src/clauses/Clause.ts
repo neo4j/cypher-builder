@@ -42,7 +42,7 @@ export abstract class Clause extends CypherASTNode {
         extraParams = {},
         labelOperator = ":",
     }: {
-        prefix?: string | EnvPrefix | undefined;
+        prefix?: string | EnvPrefix;
         extraParams?: Record<string, unknown>;
         labelOperator?: ":" | "&";
     } = {}): CypherResult {
