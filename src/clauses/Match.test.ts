@@ -745,4 +745,145 @@ RETURN this0"
             expect(params).toMatchInlineSnapshot(`{}`);
         });
     });
+
+    describe("SHORTEST paths", () => {
+        test("SHORTEST k", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: new Cypher.Param("test-value"),
+                    },
+                })
+                    .related()
+                    .to(new Cypher.Node(), {
+                        labels: ["Person"],
+                    })
+            )
+                .shortest(2)
+                .return(movieNode);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH SHORTEST 2 (this0:Movie { test: $param0 })-[this1]->(this2:Person)
+RETURN this0"
+`);
+        });
+
+        test("SHORTEST k GROUPS", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: new Cypher.Param("test-value"),
+                    },
+                })
+                    .related()
+                    .to(new Cypher.Node(), {
+                        labels: ["Person"],
+                    })
+            )
+                .shortestGroups(2)
+                .return(movieNode);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH SHORTEST 2 GROUPS (this0:Movie { test: $param0 })-[this1]->(this2:Person)
+RETURN this0"
+`);
+        });
+
+        test("ALL SHORTEST", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: new Cypher.Param("test-value"),
+                    },
+                })
+                    .related()
+                    .to(new Cypher.Node(), {
+                        labels: ["Person"],
+                    })
+            )
+                .allShortest()
+                .return(movieNode);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH ALL SHORTEST (this0:Movie { test: $param0 })-[this1]->(this2:Person)
+RETURN this0"
+`);
+        });
+
+        test("ANY", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: new Cypher.Param("test-value"),
+                    },
+                })
+                    .related()
+                    .to(new Cypher.Node(), {
+                        labels: ["Person"],
+                    })
+            )
+                .any()
+                .return(movieNode);
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH ANY (this0:Movie { test: $param0 })-[this1]->(this2:Person)
+RETURN this0"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": "test-value",
+                }
+            `);
+        });
+
+        test("SHORTEST with quantified path", () => {
+            const m = new Cypher.Node();
+            const m2 = new Cypher.Node();
+
+            const quantifiedPath = new Cypher.QuantifiedPath(
+                new Cypher.Pattern(m, { labels: ["Movie"], properties: { title: new Cypher.Param("V for Vendetta") } }),
+                new Cypher.Pattern({ labels: ["Movie"] })
+                    .related({ type: "ACTED_IN" })
+                    .to({ labels: ["Person"] })
+                    .quantifier({ min: 1, max: 2 }),
+                new Cypher.Pattern(m2, {
+                    labels: ["Movie"],
+                    properties: { title: new Cypher.Param("Something's Gotta Give") },
+                })
+            );
+
+            const query = new Cypher.Match(quantifiedPath).shortest(2).return(m2);
+            const queryResult = query.build();
+
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+    "MATCH SHORTEST 2 (this0:Movie { title: $param0 })
+          ((:Movie)-[:ACTED_IN]->(:Person)){1,2}
+          (this1:Movie { title: $param1 })
+    RETURN this1"
+    `);
+            expect(queryResult.params).toMatchInlineSnapshot(`
+    {
+      "param0": "V for Vendetta",
+      "param1": "Something's Gotta Give",
+    }
+    `);
+        });
+    });
 });

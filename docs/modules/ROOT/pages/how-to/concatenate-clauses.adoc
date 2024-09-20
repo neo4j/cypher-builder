@@ -2,11 +2,11 @@
 :description: This page describes how to concatenate clauses.
 = Concatenate clauses
 
-Normally, clauses can be concatenated by chained methods, for example:
+In most cases, clauses can be concatenated by using chained methods, for example:
 
 [source, javascript]
 ----
-new Cypher.Match(myNode).return(myNode);
+new Cypher.Match(myPattern).return(myNode);
 ----
 
 [source, cypher]
@@ -21,14 +21,15 @@ This may be caused by:
 * Chained methods not being available.
 * Dynamic number of clauses in a query.
 * Composite clauses that have been generated separately.
+* Using `Cypher.Raw`
 
 For these cases, the helper utility `Cypher.utils.concat` can be used. 
 This function accepts any number of clauses and concatenates them in the provided order. 
-For example, the previous example could be written as:
+For instance, the previous example could be written as:
 
 [source, javascript]
 ----
-const matchClause = new Cypher.Match(myNode);
+const matchClause = new Cypher.Match(myPattern);
 const returnClause = new Cypher.Return(myNode);
 
 const clause = Cypher.utils.concat(matchClause, returnClause);
@@ -66,7 +67,7 @@ const clauses = [match1, match2, undefined, match3]
 const clause = Cypher.utils.concat(...clauses);
 ----
 
-Note that `Cypher.utils.concat` accepts any clause and does not ensure that the resulting Cypher will be valid. 
+Note that `Cypher.utils.concat` accepts any clause and does not ensure that the resulting Cypher will be valid.
 
 
 [WARNING]
