@@ -20,12 +20,13 @@
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import type { MapExpr } from "../../expressions/map/MapExpr";
+import type { MapProjection } from "../../expressions/map/MapProjection";
+import { Label } from "../../references/Label";
 import type { PropertyRef } from "../../references/PropertyRef";
 import type { Expr } from "../../types";
 import { padBlock } from "../../utils/pad-block";
-import type { MapProjection } from "../../expressions/map/MapProjection";
 
-export type SetParam = [PropertyRef, Exclude<Expr, MapExpr | MapProjection>];
+export type SetParam = [PropertyRef, Exclude<Expr, MapExpr | MapProjection>] | Label;
 
 export class SetClause extends CypherASTNode {
     protected params: SetParam[];
@@ -51,7 +52,12 @@ export class SetClause extends CypherASTNode {
         return `SET\n${padBlock(paramsStr)}`;
     }
 
-    private composeParam(env: CypherEnvironment, [ref, param]: SetParam): string {
-        return `${ref.getCypher(env)} = ${param.getCypher(env)}`;
+    private composeParam(env: CypherEnvironment, setParam: SetParam): string {
+        if (setParam instanceof Label) {
+            return setParam.getCypher(env);
+        } else {
+            const [ref, param] = setParam;
+            return `${ref.getCypher(env)} = ${param.getCypher(env)}`;
+        }
     }
 }
