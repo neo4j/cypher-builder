@@ -1,0 +1,43 @@
+[[update-labels]]
+:description: This page describes how to add or remove labels to a node.
+= Update Labels
+
+To add or remove labels to a node, use `.set` and `.remove` with the node method `.label`.
+
+
+== Examples
+
+=== Add labels
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const clause = new Cypher.Match(new Cypher.Pattern(movie)).set(movie.label("NewLabel"), movie.label("Another label"));
+----
+
+
+[source, cypher]
+----
+MATCH (this0)
+SET
+    this0:NewLabel,
+    this0:`Another Label`
+----
+
+
+=== Remove labels
+
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const clause = new Cypher.Match(new Cypher.Pattern(movie)).remove(movie.label("NewLabel"));
+----
+
+
+[source, cypher]
+----
+MATCH (this0)
+REMOVE this0:NewLabel
+----
+

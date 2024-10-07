@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+/** Generates a string with all the labels. For example `:Movie&Film` */
 export function addLabelToken(andToken: ":" | "&", ...labels: string[]): string {
     const firstLabel = labels.shift();
     if (!firstLabel) return "";

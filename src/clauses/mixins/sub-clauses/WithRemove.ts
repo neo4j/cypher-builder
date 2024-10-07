@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import type { Label } from "../../..";
 import type { PropertyRef } from "../../../references/PropertyRef";
 import { RemoveClause } from "../../sub-clauses/Remove";
 import { Mixin } from "../Mixin";
@@ -27,7 +28,7 @@ export abstract class WithRemove extends Mixin {
     /** Append a `REMOVE` clause.
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/remove/)
      */
-    public remove(...properties: PropertyRef[]): this {
+    public remove(...properties: Array<PropertyRef | Label>): this {
         this.removeClause = new RemoveClause(this, properties);
         return this;
     }

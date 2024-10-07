@@ -176,6 +176,7 @@ export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expres
 export type { BooleanOp } from "./expressions/operations/boolean";
 export type { ComparisonOp } from "./expressions/operations/comparison";
 export type { Yield } from "./procedures/Yield";
+export type { Label } from "./references/Label";
 export type { CypherResult, Expr, NormalizationType, Operation, Predicate } from "./types";
 export type { InputArgument } from "./utils/normalize-variable";
 
