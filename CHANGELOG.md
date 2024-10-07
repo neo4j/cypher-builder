@@ -1,5 +1,40 @@
 # @neo4j/cypher-builder
 
+## 1.21.0
+
+### Minor Changes
+
+-   [#413](https://github.com/neo4j/cypher-builder/pull/413) [`0f2dfe6`](https://github.com/neo4j/cypher-builder/commit/0f2dfe67a2d4386e6a565791f6a952c0e51c6b8b) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for SHORTEST keyword in match and its variations:
+
+    -   `.shortest(k)`
+    -   `.shortestGroups(k)`
+    -   `.allShortest`
+    -   `.any`
+
+    For example:
+
+    ```js
+    new Cypher.Match(pattern).shortest(2).return(node);
+    ```
+
+    ```cypher
+    MATCH ALL SHORTEST (this0:Movie)-[this1]->(this2:Person)
+    RETURN this0
+    ```
+
+-   [#419](https://github.com/neo4j/cypher-builder/pull/419) [`c7dd297`](https://github.com/neo4j/cypher-builder/commit/c7dd29779bc70bf09a2ae442dfa211c13a39415a) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for labels in set and remove:
+
+    ```js
+    const movie = new Cypher.Node();
+    const clause = new Cypher.Match(new Cypher.Pattern(movie)).set(movie.label("NewLabel"));
+    ```
+
+    ```cypher
+    MATCH (this0)
+    SET
+        this0:NewLabel
+    ```
+
 ## 1.20.1
 
 ### Patch Changes

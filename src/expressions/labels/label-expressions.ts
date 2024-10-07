@@ -24,8 +24,6 @@ import { escapeLabel } from "../../utils/escape";
 
 export type LabelOperator = "&" | "|" | "!" | "%";
 
-type Label = string | LabelExpr;
-
 /**
  * Label Expression
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
@@ -43,7 +41,7 @@ export abstract class LabelExpr implements CypherCompilable {
      */
     public abstract getCypher(env: CypherEnvironment): string;
 
-    protected compileLabel(expr: Label, env: CypherEnvironment) {
+    protected compileLabel(expr: string | LabelExpr, env: CypherEnvironment) {
         if (typeof expr === "string") {
             return escapeLabel(expr);
         }
@@ -52,9 +50,9 @@ export abstract class LabelExpr implements CypherCompilable {
 }
 
 class BinaryLabelExpr extends LabelExpr {
-    private labels: Label[];
+    private labels: Array<string | LabelExpr>;
 
-    constructor(operator: "&" | "|", labels: Label[]) {
+    constructor(operator: "&" | "|", labels: Array<string | LabelExpr>) {
         super(operator);
         this.labels = labels;
     }
@@ -71,9 +69,9 @@ class BinaryLabelExpr extends LabelExpr {
 }
 
 class NotLabelExpr extends LabelExpr {
-    private label: Label;
+    private label: string | LabelExpr;
 
-    constructor(label: Label) {
+    constructor(label: string | LabelExpr) {
         super("!");
         this.label = label;
     }
@@ -106,7 +104,7 @@ class WildcardLabelExpr extends LabelExpr {
  * @group Expressions
  * @category Operators
  */
-function labelAnd(...labels: Label[]): LabelExpr {
+function labelAnd(...labels: Array<string | LabelExpr>): LabelExpr {
     return new BinaryLabelExpr("&", labels);
 }
 
@@ -115,7 +113,7 @@ function labelAnd(...labels: Label[]): LabelExpr {
  * @group Expressions
  * @category Operators
  */
-function labelOr(...labels: Label[]): LabelExpr {
+function labelOr(...labels: Array<string | LabelExpr>): LabelExpr {
     return new BinaryLabelExpr("|", labels);
 }
 
@@ -124,7 +122,7 @@ function labelOr(...labels: Label[]): LabelExpr {
  * @group Expressions
  * @category Operators
  */
-function labelNot(label: Label): LabelExpr {
+function labelNot(label: string | LabelExpr): LabelExpr {
     return new NotLabelExpr(label);
 }
 

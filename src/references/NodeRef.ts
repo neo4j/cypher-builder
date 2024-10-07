@@ -19,6 +19,7 @@
 
 import { HasLabel } from "../expressions/HasLabel";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
+import { Label } from "./Label";
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
 
@@ -41,6 +42,10 @@ export class NodeRef extends Variable {
         } else {
             return new HasLabel(this, label);
         }
+    }
+
+    public label(label: string): Label {
+        return new Label(this, label);
     }
 }
 
