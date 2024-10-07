@@ -19,8 +19,6 @@
 
 import { Param } from "./references/Param";
 import type { NamedReference, Variable } from "./references/Variable";
-import type { CypherCompilable } from "./types";
-import { isCypherCompilable } from "./utils/is-cypher-compilable";
 
 export type EnvPrefix = {
     params?: string;
@@ -68,13 +66,6 @@ export class CypherEnvironment {
         };
     }
 
-    public compile(element: CypherCompilable): string {
-        if (!isCypherCompilable(element))
-            throw new Error("Can't compile. Passing a non Cypher Builder element to env.compile");
-
-        return element.getCypher(this);
-    }
-
     public getReferenceId(reference: Variable | NamedReference): string {
         if (this.isNamedReference(reference)) return reference.id; // Overrides ids for compatibility reasons
         const id = this.references.get(reference);
@@ -94,16 +85,16 @@ export class CypherEnvironment {
         }, {});
     }
 
-    public addNamedParamReference(name: string, param: Param): void {
-        if (!this.references.has(param)) {
-            this.addParam(name, param);
-        }
-    }
-
     public addExtraParams(params: Record<string, Param>): void {
         Object.entries(params).forEach(([key, param]) => {
             this.addNamedParamReference(key, param);
         });
+    }
+
+    public addNamedParamReference(name: string, param: Param): void {
+        if (!this.references.has(param)) {
+            this.addParam(name, param);
+        }
     }
 
     public getParamsSize(): number {

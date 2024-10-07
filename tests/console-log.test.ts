@@ -25,11 +25,13 @@ describe("Console.log", () => {
     test("Console.log on a clause", () => {
         const releasedParam = new Cypher.Param(1999);
 
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
-        const query = new Cypher.Create(movieNode).set(
+        const query = new Cypher.Create(
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+            })
+        ).set(
             [movieNode.property("released"), releasedParam] // Explicitly defines the node property
         );
 

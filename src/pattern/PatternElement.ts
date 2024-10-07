@@ -18,10 +18,8 @@
  */
 
 import { CypherEnvironment } from "../Environment";
-import type { NodeProperties } from "../references/NodeRef";
-import type { RelationshipProperties } from "../references/RelationshipRef";
 import type { Variable } from "../references/Variable";
-import type { CypherCompilable } from "../types";
+import type { CypherCompilable, Expr } from "../types";
 import { padBlock } from "../utils/pad-block";
 import { padLeft } from "../utils/pad-left";
 import { stringifyObject } from "../utils/stringify-object";
@@ -29,21 +27,15 @@ import { stringifyObject } from "../utils/stringify-object";
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 
 export abstract class PatternElement implements CypherCompilable {
-    protected element: Variable;
+    protected variable: Variable | undefined;
 
-    constructor(element: Variable) {
-        this.element = element;
+    constructor(element: Variable | undefined) {
+        this.variable = element;
     }
 
     public abstract getCypher(env: CypherEnvironment): string;
 
-    /**
-     * Returns the ordered variables of the Pattern
-     * Note that even unnamed variables will be returned
-     */
-    public abstract getVariables(): Variable[];
-
-    protected serializeParameters(parameters: NodeProperties | RelationshipProperties, env: CypherEnvironment): string {
+    protected serializeParameters(parameters: Record<string, Expr>, env: CypherEnvironment): string {
         if (Object.keys(parameters).length === 0) return "";
         const paramValues = Object.entries(parameters).reduce((acc: Record<string, string>, [key, param]) => {
             acc[key] = param.getCypher(env);

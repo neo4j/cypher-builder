@@ -37,13 +37,19 @@ export abstract class Clause extends CypherASTNode {
     protected nextClause: Clause | undefined;
 
     /** Compiles a clause into Cypher and params */
-    public build(
-        prefix?: string | EnvPrefix | undefined,
-        extraParams: Record<string, unknown> = {},
-        config?: BuildConfig
-    ): CypherResult {
+    public build({
+        prefix,
+        extraParams = {},
+        labelOperator = ":",
+    }: {
+        prefix?: string | EnvPrefix;
+        extraParams?: Record<string, unknown>;
+        labelOperator?: ":" | "&";
+    } = {}): CypherResult {
         if (this.isRoot) {
-            const env = this.getEnv(prefix, config);
+            const env = this.getEnv(prefix, {
+                labelOperator,
+            });
             const cypher = this.getCypher(env);
 
             const cypherParams = toCypherParams(extraParams);
@@ -55,7 +61,7 @@ export abstract class Clause extends CypherASTNode {
         }
         const root = this.getRoot();
         if (root instanceof Clause) {
-            return root.build(prefix, extraParams);
+            return root.build({ prefix, extraParams, labelOperator });
         }
         throw new Error(`Cannot build root: ${root.constructor.name}`);
     }
@@ -86,7 +92,9 @@ export abstract class Clause extends CypherASTNode {
 
     protected addNextClause(clause: Clause): void {
         if (this.nextClause) {
-            throw new Error("Cannot chain 2 top-level clauses to the same clause");
+            throw new Error(
+                `Cannot add <Clause ${clause.constructor.name}> to <Clause ${this.constructor.name}> because ${this.constructor.name} it is not the last clause.`
+            );
         }
         this.nextClause = clause;
         this.addChildren(this.nextClause);

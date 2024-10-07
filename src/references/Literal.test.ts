@@ -30,6 +30,15 @@ describe("Literal", () => {
         expect(queryResult.cypher).toBe(`"hello"`);
     });
 
+    test("Serialize string value escaping it", () => {
+        const stringLiteral = new Cypher.Literal(`he"llo`);
+
+        const testClause = new TestClause(stringLiteral);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toBe(`"he\\"llo"`);
+    });
+
     test("Serialize boolean value", () => {
         const booleanLiteral = new Cypher.Literal(true);
 
@@ -55,6 +64,15 @@ describe("Literal", () => {
 
         const queryResult = testClause.build();
         expect(queryResult.cypher).toBe(`["hello", 5, "hello"]`);
+    });
+
+    test("Serialize array escaping values", () => {
+        const literal = new Cypher.Literal(["hello", 5, 'hel""lo']);
+
+        const testClause = new TestClause(literal);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toBe(`["hello", 5, "hel\\"\\"lo"]`);
     });
 
     test("Serialize null", () => {

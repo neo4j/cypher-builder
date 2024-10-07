@@ -44,17 +44,6 @@ export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
  * @group Cypher Functions
  * @category Spatial
  * @example Generated Cypher: `point.distance(point1, point2)`
- * @deprecated Use {@link point.distance} instead
- */
-export function pointDistance(lexpr: Expr, rexpr: Expr): CypherFunction {
-    return new CypherFunction("point.distance", [lexpr, rexpr]);
-}
-
-/**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance)
- * @group Cypher Functions
- * @category Spatial
- * @example Generated Cypher: `point.distance(point1, point2)`
  */
 point.distance = (lexpr: Expr, rexpr: Expr): CypherFunction => {
     return new CypherFunction("point.distance", [lexpr, rexpr]);

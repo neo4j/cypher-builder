@@ -19,18 +19,14 @@
 
 import type { Pattern } from "../../..";
 import { Merge } from "../../..";
-import type { NodeRef } from "../../../references/NodeRef";
 import { MixinClause } from "../Mixin";
 
 export abstract class WithMerge extends MixinClause {
     /** Add a {@link Merge} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
      */
-    public merge(clause: Merge): Merge;
-    public merge(pattern: Pattern): Merge;
-    /** @deprecated Use {@link Pattern} instead */
-    public merge(pattern: NodeRef | Pattern): Merge;
-    public merge(clauseOrPattern: Merge | NodeRef | Pattern): Merge {
+
+    public merge(clauseOrPattern: Merge | Pattern): Merge {
         if (clauseOrPattern instanceof Merge) {
             this.addNextClause(clauseOrPattern);
             return clauseOrPattern;

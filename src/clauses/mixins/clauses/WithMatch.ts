@@ -19,18 +19,14 @@
 
 import type { Pattern } from "../../..";
 import { Match, OptionalMatch } from "../../..";
-import type { NodeRef } from "../../../references/NodeRef";
 import { MixinClause } from "../Mixin";
 
 export abstract class WithMatch extends MixinClause {
     /** Add a {@link Match} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
      */
-    public match(clause: Match): Match;
-    public match(pattern: Pattern): Match;
-    /** @deprecated Use {@link Pattern} instead */
-    public match(pattern: NodeRef | Pattern): Match;
-    public match(clauseOrPattern: Match | NodeRef | Pattern): Match {
+
+    public match(clauseOrPattern: Match | Pattern): Match {
         if (clauseOrPattern instanceof Match) {
             this.addNextClause(clauseOrPattern);
             return clauseOrPattern;
@@ -45,10 +41,8 @@ export abstract class WithMatch extends MixinClause {
     /** Add an {@link OptionalMatch} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
      */
-    public optionalMatch(pattern: Pattern): OptionalMatch;
-    /** @deprecated Use {@link Pattern} instead */
-    public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch;
-    public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch {
+
+    public optionalMatch(pattern: Pattern): OptionalMatch {
         const matchClause = new OptionalMatch(pattern);
         this.addNextClause(matchClause);
 

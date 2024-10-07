@@ -18,6 +18,7 @@
  */
 
 import type { CypherCompilable } from "../types";
+import { escapeLiteralString } from "../utils/escape";
 
 type LiteralValue = string | number | boolean | null | Array<LiteralValue>;
 
@@ -38,7 +39,7 @@ export class Literal<T extends LiteralValue = LiteralValue> implements CypherCom
 
     private formatLiteralValue(value: LiteralValue): string {
         if (typeof value === "string") {
-            return `"${value}"`;
+            return `"${escapeLiteralString(value)}"`;
         }
         if (value === null) {
             return "NULL";
