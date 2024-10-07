@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type { Label } from "../..";
+import type { Label } from "../../references/Label";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import type { PropertyRef } from "../../references/PropertyRef";
