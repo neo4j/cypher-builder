@@ -18,7 +18,7 @@
  */
 
 // Clauses
-export { Call } from "./clauses/Call";
+export { Call, OptionalCall } from "./clauses/Call";
 export { Create } from "./clauses/Create";
 export { Finish } from "./clauses/Finish";
 export { Foreach } from "./clauses/Foreach";

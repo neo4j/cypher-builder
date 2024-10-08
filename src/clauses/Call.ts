@@ -64,6 +64,7 @@ export class Call extends Clause {
     private _importWith?: ImportWith;
     private inTransactionsConfig?: InTransactionConfig;
     private variableScope?: Variable[] | "*";
+    private _optional: boolean = false;
 
     // This is to preserve compatibility with innerWith and avoid breaking changes
     // Remove on 2.0.0
@@ -100,6 +101,14 @@ export class Call extends Clause {
         return this;
     }
 
+    /** Makes the subquery an OPTIONAL CALL
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call)
+     */
+    public optional(): this {
+        this._optional = true;
+        return this;
+    }
+
     /** @deprecated Use {@link importWith} instead */
     public innerWith(...params: Array<Variable | "*">): this {
         if (this._importWith) {
@@ -130,7 +139,9 @@ export class Call extends Clause {
         const variableScopeStr = this.generateVariableScopeStr(env);
         const nextClause = this.compileNextClause(env);
 
-        return `CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        const optionalStr = this._optional ? "OPTIONAL " : "";
+
+        return `${optionalStr}CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
     }
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
@@ -183,5 +194,16 @@ export class Call extends Clause {
             throw new Error(`Incorrect ON ERROR option ${err}`);
         }
         return errorMap[err];
+    }
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call)
+ * @category Clauses
+ */
+export class OptionalCall extends Call {
+    constructor(subquery: Clause, variableScope?: Variable[] | "*") {
+        super(subquery, variableScope);
+        this.optional();
     }
 }
