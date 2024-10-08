@@ -136,6 +136,27 @@ describe("CypherBuilder Return", () => {
             `);
         });
 
+        test("Return with order and offset param", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Return(movieNode)
+                .orderBy([movieNode.property("age")])
+                .offset(new Cypher.Param(10));
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "RETURN this0
+                ORDER BY this0.age ASC
+                OFFSET $param0"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": 10,
+                }
+            `);
+        });
+
         test("Return with order and limit", () => {
             const movieNode = new Cypher.Node();
 

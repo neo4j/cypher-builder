@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
+import type { Expr } from "../../../types";
 import type { Order } from "../../sub-clauses/OrderBy";
 import { OrderBy } from "../../sub-clauses/OrderBy";
-import type { Expr } from "../../../types";
 import { Mixin } from "../Mixin";
 
 const DEFAULT_ORDER = "ASC";
@@ -50,6 +50,15 @@ export abstract class WithOrder extends Mixin {
     public skip(value: number | Expr): this {
         const orderByStatement = this.getOrCreateOrderBy();
         orderByStatement.skip(value);
+        return this;
+    }
+
+    /** Add a `OFFSET` subclause. An alias to `SKIP`
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/skip/#offset-synonym)
+     */
+    public offset(value: number | Expr): this {
+        const orderByStatement = this.getOrCreateOrderBy();
+        orderByStatement.offset(value);
         return this;
     }
 
