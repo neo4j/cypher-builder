@@ -724,7 +724,7 @@ RETURN var1"
     });
 
     describe("Match.call", () => {
-        test("Match.Call with variable scope", () => {
+        test("Match.call with variable scope", () => {
             const movieNode = new Cypher.Node();
             const actorNode = new Cypher.Node();
 
@@ -738,6 +738,30 @@ RETURN var1"
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 CALL (this0, this1) {
+    CREATE (this0)-[this2]->(this1)
+}
+RETURN this0"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Match.optionalCall with variable scope", () => {
+            const movieNode = new Cypher.Node();
+            const actorNode = new Cypher.Node();
+
+            const match = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+                .match(new Cypher.Pattern(actorNode, { labels: ["Actor"] }))
+                .optionalCall(new Cypher.Create(new Cypher.Pattern(movieNode).related().to(actorNode)), [
+                    movieNode,
+                    actorNode,
+                ])
+                .return(movieNode);
+
+            const { cypher, params } = match.build();
+            expect(cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+MATCH (this1:Actor)
+OPTIONAL CALL (this0, this1) {
     CREATE (this0)-[this2]->(this1)
 }
 RETURN this0"

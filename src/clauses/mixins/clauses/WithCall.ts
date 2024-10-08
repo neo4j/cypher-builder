@@ -18,7 +18,7 @@
  */
 
 import type { Clause, Variable } from "../../..";
-import { Call } from "../../..";
+import { Call, OptionalCall } from "../../..";
 import { MixinClause } from "../Mixin";
 
 export abstract class WithCall extends MixinClause {
@@ -27,6 +27,15 @@ export abstract class WithCall extends MixinClause {
      */
     public call(subquery: Clause, variableScope?: Variable[] | "*"): Call {
         const callClause = new Call(subquery, variableScope);
+        this.addNextClause(callClause);
+
+        return callClause;
+    }
+
+    /** Add a {@link OptionalCall} clause
+     */
+    public optionalCall(subquery: Clause, variableScope?: Variable[] | "*"): Call {
+        const callClause = new OptionalCall(subquery, variableScope);
         this.addNextClause(callClause);
 
         return callClause;
