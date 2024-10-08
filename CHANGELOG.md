@@ -1,5 +1,21 @@
 # @neo4j/cypher-builder
 
+## 1.21.1
+
+### Patch Changes
+
+-   [#420](https://github.com/neo4j/cypher-builder/pull/420) [`77d8795`](https://github.com/neo4j/cypher-builder/commit/77d87951a8d3e378a26b8bd96a95988d5111fadf) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `OFFSET` as an alias for `SKIP`:
+
+    ```js
+    const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age")]).offset(new Cypher.Param(10));
+    ```
+
+    ```cypher
+    RETURN this0
+    ORDER BY this0.age ASC
+    OFFSET $param0
+    ```
+
 ## 1.21.0
 
 ### Minor Changes
