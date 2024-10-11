@@ -82,20 +82,16 @@ This can be achieved by using the `.importWith` method:
 
 [source, javascript]
 ----
-const dog = new Cypher.Node({ labels: ["Dog"] });
-const person = new Cypher.Node({ labels: ["Person"] });
+const dog = new Cypher.Node();
+const person = new Cypher.Node();
 
 const dogName = new Cypher.NamedVariable("dogName");
 
 const subquery = new Cypher.Match(
-    new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog)
+    new Cypher.Pattern(person, {labels: ["Person"]}).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog, {labels: ["Dog"]})
 ).return([dog.property("name"), dogName]);
 
-const match = new Cypher.Match(person);
-
-const callSubquery = new Cypher.Call(subquery).importWith(person).return(dogName);
-
-const clause = Cypher.utils.concat(match, subquery);
+const clause = new Cypher.Match(new Cypher.Pattern(person, {labels: ["Person"]})).call(subquery).importWith(person).return(dogName);
 ----
 
 [source, cypher]
@@ -117,22 +113,13 @@ A `CALL` subquery can be executed in separate transactions by using the `inTrans
 
 [source, javascript]
 ----
-const node = new Cypher.Node();
-
-const match = new Cypher.Match(node);
-const deleteSubquery = new Cypher.With(node).detachDelete(node);
-const callSubquery=new Cypher.Call(deleteSubquery).inTransactions();
-
-
-const query = Cypher.utils.concat(match, callSubquery);
+new Cypher.Match(node).call(deleteSubquery).inTransactions();
 ----
 
 [source, cypher]
 ----
-MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+    // Subquery
 } IN TRANSACTIONS
 ----
 
@@ -141,3 +128,28 @@ The method `inTransaction` accepts an object with the following options:
 * `ofRows`: A number to define the batch of rows. Translates to `IN TRANSACTIONS OF 10 ROWS`
 * `onError`: A behavior for error handling. This can be `continue`, `break` or `fail`. Translates to `ON ERROR CONTINUE`
 * `concurrentTransactions`: A number to execute concurrent transactions. Translates to `IN x CONCURRENT TRANSACTIONS`
+
+== Optional Call
+
+A `CALL` subquery can be converted to an `OPTIONAL CALL` by using the `.optional` method:
+
+[source, javascript]
+----
+new Cypher.Call(deleteSubquery).optional();
+----
+
+Alternatively, the clause `OptionalCall` can be used to create an `OPTIONAL CALL` directly:
+
+[source, javascript]
+----
+new Cypher.OptionalCall(deleteSubquery);
+----
+
+Both will generate the Cypher:
+
+[source, cypher]
+----
+OPTIONAL CALL {
+    // Subquery
+}
+----
