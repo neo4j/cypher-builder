@@ -31,6 +31,7 @@ import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { ImportWith } from "./sub-clauses/ImportWith";
@@ -46,7 +47,8 @@ export interface Call
         WithDelete,
         WithMatch,
         WithCreate,
-        WithMerge {}
+        WithMerge,
+        WithOrder {}
 
 type InTransactionConfig = {
     ofRows?: number;
@@ -58,7 +60,7 @@ type InTransactionConfig = {
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
  * @category Clauses
  */
-@mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge)
+@mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge, WithOrder)
 export class Call extends Clause {
     private subquery: CypherASTNode;
     private _importWith?: ImportWith;
@@ -133,6 +135,7 @@ export class Call extends Clause {
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const inTransactionCypher = this.generateInTransactionStr();
 
         const inCallBlock = `${importWithCypher}${subQueryStr}`;
@@ -141,7 +144,7 @@ export class Call extends Clause {
 
         const optionalStr = this._optional ? "OPTIONAL " : "";
 
-        return `${optionalStr}CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `${optionalStr}CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {

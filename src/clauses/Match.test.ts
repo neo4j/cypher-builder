@@ -533,6 +533,47 @@ RETURN this0"
         });
     });
 
+    test("Match with order by", () => {
+        const idParam = new Cypher.Param("my-id");
+        const nameParam = new Cypher.Param("my-name");
+        const ageParam = new Cypher.Param(5);
+
+        const movieNode = new Cypher.Node();
+
+        const matchQuery = new Cypher.Match(
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                },
+            })
+        )
+            .orderBy([movieNode.property("title"), "DESC"])
+            .skip(10)
+            .limit(2)
+            .where(movieNode, { id: idParam, name: nameParam, age: ageParam })
+            .return(movieNode);
+
+        const queryResult = matchQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie { test: $param0 })
+WHERE ((this0.id = $param1 AND this0.name = $param2) AND this0.age = $param3)
+ORDER BY this0.title DESC
+SKIP 10
+LIMIT 2
+RETURN this0"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": "test-value",
+                  "param1": "my-id",
+                  "param2": "my-name",
+                  "param3": 5,
+                }
+            `);
+    });
+
     describe("With delete", () => {
         test("Match and delete with return", () => {
             const idParam = new Cypher.Param("my-id");
