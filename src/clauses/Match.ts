@@ -33,6 +33,7 @@ import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { WithWhere } from "./mixins/sub-clauses/WithWhere";
@@ -51,7 +52,8 @@ export interface Match
         WithMerge,
         WithFinish,
         WithCallProcedure,
-        WithCall {}
+        WithCall,
+        WithOrder {}
 
 type ShortestStatement = {
     type: "ALL SHORTEST" | "SHORTEST" | "ANY" | "SHORTEST_GROUPS";
@@ -75,7 +77,8 @@ type ShortestStatement = {
     WithMerge,
     WithFinish,
     WithCallProcedure,
-    WithCall
+    WithCall,
+    WithOrder
 )
 export class Match extends Clause {
     private pattern: Pattern | QuantifiedPath;
@@ -183,10 +186,11 @@ export class Match extends Clause {
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+        const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const optionalMatch = this._optional ? "OPTIONAL " : "";
         const shortestStatement = this.getShortestStatement();
 
-        return `${optionalMatch}MATCH ${shortestStatement}${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `${optionalMatch}MATCH ${shortestStatement}${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {

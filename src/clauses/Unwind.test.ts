@@ -20,7 +20,7 @@
 import * as Cypher from "../Cypher";
 
 describe("CypherBuilder Unwind", () => {
-    test("Unwind Movies", () => {
+    test("Unwind movies", () => {
         const matrix = new Cypher.Map({ title: new Cypher.Literal("Matrix") });
         const matrix2 = new Cypher.Map({ title: new Cypher.Literal("Matrix 2") });
         const moviesList = new Cypher.List([matrix, matrix2]);
@@ -100,5 +100,21 @@ UNWIND var1 AS var2"
         expect(() => {
             unwindQuery.unwind([variable, new Cypher.Variable()]);
         }).toThrow("Invalid Unwind statement");
+    });
+
+    test("Unwind movies with order", () => {
+        const matrix = new Cypher.Map({ title: new Cypher.Literal("Matrix") });
+        const matrix2 = new Cypher.Map({ title: new Cypher.Literal("Matrix 2") });
+        const moviesList = new Cypher.List([matrix, matrix2]);
+
+        const batch = new Cypher.Variable();
+        const unwindQuery = new Cypher.Unwind([moviesList, batch]).orderBy([batch.property("title", "DESC")]).limit(10);
+        const queryResult = unwindQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"UNWIND [{ title: \\"Matrix\\" }, { title: \\"Matrix 2\\" }] AS var0
+ORDER BY var0.title.DESC ASC
+LIMIT 10"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

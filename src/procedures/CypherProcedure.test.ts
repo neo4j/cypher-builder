@@ -207,5 +207,22 @@ CREATE (this0)"
 `);
             expect(params).toMatchInlineSnapshot(`{}`);
         });
+
+        it("Procedure with Order by", () => {
+            const testVar = new Cypher.NamedVariable("test");
+            const procedure = new Cypher.Procedure("custom-procedure").yield("test").orderBy(testVar).skip(1).limit(10);
+
+            procedure.create(new Cypher.Pattern(new Cypher.Node()));
+            const { cypher, params } = procedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`
+"CALL custom-procedure() YIELD test
+ORDER BY test ASC
+SKIP 1
+LIMIT 10
+CREATE (this0)"
+`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
     });
 });

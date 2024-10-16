@@ -399,4 +399,48 @@ RETURN this0"
 }
 `);
     });
+
+    test("Create with order by", () => {
+        const idParam = new Cypher.Param("my-id");
+        const movieNode = new Cypher.Node();
+
+        const createQuery = new Cypher.Create(
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                    id: idParam,
+                },
+            })
+        )
+            .set(
+                [movieNode.property("title"), new Cypher.Param("The Matrix")],
+                [movieNode.property("runtime"), new Cypher.Param(120)]
+            )
+            .orderBy([movieNode.property("title"), "DESC"])
+            .skip(10)
+            .limit(1)
+            .return(movieNode);
+
+        const queryResult = createQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CREATE (this0:Movie { test: $param0, id: $param1 })
+SET
+    this0.title = $param2,
+    this0.runtime = $param3
+ORDER BY this0.title DESC
+SKIP 10
+LIMIT 1
+RETURN this0"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "test-value",
+              "param1": "my-id",
+              "param2": "The Matrix",
+              "param3": 120,
+            }
+        `);
+    });
 });

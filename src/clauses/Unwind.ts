@@ -26,6 +26,7 @@ import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import type { ProjectionColumn } from "./sub-clauses/Projection";
@@ -40,13 +41,14 @@ export interface Unwind
         WithRemove,
         WithSet,
         WithCreate,
-        WithMerge {}
+        WithMerge,
+        WithOrder {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
  * @category Clauses
  */
-@mixin(WithWith, WithDelete, WithMatch, WithReturn, WithRemove, WithSet, WithCreate, WithMerge)
+@mixin(WithWith, WithDelete, WithMatch, WithReturn, WithRemove, WithSet, WithCreate, WithMerge, WithOrder)
 export class Unwind extends Clause {
     private projection: Projection;
 
@@ -81,10 +83,11 @@ export class Unwind extends Clause {
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+        const orderCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
 
         const nextClause = this.compileNextClause(env);
 
-        return `UNWIND ${projectionStr}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `UNWIND ${projectionStr}${setCypher}${removeCypher}${deleteCypher}${orderCypher}${nextClause}`;
     }
 
     private addColumnsToUnwindClause(...columns: Array<"*" | ProjectionColumn>): Unwind {
