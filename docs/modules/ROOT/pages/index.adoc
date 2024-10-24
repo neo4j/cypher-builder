@@ -6,4 +6,4 @@ Cypher Builder is a programmatic API for building link:https://neo4j.com/docs/cy
 
 
 
-If you are using Java, check link:https://neo4j-contrib.github.io/cypher-dsl/[Neo4j Cypher-DSL].
+If you are using Java, check link:https://neo4j.github.io/cypher-dsl[Neo4j Cypher-DSL].

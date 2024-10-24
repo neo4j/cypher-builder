@@ -1,6 +1,6 @@
 [[update-labels]]
 :description: This page describes how to add or remove labels to a node.
-= Update Labels
+= Update labels
 
 To add or remove labels to a node, use `.set` and `.remove` with the node method `.label`.
 
