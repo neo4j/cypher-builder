@@ -7,6 +7,7 @@
 ** xref:getting-started/connecting-to-neo4j.adoc[]
 * Clauses
 ** xref:clauses/match.adoc[]
+** xref:clauses/create.adoc[]
 ** xref:clauses/union.adoc[]
 ** xref:clauses/return.adoc[]
 ** xref:clauses/load-csv.adoc[]

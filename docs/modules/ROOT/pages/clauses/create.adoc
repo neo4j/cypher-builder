@@ -1,0 +1,100 @@
+[[create]]
+:description: This page describes how to add `CREATE` clauses.
+= Create
+
+This page describes how to add a link:https://neo4j.com/docs/cypher-manual/current/clauses/create/[`CREATE`] clause with the `Cypher.Create` class.
+
+To make a `CREATE` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class:
+
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] });
+
+const matchQuery = new Cypher.Create(pattern);
+----
+
+This generates the following `CREATE` clause:
+
+[source, cypher]
+----
+CREATE (this:Movie)
+----
+
+Properties can be passed to the `Pattern` to create the node with its properties:
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"], properties: { title: "The Matrix" } });
+
+const matchQuery = new Cypher.Create(pattern);
+----
+
+This generates the following `CREATE` clause:
+
+[source, cypher]
+----
+CREATE (this:Movie {title: "The Matrix"})
+----
+
+== Relationships
+
+
+Relationships can be used in a match clause by creating the relevant xref:/patterns.adoc[Pattern]:
+
+
+[source, javascript]
+----
+const actedInPattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
+    .related({ type: "ACTED_IN" })
+    .to(personNode, { labels: ["Person"] });
+
+const create = new Cypher.Create(actedInPattern)
+----
+
+[source, cypher]
+----
+CREATE (this1:`Person`)-[this0:ACTED_IN]->(this2:`Movie`)
+----
+
+
+== Update properties
+
+The clauses `SET` and `REMOVE` can be added with the methods `.set` and `.remove` respectively.
+
+`.set` take tuples of 2 elements, the first being the property to update and the second the value:
+
+[source, javascript]
+----
+const createQuery = new Cypher.Create(new Cypher.Pattern(movie, { labels: ["Movie"] })).set([
+    movie.property("title"),
+    new Cypher.Param("The Matrix"),
+]);
+----
+
+[source, cypher]
+----
+CREATE (this0:Movie)
+SET this0.title = $param0
+----
+
+Multiple properties can be updated by passing multiple tuples.
+
+
+`.remove` takes the properties to remove:
+
+[source, javascript]
+----
+const createQuery = new Cypher.Create(new Cypher.Pattern(movie, { labels: ["Movie"] })).remove(
+    movie.property("title"),
+    movie.property("year")
+);
+----
+
+[source, cypher]
+----
+CREATE (this0:Movie)
+REMOVE this0.title, this0.year
+----
