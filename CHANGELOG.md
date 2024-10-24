@@ -1,5 +1,52 @@
 # @neo4j/cypher-builder
 
+## 1.22.0
+
+### Minor Changes
+
+-   [#421](https://github.com/neo4j/cypher-builder/pull/421) [`b9b75cd`](https://github.com/neo4j/cypher-builder/commit/b9b75cdf1bdd2785fb125fdba0590303f7653904) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `OPTIONAL CALL`:
+
+    ```js
+    new Cypher.OptionalCall(subquery);
+    ```
+
+    Alternatively
+
+    ```js
+    new Cypher.Call(subquery).optional();
+    ```
+
+    To generate the following Cypher:
+
+    ```cypher
+    OPTIONAL CALL {
+        // Subquery
+    }
+    ```
+
+### Patch Changes
+
+-   [#420](https://github.com/neo4j/cypher-builder/pull/420) [`77d8795`](https://github.com/neo4j/cypher-builder/commit/77d87951a8d3e378a26b8bd96a95988d5111fadf) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `OFFSET` as an alias for `SKIP`:
+
+    ```js
+    const matchQuery = new Cypher.Return(movieNode).orderBy([movieNode.property("age")]).offset(new Cypher.Param(10));
+    ```
+
+    ```cypher
+    RETURN this0
+    ORDER BY this0.age ASC
+    OFFSET $param0
+    ```
+
+-   [#425](https://github.com/neo4j/cypher-builder/pull/425) [`e899ceb`](https://github.com/neo4j/cypher-builder/commit/e899cebd0c12bdf80051f84c0574293329f74855) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for order by, skip and limit chaining after the following clauses:
+
+    -   Call
+    -   Merge
+    -   Create
+    -   Match
+    -   Unwind
+    -   Procedures
+
 ## 1.21.0
 
 ### Minor Changes
