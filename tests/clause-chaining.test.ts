@@ -38,6 +38,10 @@ describe("Clause chaining", () => {
             "merge",
             "create",
             "assignToPath",
+            "orderBy",
+            "limit",
+            "skip",
+            "offset",
         ] as const)("Match.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -56,6 +60,10 @@ describe("Clause chaining", () => {
             "merge",
             "create",
             "assignToPath",
+            "orderBy",
+            "limit",
+            "skip",
+            "offset",
         ] as const)("Create.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -75,8 +83,11 @@ describe("Clause chaining", () => {
             "match",
             "optionalMatch",
             "merge",
-
             "create",
+            "orderBy",
+            "limit",
+            "skip",
+            "offset",
         ] as const)("Call.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -110,9 +121,12 @@ describe("Clause chaining", () => {
             "detachDelete",
             "with",
             "merge",
-
             "create",
             "assignToPath",
+            "orderBy",
+            "limit",
+            "skip",
+            "offset",
         ] as const)("Merge.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -121,7 +135,7 @@ describe("Clause chaining", () => {
     describe("Return", () => {
         const clause = new Cypher.Return();
 
-        it.each(["orderBy", "limit", "skip"] as const)("Return.%s", (value) => {
+        it.each(["orderBy", "limit", "skip", "offset"] as const)("Return.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
     });
@@ -141,6 +155,10 @@ describe("Clause chaining", () => {
             "optionalMatch",
             "merge",
             "create",
+            "orderBy",
+            "limit",
+            "skip",
+            "offset",
         ] as const)("Unwind.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
@@ -202,6 +220,9 @@ describe("Clause chaining", () => {
             "create",
             "remove",
             "set",
+            "orderBy",
+            "skip",
+            "limit",
         ] as const)("With.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });

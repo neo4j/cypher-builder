@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import type { CypherEnvironment } from "../../Environment";
 import { CypherASTNode } from "../../CypherASTNode";
+import type { CypherEnvironment } from "../../Environment";
 import type { Expr } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 import { normalizeExpr } from "../../utils/normalize-variable";
@@ -40,6 +40,11 @@ export class OrderBy extends CypherASTNode {
     public skip(offset: number | Expr): void {
         const offsetVar = normalizeExpr(offset);
         this.skipClause = new Skip(offsetVar);
+    }
+
+    public offset(offset: number | Expr): void {
+        const offsetVar = normalizeExpr(offset);
+        this.skipClause = new Skip(offsetVar, true);
     }
 
     public limit(limit: number | Expr): void {
@@ -72,16 +77,19 @@ export class OrderBy extends CypherASTNode {
 }
 
 class Skip extends CypherASTNode {
-    private value: Expr;
+    private readonly value: Expr;
+    private readonly useOffset;
 
-    constructor(value: Expr) {
+    constructor(value: Expr, useOffset: boolean = false) {
         super();
         this.value = value;
+        this.useOffset = useOffset;
     }
 
     public getCypher(env: CypherEnvironment): string {
         const valueStr = this.value.getCypher(env);
-        return `SKIP ${valueStr}`;
+        const skipStr = this.useOffset ? "OFFSET" : "SKIP";
+        return `${skipStr} ${valueStr}`;
     }
 }
 

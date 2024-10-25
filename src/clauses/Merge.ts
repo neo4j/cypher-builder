@@ -27,6 +27,7 @@ import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import type { OnCreateParam } from "./sub-clauses/OnCreate";
@@ -42,13 +43,14 @@ export interface Merge
         WithRemove,
         WithWith,
         WithCreate,
-        WithFinish {}
+        WithFinish,
+        WithOrder {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
  * @category Clauses
  */
-@mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate, WithFinish)
+@mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate, WithFinish, WithOrder)
 export class Merge extends Clause {
     private pattern: Pattern;
     private onCreateClause: OnCreate;
@@ -97,8 +99,9 @@ export class Merge extends Clause {
         const onMatchCypher = compileCypherIfExists(this.onMatchClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+        const orderCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const nextClause = this.compileNextClause(env);
 
-        return `${mergeStr}${onMatchCypher}${onCreateCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `${mergeStr}${onMatchCypher}${onCreateCypher}${setCypher}${removeCypher}${deleteCypher}${orderCypher}${nextClause}`;
     }
 }

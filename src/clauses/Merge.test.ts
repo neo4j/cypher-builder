@@ -320,4 +320,29 @@ FINISH"
             }
         `);
     });
+
+    test("Merge node with order", () => {
+        const node = new Cypher.Node();
+
+        const query = new Cypher.Merge(
+            new Cypher.Pattern(node, {
+                labels: ["MyLabel"],
+            })
+        )
+            .onCreateSet([node.property("age"), new Cypher.Param(23)])
+            .orderBy([node.property("age"), "ASC"]);
+
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MERGE (this0:MyLabel)
+ON CREATE SET
+    this0.age = $param0
+ORDER BY this0.age ASC"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": 23,
+            }
+        `);
+    });
 });

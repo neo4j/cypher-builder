@@ -31,6 +31,7 @@ import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import { ImportWith } from "./sub-clauses/ImportWith";
@@ -46,7 +47,8 @@ export interface Call
         WithDelete,
         WithMatch,
         WithCreate,
-        WithMerge {}
+        WithMerge,
+        WithOrder {}
 
 type InTransactionConfig = {
     ofRows?: number;
@@ -58,12 +60,13 @@ type InTransactionConfig = {
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
  * @category Clauses
  */
-@mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge)
+@mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge, WithOrder)
 export class Call extends Clause {
     private subquery: CypherASTNode;
     private _importWith?: ImportWith;
     private inTransactionsConfig?: InTransactionConfig;
     private variableScope?: Variable[] | "*";
+    private _optional: boolean = false;
 
     // This is to preserve compatibility with innerWith and avoid breaking changes
     // Remove on 2.0.0
@@ -100,6 +103,14 @@ export class Call extends Clause {
         return this;
     }
 
+    /** Makes the subquery an OPTIONAL CALL
+     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call)
+     */
+    public optional(): this {
+        this._optional = true;
+        return this;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const importWithCypher = compileCypherIfExists(this._importWith, env, { suffix: "\n" });
@@ -109,13 +120,16 @@ export class Call extends Clause {
         const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const inTransactionCypher = this.generateInTransactionStr();
 
         const inCallBlock = `${importWithCypher}${subQueryStr}`;
         const variableScopeStr = this.generateVariableScopeStr(env);
         const nextClause = this.compileNextClause(env);
 
-        return `CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        const optionalStr = this._optional ? "OPTIONAL " : "";
+
+        return `${optionalStr}CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
@@ -168,5 +182,16 @@ export class Call extends Clause {
             throw new Error(`Incorrect ON ERROR option ${err}`);
         }
         return errorMap[err];
+    }
+}
+
+/**
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call)
+ * @category Clauses
+ */
+export class OptionalCall extends Call {
+    constructor(subquery: Clause, variableScope?: Variable[] | "*") {
+        super(subquery, variableScope);
+        this.optional();
     }
 }

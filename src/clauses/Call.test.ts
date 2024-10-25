@@ -640,5 +640,78 @@ RETURN this0"
 `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
+
+        describe("Optional Call", () => {
+            test("Wraps query inside Call with optional method", () => {
+                const idParam = new Cypher.Param("my-id");
+                const movieNode = new Cypher.Node();
+
+                const createQuery = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+                    .set([movieNode.property("id"), idParam])
+                    .return(movieNode);
+                const queryResult = new Cypher.Call(createQuery).optional().build();
+                expect(queryResult.cypher).toMatchInlineSnapshot(`
+"OPTIONAL CALL {
+    CREATE (this0:Movie)
+    SET
+        this0.id = $param0
+    RETURN this0
+}"
+`);
+                expect(queryResult.params).toMatchInlineSnapshot(`
+                    {
+                      "param0": "my-id",
+                    }
+                `);
+            });
+
+            test("Wraps query inside OptionalCall", () => {
+                const idParam = new Cypher.Param("my-id");
+                const movieNode = new Cypher.Node();
+
+                const createQuery = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+                    .set([movieNode.property("id"), idParam])
+                    .return(movieNode);
+                const queryResult = new Cypher.OptionalCall(createQuery).build();
+                expect(queryResult.cypher).toMatchInlineSnapshot(`
+"OPTIONAL CALL {
+    CREATE (this0:Movie)
+    SET
+        this0.id = $param0
+    RETURN this0
+}"
+`);
+                expect(queryResult.params).toMatchInlineSnapshot(`
+                    {
+                      "param0": "my-id",
+                    }
+                `);
+            });
+        });
+    });
+
+    test("Call followed by Order By", () => {
+        const idParam = new Cypher.Param("my-id");
+        const movieNode = new Cypher.Node();
+
+        const createQuery = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+            .set([movieNode.property("id"), idParam])
+            .return(movieNode);
+        const queryResult = new Cypher.Call(createQuery).orderBy(movieNode).skip(10).build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"CALL {
+    CREATE (this0:Movie)
+    SET
+        this0.id = $param0
+    RETURN this0
+}
+ORDER BY this0 ASC
+SKIP 10"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "my-id",
+            }
+        `);
     });
 });
