@@ -32,5 +32,6 @@
 ** xref:how-to/use-change-data-capture.adoc[]
 ** xref:how-to/type-predicate-expressions.adoc[]
 ** xref:how-to/update-labels.adoc[]
+* xref:migration-guide-2.adoc[]
 * link:https://github.com/neo4j/cypher-builder/tree/main/examples[Examples]
 * link:https://neo4j.github.io/cypher-builder/reference/[Reference]
