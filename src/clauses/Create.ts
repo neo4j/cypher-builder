@@ -51,7 +51,7 @@ export interface Create
  */
 @mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove, WithMerge, WithFinish, WithOrder)
 export class Create extends Clause {
-    private pattern: Pattern;
+    private readonly pattern: Pattern;
 
     constructor(pattern: Pattern);
     /** @deprecated Use {@link Pattern} instead */

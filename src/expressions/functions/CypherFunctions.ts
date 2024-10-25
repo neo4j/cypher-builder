@@ -35,7 +35,7 @@ import type { Expr } from "../../types";
  */
 export class CypherFunction extends CypherASTNode {
     protected name: string;
-    private params: Array<Expr> = [];
+    private readonly params: Array<Expr> = [];
 
     constructor(name: string, params: Array<Expr> = [], namespace?: string) {
         super();

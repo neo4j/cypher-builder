@@ -47,9 +47,9 @@ type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | Dele
  */
 @mixin(WithWith, WithReturn, WithRemove, WithSet, WithDelete, WithCreate, WithMerge)
 export class Foreach extends Clause {
-    private variable: Variable;
-    private listExpr: Expr;
-    private mapClause: ForeachClauses;
+    private readonly variable: Variable;
+    private readonly listExpr: Expr;
+    private readonly mapClause: ForeachClauses;
 
     constructor(variable: Variable, listExpr: Expr, mapClause: ForeachClauses) {
         super();

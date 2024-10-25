@@ -81,7 +81,7 @@ type ShortestStatement = {
     WithOrder
 )
 export class Match extends Clause {
-    private pattern: Pattern | QuantifiedPath;
+    private readonly pattern: Pattern | QuantifiedPath;
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
 

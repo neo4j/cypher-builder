@@ -28,8 +28,8 @@ import { padBlock } from "../utils/pad-block";
  * @group Other
  */
 export class Case<C extends Expr | undefined = undefined> extends CypherASTNode {
-    private comparator: Expr | undefined;
-    private whenClauses: When<C>[] = [];
+    private readonly comparator: Expr | undefined;
+    private readonly whenClauses: When<C>[] = [];
     private default: Expr | undefined;
 
     constructor(comparator?: C) {
@@ -65,7 +65,7 @@ export class Case<C extends Expr | undefined = undefined> extends CypherASTNode 
 
 class When<T extends Expr | undefined> extends CypherASTNode {
     protected parent: Case<T>;
-    private predicates: Expr[];
+    private readonly predicates: Expr[];
     private result: Expr | undefined;
 
     constructor(parent: Case<T>, predicate: Expr[]) {

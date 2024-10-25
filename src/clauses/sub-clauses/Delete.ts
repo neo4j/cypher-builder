@@ -28,7 +28,7 @@ export type DeleteInput = Array<NodeRef | RelationshipRef | Variable>;
 type DetachKeyword = "DETACH" | "NODETACH";
 
 export class DeleteClause extends CypherASTNode {
-    private deleteInput: DeleteInput;
+    private readonly deleteInput: DeleteInput;
     private detachKeyword: DetachKeyword | undefined;
 
     constructor(parent: CypherASTNode | undefined, deleteInput: DeleteInput) {

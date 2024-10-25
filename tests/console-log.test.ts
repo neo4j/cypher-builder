@@ -17,6 +17,9 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import Cypher from "../src";
 
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");

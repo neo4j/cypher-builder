@@ -143,7 +143,7 @@ describe("Environment", () => {
         test("compile not compilable should throw", () => {
             const environment = new CypherEnvironment();
             expect(() => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
                 environment.compile({} as any);
             }).toThrow("Can't compile. Passing a non Cypher Builder element to env.compile");
         });
@@ -155,7 +155,7 @@ describe("Environment", () => {
                 },
             };
             const raw = new Cypher.Raw((env) => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
                 return env.compile(fakeClause as any);
             });
 

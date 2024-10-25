@@ -36,8 +36,8 @@ export interface LoadCSV extends WithReturn, WithCreate, WithMerge, WithWith, Wi
  */
 @mixin(WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure)
 export class LoadCSV extends Clause {
-    private url: string;
-    private alias: Variable;
+    private readonly url: string;
+    private readonly alias: Variable;
 
     constructor(url: string, alias: Variable) {
         super();

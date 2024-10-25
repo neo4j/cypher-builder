@@ -34,7 +34,7 @@ export interface Return extends WithOrder {}
  */
 @mixin(WithOrder)
 export class Return extends Clause {
-    private projection: Projection;
+    private readonly projection: Projection;
     private isDistinct = false;
 
     constructor(...columns: Array<"*" | ProjectionColumn>) {

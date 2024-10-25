@@ -38,7 +38,7 @@ export abstract class Clause extends CypherASTNode {
 
     /** Compiles a clause into Cypher and params */
     public build(
-        prefix?: string | EnvPrefix | undefined,
+        prefix?: string | EnvPrefix,
         extraParams: Record<string, unknown> = {},
         config?: BuildConfig
     ): CypherResult {

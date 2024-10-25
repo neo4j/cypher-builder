@@ -35,11 +35,11 @@ import { MapExpr } from "./MapExpr";
  */
 
 export class MapProjection implements CypherCompilable {
-    private extraValues: Map<string, Expr> = new Map();
-    private variable: Variable;
-    private projection: string[];
+    private readonly extraValues: Map<string, Expr> = new Map();
+    private readonly variable: Variable;
+    private readonly projection: string[];
 
-    private isStar = false;
+    private readonly isStar: boolean = false;
 
     constructor(variable: Variable, projection: "*" | string[] = [], extraValues: Record<string, Expr> = {}) {
         this.variable = variable;
