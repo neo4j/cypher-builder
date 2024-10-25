@@ -39,6 +39,9 @@ export class PatternComprehension extends CypherASTNode {
     private mapExpr: Expr | undefined;
 
     // NOTE: mapExpr parameter is deprecated in favour of `.map`
+    constructor(pattern: Pattern, mapExpr?: Expr);
+    /** @deprecated Use {@link Pattern} instead */
+    constructor(pattern: NodeRef, mapExpr?: Expr);
     constructor(pattern: Pattern | NodeRef, mapExpr?: Expr) {
         super();
         if (pattern instanceof Pattern) {
