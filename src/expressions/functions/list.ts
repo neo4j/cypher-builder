@@ -136,11 +136,11 @@ export function reduce(
 }
 
 class ReducerFunction extends CypherFunction {
-    private accVariable: Variable;
-    private defaultValue: Expr;
-    private variable: Variable;
-    private listExpr: Expr;
-    private mapExpr: Expr;
+    private readonly accVariable: Variable;
+    private readonly defaultValue: Expr;
+    private readonly variable: Variable;
+    private readonly listExpr: Expr;
+    private readonly mapExpr: Expr;
 
     constructor({
         accVariable,

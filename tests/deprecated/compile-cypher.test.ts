@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import Cypher from "../../src";
 
 describe("Utils.compileCypher - Deprecated", () => {

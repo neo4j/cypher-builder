@@ -41,8 +41,8 @@ const defaultConfig: EnvConfig = {
 export class CypherEnvironment {
     private readonly globalPrefix: EnvPrefix;
 
-    private references: Map<Variable, string> = new Map();
-    private params: Param[] = [];
+    private readonly references: Map<Variable, string> = new Map();
+    private readonly params: Param[] = [];
 
     public readonly config: EnvConfig;
 
@@ -132,7 +132,7 @@ export class CypherEnvironment {
     }
 
     private isNamedReference(ref: Variable | NamedReference): ref is NamedReference {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
         return Boolean((ref as any).id);
     }
 }

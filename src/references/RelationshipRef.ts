@@ -40,7 +40,7 @@ type RelationshipRefOptions = {
  * @group Variables
  */
 export class RelationshipRef extends Variable {
-    private _type: string | LabelExpr | undefined;
+    private readonly _type: string | LabelExpr | undefined;
 
     constructor();
     /** @deprecated Relationship types should be defined in {@link Pattern} */

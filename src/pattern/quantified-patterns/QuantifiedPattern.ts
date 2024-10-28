@@ -35,8 +35,8 @@ export type Quantifier =
  * @group Patterns
  */
 export class QuantifiedPattern implements CypherCompilable {
-    private pattern: Pattern;
-    private quantifier: Quantifier;
+    private readonly pattern: Pattern;
+    private readonly quantifier: Quantifier;
 
     constructor(pattern: Pattern, quantifier: Quantifier) {
         this.pattern = pattern;

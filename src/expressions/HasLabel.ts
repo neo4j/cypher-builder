@@ -35,8 +35,8 @@ import { escapeLabel } from "../utils/escape";
  * ```
  */
 export class HasLabel extends CypherASTNode {
-    private node: NodeRef | RelationshipRef;
-    private expectedLabels: string[] | LabelExpr;
+    private readonly node: NodeRef | RelationshipRef;
+    private readonly expectedLabels: string[] | LabelExpr;
 
     /**
      * @hidden

@@ -28,7 +28,7 @@ export type Order = "ASC" | "DESC";
 type OrderProjectionElement = [Expr, Order];
 
 export class OrderBy extends CypherASTNode {
-    private exprs: OrderProjectionElement[] = [];
+    private readonly exprs: OrderProjectionElement[] = [];
 
     private skipClause: Skip | undefined;
     private limitClause: Limit | undefined;
@@ -94,7 +94,7 @@ class Skip extends CypherASTNode {
 }
 
 class Limit extends CypherASTNode {
-    private value: Expr;
+    private readonly value: Expr;
 
     constructor(value: Expr) {
         super();

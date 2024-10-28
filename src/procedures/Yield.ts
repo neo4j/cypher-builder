@@ -73,7 +73,7 @@ export interface Yield
     WithOrder
 )
 export class Yield<T extends string = string> extends Clause {
-    private projection: YieldProjection;
+    private readonly projection: YieldProjection;
 
     constructor(yieldColumns: Array<YieldProjectionColumn<T>>) {
         super();

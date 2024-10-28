@@ -121,7 +121,7 @@ export function stDevP(expr: Expr): CypherAggregationFunction {
  */
 export class CypherAggregationFunction extends CypherFunction {
     private hasDistinct = false;
-    private hasStar = false;
+    private readonly hasStar: boolean = false;
 
     /**
      * @internal

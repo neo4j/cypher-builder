@@ -34,7 +34,7 @@ import { ListIndex } from "./ListIndex";
  * ```
  */
 export class ListExpr implements CypherCompilable {
-    private value: Expr[];
+    private readonly value: Expr[];
 
     constructor(value: Expr[]) {
         this.value = value;

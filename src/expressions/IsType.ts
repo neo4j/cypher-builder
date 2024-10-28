@@ -93,7 +93,7 @@ export function isNotType(expr: Expr, type: Type | Type[]): IsType {
 }
 
 class ListType {
-    private types: Type[];
+    private readonly types: Type[];
     private _notNull: boolean = false;
 
     constructor(type: Type[]) {
@@ -121,9 +121,9 @@ class ListType {
 }
 
 export class IsType extends CypherASTNode {
-    private expr: Expr;
-    private types: Type[];
-    private not: boolean;
+    private readonly expr: Expr;
+    private readonly types: Type[];
+    private readonly not: boolean;
     private _notNull: boolean = false;
 
     public constructor(expr: Expr, type: Type[], not = false) {

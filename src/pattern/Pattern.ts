@@ -55,10 +55,10 @@ export interface Pattern extends WithWhere {}
 export class Pattern extends PatternElement {
     private withLabels = true;
     private withVariable = true;
-    private previous: PartialPattern | undefined;
+    private readonly previous: PartialPattern | undefined;
     private properties: Record<string, Expr> | undefined;
 
-    private labels: string | string[] | LabelExpr | undefined;
+    private readonly labels: string | string[] | LabelExpr | undefined;
 
     constructor(node: Variable, options?: NodePattern);
     constructor(nodeConfig: NodePattern);

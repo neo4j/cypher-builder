@@ -34,7 +34,7 @@ export interface ListComprehension extends WithWhere {}
  */
 @mixin(WithWhere)
 export class ListComprehension extends CypherASTNode {
-    private variable: Variable;
+    private readonly variable: Variable;
     private listExpr: Expr | undefined;
     private mapExpr: Expr | undefined; //  Expression for list mapping
 

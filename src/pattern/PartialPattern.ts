@@ -51,10 +51,10 @@ export class PartialPattern extends PatternElement {
     private withType = true;
     private withVariable = true;
     private direction: "left" | "right" | "undirected";
-    private previous: Pattern;
+    private readonly previous: Pattern;
     private properties: RelationshipProperties | undefined;
 
-    private type: string | LabelExpr | undefined;
+    private readonly type: string | LabelExpr | undefined;
 
     constructor(variable: Variable | undefined, options: RelationshipPattern, previous: Pattern) {
         super(variable ?? new RelationshipRef());

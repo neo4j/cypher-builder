@@ -26,7 +26,7 @@ import { Clause } from "./Clause";
  * @category Clauses
  */
 export class Union extends Clause {
-    private subqueries: CypherASTNode[] = [];
+    private readonly subqueries: CypherASTNode[] = [];
 
     private unionType: "ALL" | "DISTINCT" | undefined;
 

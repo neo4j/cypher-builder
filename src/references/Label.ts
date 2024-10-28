@@ -28,8 +28,8 @@ import { escapeLabel } from "../utils/escape";
  * @example `:Movie`
  */
 export class Label extends CypherASTNode {
-    private node: NodeRef;
-    private label: string;
+    private readonly node: NodeRef;
+    private readonly label: string;
 
     /**
      * @hidden
