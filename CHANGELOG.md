@@ -1,5 +1,16 @@
 # @neo4j/cypher-builder
 
+## 1.22.1
+
+### Patch Changes
+
+-   [#430](https://github.com/neo4j/cypher-builder/pull/430) [`f662ddd`](https://github.com/neo4j/cypher-builder/commit/f662ddd29d09313b2fbdb975a64b3903aa079f2f) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate using a `Node` as a constructor of `Cypher.PatternComprehension`:
+
+    ```js
+    const node = new Cypher.Node();
+    const comprehension = new Cypher.PatternComprehension(node);
+    ```
+
 ## 1.22.0
 
 ### Minor Changes
