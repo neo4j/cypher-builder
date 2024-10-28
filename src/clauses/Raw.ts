@@ -60,7 +60,7 @@ export class Raw extends Clause {
 }
 
 export class RawCypherContext {
-    private env: CypherEnvironment;
+    private readonly env: CypherEnvironment;
 
     constructor(env: CypherEnvironment) {
         this.env = env;

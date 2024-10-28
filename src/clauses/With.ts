@@ -69,8 +69,8 @@ export interface With
 )
 export class With extends Clause {
     private readonly projection: Projection;
+    private readonly withStatement: With | undefined;
     private isDistinct = false;
-    private withStatement: With | undefined;
 
     constructor(...columns: Array<"*" | WithProjection>) {
         super();
