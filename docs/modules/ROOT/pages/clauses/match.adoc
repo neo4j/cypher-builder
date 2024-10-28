@@ -4,7 +4,7 @@
 
 This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/match/[`MATCH`] clause with the `Cypher.Match` class.
 
-To create a `MATCH` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class:
+To create a `MATCH` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class and pass it to `Match` constructor:
 
 
 [source, javascript]
@@ -13,6 +13,7 @@ const movie = new Cypher.Node();
 const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] });
 
 const matchQuery = new Cypher.Match(pattern);
+const { cypher, params } = matchQuery.build()
 ----
 
 This generates the following `MATCH` clause:
@@ -31,11 +32,99 @@ const matchQuery = new Cypher.Match(pattern)
     .return(movie);
 ----
 
-Match clauses can also be chained:
+Extra match clauses can also be chained:
 
 [source, javascript]
 ----
 const matchQuery = new Cypher.Match(pattern).match(pattern2).return(movie)
+----
+
+== Relationships
+
+Relationships can be used in a match clause by creating the relevant xref:/patterns.adoc[Pattern]:
+
+
+[source, javascript]
+----
+const actedInPattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
+    .related({ type: "ACTED_IN" })
+    .to(personNode, { labels: ["Person"] });
+
+const matchQuery = new Cypher.Match(actedInPattern)
+----
+
+[source, cypher]
+----
+MATCH (this1:`Person`)-[this0:ACTED_IN]->(this2:`Movie`)
+----
+
+== Filtering with `WHERE`
+
+A `WHERE` clause can be appended with the `.where` method, this accepts any predicate:
+
+[source, javascript]
+----
+new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+   .where(Cypher.eq(node.property("title"), new Cypher.Param("Matrix")));
+----
+
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE title = $param0
+----
+
+Multiple predicates can be chained by using the `.and` or `.where` method after `.where`:
+
+[source, javascript]
+----
+new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+   .where(Cypher.eq(node.property("title"), new Cypher.Param("Matrix")))
+   .and(Cypher.neq(node.property("year"), new Cypher.Param(2001)));
+----
+
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE this0.title = $param0
+AND this0.year <> $param1
+----
+
+=== Logical filters
+
+For more complex logical filters, the predicates `Cypher.and`, `Cypher.or`, `Cypher.not` and `Cypher.xor` can be used inside `where`:
+
+[source, javascript]
+----
+new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+    .where(
+        Cypher.and(
+            Cypher.or(Cypher.eq(movieNode.property("title"), new Cypher.Param("Matrix")), Cypher.gt(movieNode.property("year"), new Cypher.Param(1990))),
+            Cypher.neq(movieNode.property("year"), new Cypher.Param(2001))
+        )
+    )
+----
+
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE ((this0.title = $param0 OR this0.year > $param1) AND this0.year <> $param2)
+----
+
+=== Filtering properties shorthand
+
+`.where` also supports passing a variable and an object with variables to check for equality of multiple values in a more concise way:
+
+[source, javascript]
+----
+const matchQuery = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+    .where(movieNode, { id: idParam, name: nameParam })
+----
+
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE (this0.id = $param0 AND this0.name = $param1)
 ----
 
 
