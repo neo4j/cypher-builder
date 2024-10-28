@@ -46,4 +46,4 @@ _Params_
 
 You can find usage examples in the [examples](https://github.com/neo4j/cypher-builder/tree/main/examples) folder.
 
-> This library is for JavaScript and TypeScript only. If you are using Java, check [Neo4j Cypher DSL](https://github.com/neo4j/cypher-dsl).
+> This library is for JavaScript and TypeScript only. If you are using Java, check [Neo4j Cypher DSL](https://neo4j.github.io/cypher-dsl).

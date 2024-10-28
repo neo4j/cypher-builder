@@ -37,7 +37,7 @@ export abstract class BooleanOp extends CypherASTNode {
 }
 
 class BinaryOp extends BooleanOp {
-    private children: Predicate[];
+    private readonly children: Predicate[];
 
     constructor(operator: BooleanOperator, predicates: Predicate[]) {
         super(operator);
@@ -61,7 +61,7 @@ class BinaryOp extends BooleanOp {
 }
 
 class NotOp extends BooleanOp {
-    private child: Predicate;
+    private readonly child: Predicate;
 
     constructor(child: Predicate) {
         super("NOT");

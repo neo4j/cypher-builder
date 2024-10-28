@@ -47,9 +47,9 @@ export function runFirstColumnSingle(
 }
 
 class RunFirstColumnFunction extends CypherFunction {
-    private innerClause: Clause | string;
-    private variables: Variable[] | MapExpr;
-    private many: boolean;
+    private readonly innerClause: Clause | string;
+    private readonly variables: Variable[] | MapExpr;
+    private readonly many: boolean;
 
     constructor(clause: Clause | string, variables: Variable[] | MapExpr | Record<string, Expr>, many: boolean) {
         super(`apoc.cypher.runFirstColumn${many ? "Many" : "Single"}`); // Note: this argument is never used

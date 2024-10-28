@@ -53,9 +53,9 @@ export interface Pattern extends WithWhere {}
  */
 @mixin(WithWhere)
 export class Pattern extends PatternElement {
-    private properties: Record<string, Expr> | undefined;
+    private readonly properties: Record<string, Expr> | undefined;
+    private readonly labels: string | string[] | LabelExpr | undefined;
 
-    private labels: string | string[] | LabelExpr | undefined;
     protected previous: PartialPattern | undefined;
 
     constructor(nodeConfig?: NodePattern);
@@ -120,7 +120,7 @@ export class Pattern extends PatternElement {
 // This exists to support a "previous" parameter without exposing this to the user
 export class NestedPattern extends Pattern {
     constructor(nodeVariable?: Variable | NodePattern, options: NodePattern = {}, previous?: PartialPattern) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
         super(nodeVariable as any, options);
         this.previous = previous;
     }

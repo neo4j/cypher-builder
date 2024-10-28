@@ -23,7 +23,7 @@ import type { CypherEnvironment } from "../../Environment";
 import type { PropertyRef } from "../../references/PropertyRef";
 
 export class RemoveClause extends CypherASTNode {
-    private removeInput: Array<PropertyRef | Label>;
+    private readonly removeInput: Array<PropertyRef | Label>;
 
     constructor(parent: CypherASTNode | undefined, removeInput: Array<PropertyRef | Label>) {
         super(parent);

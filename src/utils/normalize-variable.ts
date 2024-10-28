@@ -40,7 +40,7 @@ export function normalizeExpr(value: VariableInput | Expr): Variable | Literal |
     return new Literal(value);
 }
 
-export function normalizeMap(map: Record<string, VariableInput> | Expr): MapExpr {
+export function normalizeMap(map: Record<string, VariableInput>): MapExpr {
     return Object.entries(map).reduce((mapExpr, [key, value]) => {
         mapExpr.set(key, normalizeVariable(value));
         return mapExpr;

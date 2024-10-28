@@ -87,7 +87,7 @@ export function single(variable: Variable, listExpr: Expr, whereFilter: Predicat
 }
 
 class ExistsFunction extends PredicateFunction {
-    private pattern: Pattern;
+    private readonly pattern: Pattern;
 
     constructor(pattern: Pattern) {
         super("exists");
@@ -103,9 +103,9 @@ class ExistsFunction extends PredicateFunction {
 
 /** Predicate function that uses a list comprehension "var IN list WHERE .." */
 class ListPredicateFunction extends PredicateFunction {
-    private variable: Variable;
-    private listExpr: Expr;
-    private whereSubClause: Where;
+    private readonly variable: Variable;
+    private readonly listExpr: Expr;
+    private readonly whereSubClause: Where;
 
     constructor(name: string, variable: Variable, listExpr: Expr, whereFilter: Predicate) {
         super(name);

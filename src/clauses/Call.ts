@@ -62,10 +62,10 @@ type InTransactionConfig = {
  */
 @mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge, WithOrder)
 export class Call extends Clause {
-    private subquery: CypherASTNode;
+    private readonly subquery: CypherASTNode;
     private _importWith?: ImportWith;
     private inTransactionsConfig?: InTransactionConfig;
-    private variableScope?: Variable[] | "*";
+    private readonly variableScope?: Variable[] | "*";
     private _optional: boolean = false;
 
     // This is to preserve compatibility with innerWith and avoid breaking changes

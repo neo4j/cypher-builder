@@ -50,7 +50,7 @@ export abstract class LabelExpr implements CypherCompilable {
 }
 
 class BinaryLabelExpr extends LabelExpr {
-    private labels: Array<string | LabelExpr>;
+    private readonly labels: Array<string | LabelExpr>;
 
     constructor(operator: "&" | "|", labels: Array<string | LabelExpr>) {
         super(operator);
@@ -69,7 +69,7 @@ class BinaryLabelExpr extends LabelExpr {
 }
 
 class NotLabelExpr extends LabelExpr {
-    private label: string | LabelExpr;
+    private readonly label: string | LabelExpr;
 
     constructor(label: string | LabelExpr) {
         super("!");

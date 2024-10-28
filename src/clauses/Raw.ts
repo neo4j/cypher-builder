@@ -29,7 +29,7 @@ type RawCypherCallback = (context: RawCypherContext) => [string, Record<string, 
  * @group Other
  */
 export class Raw extends Clause {
-    private callback: RawCypherCallback;
+    private readonly callback: RawCypherCallback;
 
     constructor(callback: RawCypherCallback | string) {
         super();

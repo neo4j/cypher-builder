@@ -68,7 +68,7 @@ export interface With
     WithCall
 )
 export class With extends Clause {
-    private projection: Projection;
+    private readonly projection: Projection;
     private isDistinct = false;
     private withStatement: With | undefined;
 

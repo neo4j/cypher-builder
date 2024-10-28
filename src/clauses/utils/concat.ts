@@ -34,7 +34,7 @@ export class CompositeClause extends Clause {
      */
     constructor(
         children: Array<Clause | undefined>,
-        private separator: string
+        private readonly separator: string
     ) {
         super();
         this._children = [];

@@ -50,7 +50,7 @@ export interface Unwind
  */
 @mixin(WithWith, WithDelete, WithMatch, WithReturn, WithRemove, WithSet, WithCreate, WithMerge, WithOrder)
 export class Unwind extends Clause {
-    private projection: Projection;
+    private readonly projection: Projection;
 
     constructor(...columns: Array<ProjectionColumn>) {
         super();

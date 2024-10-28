@@ -24,8 +24,8 @@ import { CypherASTNode } from "../../CypherASTNode";
 type MathOperator = "+" | "-" | "*" | "/" | "%" | "^";
 
 export class MathOp extends CypherASTNode {
-    private operator: MathOperator;
-    private exprs: Expr[];
+    private readonly operator: MathOperator;
+    private readonly exprs: Expr[];
 
     constructor(operator: MathOperator, exprs: Expr[]) {
         super();

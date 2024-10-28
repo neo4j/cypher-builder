@@ -45,12 +45,12 @@ export type LengthOption =
 
 @mixin(WithWhere)
 export class PartialPattern extends PatternElement {
-    private length: LengthOption | undefined;
-    private direction: "left" | "right" | "undirected";
-    private previous: Pattern;
-    private properties: Record<string, Expr> | undefined;
+    private readonly length: LengthOption | undefined;
+    private readonly direction: "left" | "right" | "undirected";
+    private readonly previous: Pattern;
+    private readonly properties: Record<string, Expr> | undefined;
 
-    private type: string | LabelExpr | undefined;
+    private readonly type: string | LabelExpr | undefined;
 
     constructor(variable: Variable | undefined, options: RelationshipPattern, previous: Pattern) {
         super(variable);
