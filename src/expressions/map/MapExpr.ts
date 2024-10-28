@@ -26,7 +26,7 @@ import { serializeMap } from "../../utils/serialize-map";
  * @group Maps
  */
 export class MapExpr implements CypherCompilable {
-    private map = new Map<string, Expr>();
+    private readonly map = new Map<string, Expr>();
 
     constructor(value: Record<string, Expr> = {}) {
         this.set(value);

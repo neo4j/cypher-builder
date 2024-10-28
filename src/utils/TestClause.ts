@@ -23,7 +23,7 @@ import type { CypherCompilable } from "../types";
 
 /** For testing purposes only */
 export class TestClause extends Clause {
-    private children: CypherCompilable[];
+    private readonly children: CypherCompilable[];
 
     constructor(...children: CypherCompilable[]) {
         super();

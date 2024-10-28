@@ -28,8 +28,8 @@ import type { Variable } from "./Variable";
  * @example new Node({labels: ["Movie"]}).property("title")
  */
 export class PropertyRef implements CypherCompilable {
-    private _variable: Variable;
-    private propertyPath: Array<string | Expr>;
+    private readonly _variable: Variable;
+    private readonly propertyPath: Array<string | Expr>;
 
     /**
      * @internal

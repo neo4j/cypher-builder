@@ -34,7 +34,7 @@ export interface PatternComprehension extends WithWhere {}
  */
 @mixin(WithWhere)
 export class PatternComprehension extends CypherASTNode {
-    private pattern: Pattern;
+    private readonly pattern: Pattern;
     private mapExpr: Expr | undefined;
 
     constructor(pattern: Pattern) {

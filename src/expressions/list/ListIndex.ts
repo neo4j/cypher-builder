@@ -24,8 +24,8 @@ import type { CypherCompilable } from "../../types";
 import type { ListExpr } from "./ListExpr";
 
 export class ListIndex implements CypherCompilable {
-    private value: Variable | ListExpr | PropertyRef;
-    private index: number;
+    private readonly value: Variable | ListExpr | PropertyRef;
+    private readonly index: number;
 
     /**
      * @hidden

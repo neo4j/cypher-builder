@@ -28,7 +28,7 @@ export type SetParam = [PropertyRef, Param<unknown>];
 
 /** Represents a WITH statement to import variables into a CALL subquery */
 export class ImportWith extends CypherASTNode {
-    private params: Variable[];
+    private readonly params: Variable[];
     private hasStar = false;
 
     constructor(parent: Call, params: Array<"*" | Variable>) {

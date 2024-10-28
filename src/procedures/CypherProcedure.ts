@@ -31,7 +31,7 @@ import { Yield } from "./Yield";
  */
 export class VoidCypherProcedure extends Clause {
     protected name: string;
-    private params: Array<Expr>;
+    private readonly params: Array<Expr>;
 
     constructor(name: string, params: Array<Expr> = [], namespace?: string) {
         super();

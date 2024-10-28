@@ -26,8 +26,8 @@ import { Clause } from "./Clause";
  * @category Clauses
  */
 export class Use extends Clause {
-    private graph: string;
-    private subClause: CypherASTNode;
+    private readonly graph: string;
+    private readonly subClause: CypherASTNode;
 
     constructor(graph: string, subClause: Clause) {
         super();

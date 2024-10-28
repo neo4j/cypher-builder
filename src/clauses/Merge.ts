@@ -52,9 +52,9 @@ export interface Merge
  */
 @mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate, WithFinish, WithOrder)
 export class Merge extends Clause {
-    private pattern: Pattern;
-    private onCreateClause: OnCreate;
-    private onMatchClause: OnMatch;
+    private readonly pattern: Pattern;
+    private readonly onCreateClause: OnCreate;
+    private readonly onMatchClause: OnMatch;
 
     constructor(pattern: Pattern) {
         super();

@@ -111,7 +111,7 @@ describe("Map Projection", () => {
         const mapProjection = new Cypher.MapProjection(new Cypher.Variable(), []);
         expect(() => {
             mapProjection.set({
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
                 myValue: "" as any,
             });
         }).toThrow("Missing value on map key myValue");

@@ -24,7 +24,7 @@ import type { Pattern } from "../Pattern";
 import type { QuantifiedPattern } from "./QuantifiedPattern";
 
 export class QuantifiedPath implements CypherCompilable {
-    private patterns: Array<QuantifiedPattern | Pattern> = [];
+    private readonly patterns: Array<QuantifiedPattern | Pattern> = [];
 
     constructor(...patterns: Array<QuantifiedPattern | Pattern>) {
         this.patterns = patterns;

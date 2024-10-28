@@ -94,7 +94,7 @@ describe("Raw Cypher", () => {
 
     test("compile not compilable should throw", () => {
         const rawCypher = new Cypher.Raw((context) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
             const cypher = context.compile({} as any);
 
             return cypher;
@@ -112,7 +112,7 @@ describe("Raw Cypher", () => {
             },
         };
         const raw = new Cypher.Raw((context) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
             return context.compile(fakeClause as any);
         });
 

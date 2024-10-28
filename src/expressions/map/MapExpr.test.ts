@@ -80,7 +80,7 @@ describe("Map Expression", () => {
 
         expect(() => {
             map.set({
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
                 myValue: "" as any,
             });
         }).toThrow("Missing value on map key myValue");

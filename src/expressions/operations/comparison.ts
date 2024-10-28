@@ -65,7 +65,7 @@ export class ComparisonOp extends CypherASTNode {
 }
 
 export class NormalizationOperator extends ComparisonOp {
-    private normalizationType: NormalizationType | undefined;
+    private readonly normalizationType: NormalizationType | undefined;
 
     constructor(
         operator: "IS NORMALIZED" | "IS NOT NORMALIZED",

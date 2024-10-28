@@ -26,7 +26,7 @@ import type { Literal } from "../../references/Literal";
 export type ProjectionColumn = Expr | [Expr, string | Variable | Literal];
 
 export class Projection extends CypherASTNode {
-    private columns: ProjectionColumn[] = [];
+    private readonly columns: ProjectionColumn[] = [];
     private isStar = false;
 
     constructor(columns: Array<"*" | ProjectionColumn>) {
