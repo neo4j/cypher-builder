@@ -1,5 +1,20 @@
 # @neo4j/cypher-builder
 
+## 1.22.2
+
+### Patch Changes
+
+-   [#437](https://github.com/neo4j/cypher-builder/pull/437) [`fa520b8`](https://github.com/neo4j/cypher-builder/commit/fa520b81d8e9723fe34482616f44ef7624dcf978) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for patterns in `size()` for Neo4j 4
+
+    ```js
+    const pattern = new Cypher.Pattern(new Cypher.Node()).related().to();
+    const cypherFunction = Cypher.size(pattern);
+    ```
+
+    ```cypher
+    size((this0)-[this1]->(this2))
+    ```
+
 ## 1.22.1
 
 ### Patch Changes
