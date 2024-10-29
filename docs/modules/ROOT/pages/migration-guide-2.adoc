@@ -6,10 +6,6 @@ This guide describes the changes required to migrate from Cypher Builder 1.x to 
 
 The full, up to date changelog can be found link:https://github.com/neo4j/cypher-builder/blob/2.x/CHANGELOG.md[here].
 
-== Minimum Node.js version
-
-Update minimum Node.js version to 18.
-
 == Patterns
 
 xref:patterns.adoc[Patterns] have been reworked in version 1.x, and the old behavior have been removed in version 2.0.
