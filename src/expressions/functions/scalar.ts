@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { Raw, type Pattern } from "../..";
 import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
@@ -107,8 +108,17 @@ export function randomUUID(): CypherFunction {
  * @group Cypher Functions
  * @category Scalar
  */
-export function size(expr: Expr): CypherFunction {
-    return new CypherFunction("size", [expr]);
+export function size(expr: Expr): CypherFunction;
+/** @deprecated size() with pattern is deprecated in Neo4j 5 */
+export function size(expr: Pattern): CypherFunction;
+export function size(expr: Expr | Pattern): CypherFunction {
+    // Support for patterns in size() in Neo4j 4
+    // Using Raw to avoid adding Patterns to CypherFunction
+    const sizeParam = new Raw((env) => {
+        return env.compile(expr);
+    });
+
+    return new CypherFunction("size", [sizeParam]);
 }
 
 /**
