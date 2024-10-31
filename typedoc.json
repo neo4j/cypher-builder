@@ -13,5 +13,18 @@
     },
     "gitRemote": "origin",
     "out": "./docs/build/site/reference",
-    "readme": "none"
+    "readme": "none",
+    "highlightLanguages": [
+        "bash",
+        "console",
+        "css",
+        "html",
+        "javascript",
+        "json",
+        "jsonc",
+        "json5",
+        "tsx",
+        "typescript",
+        "cypher"
+    ]
 }
