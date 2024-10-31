@@ -93,7 +93,7 @@ function createOp(op: ComparisonOperator, leftExpr: Expr, rightExpr?: Expr): Com
     return new ComparisonOp(op, leftExpr, rightExpr);
 }
 
-/** Equality (=) operator
+/** Equality (`=`) operator
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
  * @group Operators
  * @category Comparison
@@ -102,7 +102,7 @@ export function eq(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
     return createOp("=", leftExpr, rightExpr);
 }
 
-/** Inequality (<>) operator
+/** Inequality (`<>`) operator
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
  * @group Operators
  * @category Comparison
@@ -111,7 +111,7 @@ export function neq(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
     return createOp("<>", leftExpr, rightExpr);
 }
 
-/** Greater Than (>) operator
+/** Greater Than (`>`) operator
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
  * @group Operators
  * @category Comparison
@@ -120,7 +120,7 @@ export function gt(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
     return createOp(">", leftExpr, rightExpr);
 }
 
-/** Greater Than Equal (>=) operator
+/** Greater Than Equal (`>=`) operator
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
  * @group Operators
  * @category Comparison
@@ -129,7 +129,7 @@ export function gte(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
     return createOp(">=", leftExpr, rightExpr);
 }
 
-/** Less Than (<) operator
+/** Less Than (`<`) operator
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
  * @group Operators
  * @category Comparison
@@ -138,7 +138,7 @@ export function lt(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
     return createOp("<", leftExpr, rightExpr);
 }
 
-/** Less Than Equal (<=) operator
+/** Less Than Equal (`<=`) operator
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
  * @group Operators
  * @category Comparison

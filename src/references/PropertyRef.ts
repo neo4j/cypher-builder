@@ -25,7 +25,7 @@ import type { Variable } from "./Variable";
 
 /** Reference to a variable property
  * @group Variables
- * @example new Node({labels: ["Movie"]}).property("title")
+ * @example `new Node({labels: ["Movie"]}).property("title")`
  */
 export class PropertyRef implements CypherCompilable {
     private readonly _variable: Variable;

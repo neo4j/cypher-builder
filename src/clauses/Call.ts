@@ -105,6 +105,7 @@ export class Call extends Clause {
 
     /** Makes the subquery an OPTIONAL CALL
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call)
+     * @version Neo4j 5.24
      */
     public optional(): this {
         this._optional = true;

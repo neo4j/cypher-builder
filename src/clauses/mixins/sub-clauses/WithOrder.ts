@@ -55,6 +55,7 @@ export abstract class WithOrder extends Mixin {
 
     /** Add a `OFFSET` subclause. An alias to `SKIP`
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/skip/#offset-synonym)
+     * @version Neo4j 5.24
      */
     public offset(value: number | Expr): this {
         const orderByStatement = this.getOrCreateOrderBy();
