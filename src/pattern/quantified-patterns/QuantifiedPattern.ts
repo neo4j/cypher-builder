@@ -30,7 +30,7 @@ export type Quantifier =
           max?: number;
       };
 
-/** Represents a quantified path pattern as a {@link Pattern} with at least one relationship and a quantifier of the form {1,2}
+/** Represents a quantified path pattern as a {@link Pattern} with at least one relationship and a quantifier of the form `{1,2}`
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/patterns/variable-length-patterns/#quantified-path-patterns)
  * @group Patterns
  */

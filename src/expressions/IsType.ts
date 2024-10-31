@@ -50,7 +50,7 @@ const BaseTypes = {
 } as const;
 
 /**
- * Generates a cypher LIST<...> type
+ * Generates a cypher `LIST<...>` type
  * @example
  * ```cypher
  * LIST<STRING>
