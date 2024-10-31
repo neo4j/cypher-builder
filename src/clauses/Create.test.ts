@@ -104,7 +104,7 @@ describe("CypherBuilder Create", () => {
         const properties = {
             id: idParam,
         };
-        const path = new Cypher.Path();
+        const path = new Cypher.PathVariable();
         const createQuery = new Cypher.Create(
             new Cypher.Pattern(
                 movieNode,

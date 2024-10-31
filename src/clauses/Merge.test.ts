@@ -157,7 +157,7 @@ SET
 
         const relationship = new Cypher.Relationship();
         const pattern = new Cypher.Pattern(node1).related(relationship).to(node2);
-        const path = new Cypher.Path();
+        const path = new Cypher.PathVariable();
         const query = new Cypher.Merge(pattern.assignTo(path))
             .onCreateSet(
                 [node1.property("age"), new Cypher.Param(23)],

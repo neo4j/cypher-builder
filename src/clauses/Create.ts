@@ -18,7 +18,8 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { PathAssign, Pattern } from "../pattern/Pattern";
+import { PathAssign } from "../pattern/PathAssign";
+import { Pattern } from "../pattern/Pattern";
 import type { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
@@ -51,12 +52,12 @@ export interface Create
  */
 @mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove, WithMerge, WithFinish, WithOrder)
 export class Create extends Clause {
-    private readonly pattern: Pattern | PathAssign;
+    private readonly pattern: Pattern | PathAssign<Pattern>;
 
-    constructor(pattern: Pattern | PathAssign);
+    constructor(pattern: Pattern | PathAssign<Pattern>);
     /** @deprecated Use {@link Pattern} instead */
     constructor(pattern: NodeRef | Pattern);
-    constructor(pattern: NodeRef | Pattern | PathAssign) {
+    constructor(pattern: NodeRef | Pattern | PathAssign<Pattern>) {
         super();
         if (pattern instanceof Pattern || pattern instanceof PathAssign) {
             this.pattern = pattern;

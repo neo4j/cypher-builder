@@ -17,19 +17,19 @@
  * limitations under the License.
  */
 
-import type { Path } from "..";
-import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
 import { NodeRef } from "../references/NodeRef";
+import type { PathVariable } from "../references/Path";
 import { RelationshipRef } from "../references/RelationshipRef";
 import { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { LengthOption } from "./PartialPattern";
 import { PartialPattern } from "./PartialPattern";
+import { PathAssign } from "./PathAssign";
 import { PatternElement } from "./PatternElement";
 import { labelsToString } from "./labels-to-string";
 import { QuantifiedPattern, type Quantifier } from "./quantified-patterns/QuantifiedPattern";
@@ -127,7 +127,7 @@ export class Pattern extends PatternElement {
         return new QuantifiedPattern(this, quantifier);
     }
 
-    public assignTo(variable: Path): PathAssign {
+    public assignTo(variable: PathVariable): PathAssign<this> {
         return new PathAssign(this, variable);
     }
 
@@ -165,24 +165,5 @@ export class Pattern extends PatternElement {
             return labelsToString(this.element.labels, env);
         }
         return "";
-    }
-}
-
-export class PathAssign extends CypherASTNode {
-    private readonly variable: Path;
-    private readonly pattern: Pattern;
-
-    constructor(pattern: Pattern, variable: Path) {
-        super();
-        this.addChildren(pattern);
-        this.pattern = pattern;
-        this.variable = variable;
-    }
-
-    public getCypher(env: CypherEnvironment): string {
-        const patternStr = env.compile(this.pattern);
-        const variableStr = env.compile(this.variable);
-
-        return `${variableStr} = ${patternStr}`;
     }
 }

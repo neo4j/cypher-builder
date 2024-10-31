@@ -70,14 +70,14 @@ RETURN this1"
             })
         );
 
-        const query = new Cypher.Match(quantifiedPath).assignToPath(p).return(p);
+        const query = new Cypher.Match(quantifiedPath.assignTo(p)).return(p);
         const queryResult = query.build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH p0 = (this1:Movie { title: $param0 })
+"MATCH p2 = (this0:Movie { title: $param0 })
       ((:Movie)-[:ACTED_IN]->(:Person)){1,2}
-      (this2:Movie { title: $param1 })
-RETURN p0"
+      (this1:Movie { title: $param1 })
+RETURN p2"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`
 {

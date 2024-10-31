@@ -182,7 +182,7 @@ RETURN this1"
             .to(b);
 
         test("with unique id", () => {
-            const path = new Cypher.Path();
+            const path = new Cypher.PathVariable();
 
             const query = new Cypher.Match(pattern.assignTo(path)).return(path);
 

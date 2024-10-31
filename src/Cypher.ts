@@ -175,6 +175,7 @@ export type { HasLabel } from "./expressions/HasLabel";
 export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
 export type { BooleanOp } from "./expressions/operations/boolean";
 export type { ComparisonOp } from "./expressions/operations/comparison";
+export type { PathAssign } from "./pattern/PathAssign";
 export type { Yield } from "./procedures/Yield";
 export type { Label } from "./references/Label";
 export type { CypherResult, Expr, NormalizationType, Operation, Predicate } from "./types";

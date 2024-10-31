@@ -18,8 +18,10 @@
  */
 
 import type { CypherEnvironment } from "../../Environment";
+import type { PathVariable } from "../../references/Path";
 import type { CypherCompilable } from "../../types";
 import { padBlock } from "../../utils/pad-block";
+import { PathAssign } from "../PathAssign";
 import type { Pattern } from "../Pattern";
 import type { QuantifiedPattern } from "./QuantifiedPattern";
 
@@ -28,6 +30,10 @@ export class QuantifiedPath implements CypherCompilable {
 
     constructor(...patterns: Array<QuantifiedPattern | Pattern>) {
         this.patterns = patterns;
+    }
+
+    public assignTo(variable: PathVariable): PathAssign<this> {
+        return new PathAssign(this, variable);
     }
 
     /**
