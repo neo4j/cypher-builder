@@ -68,10 +68,6 @@ export class Call extends Clause {
     private readonly variableScope?: Variable[] | "*";
     private _optional: boolean = false;
 
-    // This is to preserve compatibility with innerWith and avoid breaking changes
-    // Remove on 2.0.0
-    private _usingImportWith = false;
-
     constructor(subquery: Clause, variableScope?: Variable[] | "*") {
         super();
         const rootQuery = subquery.getRoot();
@@ -93,7 +89,6 @@ export class Call extends Clause {
         if (params.length > 0) {
             this._importWith = new ImportWith(this, [...params]);
             this.addChildren(this._importWith);
-            this._usingImportWith = true;
         }
         return this;
     }
@@ -135,7 +130,7 @@ export class Call extends Clause {
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
         // This ensures the import with is added to all the union subqueries
-        if (this._usingImportWith && (this.subquery instanceof Union || this.subquery instanceof CompositeClause)) {
+        if (this.subquery instanceof Union || this.subquery instanceof CompositeClause) {
             //TODO: try to embed the importWithCypher in the environment for a more generic solution
             return this.subquery.getCypher(env, importWithCypher);
         }
