@@ -29,7 +29,7 @@ import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 export interface PatternComprehension extends WithWhere {}
 
 /** Represents a Pattern comprehension
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/lists/#cypher-pattern-comprehension)
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher-pattern-comprehension)
  * @group Patterns
  */
 @mixin(WithWhere)
