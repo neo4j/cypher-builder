@@ -40,7 +40,7 @@ describe("Path Functions", () => {
     });
 
     test("NamedPath", () => {
-        const nodesFn = Cypher.nodes(new Cypher.NamedPath("my_path"));
+        const nodesFn = Cypher.nodes(new Cypher.NamedPathVariable("my_path"));
 
         const queryResult = new TestClause(nodesFn).build();
 

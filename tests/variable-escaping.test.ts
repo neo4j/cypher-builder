@@ -77,7 +77,7 @@ describe("Variable escaping", () => {
         const movie = new Cypher.Node({ labels: ["Movie"] });
         const relationship = new Cypher.Relationship({ type: "Movie" });
         const match = new Cypher.Match(new Cypher.Pattern(movie).related(relationship).to())
-            .assignToPath(new Cypher.NamedPath("my path"))
+            .assignToPath(new Cypher.NamedPathVariable("my path"))
             .return(relationship);
 
         const { cypher, params } = match.build();

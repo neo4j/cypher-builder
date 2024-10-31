@@ -195,7 +195,7 @@ RETURN p3"
         });
 
         test("with named path", () => {
-            const path = new Cypher.NamedPath("my-path");
+            const path = new Cypher.NamedPathVariable("my-path");
 
             const query = new Cypher.Match(pattern.assignTo(path)).return(path);
 
