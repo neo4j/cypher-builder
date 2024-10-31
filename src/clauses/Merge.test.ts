@@ -158,8 +158,7 @@ SET
         const relationship = new Cypher.Relationship();
         const pattern = new Cypher.Pattern(node1).related(relationship).to(node2);
         const path = new Cypher.Path();
-        const query = new Cypher.Merge(pattern)
-            .assignToPath(path)
+        const query = new Cypher.Merge(pattern.assignTo(path))
             .onCreateSet(
                 [node1.property("age"), new Cypher.Param(23)],
                 [node1.property("name"), new Cypher.Param("Keanu")],
@@ -169,13 +168,13 @@ SET
 
         const queryResult = query.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MERGE p0 = (this1)-[this2]->(this3)
-            ON CREATE SET
-                this1.age = $param0,
-                this1.name = $param1,
-                this2.screentime = $param2
-            RETURN this1.title AS movie"
-        `);
+"MERGE p3 = (this0)-[this1]->(this2)
+ON CREATE SET
+    this0.age = $param0,
+    this0.name = $param1,
+    this1.screentime = $param2
+RETURN this0.title AS movie"
+`);
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
               "param0": 23,

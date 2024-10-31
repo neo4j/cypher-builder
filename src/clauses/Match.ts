@@ -18,6 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
+import type { PathAssign } from "../pattern/Pattern";
 import { Pattern } from "../pattern/Pattern";
 import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
 import { NodeRef } from "../references/NodeRef";
@@ -81,14 +82,14 @@ type ShortestStatement = {
     WithOrder
 )
 export class Match extends Clause {
-    private readonly pattern: Pattern | QuantifiedPath;
+    private readonly pattern: Pattern | QuantifiedPath | PathAssign;
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
 
-    constructor(pattern: Pattern | QuantifiedPath);
+    constructor(pattern: Pattern | QuantifiedPath | PathAssign);
     /** @deprecated Use {@link Pattern} instead of node: `new Cypher.Match(new Cypher.Pattern(node))` */
     constructor(node: NodeRef | Pattern | QuantifiedPath);
-    constructor(pattern: NodeRef | Pattern | QuantifiedPath) {
+    constructor(pattern: NodeRef | Pattern | QuantifiedPath | PathAssign) {
         super();
 
         // NOTE: deprecated behaviour
