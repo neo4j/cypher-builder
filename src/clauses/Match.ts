@@ -18,7 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import type { PathAssign } from "../pattern/PathAssign";
+import { PathAssign } from "../pattern/PathAssign";
 import { Pattern } from "../pattern/Pattern";
 import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
 import { NodeRef } from "../references/NodeRef";
@@ -178,6 +178,9 @@ export class Match extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathAssignStr = this.compilePath(env);
+        if (pathAssignStr && this.pattern instanceof PathAssign) {
+            throw new Error("Cannot generate MATCH, using assignTo and assignToPath at the same time is not supported");
+        }
 
         const patternCypher = this.pattern.getCypher(env);
 

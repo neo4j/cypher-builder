@@ -116,7 +116,9 @@ export class Merge extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathAssignStr = this.compilePath(env);
-
+        if (pathAssignStr && this.pattern instanceof PathAssign) {
+            throw new Error("Cannot generate MERGE, using assignTo and assignToPath at the same time is not supported");
+        }
         const mergeStr = `MERGE ${pathAssignStr}${this.pattern.getCypher(env)}`;
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const onCreateCypher = compileCypherIfExists(this.onCreateClause, env, { prefix: "\n" });

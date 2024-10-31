@@ -90,6 +90,12 @@ export class Create extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathCypher = this.compilePath(env);
+        if (pathCypher && this.pattern instanceof PathAssign) {
+            throw new Error(
+                "Cannot generate CREATE, using assignTo and assignToPath at the same time is not supported"
+            );
+        }
+
         const patternCypher = this.pattern.getCypher(env);
 
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });

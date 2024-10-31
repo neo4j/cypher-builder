@@ -164,4 +164,39 @@ RETURN p0"
 }
 `);
     });
+
+    test("throws if used with assignTo in match", () => {
+        const path = new Cypher.Path();
+
+        const query = new Cypher.Match(pattern.assignTo(path)).assignToPath(path).return(path);
+
+        expect(() => {
+            query.build();
+        }).toThrowErrorMatchingInlineSnapshot(
+            `"Cannot generate MATCH, using assignTo and assignToPath at the same time is not supported"`
+        );
+    });
+
+    test("throws if used with assignTo in create", () => {
+        const path = new Cypher.Path();
+
+        const query = new Cypher.Create(pattern.assignTo(path)).assignToPath(path).return(path);
+
+        expect(() => {
+            query.build();
+        }).toThrowErrorMatchingInlineSnapshot(
+            `"Cannot generate CREATE, using assignTo and assignToPath at the same time is not supported"`
+        );
+    });
+    test("throws if used with assignTo in merge", () => {
+        const path = new Cypher.Path();
+
+        const query = new Cypher.Merge(pattern.assignTo(path)).assignToPath(path).return(path);
+
+        expect(() => {
+            query.build();
+        }).toThrowErrorMatchingInlineSnapshot(
+            `"Cannot generate MERGE, using assignTo and assignToPath at the same time is not supported"`
+        );
+    });
 });
