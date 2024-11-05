@@ -74,6 +74,20 @@ describe("CypherBuilder With", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
+    test("Existing with clause chained  after with", () => {
+        const node = new Cypher.Node();
+        const secondWith = new Cypher.With(node);
+        const withQuery = new Cypher.With(node).with(secondWith).with("*");
+
+        const queryResult = withQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+            "WITH this0
+            WITH this0
+            WITH *"
+        `);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
     test("With clause ignores multiple *", () => {
         const node = new Cypher.Node();
         const withQuery = new Cypher.With(node, "*", "*");
