@@ -20,11 +20,11 @@
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
 
-/** Reference to a path
+/** Reference to a path variable
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns)
  * @group Variables
  */
-export class Path extends Variable {
+export class PathVariable extends Variable {
     constructor() {
         super();
         this.prefix = "p";
@@ -32,9 +32,9 @@ export class Path extends Variable {
 }
 
 /** For compatibility reasons, represents a path as a variable with the given name
- * @hidden
+ *  @group Variables
  */
-export class NamedPath extends Path implements NamedReference {
+export class NamedPathVariable extends PathVariable implements NamedReference {
     public readonly id: string;
 
     constructor(name: string) {
@@ -43,3 +43,16 @@ export class NamedPath extends Path implements NamedReference {
         this.prefix = "";
     }
 }
+
+/** Reference to a variable
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns)
+ * @group Variables
+ * @deprecated Use {@link PathVariable} instead
+ */
+export class Path extends PathVariable {}
+
+/** For compatibility reasons, represents a path as a variable with the given name
+ *  @group Variables
+ *  @deprecated Use {@link NamedPathVariable} instead
+ */
+export class NamedPath extends NamedPathVariable {}

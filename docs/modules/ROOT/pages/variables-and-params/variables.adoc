@@ -128,13 +128,13 @@ MATCH p0 = (this1)-[this2:ACTED_IN]->(this3)
 RETURN p0
 ----
 
-To assign a path variable, use the method `.assignToPath` in the relevant clause and pass a `new Path()` instance:
+To assign a path variable, use the method `.assignTo` in the relevant pattern and pass a `new PathVariable()` instance:
 
 [source, javascript]
 ----
-const path = new Cypher.Path();
+const path = new Cypher.PathVariable();
 
-const query = new Cypher.Match(pattern).assignToPath(path).return(path);
+const query = new Cypher.Match(pattern.assignTo(path)).return(path);
 ----
 
 
@@ -147,7 +147,7 @@ To do this, all variable types must have a counterpart `Named` class, for instan
 * `NamedVariable`
 * `NamedNode`
 * `NamedRelationship`
-* `NamedPath`
+* `NamedPathVariable`
 
 These can be used in the same fashion as normal variables, but a name must be provided when creating them:
 

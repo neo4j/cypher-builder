@@ -104,7 +104,7 @@ describe("CypherBuilder Create", () => {
         const properties = {
             id: idParam,
         };
-        const path = new Cypher.Path();
+        const path = new Cypher.PathVariable();
         const createQuery = new Cypher.Create(
             new Cypher.Pattern(
                 movieNode,
@@ -113,20 +113,19 @@ describe("CypherBuilder Create", () => {
                     labels: ["Movie"],
                     properties,
                 }
-            )
+            ).assignTo(path)
         )
-            .assignToPath(path)
             .set([movieNode.property("test"), testParam], [movieNode.property("nullStr"), nullStringParam])
             .return(movieNode);
 
         const queryResult = createQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE p0 = (this1:Movie { id: NULL })
-            SET
-                this1.test = NULL,
-                this1.nullStr = $param0
-            RETURN this1"
-        `);
+"CREATE p1 = (this0:Movie { id: NULL })
+SET
+    this0.test = NULL,
+    this0.nullStr = $param0
+RETURN this0"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {

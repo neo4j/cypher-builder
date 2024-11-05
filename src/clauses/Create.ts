@@ -18,6 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
+import { PathAssign } from "../pattern/PathAssign";
 import { Pattern } from "../pattern/Pattern";
 import type { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
@@ -51,14 +52,14 @@ export interface Create
  */
 @mixin(WithReturn, WithSet, WithPathAssign, WithWith, WithDelete, WithRemove, WithMerge, WithFinish, WithOrder)
 export class Create extends Clause {
-    private readonly pattern: Pattern;
+    private readonly pattern: Pattern | PathAssign<Pattern>;
 
-    constructor(pattern: Pattern);
+    constructor(pattern: Pattern | PathAssign<Pattern>);
     /** @deprecated Use {@link Pattern} instead */
     constructor(pattern: NodeRef | Pattern);
-    constructor(pattern: NodeRef | Pattern) {
+    constructor(pattern: NodeRef | Pattern | PathAssign<Pattern>) {
         super();
-        if (pattern instanceof Pattern) {
+        if (pattern instanceof Pattern || pattern instanceof PathAssign) {
             this.pattern = pattern;
         } else {
             this.pattern = new Pattern(pattern);
@@ -89,6 +90,12 @@ export class Create extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathCypher = this.compilePath(env);
+        if (pathCypher && this.pattern instanceof PathAssign) {
+            throw new Error(
+                "Cannot generate CREATE, using assignTo and assignToPath at the same time is not supported"
+            );
+        }
+
         const patternCypher = this.pattern.getCypher(env);
 
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });

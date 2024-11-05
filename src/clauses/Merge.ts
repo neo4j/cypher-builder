@@ -17,7 +17,9 @@
  * limitations under the License.
  */
 
+import type { QuantifiedPath } from "..";
 import type { CypherEnvironment } from "../Environment";
+import { PathAssign } from "../pattern/PathAssign";
 import { Pattern } from "../pattern/Pattern";
 import type { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
@@ -53,17 +55,17 @@ export interface Merge
  */
 @mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate, WithFinish, WithOrder)
 export class Merge extends Clause {
-    private readonly pattern: Pattern;
+    private readonly pattern: Pattern | PathAssign<Pattern | QuantifiedPath>;
     private readonly onCreateClause: OnCreate;
     private readonly onMatchClause: OnMatch;
 
-    constructor(pattern: Pattern);
+    constructor(pattern: Pattern | PathAssign<Pattern | QuantifiedPath>);
     /** @deprecated Use {@link Pattern} instead */
     constructor(pattern: NodeRef | Pattern);
-    constructor(pattern: NodeRef | Pattern) {
+    constructor(pattern: NodeRef | Pattern | PathAssign<Pattern | QuantifiedPath>) {
         super();
 
-        if (pattern instanceof Pattern) {
+        if (pattern instanceof Pattern || pattern instanceof PathAssign) {
             this.pattern = pattern;
         } else {
             this.pattern = new Pattern(pattern);
@@ -114,7 +116,9 @@ export class Merge extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathAssignStr = this.compilePath(env);
-
+        if (pathAssignStr && this.pattern instanceof PathAssign) {
+            throw new Error("Cannot generate MERGE, using assignTo and assignToPath at the same time is not supported");
+        }
         const mergeStr = `MERGE ${pathAssignStr}${this.pattern.getCypher(env)}`;
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const onCreateCypher = compileCypherIfExists(this.onCreateClause, env, { prefix: "\n" });

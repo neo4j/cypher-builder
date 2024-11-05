@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import type { Path } from "../../references/Path";
 import type { CypherEnvironment } from "../../Environment";
+import type { Path } from "../../references/Path";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 import { Mixin } from "./Mixin";
 
@@ -27,6 +27,7 @@ export abstract class WithPathAssign extends Mixin {
 
     /** Add a path assignment to the pattern
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns/#cypher-pattern-path-variables)
+     * @deprecated Use `Pattern.assignTo` instead
      */
     public assignToPath(path: Path): this {
         this.pathVariable = path;
