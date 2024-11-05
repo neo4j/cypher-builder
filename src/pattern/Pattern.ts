@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { PathVariable } from "..";
+import type { PathVariable } from "..";
 import { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
