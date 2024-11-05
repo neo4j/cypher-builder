@@ -18,6 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
+import { PathAssign } from "../pattern/PathAssign";
 import type { Pattern } from "../pattern/Pattern";
 import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
@@ -80,11 +81,11 @@ type ShortestStatement = {
     WithOrder
 )
 export class Match extends Clause {
-    private readonly pattern: Pattern | QuantifiedPath;
+    private readonly pattern: Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>;
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
 
-    constructor(pattern: Pattern | QuantifiedPath) {
+    constructor(pattern: Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>) {
         super();
         this.pattern = pattern;
     }
@@ -160,6 +161,9 @@ export class Match extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathAssignStr = this.compilePath(env);
+        if (pathAssignStr && this.pattern instanceof PathAssign) {
+            throw new Error("Cannot generate MATCH, using assignTo and assignToPath at the same time is not supported");
+        }
 
         const patternCypher = this.pattern.getCypher(env);
 

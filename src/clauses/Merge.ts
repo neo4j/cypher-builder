@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
+import type { Pattern } from "..";
 import type { CypherEnvironment } from "../Environment";
-import type { Pattern } from "../pattern/Pattern";
+import { PathAssign } from "../pattern/PathAssign";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithPathAssign } from "./mixins/WithPathAssign";
@@ -52,11 +53,11 @@ export interface Merge
  */
 @mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate, WithFinish, WithOrder)
 export class Merge extends Clause {
-    private readonly pattern: Pattern;
+    private readonly pattern: Pattern | PathAssign<Pattern>;
     private readonly onCreateClause: OnCreate;
     private readonly onMatchClause: OnMatch;
 
-    constructor(pattern: Pattern) {
+    constructor(pattern: Pattern | PathAssign<Pattern>) {
         super();
 
         this.pattern = pattern;
@@ -92,7 +93,9 @@ export class Merge extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const pathAssignStr = this.compilePath(env);
-
+        if (pathAssignStr && this.pattern instanceof PathAssign) {
+            throw new Error("Cannot generate MERGE, using assignTo and assignToPath at the same time is not supported");
+        }
         const mergeStr = `MERGE ${pathAssignStr}${this.pattern.getCypher(env)}`;
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const onCreateCypher = compileCypherIfExists(this.onCreateClause, env, { prefix: "\n" });

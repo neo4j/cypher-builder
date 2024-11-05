@@ -79,10 +79,11 @@ describe("Variable escaping", () => {
         const movie = new Cypher.Node();
         const relationship = new Cypher.Relationship();
         const match = new Cypher.Match(
-            new Cypher.Pattern(movie, { labels: ["Movie"] }).related(relationship, { type: "Movie" }).to()
-        )
-            .assignToPath(new Cypher.NamedPath("my path"))
-            .return(relationship);
+            new Cypher.Pattern(movie, { labels: ["Movie"] })
+                .related(relationship, { type: "Movie" })
+                .to()
+                .assignTo(new Cypher.NamedPathVariable("my path"))
+        ).return(relationship);
 
         const { cypher, params } = match.build();
         expect(cypher).toMatchInlineSnapshot(`

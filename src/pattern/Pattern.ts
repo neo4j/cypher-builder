@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { PathVariable } from "..";
 import { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
@@ -28,6 +29,7 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 import type { LengthOption } from "./PartialPattern";
 import { PartialPattern } from "./PartialPattern";
+import { PathAssign } from "./PathAssign";
 import { PatternElement } from "./PatternElement";
 import { labelsToString } from "./labels-to-string";
 import { QuantifiedPattern, type Quantifier } from "./quantified-patterns/QuantifiedPattern";
@@ -91,6 +93,10 @@ export class Pattern extends PatternElement {
     /** Adds a quantifier to the pattern such as `{1,3}`, to be used as part of a {@link QuantifiedPath} */
     public quantifier(quantifier: Quantifier): QuantifiedPattern {
         return new QuantifiedPattern(this, quantifier);
+    }
+
+    public assignTo(variable: PathVariable): PathAssign<this> {
+        return new PathAssign(this, variable);
     }
 
     /**

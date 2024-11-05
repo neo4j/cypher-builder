@@ -182,22 +182,22 @@ RETURN this1"
             .to(b);
 
         test("with unique id", () => {
-            const path = new Cypher.Path();
+            const path = new Cypher.PathVariable();
 
-            const query = new Cypher.Match(pattern).assignToPath(path).return(path);
+            const query = new Cypher.Match(pattern.assignTo(path)).return(path);
 
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH p0 = (this1)-[this2:ACTED_IN]->(this3)
-                RETURN p0"
-            `);
+"MATCH p3 = (this0)-[this1:ACTED_IN]->(this2)
+RETURN p3"
+`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
         test("with named path", () => {
-            const path = new Cypher.NamedPath("my-path");
+            const path = new Cypher.NamedPathVariable("my-path");
 
-            const query = new Cypher.Match(pattern).assignToPath(path).return(path);
+            const query = new Cypher.Match(pattern.assignTo(path)).return(path);
 
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`

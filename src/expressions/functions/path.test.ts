@@ -22,7 +22,7 @@ import { TestClause } from "../../utils/TestClause";
 
 describe("Path Functions", () => {
     test("nodes", () => {
-        const nodesFn = Cypher.nodes(new Cypher.Path());
+        const nodesFn = Cypher.nodes(new Cypher.PathVariable());
 
         const queryResult = new TestClause(nodesFn).build();
 
@@ -31,7 +31,7 @@ describe("Path Functions", () => {
     });
 
     test("relationships", () => {
-        const relationshipsFn = Cypher.relationships(new Cypher.Path());
+        const relationshipsFn = Cypher.relationships(new Cypher.PathVariable());
 
         const queryResult = new TestClause(relationshipsFn).build();
 
@@ -40,7 +40,7 @@ describe("Path Functions", () => {
     });
 
     test("NamedPath", () => {
-        const nodesFn = Cypher.nodes(new Cypher.NamedPath("my_path"));
+        const nodesFn = Cypher.nodes(new Cypher.NamedPathVariable("my_path"));
 
         const queryResult = new TestClause(nodesFn).build();
 
