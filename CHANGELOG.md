@@ -1,5 +1,32 @@
 # @neo4j/cypher-builder
 
+## 1.22.3
+
+### Patch Changes
+
+-   [#444](https://github.com/neo4j/cypher-builder/pull/444) [`be3c49e`](https://github.com/neo4j/cypher-builder/commit/be3c49ed060cd5cd06226d0eb01c4d123d4bdb20) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate `assignToPath` in clauses in favor of `assignTo` in Pattern
+
+    Before:
+
+    ```js
+    new Cypher.Match(pattern).assignToPath(path).return(path);
+    ```
+
+    Now:
+
+    ```js
+    new Cypher.Match(pattern.assignTo(path)).return(path);
+    ```
+
+    Generates the Cypher:
+
+    ```cypher
+    MATCH p = ()-[]-()
+    RETURN p
+    ```
+
+-   [#444](https://github.com/neo4j/cypher-builder/pull/444) [`0a5bf6c`](https://github.com/neo4j/cypher-builder/commit/0a5bf6c5cbb7e0c3ebd9773c58398994f14858b3) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate `Cypher.Path` and `Cypher.NamedPath` in favor of `Cypher.PathVariable` and `Cypher.NamedPathVariable` respectively
+
 ## 1.22.2
 
 ### Patch Changes
