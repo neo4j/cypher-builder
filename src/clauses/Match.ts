@@ -18,12 +18,11 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { PathAssign } from "../pattern/PathAssign";
+import type { PathAssign } from "../pattern/PathAssign";
 import type { Pattern } from "../pattern/Pattern";
 import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
-import { WithPathAssign } from "./mixins/WithPathAssign";
 import { WithCall } from "./mixins/clauses/WithCall";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
@@ -44,7 +43,6 @@ export interface Match
         WithWhere,
         WithSet,
         WithWith,
-        WithPathAssign,
         WithDelete,
         WithRemove,
         WithUnwind,
@@ -69,7 +67,6 @@ type ShortestStatement = {
     WithWhere,
     WithSet,
     WithWith,
-    WithPathAssign,
     WithDelete,
     WithRemove,
     WithUnwind,
@@ -160,11 +157,6 @@ export class Match extends Clause {
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const pathAssignStr = this.compilePath(env);
-        if (pathAssignStr && this.pattern instanceof PathAssign) {
-            throw new Error("Cannot generate MATCH, using assignTo and assignToPath at the same time is not supported");
-        }
-
         const patternCypher = this.pattern.getCypher(env);
 
         const whereCypher = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
@@ -177,7 +169,7 @@ export class Match extends Clause {
         const optionalMatch = this._optional ? "OPTIONAL " : "";
         const shortestStatement = this.getShortestStatement();
 
-        return `${optionalMatch}MATCH ${shortestStatement}${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        return `${optionalMatch}MATCH ${shortestStatement}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {

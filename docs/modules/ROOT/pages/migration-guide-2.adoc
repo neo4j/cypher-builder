@@ -144,6 +144,37 @@ The generated Cypher:
 
 Note that labels and types are now defined in the Pattern, not in the `Node` and `Relationship` classes.
 
+=== Assign to path variable
+
+The method `assignToPath` has been removed in the following clauses:
+
+- `Match`
+- `Merge`
+- `Create`
+
+Instead, the method `assignTo` in `Patterns` must be used:
+
+Before:
+
+```js
+const pathVariable = new Cypher.Cypher.PathVariable()
+new Cypher.Match(pattern).assignToPath(pathVariable).return(pathVariable);
+```
+
+Now:
+
+```js
+const pathVariable = new Cypher.Cypher.PathVariable()
+new Cypher.Match(pattern.assignTo(pathVariable)).return(pathVariable);
+```
+
+Generates the Cypher:
+
+```cypher
+MATCH p = ()-[]-()
+RETURN p
+```
+
 
 == Node and Relationship variables
 
@@ -178,6 +209,10 @@ new Cypher.Pattern(a, { labels: ["Person", "Actor"] })
     .related(rel, { type: "ACTED_IN"})
     .to(b)
 ----
+
+=== Path variables
+
+The variables used for paths `Cypher.Path` and `Cypher.NamedPath` have been removed in favor of the more accurate names: `Cypher.PathVariable` and `Cypher.NamedPathVariable`  
 
 == Renamed features
 

@@ -19,10 +19,9 @@
 
 import type { Pattern } from "..";
 import type { CypherEnvironment } from "../Environment";
-import { PathAssign } from "../pattern/PathAssign";
+import type { PathAssign } from "../pattern/PathAssign";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
-import { WithPathAssign } from "./mixins/WithPathAssign";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithReturn } from "./mixins/clauses/WithReturn";
@@ -39,7 +38,6 @@ import { mixin } from "./utils/mixin";
 export interface Merge
     extends WithReturn,
         WithSet,
-        WithPathAssign,
         WithDelete,
         WithRemove,
         WithWith,
@@ -51,7 +49,7 @@ export interface Merge
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
  * @category Clauses
  */
-@mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate, WithFinish, WithOrder)
+@mixin(WithReturn, WithSet, WithDelete, WithRemove, WithWith, WithCreate, WithFinish, WithOrder)
 export class Merge extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
     private readonly onCreateClause: OnCreate;
@@ -92,11 +90,7 @@ export class Merge extends Clause {
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const pathAssignStr = this.compilePath(env);
-        if (pathAssignStr && this.pattern instanceof PathAssign) {
-            throw new Error("Cannot generate MERGE, using assignTo and assignToPath at the same time is not supported");
-        }
-        const mergeStr = `MERGE ${pathAssignStr}${this.pattern.getCypher(env)}`;
+        const mergeStr = `MERGE ${this.pattern.getCypher(env)}`;
         const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const onCreateCypher = compileCypherIfExists(this.onCreateClause, env, { prefix: "\n" });
         const onMatchCypher = compileCypherIfExists(this.onMatchClause, env, { prefix: "\n" });
