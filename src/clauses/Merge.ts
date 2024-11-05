@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-import type { QuantifiedPath } from "..";
 import type { CypherEnvironment } from "../Environment";
 import { PathAssign } from "../pattern/PathAssign";
 import { Pattern } from "../pattern/Pattern";
@@ -55,14 +54,14 @@ export interface Merge
  */
 @mixin(WithReturn, WithSet, WithPathAssign, WithDelete, WithRemove, WithWith, WithCreate, WithFinish, WithOrder)
 export class Merge extends Clause {
-    private readonly pattern: Pattern | PathAssign<Pattern | QuantifiedPath>;
+    private readonly pattern: Pattern | PathAssign<Pattern>;
     private readonly onCreateClause: OnCreate;
     private readonly onMatchClause: OnMatch;
 
-    constructor(pattern: Pattern | PathAssign<Pattern | QuantifiedPath>);
+    constructor(pattern: Pattern | PathAssign<Pattern>);
     /** @deprecated Use {@link Pattern} instead */
     constructor(pattern: NodeRef | Pattern);
-    constructor(pattern: NodeRef | Pattern | PathAssign<Pattern | QuantifiedPath>) {
+    constructor(pattern: NodeRef | Pattern | PathAssign<Pattern>) {
         super();
 
         if (pattern instanceof Pattern || pattern instanceof PathAssign) {
