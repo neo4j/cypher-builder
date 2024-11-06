@@ -168,7 +168,7 @@ describe("Patterns", () => {
         });
 
         test("Simple relationship Pattern without variables", () => {
-            const query = new TestClause(new Cypher.Pattern({}).related({}).to({}));
+            const query = new TestClause(new Cypher.Pattern().related().to());
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"()-[]->()"`);
 

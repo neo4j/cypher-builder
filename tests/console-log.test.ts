@@ -69,18 +69,18 @@ describe("Console.log", () => {
 
         expect(`${pattern}`).toMatchInlineSnapshot(`
 "<Pattern> \\"\\"\\"
-    (this0)-[this1]->()
+    (this0)-[]->()
 \\"\\"\\""
 `);
         expect(pattern.toString()).toMatchInlineSnapshot(`
 "<Pattern> \\"\\"\\"
-    (this0)-[this1]->()
+    (this0)-[]->()
 \\"\\"\\""
 `);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((pattern as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
 "<Pattern> \\"\\"\\"
-    (this0)-[this1]->()
+    (this0)-[]->()
 \\"\\"\\""
 `);
     });

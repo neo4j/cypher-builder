@@ -578,7 +578,7 @@ CALL {
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 CALL (this0, this1) {
-    CREATE (this0)-[this2]->(this1)
+    CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);
@@ -610,7 +610,7 @@ RETURN this0"
             const queryResult = clause.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL () {
-    CREATE (this0)-[this1]->(this2)
+    CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);
@@ -634,7 +634,7 @@ RETURN this0"
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 CALL (*) {
-    CREATE (this0)-[this2]->(this1)
+    CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);

@@ -310,9 +310,9 @@ CALL apoc.util.validate(true, \\"message\\", [0])"
             expect(cypher).toMatchInlineSnapshot(`
 "WITH this0
 CALL (this0) {
-    CREATE (this0)-[this1]->(this2)
+    CREATE (this0)-[]->(this1)
 }
-RETURN this2"
+RETURN this1"
 `);
             expect(params).toMatchInlineSnapshot(`{}`);
         });
