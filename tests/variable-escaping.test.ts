@@ -42,9 +42,9 @@ describe("Variable escaping", () => {
 
         const { cypher, params } = match.build();
         expect(cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:Movie)-[\`my \`\`rel\`:Movie]->(this1)
-            RETURN \`my \`\`rel\`"
-        `);
+"MATCH (this0:Movie)-[\`my \`\`rel\`:Movie]->()
+RETURN \`my \`\`rel\`"
+`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
 
@@ -87,9 +87,9 @@ describe("Variable escaping", () => {
 
         const { cypher, params } = match.build();
         expect(cypher).toMatchInlineSnapshot(`
-            "MATCH \`my path\` = (this0:Movie)-[this1:Movie]->(this2)
-            RETURN this1"
-        `);
+"MATCH \`my path\` = (this0:Movie)-[this1:Movie]->()
+RETURN this1"
+`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
 });
