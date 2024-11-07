@@ -779,7 +779,7 @@ RETURN var1"
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 CALL (this0, this1) {
-    CREATE (this0)-[this2]->(this1)
+    CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);
@@ -803,7 +803,7 @@ RETURN this0"
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 OPTIONAL CALL (this0, this1) {
-    CREATE (this0)-[this2]->(this1)
+    CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);
@@ -832,7 +832,7 @@ RETURN this0"
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH SHORTEST 2 (this0:Movie { test: $param0 })-[this1]->(this2:Person)
+"MATCH SHORTEST 2 (this0:Movie { test: $param0 })-[]->(this1:Person)
 RETURN this0"
 `);
         });
@@ -857,7 +857,7 @@ RETURN this0"
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH SHORTEST 2 GROUPS (this0:Movie { test: $param0 })-[this1]->(this2:Person)
+"MATCH SHORTEST 2 GROUPS (this0:Movie { test: $param0 })-[]->(this1:Person)
 RETURN this0"
 `);
         });
@@ -882,7 +882,7 @@ RETURN this0"
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH ALL SHORTEST (this0:Movie { test: $param0 })-[this1]->(this2:Person)
+"MATCH ALL SHORTEST (this0:Movie { test: $param0 })-[]->(this1:Person)
 RETURN this0"
 `);
         });
@@ -907,7 +907,7 @@ RETURN this0"
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH ANY (this0:Movie { test: $param0 })-[this1]->(this2:Person)
+"MATCH ANY (this0:Movie { test: $param0 })-[]->(this1:Person)
 RETURN this0"
 `);
 

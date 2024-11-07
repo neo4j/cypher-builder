@@ -62,10 +62,10 @@ SET
 
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0)-[this1]->(this2)
+"MATCH (this0)-[]->(this1)
 SET
     this0:NewLabel,
-    this2:\`Another Label\`"
+    this1:\`Another Label\`"
 `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);

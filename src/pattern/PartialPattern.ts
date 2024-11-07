@@ -21,7 +21,6 @@ import type { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
-import { NodeRef } from "../references/NodeRef";
 import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
@@ -65,7 +64,6 @@ export class PartialPattern extends PatternElement {
     public to(node: Variable | undefined, options?: NodePattern): Pattern;
     public to(nodeConfig?: NodePattern): Pattern;
     public to(node?: Variable | NodePattern, options?: NodePattern): Pattern {
-        if (!node) node = new NodeRef();
         return new NestedPattern(node, options, this);
     }
 

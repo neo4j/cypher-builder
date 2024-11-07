@@ -22,7 +22,6 @@ import { CypherEnvironment } from "../Environment";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../clauses/utils/mixin";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
-import { RelationshipRef } from "../references/RelationshipRef";
 import { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
@@ -81,12 +80,7 @@ export class Pattern extends PatternElement {
         if (ref instanceof Variable) {
             return new PartialPattern(ref, options ?? {}, this);
         } else {
-            // Emulates previous behaviour
-            let fakeRef: RelationshipRef | undefined;
-            if (!ref && !options) {
-                fakeRef = new RelationshipRef();
-            }
-            return new PartialPattern(fakeRef, options ?? ref ?? {}, this);
+            return new PartialPattern(undefined, options ?? ref ?? {}, this);
         }
     }
 
