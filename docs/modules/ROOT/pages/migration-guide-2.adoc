@@ -1,10 +1,10 @@
 [[migration]]
 :description: This page describes how to migrate to version 2.x
-= Migration to 2.0
+= Migration to Cypher Builder 2
 
 This guide describes the changes required to migrate from Cypher Builder 1.x to 2.0, as well as some breaking changes that may affect projects using Cypher Builder.
 
-The full, up to date changelog can be found link:https://github.com/neo4j/cypher-builder/blob/2.x/CHANGELOG.md[here].
+The full, up to date changelog can be found link:https://github.com/neo4j/cypher-builder/blob/main/CHANGELOG.md[here].
 
 == Patterns
 
