@@ -8,8 +8,9 @@
 * Clauses
 ** xref:clauses/match.adoc[]
 ** xref:clauses/create.adoc[]
-** xref:clauses/union.adoc[]
 ** xref:clauses/return.adoc[]
+** xref:clauses/merge.adoc[]
+** xref:clauses/union.adoc[]
 ** xref:clauses/load-csv.adoc[]
 * Variables and parameters
 ** xref:variables-and-params/variables.adoc[]
@@ -33,5 +34,6 @@
 ** xref:how-to/use-change-data-capture.adoc[]
 ** xref:how-to/type-predicate-expressions.adoc[]
 ** xref:how-to/update-labels.adoc[]
+* xref:migration-guide-2.adoc[]
 * link:https://github.com/neo4j/cypher-builder/tree/main/examples[Examples]
 * link:https://neo4j.github.io/cypher-builder/reference/[Reference]

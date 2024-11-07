@@ -68,10 +68,6 @@ export class Call extends Clause {
     private readonly variableScope?: Variable[] | "*";
     private _optional: boolean = false;
 
-    // This is to preserve compatibility with innerWith and avoid breaking changes
-    // Remove on 2.0.0
-    private _usingImportWith = false;
-
     constructor(subquery: Clause, variableScope?: Variable[] | "*") {
         super();
         const rootQuery = subquery.getRoot();
@@ -93,7 +89,6 @@ export class Call extends Clause {
         if (params.length > 0) {
             this._importWith = new ImportWith(this, [...params]);
             this.addChildren(this._importWith);
-            this._usingImportWith = true;
         }
         return this;
     }
@@ -105,24 +100,10 @@ export class Call extends Clause {
 
     /** Makes the subquery an OPTIONAL CALL
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call)
+     * @version Neo4j 5.24
      */
     public optional(): this {
         this._optional = true;
-        return this;
-    }
-
-    /** @deprecated Use {@link importWith} instead */
-    public innerWith(...params: Array<Variable | "*">): this {
-        if (this._importWith) {
-            throw new Error(`Call import "WITH" already set`);
-        }
-        if (this.variableScope) {
-            throw new Error(`Call import cannot be used along with scope clauses "Call (<variable>)"`);
-        }
-        if (params.length > 0) {
-            this._importWith = new ImportWith(this, [...params]);
-            this.addChildren(this._importWith);
-        }
         return this;
     }
 
@@ -149,7 +130,7 @@ export class Call extends Clause {
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
         // This ensures the import with is added to all the union subqueries
-        if (this._usingImportWith && (this.subquery instanceof Union || this.subquery instanceof CompositeClause)) {
+        if (this.subquery instanceof Union || this.subquery instanceof CompositeClause) {
             //TODO: try to embed the importWithCypher in the environment for a more generic solution
             return this.subquery.getCypher(env, importWithCypher);
         }

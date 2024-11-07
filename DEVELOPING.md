@@ -19,9 +19,9 @@ To unlink, in the project using cypher-builder:
 
 -   `yarn unlink @neo4j/cypher-builder`
 
-# JSDoc references
+# TSDoc references
 
-Each public element of the library should have a JSDoc comment compatible with [TypeDoc](https://typedoc.org/guides/overview).
+Each public element of the library should have a TSDoc comment compatible with [TypeDoc](https://typedoc.org/guides/overview).
 The comments should follow these conventions:
 
 -   Brief description
@@ -40,3 +40,8 @@ The comments should follow these conventions:
 * OPTIONAL MATCH (this:Movie)
 * ```
 ````
+
+## Files
+
+-   `tsdoc.json` Defines the tsdoc shcema
+-   `typedoc.json` Configures the tool typedoc

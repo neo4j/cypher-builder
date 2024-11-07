@@ -19,10 +19,11 @@
 
 import type { CypherEnvironment } from "../Environment";
 import type { CypherCompilable } from "../types";
+import { isCypherCompilable } from "../utils/is-cypher-compilable";
 import { toCypherParams } from "../utils/to-cypher-params";
 import { Clause } from "./Clause";
 
-type RawCypherCallback = (env: CypherEnvironment) => [string, Record<string, unknown>] | string | undefined;
+type RawCypherCallback = (context: RawCypherContext) => [string, Record<string, unknown>] | string | undefined;
 
 /** Allows for a raw string to be used as a clause
  * @group Other
@@ -38,7 +39,7 @@ export class Raw extends Clause {
     }
 
     public getCypher(env: CypherEnvironment): string {
-        const cbResult = this.callback(env);
+        const cbResult = this.callback(new RawCypherContext(env));
         if (!cbResult) return "";
         let query: string;
         let params = {};
@@ -58,13 +59,18 @@ export class Raw extends Clause {
     }
 }
 
-/** Allows for a raw string to be used as a clause
- * @group Other
- * @deprecated Use {@link Raw} instead
- */
-export class RawCypher extends Raw {}
+export class RawCypherContext {
+    private readonly env: CypherEnvironment;
 
-export interface RawCypherContext {
+    constructor(env: CypherEnvironment) {
+        this.env = env;
+    }
+
     /** Compiles a Cypher element in the current context */
-    compile(element: CypherCompilable): string;
+    public compile(element: CypherCompilable): string {
+        if (!isCypherCompilable(element))
+            throw new Error("Can't build. Passing a non Cypher Builder element to context.compile in RawCypher");
+
+        return element.getCypher(this.env);
+    }
 }

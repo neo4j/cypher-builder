@@ -18,6 +18,7 @@
  */
 
 import Cypher from "..";
+import { escapeLiteralString } from "./escape";
 
 describe("escaping", () => {
     describe.each(["escapeVariable", "escapeLabel", "escapeType", "escapeProperty"] as const)("utils.%s()", (func) => {
@@ -36,6 +37,23 @@ describe("escaping", () => {
             ["0this", "`0this`"],
         ])("Escape '%s'", (original, expected) => {
             expect(Cypher.utils[func](original)).toBe(expected);
+        });
+    });
+
+    describe("escapeLiteralString", () => {
+        test("Does not escape empty strings", () => {
+            expect(escapeLiteralString("")).toBe("");
+        });
+
+        test.each([
+            [`my "var"`, `my \\"var\\"`],
+            [`my \\"var`, `my \\\\"var`],
+        ])("Escape '%s'", (original, expected) => {
+            expect(escapeLiteralString(original)).toBe(expected);
+        });
+
+        test.each(["this", "_var", "hello` dsa"])("Does not escape '%s'", (value) => {
+            expect(escapeLiteralString(value)).toBe(value);
         });
     });
 });

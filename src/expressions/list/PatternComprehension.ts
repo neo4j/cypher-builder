@@ -21,8 +21,7 @@ import { WithWhere } from "../../clauses/mixins/sub-clauses/WithWhere";
 import { mixin } from "../../clauses/utils/mixin";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
-import { Pattern } from "../../pattern/Pattern";
-import type { NodeRef } from "../../references/NodeRef";
+import type { Pattern } from "../../pattern/Pattern";
 import type { Expr } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 
@@ -30,7 +29,7 @@ import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 export interface PatternComprehension extends WithWhere {}
 
 /** Represents a Pattern comprehension
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/lists/#cypher-pattern-comprehension)
+ * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher-pattern-comprehension)
  * @group Patterns
  */
 @mixin(WithWhere)
@@ -38,19 +37,9 @@ export class PatternComprehension extends CypherASTNode {
     private readonly pattern: Pattern;
     private mapExpr: Expr | undefined;
 
-    constructor(pattern: Pattern);
-    /** @deprecated Use `.map` instead of a second argument */
-    constructor(pattern: Pattern, mapExpr?: Expr);
-    /** @deprecated Use {@link Pattern} instead */
-    constructor(pattern: NodeRef, mapExpr?: Expr);
-    constructor(pattern: Pattern | NodeRef, mapExpr?: Expr) {
+    constructor(pattern: Pattern) {
         super();
-        if (pattern instanceof Pattern) {
-            this.pattern = pattern;
-        } else {
-            this.pattern = new Pattern(pattern);
-        }
-        this.mapExpr = mapExpr;
+        this.pattern = pattern;
     }
 
     public map(mapExpr: Expr): this {

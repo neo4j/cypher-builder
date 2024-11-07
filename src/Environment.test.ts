@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-import Cypher from ".";
 import { CypherEnvironment } from "./Environment";
 import { Param } from "./references/Param";
 import { Variable } from "./references/Variable";
@@ -67,102 +66,6 @@ describe("Environment", () => {
 
             expect(paramId).toBe("my-prefixparam0");
             expect(variableId).toBe("my-prefixvar0");
-        });
-
-        test("environment with an object prefix", () => {
-            const environment = new CypherEnvironment({
-                params: "p",
-                variables: "v",
-            });
-
-            const variable = new Variable();
-            const param = new Param("my-param");
-
-            const paramId = environment.getReferenceId(param);
-            const variableId = environment.getReferenceId(variable);
-
-            expect(paramId).toBe("pparam0");
-            expect(variableId).toBe("vvar0");
-        });
-
-        test("environment with an object prefix with default values", () => {
-            const environment = new CypherEnvironment({});
-
-            const variable = new Variable();
-            const param = new Param("my-param");
-
-            const paramId = environment.getReferenceId(param);
-            const variableId = environment.getReferenceId(variable);
-
-            expect(paramId).toBe("param0");
-            expect(variableId).toBe("var0");
-        });
-    });
-
-    describe("compile", () => {
-        test("basic compile function", () => {
-            const param = new Param("Hello");
-            const environment = new CypherEnvironment();
-
-            const str = environment.compile(param);
-
-            expect(environment.getParams()).toEqual({
-                param0: "Hello",
-            });
-            expect(str).toEqual("$param0");
-        });
-
-        test("compile cypher in Raw", () => {
-            const matchClause = new Cypher.Match(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] })).where(
-                Cypher.eq(new Cypher.Literal("first"), new Cypher.Param("first"))
-            );
-            const secondMatch = new Cypher.Match(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] })).where(
-                Cypher.eq(new Cypher.Literal("Hello"), new Cypher.Param("Hello"))
-            );
-            const raw = new Cypher.Raw((env) => {
-                return env.compile(secondMatch);
-            });
-
-            const query = Cypher.utils.concat(matchClause, raw);
-            const { cypher, params } = query.build();
-            expect(cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:Movie)
-                WHERE \\"first\\" = $param0
-                MATCH (this1:Movie)
-                WHERE \\"Hello\\" = $param1"
-            `);
-
-            expect(params).toMatchInlineSnapshot(`
-                {
-                  "param0": "first",
-                  "param1": "Hello",
-                }
-            `);
-        });
-
-        test("compile not compilable should throw", () => {
-            const environment = new CypherEnvironment();
-            expect(() => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-                environment.compile({} as any);
-            }).toThrow("Can't compile. Passing a non Cypher Builder element to env.compile");
-        });
-
-        test("Return empty string if compiled cypher is empty", () => {
-            const fakeClause = {
-                getCypher() {
-                    return undefined;
-                },
-            };
-            const raw = new Cypher.Raw((env) => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-                return env.compile(fakeClause as any);
-            });
-
-            const { cypher, params } = raw.build();
-            expect(cypher).toMatchInlineSnapshot(`""`);
-
-            expect(params).toMatchInlineSnapshot(`{}`);
         });
     });
 });

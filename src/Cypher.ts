@@ -25,14 +25,12 @@ export { Foreach } from "./clauses/Foreach";
 export { LoadCSV } from "./clauses/LoadCSV";
 export { Match, OptionalMatch } from "./clauses/Match";
 export { Merge } from "./clauses/Merge";
-export { Raw, RawCypher } from "./clauses/Raw";
+export { Raw, type RawCypherContext } from "./clauses/Raw";
 export { Return } from "./clauses/Return";
 export { Union } from "./clauses/Union";
 export { Unwind } from "./clauses/Unwind";
 export { Use } from "./clauses/Use";
 export { With } from "./clauses/With";
-
-export { concat } from "./clauses/utils/concat";
 
 // Patterns
 export { labelExpr } from "./expressions/labels/label-expressions";
@@ -60,9 +58,6 @@ export { Exists } from "./expressions/subquery/Exists";
 
 // --Apoc
 export * as apoc from "./namespaces/apoc/apoc";
-
-// --CDC
-export * as cdc from "./namespaces/cdc/cdc";
 
 export * as db from "./namespaces/db/db";
 export * as genai from "./namespaces/genai/genai";
@@ -164,12 +159,10 @@ export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } fr
 
 // Types
 export type { BuildConfig, Clause } from "./clauses/Clause";
-export type { RawCypherContext } from "./clauses/Raw";
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
 export type { CompositeClause } from "./clauses/utils/concat";
-export type { CypherEnvironment as Environment } from "./Environment";
 export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation";
 export type { PredicateFunction } from "./expressions/functions/predicate";
 export type { HasLabel } from "./expressions/HasLabel";

@@ -19,8 +19,6 @@
 
 import { Param } from "./references/Param";
 import type { NamedReference, Variable } from "./references/Variable";
-import type { CypherCompilable } from "./types";
-import { isCypherCompilable } from "./utils/is-cypher-compilable";
 
 export type EnvPrefix = {
     params?: string;
@@ -37,10 +35,9 @@ const defaultConfig: EnvConfig = {
 
 /** Hold the internal references of Cypher parameters and variables
  * @group Internal
- * @deprecated Use `RawCypherContext` interface instead
  */
 export class CypherEnvironment {
-    private readonly globalPrefix: EnvPrefix;
+    private readonly globalPrefix: string;
 
     private readonly references: Map<Variable, string> = new Map();
     private readonly params: Param[] = [];
@@ -50,30 +47,13 @@ export class CypherEnvironment {
     /**
      *  @internal
      */
-    constructor(prefix?: string | EnvPrefix, config: Partial<EnvConfig> = {}) {
-        if (!prefix || typeof prefix === "string") {
-            this.globalPrefix = {
-                params: prefix ?? "",
-                variables: prefix ?? "",
-            };
-        } else {
-            this.globalPrefix = {
-                params: prefix.params ?? "",
-                variables: prefix.variables ?? "",
-            };
-        }
+    constructor(prefix?: string, config: Partial<EnvConfig> = {}) {
+        this.globalPrefix = prefix ?? "";
 
         this.config = {
             ...defaultConfig,
             ...config,
         };
-    }
-
-    public compile(element: CypherCompilable): string {
-        if (!isCypherCompilable(element))
-            throw new Error("Can't compile. Passing a non Cypher Builder element to env.compile");
-
-        return element.getCypher(this);
     }
 
     public getReferenceId(reference: Variable | NamedReference): string {
@@ -95,16 +75,16 @@ export class CypherEnvironment {
         }, {});
     }
 
-    public addNamedParamReference(name: string, param: Param): void {
-        if (!this.references.has(param)) {
-            this.addParam(name, param);
-        }
-    }
-
     public addExtraParams(params: Record<string, Param>): void {
         Object.entries(params).forEach(([key, param]) => {
             this.addNamedParamReference(key, param);
         });
+    }
+
+    public addNamedParamReference(name: string, param: Param): void {
+        if (!this.references.has(param)) {
+            this.addParam(name, param);
+        }
     }
 
     public getParamsSize(): number {
@@ -122,12 +102,12 @@ export class CypherEnvironment {
         const paramIndex = this.getParamsSize(); // Indexes are separate for readability reasons
 
         if (variable instanceof Param) {
-            const varId = `${this.globalPrefix.params}${variable.prefix}${paramIndex}`;
+            const varId = `${this.globalPrefix}${variable.prefix}${paramIndex}`;
             return this.addParam(varId, variable);
         }
 
         const varIndex = this.references.size - paramIndex;
-        const varId = `${this.globalPrefix.variables}${variable.prefix}${varIndex}`;
+        const varId = `${this.globalPrefix}${variable.prefix}${varIndex}`;
         this.references.set(variable, varId);
         return varId;
     }

@@ -19,7 +19,6 @@
 
 // Note: This file exists for exported utils to the user
 
-export { compileCypher } from "./compile-cypher";
 export { concat } from "./concat";
 export { escapeLabel, escapeProperty, escapeType, escapeVariable } from "./escape";
 export { toCypherParams } from "./to-cypher-params";

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type { Environment } from "../..";
+import type { CypherEnvironment } from "../../Environment";
 import type { CypherCompilable } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 import { escapeLabel } from "../../utils/escape";
@@ -39,9 +39,9 @@ export abstract class LabelExpr implements CypherCompilable {
     /**
      * @internal
      */
-    public abstract getCypher(env: Environment): string;
+    public abstract getCypher(env: CypherEnvironment): string;
 
-    protected compileLabel(expr: string | LabelExpr, env: Environment) {
+    protected compileLabel(expr: string | LabelExpr, env: CypherEnvironment) {
         if (typeof expr === "string") {
             return escapeLabel(expr);
         }
@@ -60,7 +60,7 @@ class BinaryLabelExpr extends LabelExpr {
     /**
      * @internal
      */
-    public getCypher(env: Environment): string {
+    public getCypher(env: CypherEnvironment): string {
         const labelStrs = this.labels.map((l) => this.compileLabel(l, env));
         if (labelStrs.length === 0) return "";
 
@@ -79,7 +79,7 @@ class NotLabelExpr extends LabelExpr {
     /**
      * @internal
      */
-    public getCypher(env: Environment): string {
+    public getCypher(env: CypherEnvironment): string {
         const labelStrs = this.compileLabel(this.label, env);
 
         return `${this.operator}${labelStrs}`;

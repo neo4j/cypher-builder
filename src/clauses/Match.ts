@@ -18,13 +18,11 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { PathAssign } from "../pattern/PathAssign";
-import { Pattern } from "../pattern/Pattern";
+import type { PathAssign } from "../pattern/PathAssign";
+import type { Pattern } from "../pattern/Pattern";
 import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
-import { NodeRef } from "../references/NodeRef";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
-import { WithPathAssign } from "./mixins/WithPathAssign";
 import { WithCall } from "./mixins/clauses/WithCall";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
@@ -45,7 +43,6 @@ export interface Match
         WithWhere,
         WithSet,
         WithWith,
-        WithPathAssign,
         WithDelete,
         WithRemove,
         WithUnwind,
@@ -70,7 +67,6 @@ type ShortestStatement = {
     WithWhere,
     WithSet,
     WithWith,
-    WithPathAssign,
     WithDelete,
     WithRemove,
     WithUnwind,
@@ -86,18 +82,9 @@ export class Match extends Clause {
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
 
-    constructor(pattern: Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>);
-    /** @deprecated Use {@link Pattern} instead of node: `new Cypher.Match(new Cypher.Pattern(node))` */
-    constructor(node: NodeRef | Pattern | QuantifiedPath);
-    constructor(pattern: NodeRef | Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>) {
+    constructor(pattern: Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>) {
         super();
-
-        // NOTE: deprecated behaviour
-        if (pattern instanceof NodeRef) {
-            this.pattern = new Pattern(pattern);
-        } else {
-            this.pattern = pattern;
-        }
+        this.pattern = pattern;
     }
 
     /** Makes the clause an OPTIONAL MATCH
@@ -119,11 +106,7 @@ export class Match extends Clause {
     /** Add a {@link Match} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
      */
-    public match(clause: Match): Match;
-    public match(pattern: Pattern): Match;
-    /** @deprecated Use {@link Pattern} instead */
-    public match(pattern: NodeRef | Pattern): Match;
-    public match(clauseOrPattern: Match | NodeRef | Pattern): Match {
+    public match(clauseOrPattern: Match | Pattern): Match {
         if (clauseOrPattern instanceof Match) {
             this.addNextClause(clauseOrPattern);
             return clauseOrPattern;
@@ -138,10 +121,7 @@ export class Match extends Clause {
     /** Add an {@link OptionalMatch} clause
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
      */
-    public optionalMatch(pattern: Pattern): OptionalMatch;
-    /** @deprecated Use {@link Pattern} instead */
-    public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch;
-    public optionalMatch(pattern: NodeRef | Pattern): OptionalMatch {
+    public optionalMatch(pattern: Pattern): OptionalMatch {
         const matchClause = new OptionalMatch(pattern);
         this.addNextClause(matchClause);
 
@@ -177,11 +157,6 @@ export class Match extends Clause {
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const pathAssignStr = this.compilePath(env);
-        if (pathAssignStr && this.pattern instanceof PathAssign) {
-            throw new Error("Cannot generate MATCH, using assignTo and assignToPath at the same time is not supported");
-        }
-
         const patternCypher = this.pattern.getCypher(env);
 
         const whereCypher = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
@@ -194,7 +169,7 @@ export class Match extends Clause {
         const optionalMatch = this._optional ? "OPTIONAL " : "";
         const shortestStatement = this.getShortestStatement();
 
-        return `${optionalMatch}MATCH ${shortestStatement}${pathAssignStr}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        return `${optionalMatch}MATCH ${shortestStatement}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {
@@ -219,10 +194,7 @@ export class Match extends Clause {
  * @category Clauses
  */
 export class OptionalMatch extends Match {
-    constructor(pattern: Pattern);
-    /** @deprecated Use a {@link Pattern} instead */
-    constructor(pattern: NodeRef | Pattern);
-    constructor(pattern: NodeRef | Pattern) {
+    constructor(pattern: Pattern) {
         super(pattern);
         this.optional();
     }

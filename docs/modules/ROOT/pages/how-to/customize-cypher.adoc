@@ -294,7 +294,7 @@ In more complex scenarios, you may need to access variables created with the Cyp
 However, these values are not available before executing `.build`. 
 To achieve this, `Raw` supports a callback that is executed while the query is being built, and has access to the variables. 
 
-This callback receives a parameter `env` that can be used to manually compile Cypher Builder clauses and translate variable names.
+This callback receives a parameter `context` that can be used to manually compile Cypher Builder clauses and translate variable names.
 It returns the following values:
 
 * `string`: Cypher string to be used for this element.
@@ -309,8 +309,8 @@ However, a custom `Raw` is being injected as part of the `WHERE` subclause:
 const movie = new Cypher.Node();
 const match = new Cypher.Match(movie, { labels: ["Movie"] })
     .where(
-        new Cypher.Raw((env) => {
-            const movieStr = env.compile(movie);
+        new Cypher.Raw((context) => {
+            const movieStr = context.compile(movie);
 
             const cypher = `${movieStr}.prop = $myParam`;
             const params = {
@@ -344,5 +344,5 @@ And the following parameters:
 ----
 
 The callback passed into `Raw` is producing the string `this0.prop = $myParam`. 
-To achieve this, it uses the utility method `utils.compileCypher` and passes the variable `movie` and the `env` parameter, which then returns the string `this0`. 
+To achieve this, it uses the utility method `utils.compileCypher` and passes the variable `movie` and the `context` parameter, which then returns the string `this0`. 
 Finally, the custom parameter `$myParam` is returned in the tuple `[cypher, params]`, ensuring that it is available when executing `match.build()`.

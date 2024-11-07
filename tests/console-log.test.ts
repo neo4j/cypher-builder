@@ -28,11 +28,13 @@ describe("Console.log", () => {
     test("Console.log on a clause", () => {
         const releasedParam = new Cypher.Param(1999);
 
-        const movieNode = new Cypher.Node({
-            labels: ["Movie"],
-        });
+        const movieNode = new Cypher.Node();
 
-        const query = new Cypher.Create(movieNode).set(
+        const query = new Cypher.Create(
+            new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+            })
+        ).set(
             [movieNode.property("released"), releasedParam] // Explicitly defines the node property
         );
 
@@ -66,20 +68,20 @@ describe("Console.log", () => {
         const pattern = new Cypher.Pattern(a).related().to();
 
         expect(`${pattern}`).toMatchInlineSnapshot(`
-            "<Pattern> \\"\\"\\"
-                (this0)-[this1]->(this2)
-            \\"\\"\\""
-        `);
+"<Pattern> \\"\\"\\"
+    (this0)-[]->()
+\\"\\"\\""
+`);
         expect(pattern.toString()).toMatchInlineSnapshot(`
-            "<Pattern> \\"\\"\\"
-                (this0)-[this1]->(this2)
-            \\"\\"\\""
-        `);
+"<Pattern> \\"\\"\\"
+    (this0)-[]->()
+\\"\\"\\""
+`);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((pattern as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
-            "<Pattern> \\"\\"\\"
-                (this0)-[this1]->(this2)
-            \\"\\"\\""
-        `);
+"<Pattern> \\"\\"\\"
+    (this0)-[]->()
+\\"\\"\\""
+`);
     });
 });

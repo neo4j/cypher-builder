@@ -105,7 +105,10 @@ describe("CypherBuilder utils.concat", () => {
 
     test("Nested composite clause with multiple elements", () => {
         const compositeClause = Cypher.utils.concat(
-            Cypher.utils.concat(new Cypher.Match(new Cypher.Node()), new Cypher.Match(new Cypher.Node()))
+            Cypher.utils.concat(
+                new Cypher.Match(new Cypher.Pattern(new Cypher.Node())),
+                new Cypher.Match(new Cypher.Pattern(new Cypher.Node()))
+            )
         );
         expect(compositeClause.empty).toBeFalse();
         expect(compositeClause.children).toHaveLength(1);

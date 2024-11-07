@@ -105,7 +105,7 @@ WHERE this0:(Movie|Film)"
             const queryResult = new TestClause(query).build();
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Movie)-[this1]->(this2)
+"MATCH (this0:Movie)-[this1]->()
 WHERE this1:ACTED_IN"
 `);
 
@@ -122,7 +122,7 @@ WHERE this1:ACTED_IN"
             const queryResult = new TestClause(query).build();
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Movie)-[this1:ACTED_IN]->(this2)
+"MATCH (this0:Movie)-[this1:ACTED_IN]->()
 WHERE this1:(ACTED_IN|STARRED_IN)"
 `);
 

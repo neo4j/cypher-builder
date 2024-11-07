@@ -33,8 +33,8 @@ export class PathAssign<T extends Pattern | QuantifiedPath> extends CypherASTNod
     }
 
     public getCypher(env: CypherEnvironment): string {
-        const patternStr = env.compile(this.pattern);
-        const variableStr = env.compile(this.variable);
+        const patternStr = this.pattern.getCypher(env);
+        const variableStr = this.variable.getCypher(env);
 
         return `${variableStr} = ${patternStr}`;
     }

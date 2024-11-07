@@ -17,10 +17,10 @@
  * limitations under the License.
  */
 
-import { filterTruthy } from "../../utils/filter-truthy";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import type { Predicate } from "../../types";
+import { filterTruthy } from "../../utils/filter-truthy";
 
 type BooleanOperator = "AND" | "NOT" | "OR" | "XOR";
 
@@ -39,9 +39,9 @@ export abstract class BooleanOp extends CypherASTNode {
 class BinaryOp extends BooleanOp {
     private readonly children: Predicate[];
 
-    constructor(operator: BooleanOperator, left: Predicate, right: Predicate, ...extra: Predicate[]) {
+    constructor(operator: BooleanOperator, predicates: Predicate[]) {
         super(operator);
-        this.children = [left, right, ...extra];
+        this.children = predicates;
         this.addChildren(...this.children);
     }
 
@@ -52,7 +52,7 @@ class BinaryOp extends BooleanOp {
         const childrenStrs = this.children.map((c) => c.getCypher(env)).filter(Boolean);
 
         if (childrenStrs.length <= 1) {
-            return childrenStrs.join("");
+            throw new Error(`Boolean operation ${this.operator} does not have predicates`);
         }
 
         const operatorStr = ` ${this.operator} `;
@@ -103,16 +103,15 @@ class NotOp extends BooleanOp {
  */
 export function and(): undefined;
 export function and(left: Predicate, right: Predicate, ...extra: Array<Predicate | undefined>): BooleanOp;
-export function and(...ops: Array<Predicate>): Predicate;
+export function and(left: Predicate, ...extra: Array<Predicate | undefined>): Predicate;
 export function and(...ops: Array<Predicate | undefined>): Predicate | undefined;
 export function and(...ops: Array<Predicate | undefined>): Predicate | undefined {
     const filteredPredicates = filterTruthy(ops);
-    const predicate1 = filteredPredicates.shift();
-    const predicate2 = filteredPredicates.shift();
-    if (predicate1 && predicate2) {
-        return new BinaryOp("AND", predicate1, predicate2, ...filteredPredicates);
+
+    if (filteredPredicates[0] && filteredPredicates[1]) {
+        return new BinaryOp("AND", filteredPredicates);
     }
-    return predicate1;
+    return filteredPredicates[0];
 }
 
 /** Generates an `NOT` operator before the given predicate
@@ -154,16 +153,15 @@ export function not(child: Predicate): BooleanOp {
  */
 export function or(): undefined;
 export function or(left: Predicate, right: Predicate, ...extra: Array<Predicate | undefined>): BooleanOp;
-export function or(...ops: Array<Predicate>): Predicate;
+export function or(left: Predicate, ...extra: Array<Predicate | undefined>): Predicate;
 export function or(...ops: Array<Predicate | undefined>): Predicate | undefined;
 export function or(...ops: Array<Predicate | undefined>): Predicate | undefined {
     const filteredPredicates = filterTruthy(ops);
-    const predicate1 = filteredPredicates.shift();
-    const predicate2 = filteredPredicates.shift();
-    if (predicate1 && predicate2) {
-        return new BinaryOp("OR", predicate1, predicate2, ...filteredPredicates);
+
+    if (filteredPredicates[0] && filteredPredicates[1]) {
+        return new BinaryOp("OR", filteredPredicates);
     }
-    return predicate1;
+    return filteredPredicates[0];
 }
 
 /** Generates an `XOR` operator between the given predicates
@@ -185,14 +183,13 @@ export function or(...ops: Array<Predicate | undefined>): Predicate | undefined 
  */
 export function xor(): undefined;
 export function xor(left: Predicate, right: Predicate, ...extra: Array<Predicate | undefined>): BooleanOp;
-export function xor(...ops: Array<Predicate>): Predicate;
+export function xor(left: Predicate, ...extra: Array<Predicate | undefined>): Predicate;
 export function xor(...ops: Array<Predicate | undefined>): Predicate | undefined;
 export function xor(...ops: Array<Predicate | undefined>): Predicate | undefined {
     const filteredPredicates = filterTruthy(ops);
-    const predicate1 = filteredPredicates.shift();
-    const predicate2 = filteredPredicates.shift();
-    if (predicate1 && predicate2) {
-        return new BinaryOp("XOR", predicate1, predicate2, ...filteredPredicates);
+
+    if (filteredPredicates[0] && filteredPredicates[1]) {
+        return new BinaryOp("XOR", filteredPredicates);
     }
-    return predicate1;
+    return filteredPredicates[0];
 }

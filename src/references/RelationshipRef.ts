@@ -19,36 +19,16 @@
 
 import { HasLabel } from "../expressions/HasLabel";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
-import type { Expr } from "../types";
-import type { NodeRef } from "./NodeRef";
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
-
-export type RelationshipInput = {
-    source: NodeRef;
-    target: NodeRef;
-    type?: string;
-};
-
-export type RelationshipProperties = Record<string, Expr>;
-
-type RelationshipRefOptions = {
-    type?: string | LabelExpr;
-};
 
 /** Reference to a relationship property
  * @group Variables
  */
 export class RelationshipRef extends Variable {
-    private readonly _type: string | LabelExpr | undefined;
-
-    constructor();
-    /** @deprecated Relationship types should be defined in {@link Pattern} */
-    constructor(input: RelationshipRefOptions);
-    constructor(input: RelationshipRefOptions = {}) {
+    constructor() {
         super();
         this.prefix = "this";
-        this._type = input.type ?? undefined;
     }
 
     public hasType(label: string | LabelExpr): HasLabel {
@@ -58,10 +38,6 @@ export class RelationshipRef extends Variable {
             return new HasLabel(this, label);
         }
     }
-
-    public get type(): string | LabelExpr | undefined {
-        return this._type;
-    }
 }
 
 /** Represents a relationship reference with a given name
@@ -70,11 +46,8 @@ export class RelationshipRef extends Variable {
 export class NamedRelationship extends RelationshipRef implements NamedReference {
     public readonly id: string;
 
-    constructor(id: string);
-    /** @deprecated */
-    constructor(id: string, options?: RelationshipRefOptions);
-    constructor(id: string, options?: RelationshipRefOptions) {
-        super(options ?? {});
+    constructor(id: string) {
+        super();
         this.id = id;
     }
 

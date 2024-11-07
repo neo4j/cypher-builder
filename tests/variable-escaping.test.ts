@@ -21,8 +21,8 @@ import Cypher from "../src";
 
 describe("Variable escaping", () => {
     test("Should escape NamedNode", () => {
-        const movie = new Cypher.NamedNode("n v", { labels: ["My Movie"] });
-        const match = new Cypher.Match(movie).return(movie);
+        const movie = new Cypher.NamedNode("n v");
+        const match = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["My Movie"] })).return(movie);
 
         const { cypher, params } = match.build();
 
@@ -34,22 +34,24 @@ describe("Variable escaping", () => {
     });
 
     test("Should escape NamedRelationship", () => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const relationship = new Cypher.NamedRelationship("my `rel", { type: "Movie" });
-        const match = new Cypher.Match(new Cypher.Pattern(movie).related(relationship).to()).return(relationship);
+        const movie = new Cypher.Node();
+        const relationship = new Cypher.NamedRelationship("my `rel");
+        const match = new Cypher.Match(
+            new Cypher.Pattern(movie, { labels: ["Movie"] }).related(relationship, { type: "Movie" }).to()
+        ).return(relationship);
 
         const { cypher, params } = match.build();
         expect(cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:Movie)-[\`my \`\`rel\`:Movie]->(this1)
-            RETURN \`my \`\`rel\`"
-        `);
+"MATCH (this0:Movie)-[\`my \`\`rel\`:Movie]->()
+RETURN \`my \`\`rel\`"
+`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Should escape NamedVariable", () => {
         const variable = new Cypher.NamedVariable("my var");
-        const movie = new Cypher.NamedNode("n v", { labels: ["My Movie"] });
-        const match = new Cypher.Match(movie).return(variable);
+        const movie = new Cypher.NamedNode("n v");
+        const match = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["My Movie"] })).return(variable);
 
         const { cypher, params } = match.build();
 
@@ -61,10 +63,10 @@ describe("Variable escaping", () => {
     });
 
     test("Should escape prefix", () => {
-        const movie = new Cypher.Node({ labels: ["My Movie"] });
-        const match = new Cypher.Match(movie).return(movie);
+        const movie = new Cypher.Node();
+        const match = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["My Movie"] })).return(movie);
 
-        const { cypher, params } = match.build("my prefix");
+        const { cypher, params } = match.build({ prefix: "my prefix" });
 
         expect(cypher).toMatchInlineSnapshot(`
             "MATCH (\`my prefixthis0\`:\`My Movie\`)
@@ -74,17 +76,20 @@ describe("Variable escaping", () => {
     });
 
     test("Should escape path", () => {
-        const movie = new Cypher.Node({ labels: ["Movie"] });
-        const relationship = new Cypher.Relationship({ type: "Movie" });
-        const match = new Cypher.Match(new Cypher.Pattern(movie).related(relationship).to())
-            .assignToPath(new Cypher.NamedPathVariable("my path"))
-            .return(relationship);
+        const movie = new Cypher.Node();
+        const relationship = new Cypher.Relationship();
+        const match = new Cypher.Match(
+            new Cypher.Pattern(movie, { labels: ["Movie"] })
+                .related(relationship, { type: "Movie" })
+                .to()
+                .assignTo(new Cypher.NamedPathVariable("my path"))
+        ).return(relationship);
 
         const { cypher, params } = match.build();
         expect(cypher).toMatchInlineSnapshot(`
-            "MATCH \`my path\` = (this0:Movie)-[this1:Movie]->(this2)
-            RETURN this1"
-        `);
+"MATCH \`my path\` = (this0:Movie)-[this1:Movie]->()
+RETURN this1"
+`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
 });

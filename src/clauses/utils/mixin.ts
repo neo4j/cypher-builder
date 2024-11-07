@@ -30,7 +30,7 @@ type AbstractConstructorType<T> = abstract new (...args: any[]) => T;
  * Typings will not automatically be updated, but exporting an interface with the same name will fix typings
  *
  * @example
- *  ```ts
+ * ```ts
  * export interface MyClass extends WithName, WithAge
  * \@mixin(WithName, WithAge)
  * export class MyClass{}

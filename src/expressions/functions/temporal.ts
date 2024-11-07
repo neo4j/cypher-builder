@@ -22,7 +22,7 @@ import type { Expr } from "../../types";
 import { normalizeExpr } from "../../utils/normalize-variable";
 import { CypherFunction } from "./CypherFunctions";
 
-/** Temporal unit to be used in `.truncate() functions
+/** Temporal unit to be used in `.truncate()` functions
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-truncate)
  */
 export type TemporalUnit =

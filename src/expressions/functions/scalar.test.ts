@@ -89,13 +89,12 @@ describe("Scalar Functions", () => {
 
     test("size() applied to pattern comprehension", () => {
         const patternComprehension = new Cypher.PatternComprehension(
-            new Cypher.Pattern(new Cypher.Node()).related().to(),
-            new Cypher.Variable()
-        );
+            new Cypher.Pattern(new Cypher.Node()).related().to()
+        ).map(new Cypher.Variable());
         const cypherFunction = Cypher.size(patternComprehension);
         const queryResult = new TestClause(cypherFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"size([(this1)-[this2]->(this3) | var0])"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"size([(this1)-[]->() | var0])"`);
     });
 
     test("size() applied to string", () => {
@@ -110,6 +109,6 @@ describe("Scalar Functions", () => {
         const cypherFunction = Cypher.size(pattern);
         const queryResult = new TestClause(cypherFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"size((this0)-[this1]->(this2))"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"size((this0)-[]->())"`);
     });
 });

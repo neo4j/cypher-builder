@@ -17,18 +17,28 @@
  * limitations under the License.
  */
 
-import Cypher from "../../src";
-import { TestClause } from "../../src/utils/TestClause";
+import Cypher from "..";
 
-describe("Spatial Functions - Deprecated", () => {
-    test("point.distance", () => {
-        const leftExpr = new Cypher.Variable();
-        const rightExpr = new Cypher.Variable();
-        const pointDistanceFn = Cypher.pointDistance(leftExpr, rightExpr);
+// MERGE (this0:MyLabel)
+// ON MATCH SET
+//     this0.count = (this0.count + 1)
+// ON CREATE SET
+//     this0.count = 1
 
-        const queryResult = new TestClause(pointDistanceFn).build();
+const node = new Cypher.Node();
 
-        expect(queryResult.cypher).toBe(`point.distance(var0, var1)`);
-        expect(queryResult.params).toEqual({});
-    });
-});
+const countProp = node.property("count");
+const query = new Cypher.Merge(
+    new Cypher.Pattern(node, {
+        labels: ["MyLabel"],
+    })
+)
+    .onCreateSet([countProp, new Cypher.Literal(1)])
+    .onMatchSet([countProp, Cypher.plus(countProp, new Cypher.Literal(1))]);
+
+const { cypher, params } = query.build();
+
+console.log("Cypher");
+console.log(cypher);
+console.log("----");
+console.log("Params", params);

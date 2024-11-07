@@ -36,16 +36,15 @@ Note how the value `The Matrix` is not injected directly, but correctly serializ
 The following values are supported by `Literal`:
 
 * *String:* `Cypher.Literal("Hello")` -> `"Hello"`
-* Number: `Cypher.Literal(5)` -> `5`
+* *Number:* `Cypher.Literal(5)` -> `5`
 * *Boolean:* `Cypher.Literal(true)` -> `true`
 * *Array:* `Cypher.Literal([5, "Hello"])` -> `[5, "Hello"]`
 * *Null:* `Cypher.Literal(null)` -> `NULL`
 
 
 [NOTE]
-====
-Literals do not escape the values and code injection is a risk. 
-It is generally recommended to use `Cypher.Param` instead.
+==== 
+It is generally recommended to use `Cypher.Param` rather than `Cypher.Literal` for user input.
 ====
 
 == `NULL`
