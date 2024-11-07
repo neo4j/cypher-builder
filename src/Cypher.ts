@@ -164,6 +164,7 @@ export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } fr
 
 // Types
 export type { BuildConfig, Clause } from "./clauses/Clause";
+export type { RawCypherContext } from "./clauses/Raw";
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
