@@ -36,7 +36,8 @@ const defaultConfig: EnvConfig = {
 };
 
 /** Hold the internal references of Cypher parameters and variables
- *  @group Internal
+ * @group Internal
+ * @deprecated Use `RawCypherContext` interface instead
  */
 export class CypherEnvironment {
     private readonly globalPrefix: EnvPrefix;

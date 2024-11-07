@@ -18,6 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
+import type { CypherCompilable } from "../types";
 import { toCypherParams } from "../utils/to-cypher-params";
 import { Clause } from "./Clause";
 
@@ -62,3 +63,8 @@ export class Raw extends Clause {
  * @deprecated Use {@link Raw} instead
  */
 export class RawCypher extends Raw {}
+
+export interface RawCypherContext {
+    /** Compiles a Cypher element in the current context */
+    compile(element: CypherCompilable): string;
+}
