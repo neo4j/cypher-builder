@@ -1,0 +1,68 @@
+[[merge]]
+:description: This page describes how to create `MERGE` clauses.
+= Merge
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/merge/[`MERGE`] clause with the `Cypher.Merge` class.
+
+To create a `Merge` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class and pass it to `Merge` constructor:
+
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const actor = new Cypher.Node();
+const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] }).related({type: ["ACTED_IN"]}).to(actor);
+
+const mergeQuery = new Cypher.Merge(pattern);
+const { cypher, params } = matchQuery.build()
+----
+
+This generates the following `MERGE` clause:
+
+[source, cypher]
+----
+MERGE (this:Movie)-[:ACTED_IN]->(this1)
+----
+
+Afterwards, other clauses can be added. For example:
+
+[source, javascript]
+----
+const mergeQuery = new Cypher.Merge(pattern)
+    .where(Cypher.eq(movie.property("name"), new Cypher.Param("my-movie")))
+    .return(movie);
+----
+
+[source, cypher]
+----
+MERGE (this:Movie)-[:ACTED_IN]->(this1)
+WHERE this.name = $param1
+return this
+----
+
+== On Create / On Match
+
+A `MERGE` statement can be followed by `ON CREATE SET` and `ON MATCH SET`, this can be achieved with the methods `onCreateSet` and `onMatchSet` respectively:
+
+[source, javascript]
+----
+const node = new Cypher.Node();
+
+const countProp = node.property("count");
+const query = new Cypher.Merge(
+    new Cypher.Pattern(node, {
+        labels: ["MyLabel"],
+    })
+)
+    .onCreateSet([countProp, new Cypher.Literal(1)])
+    .onMatchSet([countProp, Cypher.plus(countProp, new Cypher.Literal(1))]);
+----
+
+[source, cypher]
+----
+MERGE (this0:MyLabel)
+ON MATCH SET
+    this0.count = (this0.count + 1)
+ON CREATE SET
+    this0.count = 1
+----
