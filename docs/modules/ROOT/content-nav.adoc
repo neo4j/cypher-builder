@@ -8,8 +8,9 @@
 * Clauses
 ** xref:clauses/match.adoc[]
 ** xref:clauses/create.adoc[]
-** xref:clauses/union.adoc[]
 ** xref:clauses/return.adoc[]
+** xref:clauses/merge.adoc[]
+** xref:clauses/union.adoc[]
 ** xref:clauses/load-csv.adoc[]
 * Variables and parameters
 ** xref:variables-and-params/variables.adoc[]
