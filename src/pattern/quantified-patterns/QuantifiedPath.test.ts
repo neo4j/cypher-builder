@@ -56,7 +56,7 @@ RETURN this1"
     test("Match and assign quantified path", () => {
         const m = new Cypher.Node();
         const m2 = new Cypher.Node();
-        const p = new Cypher.Path();
+        const p = new Cypher.PathVariable();
 
         const quantifiedPath = new Cypher.QuantifiedPath(
             new Cypher.Pattern(m, { labels: ["Movie"], properties: { title: new Cypher.Param("V for Vendetta") } }),
