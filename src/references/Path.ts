@@ -43,16 +43,3 @@ export class NamedPathVariable extends PathVariable implements NamedReference {
         this.prefix = "";
     }
 }
-
-/** Reference to a variable
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns)
- * @group Variables
- * @deprecated Use {@link PathVariable} instead
- */
-export class Path extends PathVariable {}
-
-/** For compatibility reasons, represents a path as a variable with the given name
- *  @group Variables
- *  @deprecated Use {@link NamedPathVariable} instead
- */
-export class NamedPath extends NamedPathVariable {}

@@ -42,7 +42,7 @@ export { type QuantifiedPattern, type Quantifier } from "./pattern/quantified-pa
 export { Literal, CypherNull as Null, CypherFalse as false, CypherTrue as true } from "./references/Literal";
 export { NamedNode, NodeRef as Node } from "./references/NodeRef";
 export { NamedParam, Param } from "./references/Param";
-export { NamedPath, NamedPathVariable, Path, PathVariable } from "./references/Path";
+export { NamedPathVariable, PathVariable } from "./references/Path";
 export { PropertyRef as Property } from "./references/PropertyRef";
 export { NamedRelationship, RelationshipRef as Relationship } from "./references/RelationshipRef";
 export { NamedVariable, Variable } from "./references/Variable";
