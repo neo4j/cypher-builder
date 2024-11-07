@@ -279,6 +279,19 @@ describe("Patterns", () => {
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
+        test("Relationship Pattern with Cypher.Node | undefined variable", () => {
+            const a = new Cypher.Node();
+            const rel = new Cypher.Variable();
+
+            const query = new TestClause(
+                new Cypher.Pattern(a as Cypher.Node | undefined).related(rel).to(a as Cypher.Node | undefined)
+            );
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[var1]->(this0)"`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
         test("Relationship Pattern with different directions", () => {
             const a = new Cypher.Node();
             const rel = new Cypher.Relationship();

@@ -61,7 +61,7 @@ export class Pattern extends PatternElement {
     protected previous: PartialPattern | undefined;
 
     constructor(nodeConfig?: NodePattern);
-    constructor(node: Variable, options?: NodePattern);
+    constructor(node: Variable | undefined, options?: NodePattern);
     constructor(nodeVariable: Variable | NodePattern | undefined, options: NodePattern = {}) {
         const firstArgumentIsVar = nodeVariable instanceof Variable;
         const variable = firstArgumentIsVar ? nodeVariable : undefined;

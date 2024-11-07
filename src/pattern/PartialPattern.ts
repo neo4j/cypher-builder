@@ -62,7 +62,7 @@ export class PartialPattern extends PatternElement {
         this.length = options.length;
     }
 
-    public to(node: Variable, options?: NodePattern): Pattern;
+    public to(node: Variable | undefined, options?: NodePattern): Pattern;
     public to(nodeConfig?: NodePattern): Pattern;
     public to(node?: Variable | NodePattern, options?: NodePattern): Pattern {
         if (!node) node = new NodeRef();
