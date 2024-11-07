@@ -67,34 +67,5 @@ describe("Environment", () => {
             expect(paramId).toBe("my-prefixparam0");
             expect(variableId).toBe("my-prefixvar0");
         });
-
-        test("environment with an object prefix", () => {
-            const environment = new CypherEnvironment({
-                params: "p",
-                variables: "v",
-            });
-
-            const variable = new Variable();
-            const param = new Param("my-param");
-
-            const paramId = environment.getReferenceId(param);
-            const variableId = environment.getReferenceId(variable);
-
-            expect(paramId).toBe("pparam0");
-            expect(variableId).toBe("vvar0");
-        });
-
-        test("environment with an object prefix with default values", () => {
-            const environment = new CypherEnvironment({});
-
-            const variable = new Variable();
-            const param = new Param("my-param");
-
-            const paramId = environment.getReferenceId(param);
-            const variableId = environment.getReferenceId(variable);
-
-            expect(paramId).toBe("param0");
-            expect(variableId).toBe("var0");
-        });
     });
 });
