@@ -30,6 +30,12 @@ const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 /** Config fields for the .build method */
 export type BuildConfig = Partial<EnvConfig>;
 
+type ClauseParam = {
+    prefix?: string;
+    extraParams?: Record<string, unknown>;
+    labelOperator?: ":" | "&";
+};
+
 /** Represents a clause AST node
  *  @group Internal
  */
@@ -37,31 +43,69 @@ export abstract class Clause extends CypherASTNode {
     protected nextClause: Clause | undefined;
 
     /** Compiles a clause into Cypher and params */
+    public build(config: {
+        prefix?: string;
+        extraParams?: Record<string, unknown>;
+        labelOperator?: ":" | "&";
+    }): CypherResult;
+    /**
+     * Compiles a clause into Cypher and params
+     * @deprecated Pass a config object instead: `build({ prefix: "", extraParams: {}, labelOperator: ":"})`
+     */
     public build(
         prefix?: string | EnvPrefix,
+        extraParams?: Record<string, unknown>,
+        config?: BuildConfig
+    ): CypherResult;
+    public build(
+        prefix?: string | EnvPrefix | ClauseParam,
         extraParams: Record<string, unknown> = {},
         config?: BuildConfig
     ): CypherResult {
         if (this.isRoot) {
-            const env = this.getEnv(prefix, config);
-            const cypher = this.getCypher(env);
+            if (this.isConfigObject(prefix)) {
+                const env = this.getEnv(prefix.prefix, {
+                    labelOperator: prefix.labelOperator,
+                });
+                const cypher = this.getCypher(env);
 
-            const cypherParams = toCypherParams(extraParams);
-            env.addExtraParams(cypherParams);
-            return {
-                cypher,
-                params: env.getParams(),
-            };
+                const cypherParams = toCypherParams(prefix.extraParams ?? {});
+                env.addExtraParams(cypherParams);
+                return {
+                    cypher,
+                    params: env.getParams(),
+                };
+            } else {
+                const env = this.getEnv(prefix, config);
+                const cypher = this.getCypher(env);
+
+                const cypherParams = toCypherParams(extraParams);
+                env.addExtraParams(cypherParams);
+                return {
+                    cypher,
+                    params: env.getParams(),
+                };
+            }
         }
         const root = this.getRoot();
         if (root instanceof Clause) {
-            return root.build(prefix, extraParams);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
+            return root.build(prefix as any, extraParams, config);
         }
         throw new Error(`Cannot build root: ${root.constructor.name}`);
     }
 
     private getEnv(prefix?: string | EnvPrefix, config: BuildConfig = {}): CypherEnvironment {
         return new CypherEnvironment(prefix, config);
+    }
+
+    private isConfigObject(param: string | EnvPrefix | undefined | ClauseParam): param is ClauseParam {
+        if (typeof param === "object") {
+            if ("prefix" in param || "extraParams" in param || "labelOperator" in param) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** Custom string for browsers and templating
