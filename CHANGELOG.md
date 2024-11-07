@@ -1,5 +1,154 @@
 # @neo4j/cypher-builder
 
+## 2.0.0
+
+### Major Changes
+
+-   [#389](https://github.com/neo4j/cypher-builder/pull/389) [`88f4928`](https://github.com/neo4j/cypher-builder/commit/88f4928dfe0091fe1e0089c7ec91a386e63f0b22) Thanks [@angrykoala](https://github.com/angrykoala)! - Patterns no longer create a variable by default
+
+    ```js
+    const pattern = new Cypher.Pattern();
+    ```
+
+    Before:
+
+    ```cypher
+    (this0)
+    ```
+
+    Now:
+
+    ```cypher
+    ()
+    ```
+
+-   [#390](https://github.com/neo4j/cypher-builder/pull/390) [`038d8b5`](https://github.com/neo4j/cypher-builder/commit/038d8b5bd723ceba3edf4cbef68996bf6f205804) Thanks [@angrykoala](https://github.com/angrykoala)! - Clause build options are now passed as an object rather than parameters:
+
+    ```js
+    myClause.build({
+        prefix: "another-this",
+        extraParams: {
+            myParam: "hello",
+        },
+        labelOperator: "&",
+    });
+    ```
+
+    All parameters are optional, and `build` can still be called without parameters
+
+-   [#389](https://github.com/neo4j/cypher-builder/pull/389) [`f5135f5`](https://github.com/neo4j/cypher-builder/commit/f5135f5396c7f86051282b214cf14b9e843cd3e8) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove support for adding new columns into an existing with clause with `.with`, the method `addColumns` should be used instead
+
+-   [#408](https://github.com/neo4j/cypher-builder/pull/408) [`bba9d81`](https://github.com/neo4j/cypher-builder/commit/bba9d811b8441aae87748cff0d44c9af6fe40a16) Thanks [@angrykoala](https://github.com/angrykoala)! - Escape literal strings if they contain invalid characters:
+
+    ```js
+    new Cypher.Literal(`Hello "World"`);
+    ```
+
+    Would get translated into the following Cypher:
+
+    ```cypher
+    "Hello \"World\""
+    ```
+
+-   [#409](https://github.com/neo4j/cypher-builder/pull/409) [`adf599f`](https://github.com/neo4j/cypher-builder/commit/adf599fb7935ab4d7fa91abc3455eef3d13a98c5) Thanks [@angrykoala](https://github.com/angrykoala)! - Cypher.Raw no longer exposes Cypher.Environment variable. It provides a `CypherRawContext` instance with a `compile` method to compile nested elements in custom cypher instead
+
+-   [#407](https://github.com/neo4j/cypher-builder/pull/407) [`88a300a`](https://github.com/neo4j/cypher-builder/commit/88a300ad6670b9c6bfd24d92cd6d2456179a8021) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove method `Cypher.concat`, `Cypher.utils.concat` should be used instead
+
+-   [#447](https://github.com/neo4j/cypher-builder/pull/447) [`b82be57`](https://github.com/neo4j/cypher-builder/commit/b82be57dc5440e63aa5c7b4dc95edc5a778338f3) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove `Path` and `NamedPath` in favor of `PathVariable` and `NamedPathVariable`
+
+-   [#389](https://github.com/neo4j/cypher-builder/pull/389) [`f5135f5`](https://github.com/neo4j/cypher-builder/commit/f5135f5396c7f86051282b214cf14b9e843cd3e8) Thanks [@angrykoala](https://github.com/angrykoala)! - Removes the following deprecated features:
+
+    -   `pointDistance`
+    -   `utils.compileCypher`
+    -   `RawCypher`
+    -   `onCreate` method in `Merge` clauses
+    -   `innerWith` method in `Call` clauses
+    -   `PatternComprehension` second parameter
+    -   `cdc` namespace:
+        -   `cdc.current`
+        -   `cdc.earliest`
+        -   `cdc.query`
+    -   `rTrim` and `lTrim`
+    -   `Pattern.withoutLabels`
+    -   `Pattern.withoutVariable`
+    -   `Pattern.withProperties`
+    -   `Pattern.withVariables`
+    -   `Pattern.related().withoutType`
+    -   `Pattern.related().withDirection`
+    -   `Pattern.related().withLength`
+    -   `Pattern.related().getVariables`
+    -   `Relationship.type`
+    -   Labels, types and properties in `Node` and `Relationship` classes
+    -   Using `Node` directly in constructor of clauses
+
+-   [#453](https://github.com/neo4j/cypher-builder/pull/453) [`f8a8120`](https://github.com/neo4j/cypher-builder/commit/f8a812080d85ec8ae62551f31366d3f6f89cbf5f) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove support for fine-grained prefix configuration
+
+    No longer supported:
+
+    ```js
+    myClause.build({
+        variable: "var_prefix_",
+        params: "param_prefix_",
+    });
+    ```
+
+-   [#410](https://github.com/neo4j/cypher-builder/pull/410) [`961933f`](https://github.com/neo4j/cypher-builder/commit/961933f051d2359184f6dcc9d3407f1092feec83) Thanks [@angrykoala](https://github.com/angrykoala)! - Removes `previous` argument from `Pattern` constructor. This argument was never meant to be used externally and now it is not accessible
+
+-   [#391](https://github.com/neo4j/cypher-builder/pull/391) [`d416ee6`](https://github.com/neo4j/cypher-builder/commit/d416ee6a623a9cbc8c573e11e1e155d799f19abf) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix TypeScript typings for boolean operators when using array spread:
+
+    -   `Cypher.and`
+    -   `Cypher.or`
+    -   `Cypher.xor`
+
+    The following:
+
+    ```ts
+    const predicates: Cypher.Predicate[] = [];
+    const andPredicate = Cypher.and(...predicates);
+    ```
+
+    Will now return the correct type `Cypher.Predicate | undefined`. This change means that additional checks may be needed when using boolean operators:
+
+    ```ts
+    const predicates = [Cypher.true, Cypher.false];
+    const andPredicate = Cypher.and(...predicates); // type Cypher.Predicate | undefined
+    ```
+
+    Passing parameters without spread will still return a defined type
+
+-   [#447](https://github.com/neo4j/cypher-builder/pull/447) [`b82be57`](https://github.com/neo4j/cypher-builder/commit/b82be57dc5440e63aa5c7b4dc95edc5a778338f3) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove `assignToPath` method from clauses, in favor of `assignTo` in Patterns for the following clauses:
+
+    -   `Match`
+    -   `Merge`
+    -   `Create`
+
+    Before:
+
+    ```js
+    new Cypher.Match(pattern).assignToPath(pathVariable).return(pathVariable);
+    ```
+
+    Now:
+
+    ```js
+    new Cypher.Match(pattern.assignTo(pathVariable)).return(pathVariable);
+    ```
+
+    Generates the Cypher:
+
+    ```cypher
+    MATCH p = ()-[]-()
+    RETURN p
+    ```
+
+### Patch Changes
+
+-   [#389](https://github.com/neo4j/cypher-builder/pull/389) [`f5135f5`](https://github.com/neo4j/cypher-builder/commit/f5135f5396c7f86051282b214cf14b9e843cd3e8) Thanks [@angrykoala](https://github.com/angrykoala)! - Improves error message when multiple clauses are added to the same clause
+
+-   [#389](https://github.com/neo4j/cypher-builder/pull/389) [`f5135f5`](https://github.com/neo4j/cypher-builder/commit/f5135f5396c7f86051282b214cf14b9e843cd3e8) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for passing an existing With clause to `With.with`
+
+-   [#448](https://github.com/neo4j/cypher-builder/pull/448) [`253a6df`](https://github.com/neo4j/cypher-builder/commit/253a6df1b1cbc6a3f14d5c5fa5d4dc68d020ab93) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for `Variable | undefined` as an input for Patterns
+
 ## 1.22.4
 
 ### Patch Changes
