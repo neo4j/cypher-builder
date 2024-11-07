@@ -259,6 +259,29 @@ myClause.build({
 
 All parameters are optional, and `build` can still be called without parameters.
 
+=== Remove support for fine-grained prefix
+
+The prefix parameter prefix for the `.build` method in 1.x supports passing an object with the parameters `params` and `variables` for fine grained control of what prefix to use in different kind of variables. This has been removed in 2.x, supporting only a `string` as global prefix:
+
+No longer supported:
+[source, javascript]
+----
+myClause.build({
+    variable: "var_prefix_",
+    params: "param_prefix_"
+});
+----
+
+Instead, a single string can be used as prefix for bother, variables and params:
+
+Now:
+[source, javascript]
+----
+myClause.build({
+    prefix: "my-custom-prefix"
+});
+----
+
 == `With`
 
 The method `.with` no longer adds new columns into the existing clause. It will always create a new `WITH` statement instead. The method `.addColumns` should be used instead to add extra columns. 

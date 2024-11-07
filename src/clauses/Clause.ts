@@ -18,7 +18,7 @@
  */
 
 import { CypherASTNode } from "../CypherASTNode";
-import type { EnvConfig, EnvPrefix } from "../Environment";
+import type { EnvConfig } from "../Environment";
 import { CypherEnvironment } from "../Environment";
 import type { CypherResult } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
@@ -42,7 +42,7 @@ export abstract class Clause extends CypherASTNode {
         extraParams = {},
         labelOperator = ":",
     }: {
-        prefix?: string | EnvPrefix;
+        prefix?: string;
         extraParams?: Record<string, unknown>;
         labelOperator?: ":" | "&";
     } = {}): CypherResult {
@@ -66,7 +66,7 @@ export abstract class Clause extends CypherASTNode {
         throw new Error(`Cannot build root: ${root.constructor.name}`);
     }
 
-    private getEnv(prefix?: string | EnvPrefix, config: BuildConfig = {}): CypherEnvironment {
+    private getEnv(prefix?: string, config: BuildConfig = {}): CypherEnvironment {
         return new CypherEnvironment(prefix, config);
     }
 

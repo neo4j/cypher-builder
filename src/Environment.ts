@@ -37,7 +37,7 @@ const defaultConfig: EnvConfig = {
  * @group Internal
  */
 export class CypherEnvironment {
-    private readonly globalPrefix: EnvPrefix;
+    private readonly globalPrefix: string;
 
     private readonly references: Map<Variable, string> = new Map();
     private readonly params: Param[] = [];
@@ -47,18 +47,8 @@ export class CypherEnvironment {
     /**
      *  @internal
      */
-    constructor(prefix?: string | EnvPrefix, config: Partial<EnvConfig> = {}) {
-        if (!prefix || typeof prefix === "string") {
-            this.globalPrefix = {
-                params: prefix ?? "",
-                variables: prefix ?? "",
-            };
-        } else {
-            this.globalPrefix = {
-                params: prefix.params ?? "",
-                variables: prefix.variables ?? "",
-            };
-        }
+    constructor(prefix?: string, config: Partial<EnvConfig> = {}) {
+        this.globalPrefix = prefix ?? "";
 
         this.config = {
             ...defaultConfig,
@@ -112,12 +102,12 @@ export class CypherEnvironment {
         const paramIndex = this.getParamsSize(); // Indexes are separate for readability reasons
 
         if (variable instanceof Param) {
-            const varId = `${this.globalPrefix.params}${variable.prefix}${paramIndex}`;
+            const varId = `${this.globalPrefix}${variable.prefix}${paramIndex}`;
             return this.addParam(varId, variable);
         }
 
         const varIndex = this.references.size - paramIndex;
-        const varId = `${this.globalPrefix.variables}${variable.prefix}${varIndex}`;
+        const varId = `${this.globalPrefix}${variable.prefix}${varIndex}`;
         this.references.set(variable, varId);
         return varId;
     }
