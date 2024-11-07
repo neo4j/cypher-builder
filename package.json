@@ -1,6 +1,6 @@
 {
     "name": "@neo4j/cypher-builder",
-    "version": "1.22.3",
+    "version": "1.22.4",
     "description": "A programmatic API for building Cypher queries for Neo4j",
     "exports": "./dist/index.js",
     "main": "./dist/index.js",
