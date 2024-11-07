@@ -163,7 +163,6 @@ export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
 export type { CompositeClause } from "./clauses/utils/concat";
-export type { CypherEnvironment as Environment } from "./Environment";
 export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation";
 export type { PredicateFunction } from "./expressions/functions/predicate";
 export type { HasLabel } from "./expressions/HasLabel";
