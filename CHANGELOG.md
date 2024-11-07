@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 1.22.4
+
+### Patch Changes
+
+-   [#451](https://github.com/neo4j/cypher-builder/pull/451) [`e0d7f4b`](https://github.com/neo4j/cypher-builder/commit/e0d7f4b260177267e6dfd268f357c76a2ccad7b6) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates `CypherEnvironment` exported types in favor of `RawCypherContext` for usage in `Cypher.Raw`
+
 ## 1.22.3
 
 ### Patch Changes
