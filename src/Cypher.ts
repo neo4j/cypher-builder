@@ -28,7 +28,7 @@ export { Merge } from "./clauses/Merge";
 export { Raw, type RawCypherContext } from "./clauses/Raw";
 export { Return } from "./clauses/Return";
 export { Union } from "./clauses/Union";
-export { Unwind } from "./clauses/Unwind";
+export { Unwind, type UnwindProjectionColumn } from "./clauses/Unwind";
 export { Use } from "./clauses/Use";
 export { With } from "./clauses/With";
 
