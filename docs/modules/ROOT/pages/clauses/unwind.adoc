@@ -1,0 +1,24 @@
+[[unwind]]
+:description: This page describes how to create `UNWIND` clauses.
+= Unwind
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/unwind/[`UNWIND`] clause with the `Cypher.Unwind` class.
+
+To create an `Unwind` clause, pass a tuple of a variable or expression and its alias to `new Cypher.Unwind`:
+
+
+[source, javascript]
+----
+const val = new Cypher.Variable()
+const unwindClause = new Cypher.Unwind([new Cypher.Param([1,2]), val]).return([val, "result"])
+
+const { cypher, params } = unwindClause.build()
+----
+
+This generates the following `UNWIND` clause:
+
+[source, cypher]
+----
+UNWIND $param0 AS var0
+RETURN var0 AS result
+----
