@@ -26,21 +26,18 @@ export abstract class WithUnwind extends MixinClause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
      */
     public unwind(clause: Unwind): Unwind;
-    public unwind(...columns: Array<UnwindProjectionColumn>): Unwind;
-    public unwind(clauseOrColumn: Unwind | UnwindProjectionColumn, ...columns: Array<UnwindProjectionColumn>): Unwind {
-        const unwindClause = this.getUnwindClause(clauseOrColumn, columns);
+    public unwind(projection: UnwindProjectionColumn): Unwind;
+    public unwind(clauseOrColumn: Unwind | UnwindProjectionColumn): Unwind {
+        const unwindClause = this.getUnwindClause(clauseOrColumn);
         this.addNextClause(unwindClause);
         return unwindClause;
     }
 
-    private getUnwindClause(
-        clauseOrColumn: Unwind | UnwindProjectionColumn,
-        columns: Array<UnwindProjectionColumn>
-    ): Unwind {
+    private getUnwindClause(clauseOrColumn: Unwind | UnwindProjectionColumn): Unwind {
         if (clauseOrColumn instanceof Unwind) {
             return clauseOrColumn;
         } else {
-            return new Unwind(clauseOrColumn, ...columns);
+            return new Unwind(clauseOrColumn);
         }
     }
 }
