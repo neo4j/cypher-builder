@@ -1,5 +1,15 @@
 # @neo4j/cypher-builder
 
+## 2.0.1
+
+### Patch Changes
+
+-   [#457](https://github.com/neo4j/cypher-builder/pull/457) [`85aa393`](https://github.com/neo4j/cypher-builder/commit/85aa39378525f7c4d87363bad39310a94ceb9b00) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix types in `Unwind` to reflect its behaviour in Cypher:
+
+    -   Unwind without alias is not supported in Cypher.
+    -   Unwind does not support `*`
+    -   Unwind does not support multiple columns
+
 ## 2.0.0
 
 ### Major Changes
