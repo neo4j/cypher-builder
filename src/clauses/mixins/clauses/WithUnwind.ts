@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type { ProjectionColumn } from "../../sub-clauses/Projection";
+import type { UnwindProjectionColumn } from "../../Unwind";
 import { Unwind } from "../../Unwind";
 import { MixinClause } from "../Mixin";
 
@@ -26,18 +26,18 @@ export abstract class WithUnwind extends MixinClause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
      */
     public unwind(clause: Unwind): Unwind;
-    public unwind(...columns: Array<ProjectionColumn>): Unwind;
-    public unwind(clauseOrColumn: Unwind | ProjectionColumn, ...columns: Array<ProjectionColumn>): Unwind {
-        const unwindClause = this.getUnwindClause(clauseOrColumn, columns);
+    public unwind(projection: UnwindProjectionColumn): Unwind;
+    public unwind(clauseOrColumn: Unwind | UnwindProjectionColumn): Unwind {
+        const unwindClause = this.getUnwindClause(clauseOrColumn);
         this.addNextClause(unwindClause);
         return unwindClause;
     }
 
-    private getUnwindClause(clauseOrColumn: Unwind | ProjectionColumn, columns: Array<ProjectionColumn>): Unwind {
+    private getUnwindClause(clauseOrColumn: Unwind | UnwindProjectionColumn): Unwind {
         if (clauseOrColumn instanceof Unwind) {
             return clauseOrColumn;
         } else {
-            return new Unwind(clauseOrColumn, ...columns);
+            return new Unwind(clauseOrColumn);
         }
     }
 }

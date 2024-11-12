@@ -138,7 +138,7 @@ describe("Clause chaining", () => {
     });
 
     describe("Unwind", () => {
-        const clause = new Cypher.Unwind();
+        const clause = new Cypher.Unwind([new Cypher.Variable(), "a"]);
 
         it.each([
             "return",

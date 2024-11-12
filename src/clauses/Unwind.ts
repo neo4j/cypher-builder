@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+import type { Expr, Literal, Variable } from "..";
+import Cypher from "..";
 import type { CypherEnvironment } from "../Environment";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
@@ -29,7 +31,6 @@ import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
-import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
@@ -44,6 +45,8 @@ export interface Unwind
         WithMerge,
         WithOrder {}
 
+export type UnwindProjectionColumn = [Expr, string | Variable | Literal];
+
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
  * @category Clauses
@@ -52,13 +55,9 @@ export interface Unwind
 export class Unwind extends Clause {
     private readonly projection: Projection;
 
-    constructor(...columns: Array<ProjectionColumn>) {
+    constructor(projection: UnwindProjectionColumn) {
         super();
-        this.projection = new Projection(columns);
-    }
-
-    public addColumns(...columns: Array<"*" | ProjectionColumn>): void {
-        this.projection.addColumns(columns);
+        this.projection = new Projection([projection]);
     }
 
     // Cannot be part of WithUnwind due to dependency cycles
@@ -66,14 +65,16 @@ export class Unwind extends Clause {
      * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
      */
     public unwind(clause: Unwind): Unwind;
-    public unwind(...columns: Array<ProjectionColumn>): Unwind;
-    public unwind(clauseOrColumn: Unwind | ProjectionColumn, ...columns: Array<ProjectionColumn>): Unwind {
+    public unwind(projection: UnwindProjectionColumn): Unwind;
+    public unwind(clauseOrColumn: Unwind | UnwindProjectionColumn): Unwind {
         if (clauseOrColumn instanceof Unwind) {
             this.addNextClause(clauseOrColumn);
             return clauseOrColumn;
+        } else {
+            const newUnwind = new Cypher.Unwind(clauseOrColumn);
+            this.addNextClause(newUnwind);
+            return newUnwind;
         }
-
-        return this.addColumnsToUnwindClause(clauseOrColumn, ...columns);
     }
 
     /** @internal */
@@ -88,18 +89,5 @@ export class Unwind extends Clause {
         const nextClause = this.compileNextClause(env);
 
         return `UNWIND ${projectionStr}${setCypher}${removeCypher}${deleteCypher}${orderCypher}${nextClause}`;
-    }
-
-    private addColumnsToUnwindClause(...columns: Array<"*" | ProjectionColumn>): Unwind {
-        if (!this.nextClause) {
-            this.addNextClause(new Unwind());
-        }
-
-        if (!(this.nextClause instanceof Unwind)) {
-            throw new Error("Invalid Unwind statement");
-        }
-
-        this.nextClause.addColumns(...columns);
-        return this.nextClause;
     }
 }

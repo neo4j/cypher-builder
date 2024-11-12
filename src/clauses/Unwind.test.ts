@@ -99,7 +99,7 @@ UNWIND var1 AS var2"
 
         expect(() => {
             unwindQuery.unwind([variable, new Cypher.Variable()]);
-        }).toThrow("Invalid Unwind statement");
+        }).toThrow("Cannot add <Clause Unwind> to <Clause Unwind> because Unwind it is not the last clause.");
     });
 
     test("Unwind movies with order", () => {
