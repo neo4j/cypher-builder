@@ -30,14 +30,13 @@ import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
-import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import type { DeleteClause } from "./sub-clauses/Delete";
 import type { RemoveClause } from "./sub-clauses/Remove";
 import type { SetClause } from "./sub-clauses/Set";
 import { mixin } from "./utils/mixin";
 
-export interface Foreach extends WithWith, WithReturn, WithRemove, WithSet, WithDelete, WithCreate, WithMerge {}
+export interface Foreach extends WithWith, WithReturn, WithSet, WithDelete, WithCreate, WithMerge {}
 
 type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | DeleteClause;
 
@@ -45,7 +44,7 @@ type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | Dele
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/foreach/)
  * @category Clauses
  */
-@mixin(WithWith, WithReturn, WithRemove, WithSet, WithDelete, WithCreate, WithMerge)
+@mixin(WithWith, WithReturn, WithSet, WithDelete, WithCreate, WithMerge)
 export class Foreach extends Clause {
     private readonly variable: Variable;
     private readonly listExpr: Expr;
@@ -67,10 +66,9 @@ export class Foreach extends Clause {
 
         const foreachStr = [`FOREACH (${variableStr} IN ${listExpr} |`, padBlock(mapClauseStr), `)`].join("\n");
 
-        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const setCypher = this.compileSetCypher(env);
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
 
-        return `${foreachStr}${setCypher}${removeCypher}${deleteCypher}${nextClause}`;
+        return `${foreachStr}${setCypher}${deleteCypher}${nextClause}`;
     }
 }

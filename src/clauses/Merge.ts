@@ -28,28 +28,19 @@ import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithRemove } from "./mixins/sub-clauses/WithRemove";
 import { WithSet } from "./mixins/sub-clauses/WithSet";
 import type { OnCreateParam } from "./sub-clauses/OnCreate";
 import { OnCreate } from "./sub-clauses/OnCreate";
 import { OnMatch } from "./sub-clauses/OnMatch";
 import { mixin } from "./utils/mixin";
 
-export interface Merge
-    extends WithReturn,
-        WithSet,
-        WithDelete,
-        WithRemove,
-        WithWith,
-        WithCreate,
-        WithFinish,
-        WithOrder {}
+export interface Merge extends WithReturn, WithSet, WithDelete, WithWith, WithCreate, WithFinish, WithOrder {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
  * @category Clauses
  */
-@mixin(WithReturn, WithSet, WithDelete, WithRemove, WithWith, WithCreate, WithFinish, WithOrder)
+@mixin(WithReturn, WithSet, WithDelete, WithWith, WithCreate, WithFinish, WithOrder)
 export class Merge extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
     private readonly onCreateClause: OnCreate;
@@ -91,14 +82,13 @@ export class Merge extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const mergeStr = `MERGE ${this.pattern.getCypher(env)}`;
-        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const setCypher = this.compileSetCypher(env);
         const onCreateCypher = compileCypherIfExists(this.onCreateClause, env, { prefix: "\n" });
         const onMatchCypher = compileCypherIfExists(this.onMatchClause, env, { prefix: "\n" });
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const orderCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const nextClause = this.compileNextClause(env);
 
-        return `${mergeStr}${onMatchCypher}${onCreateCypher}${setCypher}${removeCypher}${deleteCypher}${orderCypher}${nextClause}`;
+        return `${mergeStr}${onMatchCypher}${onCreateCypher}${setCypher}${deleteCypher}${orderCypher}${nextClause}`;
     }
 }

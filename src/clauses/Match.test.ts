@@ -99,11 +99,11 @@ describe("CypherBuilder Match", () => {
 
         const queryResult = matchQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:Movie)
-            WHERE (this0.id = $param0 AND this0.name = $param1)
-            REMOVE this0.name,this0.released
-            RETURN this0.id"
-        `);
+"MATCH (this0:Movie)
+WHERE (this0.id = $param0 AND this0.name = $param1)
+REMOVE this0.name, this0.released
+RETURN this0.id"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {

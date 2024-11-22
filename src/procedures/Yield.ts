@@ -27,7 +27,6 @@ import { WithUnwind } from "../clauses/mixins/clauses/WithUnwind";
 import { WithWith } from "../clauses/mixins/clauses/WithWith";
 import { WithDelete } from "../clauses/mixins/sub-clauses/WithDelete";
 import { WithOrder } from "../clauses/mixins/sub-clauses/WithOrder";
-import { WithRemove } from "../clauses/mixins/sub-clauses/WithRemove";
 import { WithSet } from "../clauses/mixins/sub-clauses/WithSet";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import type { ProjectionColumn } from "../clauses/sub-clauses/Projection";
@@ -51,7 +50,6 @@ export interface Yield
         WithDelete,
         WithMerge,
         WithCreate,
-        WithRemove,
         WithSet,
         WithOrder {}
 
@@ -59,19 +57,7 @@ export interface Yield
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/#call-call-a-procedure-call-yield-star)
  * @group Procedures
  */
-@mixin(
-    WithReturn,
-    WithWhere,
-    WithWith,
-    WithMatch,
-    WithUnwind,
-    WithDelete,
-    WithMerge,
-    WithCreate,
-    WithRemove,
-    WithSet,
-    WithOrder
-)
+@mixin(WithReturn, WithWhere, WithWith, WithMatch, WithUnwind, WithDelete, WithMerge, WithCreate, WithSet, WithOrder)
 export class Yield<T extends string = string> extends Clause {
     private readonly projection: YieldProjection;
 
@@ -92,8 +78,7 @@ export class Yield<T extends string = string> extends Clause {
         const yieldProjectionStr = this.projection.getCypher(env);
 
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
-        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const setCypher = this.compileSetCypher(env);
         const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
 
         const whereStr = compileCypherIfExists(this.whereSubClause, env, {
@@ -101,7 +86,7 @@ export class Yield<T extends string = string> extends Clause {
         });
 
         const nextClause = this.compileNextClause(env);
-        return `YIELD ${yieldProjectionStr}${whereStr}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        return `YIELD ${yieldProjectionStr}${whereStr}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 }
 

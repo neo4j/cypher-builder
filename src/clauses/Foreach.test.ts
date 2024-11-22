@@ -63,9 +63,9 @@ describe("Foreach", () => {
 "FOREACH (var0 IN [1, 2, 3] |
     CREATE (this1:Movie)
 )
+REMOVE this1.title
 SET
     this1.id = var0
-REMOVE this1.title
 DELETE this1
 WITH *"
 `);
