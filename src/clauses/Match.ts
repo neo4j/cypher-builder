@@ -33,18 +33,16 @@ import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithRemove } from "./mixins/sub-clauses/WithRemove";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { WithWhere } from "./mixins/sub-clauses/WithWhere";
 import { mixin } from "./utils/mixin";
 
 export interface Match
     extends WithReturn,
         WithWhere,
-        WithSet,
+        WithSetRemove,
         WithWith,
         WithDelete,
-        WithRemove,
         WithUnwind,
         WithCreate,
         WithMerge,
@@ -65,10 +63,9 @@ type ShortestStatement = {
 @mixin(
     WithReturn,
     WithWhere,
-    WithSet,
+    WithSetRemove,
     WithWith,
     WithDelete,
-    WithRemove,
     WithUnwind,
     WithCreate,
     WithMerge,
@@ -162,14 +159,13 @@ export class Match extends Clause {
         const whereCypher = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
 
         const nextClause = this.compileNextClause(env);
-        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const setCypher = this.compileSetCypher(env);
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
         const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const optionalMatch = this._optional ? "OPTIONAL " : "";
         const shortestStatement = this.getShortestStatement();
 
-        return `${optionalMatch}MATCH ${shortestStatement}${patternCypher}${whereCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        return `${optionalMatch}MATCH ${shortestStatement}${patternCypher}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {

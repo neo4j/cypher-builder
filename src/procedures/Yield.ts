@@ -27,8 +27,7 @@ import { WithUnwind } from "../clauses/mixins/clauses/WithUnwind";
 import { WithWith } from "../clauses/mixins/clauses/WithWith";
 import { WithDelete } from "../clauses/mixins/sub-clauses/WithDelete";
 import { WithOrder } from "../clauses/mixins/sub-clauses/WithOrder";
-import { WithRemove } from "../clauses/mixins/sub-clauses/WithRemove";
-import { WithSet } from "../clauses/mixins/sub-clauses/WithSet";
+import { WithSetRemove } from "../clauses/mixins/sub-clauses/WithSetRemove";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import type { ProjectionColumn } from "../clauses/sub-clauses/Projection";
 import { Projection } from "../clauses/sub-clauses/Projection";
@@ -51,8 +50,7 @@ export interface Yield
         WithDelete,
         WithMerge,
         WithCreate,
-        WithRemove,
-        WithSet,
+        WithSetRemove,
         WithOrder {}
 
 /** Yield statement after a Procedure CALL
@@ -68,8 +66,7 @@ export interface Yield
     WithDelete,
     WithMerge,
     WithCreate,
-    WithRemove,
-    WithSet,
+    WithSetRemove,
     WithOrder
 )
 export class Yield<T extends string = string> extends Clause {
@@ -92,8 +89,7 @@ export class Yield<T extends string = string> extends Clause {
         const yieldProjectionStr = this.projection.getCypher(env);
 
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
-        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
+        const setCypher = this.compileSetCypher(env);
         const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
 
         const whereStr = compileCypherIfExists(this.whereSubClause, env, {
@@ -101,7 +97,7 @@ export class Yield<T extends string = string> extends Clause {
         });
 
         const nextClause = this.compileNextClause(env);
-        return `YIELD ${yieldProjectionStr}${whereStr}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        return `YIELD ${yieldProjectionStr}${whereStr}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 }
 

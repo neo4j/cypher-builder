@@ -44,7 +44,7 @@ REMOVE this0:NewLabel"
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)-[]->(this1)
-REMOVE this0:NewLabel,this1:\`Another Label\`"
+REMOVE this0:NewLabel, this1:\`Another Label\`"
 `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);

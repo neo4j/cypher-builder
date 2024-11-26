@@ -32,8 +32,7 @@ import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithRemove } from "./mixins/sub-clauses/WithRemove";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { ImportWith } from "./sub-clauses/ImportWith";
 import { CompositeClause } from "./utils/concat";
 import { mixin } from "./utils/mixin";
@@ -42,8 +41,7 @@ export interface Call
     extends WithReturn,
         WithWith,
         WithUnwind,
-        WithSet,
-        WithRemove,
+        WithSetRemove,
         WithDelete,
         WithMatch,
         WithCreate,
@@ -60,7 +58,7 @@ type InTransactionConfig = {
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
  * @category Clauses
  */
-@mixin(WithReturn, WithWith, WithUnwind, WithRemove, WithDelete, WithSet, WithMatch, WithCreate, WithMerge, WithOrder)
+@mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSetRemove, WithMatch, WithCreate, WithMerge, WithOrder)
 export class Call extends Clause {
     private readonly subquery: CypherASTNode;
     private _importWith?: ImportWith;
@@ -113,9 +111,8 @@ export class Call extends Clause {
 
         const subQueryStr = this.getSubqueryCypher(env, importWithCypher);
 
-        const removeCypher = compileCypherIfExists(this.removeClause, env, { prefix: "\n" });
+        const setCypher = this.compileSetCypher(env);
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const setCypher = compileCypherIfExists(this.setSubClause, env, { prefix: "\n" });
         const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const inTransactionCypher = this.generateInTransactionStr();
 
@@ -125,7 +122,7 @@ export class Call extends Clause {
 
         const optionalStr = this._optional ? "OPTIONAL " : "";
 
-        return `${optionalStr}CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${removeCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        return `${optionalStr}CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {

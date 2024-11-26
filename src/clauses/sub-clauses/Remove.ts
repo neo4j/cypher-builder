@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import type { Label } from "../../references/Label";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
+import type { Label } from "../../references/Label";
 import type { PropertyRef } from "../../references/PropertyRef";
 
 export class RemoveClause extends CypherASTNode {
@@ -30,9 +30,13 @@ export class RemoveClause extends CypherASTNode {
         this.removeInput = removeInput;
     }
 
+    public addParams(...params: Array<PropertyRef | Label>): void {
+        this.removeInput.push(...params);
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const propertiesToDelete = this.removeInput.map((e) => e.getCypher(env));
-        return `REMOVE ${propertiesToDelete.join(",")}`;
+        return `REMOVE ${propertiesToDelete.join(", ")}`;
     }
 }
