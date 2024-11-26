@@ -26,7 +26,7 @@ import type { SetParam } from "../../sub-clauses/Set";
 import { SetClause } from "../../sub-clauses/Set";
 import { Mixin } from "../Mixin";
 
-export abstract class WithSet extends Mixin {
+export abstract class WithSetRemove extends Mixin {
     private subClauses: Array<SetClause | RemoveClause> | undefined;
 
     /** Append a `SET` clause. Allowing to assign variable properties to values.

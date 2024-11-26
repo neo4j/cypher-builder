@@ -32,7 +32,7 @@ import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { ImportWith } from "./sub-clauses/ImportWith";
 import { CompositeClause } from "./utils/concat";
 import { mixin } from "./utils/mixin";
@@ -41,7 +41,7 @@ export interface Call
     extends WithReturn,
         WithWith,
         WithUnwind,
-        WithSet,
+        WithSetRemove,
         WithDelete,
         WithMatch,
         WithCreate,
@@ -58,7 +58,7 @@ type InTransactionConfig = {
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
  * @category Clauses
  */
-@mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSet, WithMatch, WithCreate, WithMerge, WithOrder)
+@mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSetRemove, WithMatch, WithCreate, WithMerge, WithOrder)
 export class Call extends Clause {
     private readonly subquery: CypherASTNode;
     private _importWith?: ImportWith;

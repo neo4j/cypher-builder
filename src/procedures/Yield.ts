@@ -27,7 +27,7 @@ import { WithUnwind } from "../clauses/mixins/clauses/WithUnwind";
 import { WithWith } from "../clauses/mixins/clauses/WithWith";
 import { WithDelete } from "../clauses/mixins/sub-clauses/WithDelete";
 import { WithOrder } from "../clauses/mixins/sub-clauses/WithOrder";
-import { WithSet } from "../clauses/mixins/sub-clauses/WithSet";
+import { WithSetRemove } from "../clauses/mixins/sub-clauses/WithSetRemove";
 import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
 import type { ProjectionColumn } from "../clauses/sub-clauses/Projection";
 import { Projection } from "../clauses/sub-clauses/Projection";
@@ -50,14 +50,25 @@ export interface Yield
         WithDelete,
         WithMerge,
         WithCreate,
-        WithSet,
+        WithSetRemove,
         WithOrder {}
 
 /** Yield statement after a Procedure CALL
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/#call-call-a-procedure-call-yield-star)
  * @group Procedures
  */
-@mixin(WithReturn, WithWhere, WithWith, WithMatch, WithUnwind, WithDelete, WithMerge, WithCreate, WithSet, WithOrder)
+@mixin(
+    WithReturn,
+    WithWhere,
+    WithWith,
+    WithMatch,
+    WithUnwind,
+    WithDelete,
+    WithMerge,
+    WithCreate,
+    WithSetRemove,
+    WithOrder
+)
 export class Yield<T extends string = string> extends Clause {
     private readonly projection: YieldProjection;
 

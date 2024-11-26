@@ -28,16 +28,16 @@ import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { mixin } from "./utils/mixin";
 
-export interface Create extends WithReturn, WithSet, WithWith, WithDelete, WithMerge, WithFinish, WithOrder {}
+export interface Create extends WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder {}
 
 /**
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
  * @category Clauses
  */
-@mixin(WithReturn, WithSet, WithWith, WithDelete, WithMerge, WithFinish, WithOrder)
+@mixin(WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder)
 export class Create extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
 

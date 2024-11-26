@@ -29,7 +29,7 @@ import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
@@ -38,7 +38,7 @@ export interface Unwind
         WithDelete,
         WithMatch,
         WithReturn,
-        WithSet,
+        WithSetRemove,
         WithCreate,
         WithMerge,
         WithOrder {}
@@ -49,7 +49,7 @@ export type UnwindProjectionColumn = [Expr, string | Variable | Literal];
  * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
  * @category Clauses
  */
-@mixin(WithWith, WithDelete, WithMatch, WithReturn, WithSet, WithCreate, WithMerge, WithOrder)
+@mixin(WithWith, WithDelete, WithMatch, WithReturn, WithSetRemove, WithCreate, WithMerge, WithOrder)
 export class Unwind extends Clause {
     private readonly projection: Projection;
 

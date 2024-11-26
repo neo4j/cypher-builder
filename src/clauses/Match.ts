@@ -33,14 +33,14 @@ import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithSet } from "./mixins/sub-clauses/WithSet";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { WithWhere } from "./mixins/sub-clauses/WithWhere";
 import { mixin } from "./utils/mixin";
 
 export interface Match
     extends WithReturn,
         WithWhere,
-        WithSet,
+        WithSetRemove,
         WithWith,
         WithDelete,
         WithUnwind,
@@ -63,7 +63,7 @@ type ShortestStatement = {
 @mixin(
     WithReturn,
     WithWhere,
-    WithSet,
+    WithSetRemove,
     WithWith,
     WithDelete,
     WithUnwind,
