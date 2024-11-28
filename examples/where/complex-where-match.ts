@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../dist";
 
 // MATCH (var0:Movie)-[:ACTED_IN]->(var1:Person)
 // WHERE (var1.name = $param0 AND (var0.year = $param1 OR var0.year = $param2))

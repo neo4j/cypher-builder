@@ -112,12 +112,6 @@ In the translated Cypher, you can see how the node variable is translated to the
 These names are not defined in your JavaScript code, but are automatically generated when the query is built with `.build()`. 
 The labels and types passed to the `Node` and `Relationship` variables are used in the pattern.
 
-
-[NOTE]
-====
-Passing `labels` or `type` to Nodes and Relationships is deprecated. Currently, the classes `Node` and `Relationship` are just sugar syntax for `Variables` and can be used in the same places. The only difference is that variables will be automatically named `var` while nodes and relationships will be named `this`
-====
-
 == Path
 
 Path variables can be used for path assignment in patterns, for example:

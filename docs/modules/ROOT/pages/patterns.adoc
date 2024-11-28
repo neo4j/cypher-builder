@@ -247,6 +247,47 @@ new Cypher.Pattern(movie, { labels: ["Movie"] }).where(Cypher.eq(movie.property(
 (this0:Movie WHERE this0.title = "The Matrix")
 ----
 
+=== Label expressions
+
+Complex labels filters can be added as part of the Pattern by using link:https://neo4j.com/docs/cypher-manual/current/patterns/reference/#label-expressions[Label Expressions]. The following expressions are available:
+
+* `labelExpr.and`
+* `labelExpr.or`
+* `labelExpr.not`
+* `labelExpr.wildcard`
+
+For example:
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(
+    new Cypher.Pattern(movieNode, {
+        labels: Cypher.labelExpr.and(Cypher.labelExpr.or("Movie", "Film"), Cypher.labelExpr.not("Show")),
+    })
+).return(movieNode);
+----
+
+[source, cypher]
+----
+MATCH (this0:((Movie|Film)&!Show))
+RETURN this0
+----
+
+
+[NOTE]
+====
+By default, multiple labels in a Pattern are combined with `:` (e.g. `(m:Film:Movie)`) which is incompatible with Label expressions. If you are using label expressions and passing multiple labels to a Pattern in the same query, make sure to set the option `labelOperator` to `"&"` in `.build`:
+
+[source, javascript]
+----
+matchQuery.build({
+    labelOperator: "&"
+})
+----
+====
+
 == Quantified path patterns
 
 link:https://neo4j.com/docs/cypher-manual/current/patterns/variable-length-patterns/#quantified-path-patterns[Quantified path patterns] can be defined with the class `Cypher.QuantifiedPath`.
