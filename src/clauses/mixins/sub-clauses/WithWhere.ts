@@ -34,7 +34,7 @@ export abstract class WithWhere extends Mixin {
     protected whereSubClause: Where | undefined;
 
     /** Add a `WHERE` subclause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/where/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/where/ | Cypher Documentation}
      */
     public where(input: Predicate | undefined): this;
     public where(target: Variable | PropertyRef, params: Record<string, VariableLike>): this;

@@ -26,7 +26,7 @@ import { addLabelToken } from "../utils/add-label-token";
 import { escapeLabel } from "../utils/escape";
 
 /** Generates a predicate to check if a node has a label or a relationship has a type
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/where/#filter-on-node-label)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/where/#filter-on-node-label | Cypher Documentation}
  * @group Other
  * @example
  * ```cypher

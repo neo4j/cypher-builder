@@ -85,7 +85,7 @@ class NotOp extends BooleanOp {
 }
 
 /** Generates an `AND` operator between the given predicates
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean | Cypher Documentation}
  * @group Operators
  * @category Boolean
  * @example
@@ -115,7 +115,7 @@ export function and(...ops: Array<Predicate | undefined>): Predicate | undefined
 }
 
 /** Generates an `NOT` operator before the given predicate
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean | Cypher Documentation}
  * @group Operators
  * @category Boolean
  * @example
@@ -135,7 +135,7 @@ export function not(child: Predicate): BooleanOp {
 }
 
 /** Generates an `OR` operator between the given predicates
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean | Cypher Documentation}
  * @group Operators
  * @category Boolean
  * @example
@@ -165,7 +165,7 @@ export function or(...ops: Array<Predicate | undefined>): Predicate | undefined 
 }
 
 /** Generates an `XOR` operator between the given predicates
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-boolean | Cypher Documentation}
  * @group Operators
  * @category Boolean
  * @example

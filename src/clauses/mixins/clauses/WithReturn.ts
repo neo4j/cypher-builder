@@ -23,7 +23,7 @@ import { MixinClause } from "../Mixin";
 
 export abstract class WithReturn extends MixinClause {
     /** Append a {@link Return} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/return/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/return/ | Cypher Documentation}
      */
     public return(clause: Return): Return;
     public return(...columns: Array<"*" | ProjectionColumn>): Return;

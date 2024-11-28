@@ -22,7 +22,7 @@ import type { CypherEnvironment } from "../../Environment";
 import type { Expr } from "../../types";
 
 /** Represents a Cypher Function, all Cypher functions provided by the library extend from this class, and it can be used to use custom functions
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/ | Cypher Documentation}
  * @group Cypher Functions
  * @example
  * ```ts

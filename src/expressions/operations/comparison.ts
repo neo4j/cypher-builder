@@ -94,7 +94,7 @@ function createOp(op: ComparisonOperator, leftExpr: Expr, rightExpr?: Expr): Com
 }
 
 /** Equality (`=`) operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -103,7 +103,7 @@ export function eq(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** Inequality (`<>`) operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -112,7 +112,7 @@ export function neq(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** Greater Than (`>`) operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -121,7 +121,7 @@ export function gt(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** Greater Than Equal (`>=`) operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -130,7 +130,7 @@ export function gte(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** Less Than (`<`) operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -139,7 +139,7 @@ export function lt(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** Less Than Equal (`<=`) operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -148,7 +148,7 @@ export function lte(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** `IS NULL` operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  * @example
@@ -161,7 +161,7 @@ export function isNull(childExpr: Expr): ComparisonOp {
 }
 
 /** `IS NOT NULL` operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  * @example
@@ -174,7 +174,7 @@ export function isNotNull(childExpr: Expr): ComparisonOp {
 }
 
 /** `IN` operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -183,7 +183,7 @@ export function inOp(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** `CONTAINS` operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -192,7 +192,7 @@ export function contains(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** `STARTS WITH` operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -201,7 +201,7 @@ export function startsWith(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** `ENDS WITH` operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -210,7 +210,7 @@ export function endsWith(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** Matching (=~) operator.
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -219,7 +219,7 @@ export function matches(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
 }
 
 /** `IS NORMALIZED` operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */
@@ -228,7 +228,7 @@ export function isNormalized(leftExpr: Expr, normalizationType?: NormalizationTy
 }
 
 /** `IS NOT NORMALIZED` operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
  */

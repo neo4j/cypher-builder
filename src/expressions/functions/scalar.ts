@@ -22,7 +22,7 @@ import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-coalesce)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-coalesce | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -31,7 +31,7 @@ export function coalesce(expr: Expr, ...optionalExpr: Expr[]): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -40,7 +40,7 @@ export function elementId(variable: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-endnode)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-endnode | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -49,7 +49,7 @@ export function endNode(relationship: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-head)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-head | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -58,7 +58,7 @@ export function head(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-id)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-id | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  * @deprecated Use {@link elementId} instead
@@ -68,7 +68,7 @@ export function id(variable: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-last)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-last | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -77,7 +77,7 @@ export function last(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-length)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-length | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -86,7 +86,7 @@ export function length(path: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-properties)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-properties | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -95,7 +95,7 @@ export function properties(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-randomuuid)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-randomuuid | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -104,7 +104,7 @@ export function randomUUID(): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-size | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -122,7 +122,7 @@ export function size(expr: Expr | Pattern): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-startnode)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-startnode | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -131,7 +131,7 @@ export function startNode(relationship: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-timestamp)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-timestamp | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -140,7 +140,7 @@ export function timestamp(): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-toboolean)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-toboolean | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -149,7 +149,7 @@ export function toBoolean(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tobooleanornull)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tobooleanornull | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -158,7 +158,7 @@ export function toBooleanOrNull(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tofloat)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tofloat | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -167,7 +167,7 @@ export function toFloat(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tofloatornull)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tofloatornull | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -176,7 +176,7 @@ export function toFloatOrNull(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tointeger)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tointeger | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -185,7 +185,7 @@ export function toInteger(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tointegerornull)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-tointegerornull | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -194,7 +194,7 @@ export function toIntegerOrNull(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-type)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-type | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -203,7 +203,7 @@ export function type(relationship: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-valueType)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-valueType | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -212,7 +212,7 @@ export function valueType(expr: Expr): CypherFunction {
 }
 
 /** Alias of size()
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-char_length)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-char_length | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  */
@@ -221,7 +221,7 @@ export function char_length(expr: Expr): CypherFunction {
 }
 
 /** Alias of size()
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-character_length)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-character_length | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  * @version Neo4j 5.13
@@ -231,7 +231,7 @@ export function character_length(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-nullIf)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-nullIf | Cypher Documentation}
  * @group Cypher Functions
  * @category Scalar
  * @version Neo4j 5.14

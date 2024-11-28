@@ -29,7 +29,7 @@ import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 export interface ListComprehension extends WithWhere {}
 
 /** Represents a List comprehension
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/lists/#cypher-list-comprehension)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/lists/#cypher-list-comprehension | Cypher Documentation}
  * @group Lists
  */
 @mixin(WithWhere)

@@ -20,7 +20,7 @@
 import { Clause } from "./Clause";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/finish/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/finish/ | Cypher Documentation}
  * @category Clauses
  */
 export class Finish extends Clause {

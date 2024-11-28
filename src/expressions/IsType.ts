@@ -62,7 +62,7 @@ function list(type: Type | Type[]): ListType {
 
 /**
  * Types supported by Neo4j
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/values-and-types/property-structural-constructed/#types-synonyms)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/values-and-types/property-structural-constructed/#types-synonyms | Cypher Documentation}
  */
 export const CypherTypes = {
     ...BaseTypes,
@@ -71,7 +71,7 @@ export const CypherTypes = {
 
 /**
  * Type predicate expression
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/ | Cypher Documentation}
  * @example
  * ```cypher
  * val IS :: INTEGER
@@ -83,7 +83,7 @@ export function isType(expr: Expr, type: Type | Type[]): IsType {
 
 /**
  * Type predicate expression with NOT
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/#type-predicate-not)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/#type-predicate-not | Cypher Documentation}
  * @example
  * ```cypher
  * val IS NOT :: INTEGER

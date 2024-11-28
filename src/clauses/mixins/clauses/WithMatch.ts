@@ -23,7 +23,7 @@ import { MixinClause } from "../Mixin";
 
 export abstract class WithMatch extends MixinClause {
     /** Add a {@link Match} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/match/ | Cypher Documentation}
      */
 
     public match(clauseOrPattern: Match | Pattern): Match {
@@ -39,7 +39,7 @@ export abstract class WithMatch extends MixinClause {
     }
 
     /** Add an {@link OptionalMatch} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/ | Cypher Documentation}
      */
 
     public optionalMatch(pattern: Pattern): OptionalMatch {

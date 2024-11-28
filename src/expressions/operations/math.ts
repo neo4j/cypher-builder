@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import type { Expr } from "../../types";
-import type { CypherEnvironment } from "../../Environment";
 import { CypherASTNode } from "../../CypherASTNode";
+import type { CypherEnvironment } from "../../Environment";
+import type { Expr } from "../../types";
 
 type MathOperator = "+" | "-" | "*" | "/" | "%" | "^";
 
@@ -49,7 +49,7 @@ function createOp(op: MathOperator, exprs: Expr[]): MathOp {
 }
 
 /** Plus (+) operator. This operator may be used for addition operations between numbers or for string concatenation.
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical | Cypher Documentation}
  * @see [String Concatenation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#syntax-concatenating-two-strings)
  * @group Operators
  * @category Math
@@ -61,7 +61,7 @@ export function plus(...exprs: Expr[]): MathOp {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical | Cypher Documentation}
  * @group Operators
  * @category Math
  */
@@ -70,7 +70,7 @@ export function minus(leftExpr: Expr, rightExpr: Expr): MathOp {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical | Cypher Documentation}
  * @group Operators
  * @category Math
  */
@@ -79,7 +79,7 @@ export function multiply(leftExpr: Expr, rightExpr: Expr): MathOp {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical | Cypher Documentation}
  * @group Operators
  * @category Math
  */
@@ -88,7 +88,7 @@ export function divide(leftExpr: Expr, rightExpr: Expr): MathOp {
 }
 
 /** Modulus (%) operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical | Cypher Documentation}
  * @group Operators
  * @category Math
  */
@@ -97,7 +97,7 @@ export function mod(leftExpr: Expr, rightExpr: Expr): MathOp {
 }
 
 /** Power (^) operator
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical | Cypher Documentation}
  * @group Operators
  * @category Math
  */

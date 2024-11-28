@@ -22,7 +22,7 @@ import { padBlock } from "../../utils/pad-block";
 import { Subquery } from "./Subquery";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/collect/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/collect/ | Cypher Documentation}
  * @group Other
  */
 export class Collect extends Subquery {

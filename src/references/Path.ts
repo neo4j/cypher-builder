@@ -21,7 +21,7 @@ import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
 
 /** Reference to a path variable
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/patterns)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/patterns | Cypher Documentation}
  * @group Variables
  */
 export class PathVariable extends Variable {

@@ -24,7 +24,7 @@ import { normalizeExpr } from "../../utils/normalize-variable";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-btrim)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-btrim | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -35,7 +35,7 @@ export function btrim(original: string | Expr, trimCharacter?: string | Expr): C
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-left)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-left | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -44,7 +44,7 @@ export function left(original: Expr, length: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-lower)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-lower | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -53,7 +53,7 @@ export function lower(original: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -64,7 +64,7 @@ export function ltrim(original: Expr | string, trimCharacter?: string | Expr): C
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  * @param normalForm - A string with the normal form to use or a Cypher expression
@@ -76,7 +76,7 @@ export function normalize(input: Expr, normalForm?: NormalizationType | Expr): C
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -85,7 +85,7 @@ export function replace(original: Expr, search: Expr, replace: Expr): CypherFunc
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  * @category String
@@ -95,7 +95,7 @@ export function right(original: Expr, length: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -106,7 +106,7 @@ export function rtrim(original: Expr | string, trimCharacter?: string | Expr): C
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -115,7 +115,7 @@ export function split(original: Expr, delimiter: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -124,7 +124,7 @@ export function substring(original: Expr, start: Expr, length?: Expr): CypherFun
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -133,7 +133,7 @@ export function toLower(original: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -142,7 +142,7 @@ export function toString(expression: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -151,7 +151,7 @@ export function toStringOrNull(expression: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -160,7 +160,7 @@ export function toUpper(original: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
@@ -169,7 +169,7 @@ export function trim(original: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-upper)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-upper | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */

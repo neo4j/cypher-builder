@@ -31,7 +31,7 @@ import { mixin } from "./utils/mixin";
 export interface LoadCSV extends WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure {}
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/ | Cypher Documentation}
  * @category Clauses
  */
 @mixin(WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure)

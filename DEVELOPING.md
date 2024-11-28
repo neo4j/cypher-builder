@@ -26,7 +26,7 @@ The comments should follow these conventions:
 
 - Brief description
 - @group - This should be the Cypher concept related to this interface. Cypher Functions, Clauses, Operators, Procedures, Other Expressions.
-- @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual) - A link to the element in the Cypher documentation
+- @see {@link https://neo4j.com/docs/cypher-manual | Cypher Documentation} - A link to the element in the Cypher documentation
 - @internal - If used by the library and not exposed
 - @example - example of usage and resulting Cypher
 

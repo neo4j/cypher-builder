@@ -21,7 +21,7 @@ import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-names)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-names | Cypher Documentation}
  * @group Cypher Functions
  * @category Graph
  */
@@ -29,7 +29,7 @@ export function names(): CypherFunction {
     return new CypherFunction("graph.names");
 }
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-propertiesByName)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-propertiesByName | Cypher Documentation}
  * @group Cypher Functions
  * @category Graph
  */
@@ -37,7 +37,7 @@ export function propertiesByName(name: Expr): CypherFunction {
     return new CypherFunction("graph.propertiesByName", [name]);
 }
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-byname)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-byname | Cypher Documentation}
  * @group Cypher Functions
  * @category Graph
  */

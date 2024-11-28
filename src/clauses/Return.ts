@@ -29,7 +29,7 @@ import { mixin } from "./utils/mixin";
 export interface Return extends WithOrder {}
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/return/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/return/ | Cypher Documentation}
  * @category Clauses
  */
 @mixin(WithOrder)

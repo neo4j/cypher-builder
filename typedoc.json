@@ -14,5 +14,9 @@
     "gitRemote": "origin",
     "out": "./docs/build/site/reference",
     "readme": "none",
-    "highlightLanguages": ["css", "html", "javascript", "json", "jsonc", "json5", "tsx", "typescript", "cypher"]
+    "highlightLanguages": ["css", "html", "javascript", "json", "jsonc", "json5", "tsx", "typescript", "cypher"],
+    "validation": {
+        "invalidLink": true
+    },
+    "intentionallyNotExported": ["CypherCompilable"]
 }

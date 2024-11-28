@@ -22,7 +22,7 @@ import { MixinClause } from "../Mixin";
 
 export abstract class WithFinish extends MixinClause {
     /** Append a {@link Finish} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/finish/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/finish/ | Cypher Documentation}
      */
     public finish(): Finish {
         const finishClause = new Finish();

@@ -55,7 +55,7 @@ type InTransactionConfig = {
 };
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/ | Cypher Documentation}
  * @category Clauses
  */
 @mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSetRemove, WithMatch, WithCreate, WithMerge, WithOrder)
@@ -75,7 +75,7 @@ export class Call extends Clause {
     }
 
     /** Adds a `WITH` statement inside `CALL {`, this `WITH` can is used to import variables outside of the subquery
-     *  @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#call-importing-variables)
+     *  @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#call-importing-variables | Cypher Documentation}
      */
     public importWith(...params: Array<Variable | "*">): this {
         if (this._importWith) {
@@ -97,7 +97,7 @@ export class Call extends Clause {
     }
 
     /** Makes the subquery an OPTIONAL CALL
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call | Cypher Documentation}
      * @version Neo4j 5.24
      */
     public optional(): this {
@@ -179,7 +179,7 @@ export class Call extends Clause {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call | Cypher Documentation}
  * @category Clauses
  */
 export class OptionalCall extends Call {

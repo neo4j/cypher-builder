@@ -28,7 +28,7 @@ export abstract class WithOrder extends Mixin {
     protected orderByStatement: OrderBy | undefined;
 
     /** Add an `ORDER BY` subclause. Note that `ASC` is the default sorting order
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/order-by/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/order-by/ | Cypher Documentation}
      */
     public orderBy(...exprs: Array<[Expr, Order] | Expr | [Expr]>): this {
         const normalizedExprs = exprs.map((rawExpr): [Expr, Order] => {
@@ -45,7 +45,7 @@ export abstract class WithOrder extends Mixin {
     }
 
     /** Add a `SKIP` subclause.
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/skip/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/skip/ | Cypher Documentation}
      */
     public skip(value: number | Expr): this {
         const orderByStatement = this.getOrCreateOrderBy();
@@ -54,7 +54,7 @@ export abstract class WithOrder extends Mixin {
     }
 
     /** Add a `OFFSET` subclause. An alias to `SKIP`
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/skip/#offset-synonym)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/skip/#offset-synonym | Cypher Documentation}
      * @version Neo4j 5.24
      */
     public offset(value: number | Expr): this {
@@ -64,7 +64,7 @@ export abstract class WithOrder extends Mixin {
     }
 
     /** Add a `LIMIT` subclause.
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/limit/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/limit/ | Cypher Documentation}
      */
     public limit(value: number | Expr): this {
         const orderByStatement = this.getOrCreateOrderBy();

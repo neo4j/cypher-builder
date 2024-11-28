@@ -23,7 +23,7 @@ import { MixinClause } from "../Mixin";
 
 export abstract class WithMerge extends MixinClause {
     /** Add a {@link Merge} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
      */
 
     public merge(clauseOrPattern: Merge | Pattern): Merge {
