@@ -30,7 +30,7 @@ export abstract class WithSetRemove extends Mixin {
     private subClauses: Array<SetClause | RemoveClause> | undefined;
 
     /** Append a `SET` clause. Allowing to assign variable properties to values.
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/set/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/set/ | Cypher Documentation}
      */
     public set(...params: SetParam[]): this {
         if (!this.subClauses) {
@@ -47,7 +47,7 @@ export abstract class WithSetRemove extends Mixin {
     }
 
     /** Append a `REMOVE` clause.
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/remove/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/remove/ | Cypher Documentation}
      */
     public remove(...properties: Array<PropertyRef | Label>): this {
         if (!this.subClauses) {

@@ -41,7 +41,7 @@ export interface Foreach extends WithWith, WithReturn, WithSetRemove, WithDelete
 type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | DeleteClause;
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/foreach/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/foreach/ | Cypher Documentation}
  * @category Clauses
  */
 @mixin(WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge)

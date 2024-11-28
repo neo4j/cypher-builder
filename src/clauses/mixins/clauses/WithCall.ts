@@ -23,7 +23,7 @@ import { MixinClause } from "../Mixin";
 
 export abstract class WithCall extends MixinClause {
     /** Add a {@link Call} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/ | Cypher Documentation}
      */
     public call(subquery: Clause, variableScope?: Variable[] | "*"): Call {
         const callClause = new Call(subquery, variableScope);

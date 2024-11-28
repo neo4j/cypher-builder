@@ -43,7 +43,7 @@ import type { Variable } from "./references/Variable";
 export type Operation = BooleanOp | ComparisonOp | MathOp;
 
 /** Represents a Cypher Expression
- *  @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/)
+ *  @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/ | Cypher Documentation}
  */
 export type Expr =
     | Operation

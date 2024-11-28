@@ -26,7 +26,7 @@ import type { YieldProjectionColumn } from "./Yield";
 import { Yield } from "./Yield";
 
 /** Cypher Procedure that does not yield columns
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call/ | Cypher Documentation}
  * @group Procedures
  */
 export class VoidCypherProcedure extends Clause {
@@ -58,7 +58,7 @@ export class VoidCypherProcedure extends Clause {
 }
 
 /** Cypher Procedure
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call/ | Cypher Documentation}
  * @group Procedures
  */
 export class CypherProcedure<T extends string = string> extends VoidCypherProcedure {

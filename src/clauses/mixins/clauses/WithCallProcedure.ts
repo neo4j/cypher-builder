@@ -22,7 +22,7 @@ import { MixinClause } from "../Mixin";
 
 export abstract class WithCallProcedure extends MixinClause {
     /** Add a call {@link Procedure} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call/ | Cypher Documentation}
      */
     public callProcedure<T extends CypherProcedure | VoidCypherProcedure>(procedure: T): T {
         this.addNextClause(procedure);

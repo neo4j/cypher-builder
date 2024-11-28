@@ -20,7 +20,7 @@
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/#_access_line_numbers_with_linenumber)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/#_access_line_numbers_with_linenumber | Cypher Documentation}
  * @group Cypher Functions
  */
 export function linenumber(): CypherFunction {
@@ -28,7 +28,7 @@ export function linenumber(): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/#_access_the_csv_file_path_with_file)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/#_access_the_csv_file_path_with_file | Cypher Documentation}
  * @group Cypher Functions
  */
 export function file(): CypherFunction {

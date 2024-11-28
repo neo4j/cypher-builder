@@ -52,7 +52,7 @@ export interface With
         WithCall {}
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/with/ | Cypher Documentation}
  * @category Clauses
  */
 @mixin(
@@ -89,7 +89,7 @@ export class With extends Clause {
 
     // Cannot be part of WithWith due to dependency cycles
     /** Add a {@link With} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/with/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/with/ | Cypher Documentation}
      */
     public with(clause: With): With;
     public with(...columns: Array<"*" | WithProjection>): With;

@@ -26,7 +26,7 @@ export type LabelOperator = "&" | "|" | "!" | "%";
 
 /**
  * Label Expression
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions | Cypher Documentation}
  * @group Patterns
  */
 export abstract class LabelExpr implements CypherCompilable {
@@ -100,7 +100,7 @@ class WildcardLabelExpr extends LabelExpr {
 }
 
 /** Generates an `&` operator between labels or types
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions | Cypher Documentation}
  * @group Expressions
  * @category Operators
  */
@@ -109,7 +109,7 @@ function labelAnd(...labels: Array<string | LabelExpr>): LabelExpr {
 }
 
 /** Generates an `|` operator between labels or types
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions | Cypher Documentation}
  * @group Expressions
  * @category Operators
  */
@@ -118,7 +118,7 @@ function labelOr(...labels: Array<string | LabelExpr>): LabelExpr {
 }
 
 /** Generates an `!` operator for a label or type
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions | Cypher Documentation}
  * @group Expressions
  * @category Operators
  */
@@ -127,7 +127,7 @@ function labelNot(label: string | LabelExpr): LabelExpr {
 }
 
 /** Generates an wildcard (`%`) operator to substitute a label or type
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions | Cypher Documentation}
  * @group Expressions
  * @category Operators
  */

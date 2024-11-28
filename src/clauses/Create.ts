@@ -34,7 +34,7 @@ import { mixin } from "./utils/mixin";
 export interface Create extends WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder {}
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/create/ | Cypher Documentation}
  * @category Clauses
  */
 @mixin(WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder)
@@ -51,7 +51,7 @@ export class Create extends Clause {
     }
 
     /** Add a {@link Create} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/create/ | Cypher Documentation}
      */
     public create(clauseOrPattern: Create | Pattern): Create {
         if (clauseOrPattern instanceof Create) {

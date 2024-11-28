@@ -57,7 +57,7 @@ type ShortestStatement = {
 };
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/match/ | Cypher Documentation}
  * @category Clauses
  */
 @mixin(
@@ -85,7 +85,7 @@ export class Match extends Clause {
     }
 
     /** Makes the clause an OPTIONAL MATCH
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/ | Cypher Documentation}
      * @example
      * ```ts
      * new Cypher.Match(new Node({labels: ["Movie"]})).optional();
@@ -101,7 +101,7 @@ export class Match extends Clause {
     }
 
     /** Add a {@link Match} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/match/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/match/ | Cypher Documentation}
      */
     public match(clauseOrPattern: Match | Pattern): Match {
         if (clauseOrPattern instanceof Match) {
@@ -116,7 +116,7 @@ export class Match extends Clause {
     }
 
     /** Add an {@link OptionalMatch} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/ | Cypher Documentation}
      */
     public optionalMatch(pattern: Pattern): OptionalMatch {
         const matchClause = new OptionalMatch(pattern);
@@ -186,7 +186,7 @@ export class Match extends Clause {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/ | Cypher Documentation}
  * @category Clauses
  */
 export class OptionalMatch extends Match {

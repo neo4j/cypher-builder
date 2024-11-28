@@ -25,7 +25,7 @@ import { normalizeExpr } from "../../utils/normalize-variable";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-keys)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-keys | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -34,7 +34,7 @@ export function keys(expr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-labels)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-labels | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -43,7 +43,7 @@ export function labels(nodeRef: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-range)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-range | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -53,7 +53,7 @@ export function range(start: Expr | number, end: Expr | number, step?: Expr | nu
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reverse-list)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reverse-list | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -62,7 +62,7 @@ export function reverse(list: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tail)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tail | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -71,7 +71,7 @@ export function tail(list: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tobooleanlist)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tobooleanlist | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -80,7 +80,7 @@ export function toBooleanList(list: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tofloatlist)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tofloatlist | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -89,7 +89,7 @@ export function toFloatList(list: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tointegerlist)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tointegerlist | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -98,7 +98,7 @@ export function toIntegerList(list: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tostringlist)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-tostringlist | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  */
@@ -107,7 +107,7 @@ export function toStringList(list: Expr): CypherFunction {
 }
 
 /** Reduce a list by executing given expression.
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reduce)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-reduce | Cypher Documentation}
  * @group Cypher Functions
  * @category List
  * @example

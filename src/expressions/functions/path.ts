@@ -21,7 +21,7 @@ import type { PathVariable } from "../..";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
+ * @see {@link https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions | Cypher Documentation}
  * @group Cypher Functions
  * @category Path
  */
@@ -30,7 +30,7 @@ export function nodes(path: PathVariable): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions)
+ * @see {@link https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions | Cypher Documentation}
  * @group Cypher Functions
  * @category Path
  */

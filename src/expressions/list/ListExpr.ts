@@ -22,7 +22,7 @@ import type { CypherCompilable, Expr } from "../../types";
 import { ListIndex } from "./ListIndex";
 
 /** Represents a List
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/lists/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/lists/ | Cypher Documentation}
  * @group Lists
  * @example
  * ```ts

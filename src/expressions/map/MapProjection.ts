@@ -26,7 +26,7 @@ import { serializeMap } from "../../utils/serialize-map";
 import { MapExpr } from "./MapExpr";
 
 /** Represents a Map projection
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/maps/#cypher-map-projection)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/maps/#cypher-map-projection | Cypher Documentation}
  * @group Maps
  * @example
  * ```cypher

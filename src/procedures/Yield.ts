@@ -54,7 +54,7 @@ export interface Yield
         WithOrder {}
 
 /** Yield statement after a Procedure CALL
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/call/#call-call-a-procedure-call-yield-star)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call/#call-call-a-procedure-call-yield-star | Cypher Documentation}
  * @group Procedures
  */
 @mixin(

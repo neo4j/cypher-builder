@@ -22,7 +22,7 @@ import { padBlock } from "../../utils/pad-block";
 import { Subquery } from "./Subquery";
 
 /** COUNT subquery expression
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#count-subqueries)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#count-subqueries | Cypher Documentation}
  * @group Other
  */
 export class Count extends Subquery {

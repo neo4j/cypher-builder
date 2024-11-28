@@ -23,7 +23,7 @@ import { MixinClause } from "../Mixin";
 
 export abstract class WithUnwind extends MixinClause {
     /** Append an {@link Unwind} clause.
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/unwind/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/unwind/ | Cypher Documentation}
      */
     public unwind(clause: Unwind): Unwind;
     public unwind(projection: UnwindProjectionColumn): Unwind;

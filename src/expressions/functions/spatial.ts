@@ -21,7 +21,7 @@ import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/spatial/ | Cypher Documentation}
  * @group Cypher Functions
  * @category Spatial
  */
@@ -30,7 +30,7 @@ export function point(variable: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/4.3/functions/spatial/#functions-distance)
+ * @see {@link https://neo4j.com/docs/cypher-manual/4.3/functions/spatial/#functions-distance | Cypher Documentation}
  * @group Cypher Functions
  * @category Spatial
  * @deprecated No longer supported in Neo4j 5. Use {@link point.distance} instead.
@@ -40,7 +40,7 @@ export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
 }
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance | Cypher Documentation}
  * @group Cypher Functions
  * @category Spatial
  * @example Generated Cypher: `point.distance(point1, point2)`
@@ -50,7 +50,7 @@ point.distance = (lexpr: Expr, rexpr: Expr): CypherFunction => {
 };
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-withinBBox)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-withinBBox | Cypher Documentation}
  * @group Cypher Functions
  * @category Spatial
  */

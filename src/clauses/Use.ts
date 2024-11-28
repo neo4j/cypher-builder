@@ -22,7 +22,7 @@ import type { CypherEnvironment } from "../Environment";
 import { Clause } from "./Clause";
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/5/clauses/use/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/5/clauses/use/ | Cypher Documentation}
  * @category Clauses
  */
 export class Use extends Clause {

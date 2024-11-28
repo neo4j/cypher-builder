@@ -23,7 +23,7 @@ import { MixinClause } from "../Mixin";
 
 export abstract class WithCreate extends MixinClause {
     /** Add a {@link Create} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/create/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/create/ | Cypher Documentation}
      */
 
     public create(clauseOrPattern: Create | Pattern): Create {

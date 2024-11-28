@@ -37,7 +37,7 @@ import { mixin } from "./utils/mixin";
 export interface Merge extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder {}
 
 /**
- * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
  * @category Clauses
  */
 @mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder)
@@ -65,7 +65,7 @@ export class Merge extends Clause {
     }
 
     /** Add a {@link Merge} clause
-     * @see [Cypher Documentation](https://neo4j.com/docs/cypher-manual/current/clauses/merge/)
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
      */
     public merge(clauseOrPattern: Merge | Pattern): Merge {
         if (clauseOrPattern instanceof Merge) {
