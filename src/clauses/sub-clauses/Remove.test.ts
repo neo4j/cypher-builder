@@ -49,4 +49,17 @@ REMOVE this0:NewLabel, this1:\`Another Label\`"
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Remove dynamic labels", () => {
+        const movie = new Cypher.Node();
+        const clause = new Cypher.Match(new Cypher.Pattern(movie)).remove(movie.label(Cypher.labels(movie)));
+
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+REMOVE this0:$(labels(this0))"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });
