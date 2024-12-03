@@ -1,0 +1,74 @@
+[[filter-by-labels]]
+:description: This page describes how to filter by labels and types.
+= Filter by labels
+
+Most patterns are composed with labels such as `(m:Movie)` to make simple filtering by labels. xref:../patterns.adoc#_label_expressions[Label expressions] can also be used to perform complex filtering by labels.
+
+
+== `.hasLabel`
+
+It is possible to check for label existence in `WHERE` filters. To do so, the methods `.hasLabel` and `.hasLabels` from `Node` variables can be used in predicates. For example, to match nodes with either the `Movie` or `Film` labels:
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(new Cypher.Pattern(movieNode))
+    .where(Cypher.or(movieNode.hasLabel("Movie"), movieNode.hasLabel("Film")))
+    .return(movieNode);
+----
+
+[source, cypher]
+----
+MATCH (this0)
+WHERE (this0:Movie OR this0:Film)
+RETURN this0
+----
+
+The method `.hasLabels` allow to provide multiple labels that the node must have
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(new Cypher.Pattern(movieNode))
+    .where(movieNode.hasLabels("Movie", "Film"))
+    .return(movieNode);
+----
+
+
+[source, cypher]
+----
+MATCH (this0)
+WHERE this0:Movie:Film
+RETURN this0
+----
+
+
+== `.hasType`
+
+Like labels, relationship types can be filtered in `WHERE` statements with the method `.hasType`
+
+[source, javascript]
+----
+const personNode = new Cypher.Node();
+const actedIn = new Cypher.Relationship();
+
+const actedInPattern = new Cypher.Pattern({ labels: ["Movie"] })
+    .related(actedIn)
+    .to(personNode, { labels: ["Person"] });
+
+const matchQuery = new Cypher.Match(actedInPattern)
+    .where(Cypher.or(actedIn.hasType("ACTED_IN"), actedIn.hasType("DIRECTED")))
+    .return(personNode);
+----
+
+[source, cypher]
+----
+MATCH (:Movie)-[this0]->(this1:Person)
+WHERE (this0:ACTED_IN OR this0:DIRECTED)
+RETURN this
+----
+
+
+
