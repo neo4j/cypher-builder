@@ -249,7 +249,7 @@ new Cypher.Pattern(movie, { labels: ["Movie"] }).where(Cypher.eq(movie.property(
 
 === Label expressions
 
-Complex labels filters can be added as part of the Pattern by using link:https://neo4j.com/docs/cypher-manual/current/patterns/reference/#label-expressions[Label Expressions]. The following expressions are available:
+Complex label filters can be added as part of the Pattern by using link:https://neo4j.com/docs/cypher-manual/current/patterns/reference/#label-expressions[Label Expressions]. The following expressions are available:
 
 * `labelExpr.and`
 * `labelExpr.or`
