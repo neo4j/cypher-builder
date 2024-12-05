@@ -4,10 +4,7 @@
 
 To add or remove labels to a node, use `.set` and `.remove` with the node method `.label`.
 
-
-== Examples
-
-=== Add labels
+== Add labels
 
 [source, javascript]
 ----
@@ -25,7 +22,7 @@ SET
 ----
 
 
-=== Remove labels
+== Remove labels
 
 
 [source, javascript]
@@ -41,3 +38,23 @@ MATCH (this0)
 REMOVE this0:NewLabel
 ----
 
+== Set dynamic labels
+
+In some cases, the labels to add or remove need to be defined dynamically, such as a result of an expression. To achieve this, the `.label` methods accepts an expression instead of a string. 
+
+For example, to copy all the labels from one node to another, the function `labels()` can be used as the expression to `.label`:
+
+
+[source, javascript]
+----
+new Cypher.Match(new Cypher.Pattern(movie)).set(movie.label(Cypher.labels(anotherNode)));
+----
+
+This correctly applies the syntax for dynamic labels:
+
+[source, cypher]
+----
+MATCH (this0)
+SET
+    this0:$(labels(this1))
+----
