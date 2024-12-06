@@ -73,15 +73,23 @@ SET
 
     test("Set dynamic labels", () => {
         const movie = new Cypher.Node();
-        const clause = new Cypher.Match(new Cypher.Pattern(movie)).set(movie.label(Cypher.labels(movie)));
+        const clause = new Cypher.Match(new Cypher.Pattern(movie)).set(
+            movie.label(new Cypher.Param("my label")),
+            movie.label(movie.property("genre"))
+        );
 
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 SET
-    this0:$(labels(this0))"
+    this0:$($param0),
+    this0:$(this0.genre)"
 `);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "my label",
+}
+`);
     });
 });
