@@ -1,5 +1,21 @@
 # @neo4j/cypher-builder
 
+## 2.1.0
+
+### Minor Changes
+
+- [#471](https://github.com/neo4j/cypher-builder/pull/471) [`1c671f1`](https://github.com/neo4j/cypher-builder/commit/1c671f19f11e8c4b5cf5bb9b182dfbebcc7a647a) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for dynamic labels by passing an expression to `node.label`:
+
+    ```javascript
+    new Cypher.Match(new Cypher.Pattern(movie)).set(movie.label(Cypher.labels(anotherNode)));
+    ```
+
+    ```cypher
+    MATCH (this0)
+    SET
+        this0:$(labels(this1))
+    ```
+
 ## 2.0.2
 
 ### Patch Changes
