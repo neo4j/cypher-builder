@@ -17,9 +17,10 @@
  * limitations under the License.
  */
 
+import type { Expr } from "..";
 import { HasLabel } from "../expressions/HasLabel";
 import type { LabelExpr } from "../expressions/labels/label-expressions";
-import { Label } from "./Label";
+import { DynamicLabel, Label } from "./Label";
 import type { NamedReference } from "./Variable";
 import { Variable } from "./Variable";
 
@@ -44,8 +45,12 @@ export class NodeRef extends Variable {
         }
     }
 
-    public label(label: string): Label {
-        return new Label(this, label);
+    public label(label: string | Expr): Label {
+        if (typeof label === "string") {
+            return new Label(this, label);
+        } else {
+            return new DynamicLabel(this, label);
+        }
     }
 }
 

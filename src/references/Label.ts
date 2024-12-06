@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import type { Expr } from "..";
 import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 import type { NodeRef } from "../references/NodeRef";
@@ -28,7 +29,7 @@ import { escapeLabel } from "../utils/escape";
  * @example `:Movie`
  */
 export class Label extends CypherASTNode {
-    private readonly node: NodeRef;
+    protected readonly node: NodeRef;
     private readonly label: string;
 
     /**
@@ -49,5 +50,25 @@ export class Label extends CypherASTNode {
 
     private generateLabelExpressionStr(env: CypherEnvironment): string {
         return addLabelToken(env.config.labelOperator, escapeLabel(this.label));
+    }
+}
+
+export class DynamicLabel extends Label {
+    private readonly expr: Expr;
+
+    /**
+     * @hidden
+     */
+    constructor(node: NodeRef, expr: Expr) {
+        super(node, "");
+        this.expr = expr;
+    }
+
+    /** @internal */
+    public getCypher(env: CypherEnvironment): string {
+        const nodeId = this.node.getCypher(env);
+        const exprStr = `$(${this.expr.getCypher(env)})`;
+        const labelStr = addLabelToken(env.config.labelOperator, exprStr);
+        return `${nodeId}${labelStr}`;
     }
 }
