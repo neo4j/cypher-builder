@@ -92,4 +92,25 @@ SET
 }
 `);
     });
+
+    test("Set dynamic properties", () => {
+        const movie = new Cypher.Node();
+        const clause = new Cypher.Match(new Cypher.Pattern(movie)).set([
+            movie.property(new Cypher.Param("propName")),
+            new Cypher.Param("Value"),
+        ]);
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+SET
+    this0[$param0] = $param1"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "propName",
+  "param1": "Value",
+}
+`);
+    });
 });
