@@ -10,6 +10,7 @@
 ** xref:clauses/create.adoc[]
 ** xref:clauses/return.adoc[]
 ** xref:clauses/merge.adoc[]
+** xref:clauses/with.adoc[]
 ** xref:clauses/union.adoc[]
 ** xref:clauses/unwind.adoc[]
 ** xref:clauses/load-csv.adoc[]

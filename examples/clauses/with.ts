@@ -17,20 +17,15 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../dist";
 
-// UNWIND $param0 AS var0
-// WITH DISTINCT var0
-// RETURN collect(var0) AS setOfVals
+// WITH *, this0 AS result
 
-const coll = new Cypher.Variable();
+const movieNode = new Cypher.Node();
 
-const unwind = new Cypher.Unwind([new Cypher.Param([1, 2, 3, 4]), coll])
-    .with(coll)
-    .distinct()
-    .return([Cypher.collect(coll), "setOfVals"]);
+const withStatement = new Cypher.With("*", [movieNode, "result"]);
 
-const { cypher, params } = unwind.build();
+const { cypher, params } = withStatement.build();
 
 console.log("Cypher");
 console.log(cypher);

@@ -1,0 +1,62 @@
+[[with]]
+:description: This page describes how to create `WITH` clauses.
+= With
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/with/[`WITH`] clause using the `Cypher.With` class. Note that this is different to the xref:../subqueries/call.adoc#_importwith[ImportWith] statement inside `CALL`.
+
+A `With` clause will take multiple parameters. Variables can be passed directly without aliasing:
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const withClause = new Cypher.With(movie);
+----
+
+[source, cypher]
+----
+WITH this0
+----
+
+
+== Aliasing
+
+Any expression can be passed to `With` and aliased to a `Variable` to be used later in the query by passing a tuple of an expression and the aliaed variable:
+
+[source, javascript]
+----
+const variable = new Cypher.Variable();
+new Cypher.With([new Cypher.Literal("Hello"), variable]);
+----
+
+[source, cypher]
+----
+WITH "Hello" AS var0
+----
+
+A string can be used directly as the alias value, when the name is already known.
+
+[source, javascript]
+----
+new Cypher.With([new Cypher.Literal("Hello"), "myVar"]);
+----
+
+[source, cypher]
+----
+WITH "Hello" AS myVar
+----
+
+== Wildcard
+
+
+`With` accepts the string `"*"` to add a wildcard to carry over all existing variables. This parameter cannot be aliased, and will always be added at the beginning of the `WITH` statement:
+
+
+[source, javascript]
+----
+new Cypher.With("*", [movieNode, "result"]);
+----
+
+[source, cypher]
+----
+WITH *, this0 AS result
+----
