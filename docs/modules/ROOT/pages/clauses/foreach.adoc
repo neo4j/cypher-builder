@@ -1,0 +1,31 @@
+[[foreach]]
+:description: This page describes how to create `FOREACH` clauses.
+= Foreach
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/foreach/[`FOREACH`] clause using the `Cypher.Foreach` class.
+
+A `Foreach` clause takes a single variable to be used in a loop. The methods `.in` and `.do` are used to defined the list and update clauses:
+ 
+[source, javascript]
+----
+const x = new Cypher.Variable();
+const query = new Cypher.Foreach(x).in(new Cypher.Param([1, 2, 3])).do(
+    new Cypher.Create(
+        new Cypher.Pattern({
+            labels: ["Movie"],
+            properties: {
+                id: x,
+            },
+        })
+    )
+);
+----
+
+
+[source, cypher]
+----
+FOREACH (var0 IN $param0 |
+    CREATE (:Movie { id: var0 })
+)
+----
+

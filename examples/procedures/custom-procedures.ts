@@ -17,17 +17,17 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../dist";
 
-// CALL db.labels() yield label as this0
-// RETURN this0
+// CALL myProc(var0) YIELD column AS var1
+// RETURN var1
 
-const label = new Cypher.NamedVariable("label");
+const responseVar = new Cypher.Variable();
+const customProcedure = new Cypher.Procedure("myProc", [new Cypher.Variable()]).yield(["column", responseVar]);
 
-const labelVar = new Cypher.Variable();
-const labelsCall = Cypher.db.labels().yield(["label", labelVar]).return(label);
+const clause = customProcedure.return(responseVar);
 
-const { cypher, params } = labelsCall.build();
+const { cypher, params } = clause.build();
 
 console.log("Cypher");
 console.log(cypher);

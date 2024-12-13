@@ -59,7 +59,7 @@ export class ListComprehension extends CypherASTNode {
      * @internal
      */
     public getCypher(env: CypherEnvironment): string {
-        if (!this.listExpr) throw new Error("List Comprehension needs a source list after IN");
+        if (!this.listExpr) throw new Error("List Comprehension needs a source list after IN using .in()");
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: " " });
         const mapStr = compileCypherIfExists(this.mapExpr, env, { prefix: " | " });
         const listExprStr = this.listExpr.getCypher(env);
