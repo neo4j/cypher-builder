@@ -131,4 +131,12 @@ describe("String Functions", () => {
             param1: "NFC",
         });
     });
+
+    test("trim with trim expression", () => {
+        const { cypher } = new TestClause(
+            Cypher.trim("BOTH", new Cypher.Literal("x"), new Cypher.Literal("xxxhelloxxx"))
+        ).build();
+
+        expect(cypher).toMatchInlineSnapshot(`"trim(BOTH \\"x\\" FROM \\"xxxhelloxxx\\")"`);
+    });
 });
