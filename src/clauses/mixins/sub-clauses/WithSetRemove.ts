@@ -60,7 +60,6 @@ export abstract class WithSetRemove extends Mixin {
             this.subClauses.push(new RemoveClause(this, properties));
         }
 
-        // this.removeClause = new RemoveClause(this, properties);
         return this;
     }
 
