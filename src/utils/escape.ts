@@ -19,6 +19,9 @@
 
 const ESCAPE_SYMBOL_REGEX = /`/g;
 
+/** These names must be escaped for variables */
+const RESERVED_VAR_NAMES = ["contains", "in", "where", "is"];
+
 /** Escapes a Node label string */
 export function escapeLabel(label: string): string {
     return escapeIfNeeded(label);
@@ -26,7 +29,8 @@ export function escapeLabel(label: string): string {
 
 /** Escapes a Relationship type string */
 export function escapeType(type: string): string {
-    return escapeIfNeeded(type);
+    // Use same logic as escape label
+    return escapeLabel(type);
 }
 
 /** Escapes a property name string */
@@ -36,6 +40,9 @@ export function escapeProperty(propName: string): string {
 
 /** Escapes a variable name if needed */
 export function escapeVariable(varName: string): string {
+    if (RESERVED_VAR_NAMES.includes(varName.toLowerCase())) {
+        return escapeString(varName);
+    }
     return escapeIfNeeded(varName);
 }
 
@@ -47,10 +54,15 @@ export function escapeLiteralString(str: string): string {
 function escapeIfNeeded(str: string): string {
     const normalizedStr = normalizeString(str);
     if (needsEscape(normalizedStr)) {
-        const escapedLabel = normalizedStr.replace(ESCAPE_SYMBOL_REGEX, "``");
-        return `\`${escapedLabel}\``;
+        return escapeString(normalizedStr);
     }
     return normalizedStr;
+}
+
+function escapeString(str: string): string {
+    const normalizedStr = normalizeString(str);
+    const escapedStr = normalizedStr.replace(ESCAPE_SYMBOL_REGEX, "``");
+    return `\`${escapedStr}\``;
 }
 
 function normalizeString(str: string): string {

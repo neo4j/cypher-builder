@@ -53,4 +53,25 @@ describe("Variable", () => {
 
         expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"var0[($param0 + \\"bar\\")]"`);
     });
+
+    test("does not escape named variable with valid name", () => {
+        const variableProp = new Cypher.NamedVariable("MyVariable").property("title");
+
+        expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"MyVariable.title"`);
+    });
+
+    test("escapes named variable", () => {
+        const variableProp = new Cypher.NamedVariable("My Variable").property("my title");
+
+        expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"\`My Variable\`.\`my title\`"`);
+    });
+
+    test.each(["where", "is", "contains", "in", "WHERE", "Is"])(
+        "escapes named variable with reserved keyword: %s",
+        (keyword) => {
+            const variableProp = new Cypher.NamedVariable(keyword).property("title");
+
+            expect(new TestClause(variableProp).build().cypher).toEqual(`\`${keyword}\`.title`);
+        }
+    );
 });
