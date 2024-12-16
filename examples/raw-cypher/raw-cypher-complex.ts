@@ -17,17 +17,29 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../dist";
 
-// CALL myProc(var0) YIELD column AS var1
-// RETURN var1
+// MATCH (this0:`Movie`)
+// WHERE this0.prop = $myParam
+// RETURN this0
 
-const responseVar = new Cypher.Variable();
-const customProcedure = new Cypher.Procedure("myProc", [new Cypher.Variable()]).yield(["column", responseVar]);
+const movie = new Cypher.Node();
+const match = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
+    .where(
+        new Cypher.Raw((env) => {
+            const movieStr = env.compile(movie);
 
-const clause = customProcedure.return(responseVar);
+            const cypher = `${movieStr}.prop = $myParam`;
+            const params = {
+                myParam: "Hello World",
+            };
 
-const { cypher, params } = clause.build();
+            return [cypher, params];
+        })
+    )
+    .return(movie);
+
+const { cypher, params } = match.build();
 
 console.log("Cypher");
 console.log(cypher);
