@@ -21,7 +21,7 @@
         "@antora/cli": "^3.1.9",
         "@antora/site-generator-default": "^3.1.9",
         "@neo4j-antora/antora-add-notes": "^0.3.1",
-        "@neo4j-antora/antora-modify-sitemaps": "^0.4.4",
+        "@neo4j-antora/antora-modify-sitemaps": "^0.5.0",
         "@neo4j-antora/antora-page-roles": "^0.3.2",
         "@neo4j-antora/antora-table-footnotes": "^0.3.2",
         "@neo4j-antora/mark-terms": "1.1.0",
