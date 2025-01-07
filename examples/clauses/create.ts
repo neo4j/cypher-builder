@@ -17,26 +17,32 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../dist";
 
-// MERGE (this0:MyLabel)
-// ON MATCH SET
-//     this0.count = (this0.count + 1)
-// ON CREATE SET
-//     this0.count = 1
+// CREATE (this0:`Movie`)
+// SET
+//     this0.title = $param0
+// CREATE (this1:`Movie`)
+// SET
+//     this1.title = $param0
 
-const node = new Cypher.Node();
+const titleParam = new Cypher.Param("The Matrix");
 
-const countProp = node.property("count");
-const query = new Cypher.Merge(
-    new Cypher.Pattern(node, {
-        labels: ["MyLabel"],
-    })
-)
-    .onCreateSet([countProp, new Cypher.Literal(1)])
-    .onMatchSet([countProp, Cypher.plus(countProp, new Cypher.Literal(1))]);
+const movie1 = new Cypher.Node();
 
-const { cypher, params } = query.build();
+const movie2 = new Cypher.Node();
+
+// Note that both nodes share the same param
+const create1 = new Cypher.Create(new Cypher.Pattern(movie1, { labels: ["Movie"] })).set([
+    movie1.property("title"),
+    titleParam,
+]);
+const create2 = new Cypher.Create(new Cypher.Pattern(movie2, { labels: ["Movie"] })).set([
+    movie2.property("title"),
+    titleParam,
+]);
+
+const { cypher, params } = Cypher.utils.concat(create1, create2).build();
 
 console.log("Cypher");
 console.log(cypher);

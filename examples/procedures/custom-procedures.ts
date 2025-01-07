@@ -17,15 +17,17 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../dist";
 
-// RETURN 10 as myVal
+// CALL myProc(var0) YIELD column AS var1
+// RETURN var1
 
-const customReturn = new Cypher.Raw(`10 as myVal`);
+const responseVar = new Cypher.Variable();
+const customProcedure = new Cypher.Procedure("myProc", [new Cypher.Variable()]).yield(["column", responseVar]);
 
-const returnClause = new Cypher.Return(customReturn);
+const clause = customProcedure.return(responseVar);
 
-const { cypher, params } = returnClause.build();
+const { cypher, params } = clause.build();
 
 console.log("Cypher");
 console.log(cypher);

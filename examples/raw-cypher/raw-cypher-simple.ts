@@ -17,32 +17,15 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../dist";
 
-// CREATE (this0:`Movie`)
-// SET
-//     this0.title = $param0
-// CREATE (this1:`Movie`)
-// SET
-//     this1.title = $param0
+// RETURN 10 as myVal
 
-const titleParam = new Cypher.Param("The Matrix");
+const customReturn = new Cypher.Raw(`10 as myVal`);
 
-const movie1 = new Cypher.Node();
+const returnClause = new Cypher.Return(customReturn);
 
-const movie2 = new Cypher.Node();
-
-// Note that both nodes share the same param
-const create1 = new Cypher.Create(new Cypher.Pattern(movie1, { labels: ["Movie"] })).set([
-    movie1.property("title"),
-    titleParam,
-]);
-const create2 = new Cypher.Create(new Cypher.Pattern(movie2, { labels: ["Movie"] })).set([
-    movie2.property("title"),
-    titleParam,
-]);
-
-const { cypher, params } = Cypher.utils.concat(create1, create2).build();
+const { cypher, params } = returnClause.build();
 
 console.log("Cypher");
 console.log(cypher);

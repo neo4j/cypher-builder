@@ -1,6 +1,6 @@
 {
     "name": "@neo4j/cypher-builder",
-    "version": "2.0.2",
+    "version": "2.1.0",
     "description": "A programmatic API for building Cypher queries for Neo4j",
     "exports": "./dist/index.js",
     "main": "./dist/index.js",
@@ -59,7 +59,7 @@
         "neo4j-driver": "^5.26.0",
         "prettier": "^3.4.1",
         "ts-jest": "^29.2.5",
-        "typedoc": "^0.27.0",
+        "typedoc": "^0.27.5",
         "typescript": "^5.6.3"
     }
 }

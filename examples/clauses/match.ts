@@ -17,20 +17,25 @@
  * limitations under the License.
  */
 
-import Cypher from "..";
+import Cypher from "../../dist";
 
-// UNWIND $param0 AS var0
-// WITH DISTINCT var0
-// RETURN collect(var0) AS setOfVals
+// MATCH (this1:`Person`)-[this0:ACTED_IN]->(this2:`Movie`)
+// WHERE (this1.name = $param0 AND this2.released = $param1)
+// RETURN this2.title, this2.released AS year
 
-const coll = new Cypher.Variable();
+const movieNode = new Cypher.Node();
+const personNode = new Cypher.Node();
 
-const unwind = new Cypher.Unwind([new Cypher.Param([1, 2, 3, 4]), coll])
-    .with(coll)
-    .distinct()
-    .return([Cypher.collect(coll), "setOfVals"]);
+const actedInPattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
+    .related({ type: "ACTED_IN" })
+    .to(personNode, { labels: ["Person"] });
 
-const { cypher, params } = unwind.build();
+const matchQuery = new Cypher.Match(actedInPattern)
+    .where(personNode, { name: new Cypher.Param("Keanu Reeves") })
+    .and(movieNode, { released: new Cypher.Param(1999) })
+    .return(movieNode.property("title"), [movieNode.property("released"), "year"]);
+
+const { cypher, params } = matchQuery.build();
 
 console.log("Cypher");
 console.log(cypher);
