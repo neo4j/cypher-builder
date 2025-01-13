@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import type { CypherEnvironment } from "../../Environment";
 import type { Expr, NormalizationType } from "../../types";
 import { filterTruthy } from "../../utils/filter-truthy";
 import { normalizeExpr } from "../../utils/normalize-variable";
@@ -159,13 +160,46 @@ export function toUpper(original: Expr): CypherFunction {
     return new CypherFunction("toUpper", [original]);
 }
 
+/** Implements a trim function with a trim expression `trim(BOTH 'x' FROM 'xxxhelloxxx')` */
+class TrimFunction extends CypherFunction {
+    private readonly typeOrInput: "BOTH" | "LEADING" | "TRAILING";
+    private readonly trimChar: Expr;
+    private readonly input: Expr;
+
+    constructor(typeOrInput: "BOTH" | "LEADING" | "TRAILING", trimChar: Expr, input: Expr) {
+        super("trim");
+        this.typeOrInput = typeOrInput;
+        this.trimChar = trimChar;
+        this.input = input;
+    }
+
+    protected serializeParams(env: CypherEnvironment): string {
+        const trimStr = this.trimChar.getCypher(env);
+        const inputStr = this.input.getCypher(env);
+
+        return `${this.typeOrInput} ${trimStr} FROM ${inputStr}`;
+    }
+}
+
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/ | Cypher Documentation}
  * @group Cypher Functions
  * @category String
  */
-export function trim(original: Expr): CypherFunction {
-    return new CypherFunction("trim", [original]);
+export function trim(type: "BOTH" | "LEADING" | "TRAILING", trimChar: Expr, input: Expr): CypherFunction;
+export function trim(input: Expr): CypherFunction;
+export function trim(
+    typeOrInput: "BOTH" | "LEADING" | "TRAILING" | Expr,
+    trimChar?: Expr,
+    input?: Expr
+): CypherFunction {
+    if (typeof typeOrInput === "string") {
+        if (!trimChar || !input) {
+            throw new Error("Invalid parameters in trim. trimChar and input must be valid Expr");
+        }
+        return new TrimFunction(typeOrInput, trimChar, input);
+    }
+    return new CypherFunction("trim", [typeOrInput]);
 }
 
 /**
