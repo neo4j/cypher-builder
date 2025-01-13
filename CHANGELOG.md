@@ -1,5 +1,37 @@
 # @neo4j/cypher-builder
 
+## 2.2.0
+
+### Minor Changes
+
+- [#477](https://github.com/neo4j/cypher-builder/pull/477) [`8723c78`](https://github.com/neo4j/cypher-builder/commit/8723c788b603a2914829511385088d93bc4528a7) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for trim expressions in `trim`:
+
+    ```js
+    Cypher.trim("BOTH", new Cypher.Literal("x"), new Cypher.Literal("xxxhelloxxx"));
+    ```
+
+    ```cypher
+    trim(BOTH "x" FROM "xxxhelloxxx")
+    ```
+
+### Patch Changes
+
+- [#482](https://github.com/neo4j/cypher-builder/pull/482) [`85ff6e0`](https://github.com/neo4j/cypher-builder/commit/85ff6e0821994e5a25d27edb8d15758dd4db2d8e) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate `Foreach` extra constructor parameters in favor of methods `in` and `do`:
+
+    _Before_:
+
+    ```js
+    new Cypher.Foreach(variable, list, createMovie);
+    ```
+
+    _Now_:
+
+    ```js
+    new Cypher.Foreach(variable).in(list).do(createMovie);
+    ```
+
+- [#482](https://github.com/neo4j/cypher-builder/pull/482) [`85ff6e0`](https://github.com/neo4j/cypher-builder/commit/85ff6e0821994e5a25d27edb8d15758dd4db2d8e) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for chaining `FOREACH` after `MATCH` with `.foreach`
+
 ## 2.1.0
 
 ### Minor Changes
