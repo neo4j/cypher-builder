@@ -951,4 +951,33 @@ RETURN this0"
     `);
         });
     });
+
+    test("With foreach", () => {
+        const start = new Cypher.Node();
+        const path = new Cypher.PathVariable();
+        const end = new Cypher.Node();
+        const n = new Cypher.Variable();
+
+        const matchQuery = new Cypher.Match(
+            new Cypher.Pattern(start)
+                .related({
+                    length: "*",
+                })
+                .to(end)
+                .assignTo(path)
+        )
+            .foreach(n)
+            .in(Cypher.nodes(path))
+            .do(new Cypher.Merge(new Cypher.Pattern(n).related().to(end)));
+
+        const queryResult = matchQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH p2 = (this0)-[*]->(this1)
+FOREACH (var3 IN nodes(p2) |
+    MERGE (var3)-[]->(this1)
+)"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });

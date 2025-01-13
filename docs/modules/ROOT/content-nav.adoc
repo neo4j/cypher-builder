@@ -13,6 +13,7 @@
 ** xref:clauses/with.adoc[]
 ** xref:clauses/union.adoc[]
 ** xref:clauses/unwind.adoc[]
+** xref:clauses/foreach.adoc[]
 ** xref:clauses/load-csv.adoc[]
 * Variables and parameters
 ** xref:variables-and-params/variables.adoc[]

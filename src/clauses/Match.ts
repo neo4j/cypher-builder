@@ -27,6 +27,7 @@ import { WithCall } from "./mixins/clauses/WithCall";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFinish } from "./mixins/clauses/WithFinish";
+import { WithForeach } from "./mixins/clauses/WithForeach";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
@@ -49,7 +50,8 @@ export interface Match
         WithFinish,
         WithCallProcedure,
         WithCall,
-        WithOrder {}
+        WithOrder,
+        WithForeach {}
 
 type ShortestStatement = {
     type: "ALL SHORTEST" | "SHORTEST" | "ANY" | "SHORTEST_GROUPS";
@@ -72,7 +74,8 @@ type ShortestStatement = {
     WithFinish,
     WithCallProcedure,
     WithCall,
-    WithOrder
+    WithOrder,
+    WithForeach
 )
 export class Match extends Clause {
     private readonly pattern: Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>;

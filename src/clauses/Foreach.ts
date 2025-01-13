@@ -47,18 +47,34 @@ type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | Dele
 @mixin(WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge)
 export class Foreach extends Clause {
     private readonly variable: Variable;
-    private readonly listExpr: Expr;
-    private readonly mapClause: ForeachClauses;
+    private listExpr: Expr | undefined;
+    private mapClause: ForeachClauses | undefined;
 
-    constructor(variable: Variable, listExpr: Expr, mapClause: ForeachClauses) {
+    constructor(variable: Variable);
+    /** @deprecated Use `in` and `map` instead of passing the constructor */
+    constructor(variable: Variable, listExpr: Expr, mapClause: ForeachClauses);
+    constructor(variable: Variable, listExpr?: Expr, mapClause?: ForeachClauses) {
         super();
         this.variable = variable;
         this.listExpr = listExpr;
         this.mapClause = mapClause;
     }
 
+    public in(listExpr: Expr): this {
+        this.listExpr = listExpr;
+        return this;
+    }
+
+    public do(mapClause: ForeachClauses): this {
+        this.mapClause = mapClause;
+        return this;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
+        if (!this.listExpr) throw new Error("FOREACH needs a source list after IN using .in()");
+        if (!this.mapClause) throw new Error("FOREACH needs an updating command using .do()");
+
         const variableStr = this.variable.getCypher(env);
         const listExpr = this.listExpr.getCypher(env);
         const mapClauseStr = this.mapClause.getCypher(env);

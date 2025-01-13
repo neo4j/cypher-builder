@@ -41,6 +41,7 @@ describe("Clause chaining", () => {
             "limit",
             "skip",
             "offset",
+            "foreach",
         ] as const)("Match.%s", (value) => {
             expect(clause[value]).toBeFunction();
         });
