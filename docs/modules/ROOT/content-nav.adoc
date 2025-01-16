@@ -15,6 +15,7 @@
 ** xref:clauses/unwind.adoc[]
 ** xref:clauses/foreach.adoc[]
 ** xref:clauses/load-csv.adoc[]
+** xref:clauses/use.adoc[]
 * Variables and parameters
 ** xref:variables-and-params/variables.adoc[]
 ** xref:variables-and-params/parameters.adoc[]

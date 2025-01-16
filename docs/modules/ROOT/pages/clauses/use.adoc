@@ -1,0 +1,25 @@
+[[use]]
+:description: This page describes how to create `USE` clauses.
+= Use
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/use/[`USE`] clause with the `Cypher.Use` class.
+
+To create an `Use` clause, you can pass an existing query to `Cypher.use` to prepend an `USE` statement before the query:
+
+
+[source, javascript]
+----
+const n = new Cypher.Node();
+const query = new Cypher.Match(new Cypher.Pattern(n, { labels: ["Movie"] })).return(n);
+
+const useQuery = new Cypher.Use("mydb", query);
+----
+
+This generates the following query:
+
+[source, cypher]
+----
+USE mydb
+MATCH (this0:Movie)
+RETURN this0
+----
