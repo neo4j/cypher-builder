@@ -1,5 +1,19 @@
 # @neo4j/cypher-builder
 
+## 2.2.1
+
+### Patch Changes
+
+- [#490](https://github.com/neo4j/cypher-builder/pull/490) [`98694cb`](https://github.com/neo4j/cypher-builder/commit/98694cbbd225e3046528c70cd7e6d79442485e4d) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `WITH HEADERS` in `LoadCSV`:
+
+    ```js
+    new Cypher.LoadCSV("https://data.neo4j.com/bands/artists.csv", new Cypher.Variable()).withHeaders();
+    ```
+
+    ```cypher
+    LOAD CSV WITH HEADERS FROM \\"https://data.neo4j.com/bands/artists.csv\\" AS var0
+    ```
+
 ## 2.2.0
 
 ### Minor Changes
