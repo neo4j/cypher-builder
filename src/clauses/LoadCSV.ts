@@ -39,10 +39,17 @@ export class LoadCSV extends Clause {
     private readonly url: string;
     private readonly alias: Variable;
 
+    private _withHeaders = false;
+
     constructor(url: string, alias: Variable) {
         super();
         this.url = url;
         this.alias = alias;
+    }
+
+    public withHeaders(): this {
+        this._withHeaders = true;
+        return this;
     }
 
     /**
@@ -51,6 +58,7 @@ export class LoadCSV extends Clause {
     public getCypher(env: CypherEnvironment): string {
         const aliasStr = this.alias.getCypher(env);
         const nextClause = this.compileNextClause(env);
-        return `LOAD CSV FROM "${this.url}" AS ${aliasStr}${nextClause}`;
+        const withHeadersStr = this._withHeaders ? "WITH HEADERS " : "";
+        return `LOAD CSV ${withHeadersStr}FROM "${this.url}" AS ${aliasStr}${nextClause}`;
     }
 }
