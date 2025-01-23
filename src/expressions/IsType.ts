@@ -49,6 +49,8 @@ const BaseTypes = {
     TIME_WITH_TIME_ZONE: "TIME WITH TIME ZONE",
 } as const;
 
+type Type = ValueOf<typeof BaseTypes> | ListType;
+
 /**
  * Generates a cypher `LIST<...>` type
  * @example
@@ -93,10 +95,11 @@ export function isNotType(expr: Expr, type: Type | Type[]): IsType {
     return new IsType(expr, asArray(type), true);
 }
 
-class ListType {
+export class ListType {
     private readonly types: Type[];
     private _notNull: boolean = false;
 
+    /** @internal */
     constructor(type: Type[]) {
         this.types = type;
     }
@@ -127,6 +130,7 @@ export class IsType extends CypherASTNode {
     private readonly not: boolean;
     private _notNull: boolean = false;
 
+    /** @internal */
     public constructor(expr: Expr, type: Type[], not = false) {
         super();
         this.expr = expr;
@@ -156,8 +160,6 @@ export class IsType extends CypherASTNode {
         return `${exprCypher} ${isStr} :: ${typesStr}`;
     }
 }
-
-type Type = ValueOf<typeof BaseTypes> | ListType;
 
 function compileType(type: Type, env: CypherEnvironment): string {
     if (type instanceof ListType) {

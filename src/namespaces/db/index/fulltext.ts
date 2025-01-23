@@ -33,7 +33,7 @@ const FULLTEXT_NAMESPACE = "db.index.fulltext";
  */
 export function queryNodes(
     indexName: string | Literal<string>,
-    queryString: FulltextPhrase,
+    queryString: string | Literal<string> | Param | Variable,
     options?: { skip?: InputArgument<number>; limit?: InputArgument<number>; analyser?: InputArgument<string> }
 ): CypherProcedure<"node" | "score"> {
     const procedureArgs = getFulltextArguments(indexName, queryString, options);
@@ -47,7 +47,7 @@ export function queryNodes(
  */
 export function queryRelationships(
     indexName: string | Literal<string>,
-    queryString: FulltextPhrase,
+    queryString: string | Literal<string> | Param | Variable,
     options?: { skip?: InputArgument<number>; limit?: InputArgument<number>; analyser?: InputArgument<string> }
 ): CypherProcedure<"relationship" | "score"> {
     const procedureArgs = getFulltextArguments(indexName, queryString, options);

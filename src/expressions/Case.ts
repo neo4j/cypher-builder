@@ -63,11 +63,12 @@ export class Case<C extends Expr | undefined = undefined> extends CypherASTNode 
     }
 }
 
-class When<T extends Expr | undefined> extends CypherASTNode {
+export class When<T extends Expr | undefined> extends CypherASTNode {
     protected parent: Case<T>;
     private readonly predicates: Expr[];
     private result: Expr | undefined;
 
+    /** @internal */
     constructor(parent: Case<T>, predicate: Expr[]) {
         super(parent);
         this.parent = parent;

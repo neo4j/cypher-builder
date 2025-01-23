@@ -30,6 +30,7 @@ type BooleanOperator = "AND" | "NOT" | "OR" | "XOR";
 export abstract class BooleanOp extends CypherASTNode {
     protected operator: BooleanOperator;
 
+    /** @internal */
     constructor(operator: BooleanOperator) {
         super();
         this.operator = operator;
@@ -39,6 +40,7 @@ export abstract class BooleanOp extends CypherASTNode {
 class BinaryOp extends BooleanOp {
     private readonly children: Predicate[];
 
+    /** @internal */
     constructor(operator: BooleanOperator, predicates: Predicate[]) {
         super(operator);
         this.children = predicates;
