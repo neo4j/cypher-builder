@@ -96,3 +96,27 @@ RETURN this0, $param0
     param0: "The Matrix"
 }
 ----
+
+== Adding extra parameters
+
+It is possible to inject extra parameters to the generated parameters object:
+
+[source, javascript]
+----
+const { cypher, params } = query.build({
+    extraParams: {
+        myExtraParam1: "Extra Param",
+    },
+});
+----
+
+The parameter `myExtraParam` will be added to the object `params`:
+
+.Params
+[source, javascript]
+----
+{
+    myExtraParam1: "Extra Param",
+    param0: "The Matrix"
+}
+----
