@@ -1,5 +1,29 @@
 # @neo4j/cypher-builder
 
+## 2.3.0
+
+### Minor Changes
+
+- [#494](https://github.com/neo4j/cypher-builder/pull/494) [`a775b64`](https://github.com/neo4j/cypher-builder/commit/a775b64d8c078f96490a71ba6488b280ed80b817) Thanks [@angrykoala](https://github.com/angrykoala)! - Add cypherVersion parameter in build:
+
+    ```js
+    const { cypher } = matchQuery.build({
+        cypherVersion: "5",
+    });
+    ```
+
+    This prepends the Cypher version to the query:
+
+    ```cypher
+    CYPHER 5
+    MATCH (this0:Movie)
+    RETURN this0
+    ```
+
+### Patch Changes
+
+- [#493](https://github.com/neo4j/cypher-builder/pull/493) [`69ecd03`](https://github.com/neo4j/cypher-builder/commit/69ecd0395414dd27553aec32f0c6878beff2a03c) Thanks [@angrykoala](https://github.com/angrykoala)! - Export the following types: `When`, `IsType`, `ListType`, `BooleanOp` `MathOp`. These types were returned by some functions or methods, but the types themselves were not exported.
+
 ## 2.2.1
 
 ### Patch Changes
