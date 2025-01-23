@@ -27,6 +27,7 @@ export type EnvPrefix = {
 
 export type EnvConfig = {
     labelOperator: ":" | "&";
+    cypherVersion?: "5";
 };
 
 const defaultConfig: EnvConfig = {
