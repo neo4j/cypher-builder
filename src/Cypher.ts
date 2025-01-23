@@ -48,8 +48,8 @@ export { NamedRelationship, RelationshipRef as Relationship } from "./references
 export { NamedVariable, Variable } from "./references/Variable";
 
 // Expressions
-export { Case } from "./expressions/Case";
-export { CypherTypes as TYPE, isNotType, isType } from "./expressions/IsType";
+export { Case, type When } from "./expressions/Case";
+export { CypherTypes as TYPE, isNotType, isType, type IsType, type ListType } from "./expressions/IsType";
 
 // Subquery Expressions
 export { Collect } from "./expressions/subquery/Collect";
@@ -74,7 +74,7 @@ export { MapExpr as Map } from "./expressions/map/MapExpr";
 export { MapProjection } from "./expressions/map/MapProjection";
 
 // --Operations
-export { and, not, or, xor } from "./expressions/operations/boolean";
+export { and, not, or, xor, type BooleanOp } from "./expressions/operations/boolean";
 export {
     contains,
     endsWith,
@@ -91,8 +91,9 @@ export {
     matches,
     neq,
     startsWith,
+    type ComparisonOp,
 } from "./expressions/operations/comparison";
-export { divide, minus, mod, multiply, plus, pow } from "./expressions/operations/math";
+export { divide, minus, mod, multiply, plus, pow, type MathOp } from "./expressions/operations/math";
 
 // --Functions
 export { CypherFunction as Function } from "./expressions/functions/CypherFunctions";
@@ -167,8 +168,6 @@ export type { CypherAggregationFunction as AggregationFunction } from "./express
 export type { PredicateFunction } from "./expressions/functions/predicate";
 export type { HasLabel } from "./expressions/HasLabel";
 export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
-export type { BooleanOp } from "./expressions/operations/boolean";
-export type { ComparisonOp } from "./expressions/operations/comparison";
 export type { PathAssign } from "./pattern/PathAssign";
 export type { Yield } from "./procedures/Yield";
 export type { Label } from "./references/Label";

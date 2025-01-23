@@ -18,7 +18,6 @@
  */
 
 import { CypherASTNode } from "../CypherASTNode";
-import type { EnvConfig } from "../Environment";
 import { CypherEnvironment } from "../Environment";
 import type { CypherResult } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
@@ -28,7 +27,9 @@ import { toCypherParams } from "../utils/to-cypher-params";
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 
 /** Config fields for the .build method */
-export type BuildConfig = Partial<EnvConfig>;
+export type BuildConfig = Partial<{
+    labelOperator: ":" | "&";
+}>;
 
 /** Represents a clause AST node
  *  @group Internal

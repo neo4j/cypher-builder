@@ -46,6 +46,7 @@ export class ComparisonOp extends CypherASTNode {
     protected leftExpr: Expr;
     protected rightExpr: Expr | undefined;
 
+    /** @internal */
     constructor(operator: ComparisonOperator, left: Expr, right: Expr | undefined) {
         super();
         this.operator = operator;

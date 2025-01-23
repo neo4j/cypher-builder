@@ -27,6 +27,7 @@ export class MathOp extends CypherASTNode {
     private readonly operator: MathOperator;
     private readonly exprs: Expr[];
 
+    /** @internal */
     constructor(operator: MathOperator, exprs: Expr[]) {
         super();
         this.operator = operator;
