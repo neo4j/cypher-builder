@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import type { Variable } from "../..";
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import type { MapExpr } from "../../expressions/map/MapExpr";
@@ -26,7 +27,7 @@ import type { PropertyRef } from "../../references/PropertyRef";
 import type { Expr } from "../../types";
 import { padBlock } from "../../utils/pad-block";
 
-export type SetParam = [PropertyRef, Exclude<Expr, MapExpr | MapProjection>] | Label;
+export type SetParam = [PropertyRef, Exclude<Expr, MapExpr | MapProjection>] | [Variable, MapExpr | Variable] | Label;
 
 export class SetClause extends CypherASTNode {
     protected params: SetParam[];
