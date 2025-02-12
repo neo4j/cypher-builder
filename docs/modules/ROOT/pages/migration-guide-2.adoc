@@ -261,7 +261,7 @@ All parameters are optional, and `build` can still be called without parameters.
 
 === Remove support for fine-grained prefix
 
-The prefix parameter prefix for the `.build` method in 1.x supports passing an object with the parameters `params` and `variables` for fine grained control of what prefix to use in different kind of variables. This has been removed in 2.x, supporting only a `string` as global prefix:
+The first parameter "prefix" for the `.build` method in 1.x supports passing an object with the parameters `params` and `variables` for fine grained control of what prefix to use in different kind of variables. This has been removed in 2.x, supporting only a `string` as global prefix:
 
 No longer supported:
 [source, javascript]
@@ -272,7 +272,7 @@ myClause.build({
 });
 ----
 
-Instead, a single string can be used as prefix for bother, variables and params:
+Instead, a single string can be used as prefix for both, variables and params:
 
 Now:
 [source, javascript]
@@ -317,10 +317,10 @@ WITH *, this0
 
 === Update callback parameter
 
-`Cypher.Raw`` no longer exposes a `Cypher.Environment` variable. Instead, it provides a `CypherRawContext` instance with a `compile` method to compile nested elements in custom cypher.
+`Cypher.Raw` no longer exposes a `Cypher.Environment` variable. Instead, it provides an instance of `CypherRawContext` with a `compile` method to compile nested elements in custom cypher.
 
 
-Before
+Before.
 [source, typescript]
 ----
 const releasedParam = new Cypher.Param(1999);
@@ -433,15 +433,15 @@ Passing parameters without spread will still return a defined type.
 new Cypher.Literal(`Hello "World"`);
 ----
 
-Would generate the following Cypher
+Would generate the following Cypher:
 
-Before: 
+Before.
 [source, cypher]
 ----
 "Hello "World""
 ----
 
-Now:
+Now.
 [source, cypher]
 ----
 "Hello \"World\""
