@@ -320,7 +320,7 @@ WITH *, this0
 `Cypher.Raw` no longer exposes a `Cypher.Environment` variable. Instead, it provides an instance of `CypherRawContext` with a `compile` method to compile nested elements in custom cypher.
 
 
-Before.
+Before:
 [source, typescript]
 ----
 const releasedParam = new Cypher.Param(1999);
@@ -333,7 +333,7 @@ const rawCypher = new Cypher.Raw((env: Cypher.Environment) => {
 });
 ----
 
-Now.
+Now:
 [source, typescript]
 ----
 const releasedParam = new Cypher.Param(1999);
@@ -435,13 +435,13 @@ new Cypher.Literal(`Hello "World"`);
 
 Would generate the following Cypher:
 
-Before.
+Before:
 [source, cypher]
 ----
 "Hello "World""
 ----
 
-Now.
+Now:
 [source, cypher]
 ----
 "Hello \"World\""
