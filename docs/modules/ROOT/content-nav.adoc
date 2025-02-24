@@ -11,6 +11,7 @@
 ** xref:clauses/return.adoc[]
 ** xref:clauses/merge.adoc[]
 ** xref:clauses/with.adoc[]
+** xref:clauses/set.adoc[]
 ** xref:clauses/union.adoc[]
 ** xref:clauses/unwind.adoc[]
 ** xref:clauses/foreach.adoc[]

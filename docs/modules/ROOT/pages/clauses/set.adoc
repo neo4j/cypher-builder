@@ -1,0 +1,102 @@
+[[set]]
+:description: This page describes how to create `SET` clauses.
+= Set
+
+This page describes how to create link:https://neo4j.com/docs/cypher-manual/current/clauses/set/[`SET`] clauses. `SET` statements are appended to an a clause with the method `.set`.
+
+
+== Update properties with `SET`
+
+The `.set` method is used to update xref:../variables-and-params/variables.adoc#_properties[properties] of a node or relationship.
+
+For example, to update the properties of a node:
+
+[source, javascript]
+----
+const personNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["Person"] })).set(
+    [personNode.property("name"), new Cypher.Param("Keanu")],
+);
+----
+
+This will generate the following Cypher:
+
+[source, cypher]
+----
+MATCH (this0:Person)
+SET
+    this0.name = $param1
+RETURN this0
+----
+
+Multiple pairs of property-expression can be passed to update multiple properties:
+
+[source, javascript]
+----
+const personNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["Person"] })).set(
+    [personNode.property("name"), new Cypher.Param("Keanu")],
+    [personNode.property("year"), new Cypher.Param(1999)]
+);
+----
+
+This will generate the following Cypher:
+
+[source, cypher]
+----
+MATCH (this0:Person)
+SET
+    this0.name = $param1,
+    this0.year = $param2
+RETURN this0
+----
+
+
+=== Use `SET` to replace all node properties
+
+To update all the properties of a node or relationship, instead of a property, pass the variable directly as the first element of the array. The second element must be a `Cypher.Map` or a variable:
+
+[source, javascript]
+----
+const personNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["Person"] })).set([
+    personNode, new Cypher.Map({
+        name: new Cypher.Param("Keanu"),
+        year: new Cypher.Param(1999)
+    })
+]);
+----
+
+This generates the cypher:
+
+
+[source, cypher]
+----
+CREATE (this0:Movie)
+SET
+    this0 = { title: $param0, year: $param1 }
+----
+
+
+When using a node:
+
+[source, javascript]
+----
+const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["Person"] })).set([
+    personNode, anotherPersonNode
+]);
+----
+
+[source, cypher]
+----
+CREATE (this1:Movie)
+SET
+    this1 = this0
+----
+
+== Set with labels
+
+Set can be used to update the labels of a node or the type of a relationship. More information on xref:../../how-to/update-labels.adoc#_add_labels[How to update labels].
