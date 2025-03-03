@@ -164,4 +164,62 @@ RETURN this0 AS \`My Result\`"
 }
 `);
     });
+
+    test("Simple example", () => {
+        const personNode = new Cypher.Node();
+        const movieNode = new Cypher.Node();
+
+        const matchQuery = new Cypher.Match(
+            new Cypher.Pattern(personNode, {
+                labels: ["Person"],
+                properties: {
+                    ["person name"]: new Cypher.Literal(`Uneak "Seveer`),
+                },
+            })
+                .related({ type: "ACTED IN" })
+                .to(movieNode, { labels: ["A Movie"] })
+        ).return(personNode);
+
+        const queryResult = matchQuery.build({
+            unsafeEscapeOptions: {
+                disableLabelEscaping: true,
+                disableRelationshipTypeEscaping: true,
+            },
+        });
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Person { \`person name\`: \\"Uneak \\\\\\"Seveer\\" })-[:ACTED IN]->(this1:A Movie)
+RETURN this0"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("Manually escaping with utils", () => {
+        const personNode = new Cypher.Node();
+        const movieNode = new Cypher.Node();
+
+        const matchQuery = new Cypher.Match(
+            new Cypher.Pattern(personNode, {
+                labels: [Cypher.utils.escapeLabel("Person")],
+                properties: {
+                    ["person name"]: new Cypher.Literal(`Uneak "Seveer`),
+                },
+            })
+                .related({ type: Cypher.utils.escapeType("ACTED IN") })
+                .to(movieNode, { labels: [Cypher.utils.escapeLabel("A Movie")] })
+        ).return(personNode);
+
+        const queryResult = matchQuery.build({
+            unsafeEscapeOptions: {
+                disableLabelEscaping: true,
+                disableRelationshipTypeEscaping: true,
+            },
+        });
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Person { \`person name\`: \\"Uneak \\\\\\"Seveer\\" })-[:\`ACTED IN\`]->(this1:\`A Movie\`)
+RETURN this0"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });
