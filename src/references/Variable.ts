@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-import { PropertyRef } from "./PropertyRef";
+import type { CypherEnvironment } from "../Environment";
 import { ListIndex } from "../expressions/list/ListIndex";
 import type { Expr } from "../types";
-import type { CypherEnvironment } from "../Environment";
 import { escapeVariable } from "../utils/escape";
+import { PropertyRef } from "./PropertyRef";
 
 /** Represents a variable
  * @group Variables

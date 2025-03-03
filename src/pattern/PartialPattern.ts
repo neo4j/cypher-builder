@@ -26,7 +26,7 @@ import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { NestedPattern, type NodePattern, type Pattern, type RelationshipPattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
-import { labelsToString } from "./labels-to-string";
+import { typeToString } from "./labels-to-string";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PartialPattern extends WithWhere {}
@@ -99,7 +99,7 @@ export class PartialPattern extends PatternElement {
 
     private getTypeStr(env: CypherEnvironment): string {
         if (this.type) {
-            return labelsToString(this.type, env);
+            return typeToString(this.type, env);
         }
         return "";
     }
