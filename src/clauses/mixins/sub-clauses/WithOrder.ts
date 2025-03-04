@@ -33,7 +33,7 @@ export abstract class WithOrder extends Mixin {
     public orderBy(...exprs: Array<[Expr, Order] | Expr | [Expr]>): this {
         const normalizedExprs = exprs.map((rawExpr): [Expr, Order] => {
             if (Array.isArray(rawExpr)) {
-                return [rawExpr[0], rawExpr[1] || DEFAULT_ORDER];
+                return [rawExpr[0], rawExpr[1] ?? DEFAULT_ORDER];
             }
             return [rawExpr, DEFAULT_ORDER];
         });
