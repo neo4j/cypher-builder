@@ -27,11 +27,9 @@ export function labelsToString(labels: string | string[] | LabelExpr, env: Cyphe
     if (labels instanceof LabelExpr) {
         return addLabelToken(env.config.labelOperator, labels.getCypher(env));
     } else {
-        let escapedLabels = asArray(labels);
+        const shouldEscape = !env.config.unsafeEscapeOptions.disableLabelEscaping;
+        const escapedLabels = shouldEscape ? asArray(labels).map(escapeLabel) : asArray(labels);
 
-        if (!env.config.unsafeEscapeOptions.disableLabelEscaping) {
-            escapedLabels = escapedLabels.map(escapeLabel);
-        }
         return addLabelToken(env.config.labelOperator, ...escapedLabels);
     }
 }
@@ -40,11 +38,8 @@ export function typeToString(type: string | LabelExpr, env: CypherEnvironment): 
     if (type instanceof LabelExpr) {
         return addLabelToken(env.config.labelOperator, type.getCypher(env));
     } else {
-        let escapedType = type;
-
-        if (!env.config.unsafeEscapeOptions.disableRelationshipTypeEscaping) {
-            escapedType = escapeType(escapedType);
-        }
+        const shouldEscape = !env.config.unsafeEscapeOptions.disableRelationshipTypeEscaping;
+        const escapedType = shouldEscape ? escapeType(type) : type;
 
         return addLabelToken(env.config.labelOperator, escapedType);
     }
