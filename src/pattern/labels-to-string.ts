@@ -25,10 +25,6 @@ import { escapeLabel, escapeType } from "../utils/escape";
 
 export function labelsToString(labels: string | string[] | LabelExpr, env: CypherEnvironment): string {
     if (labels instanceof LabelExpr) {
-        const labelsStr = labels.getCypher(env);
-        if (!labelsStr) {
-            return "";
-        }
         return addLabelToken(env.config.labelOperator, labels.getCypher(env));
     } else {
         let escapedLabels = asArray(labels);
@@ -36,19 +32,12 @@ export function labelsToString(labels: string | string[] | LabelExpr, env: Cyphe
         if (!env.config.unsafeEscapeOptions.disableLabelEscaping) {
             escapedLabels = escapedLabels.map(escapeLabel);
         }
-        if (escapedLabels.length === 0) {
-            return "";
-        }
         return addLabelToken(env.config.labelOperator, ...escapedLabels);
     }
 }
 
 export function typeToString(type: string | LabelExpr, env: CypherEnvironment): string {
     if (type instanceof LabelExpr) {
-        const labelsStr = type.getCypher(env);
-        if (!labelsStr) {
-            return "";
-        }
         return addLabelToken(env.config.labelOperator, type.getCypher(env));
     } else {
         let escapedType = type;
