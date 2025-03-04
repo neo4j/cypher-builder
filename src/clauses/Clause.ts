@@ -28,10 +28,48 @@ const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 
 /** Config fields for the .build method */
 export type BuildConfig = Partial<{
+    /** Defines the default operator for adding multiple labels in a Pattern. Defaults to `":"`
+     *
+     * If the target Cypher is version 5 or above, `"&"` is recommended
+     *
+     * @example
+     * `MATCH (this:Movie:Film)`
+     * `MATCH (this:Movie&Film)`
+     *
+     */
     labelOperator: ":" | "&";
+    /** Will prefix generated queries with the Cypher version
+     * @example `CYPHER 5` */
     cypherVersion: "5";
+    /** Prefix variables with given string.
+     *
+     * This is useful to avoid name collisions if separate Cypher queries are generated and merged after generating the strings.
+     * @example `myPrefix_this0`
+     *
+     */
     prefix: string;
+    /** Extra parameters to be added to the result of `.build`. */
     extraParams: Record<string, unknown>;
+    /** Options for disabling automatic escaping of potentially unsafe strings.
+     *
+     * **WARNING**: Changing these options may lead to code injection and unsafe Cypher.
+     */
+    unsafeEscapeOptions: Partial<{
+        /** Disables automatic escaping of node labels.
+         *
+         * If disabled, any labels passed should be properly escaped with `utils.escapeLabel`.
+         *
+         * **WARNING**: Disabling label escaping may lead to code injection and unsafe Cypher.
+         */
+        disableLabelEscaping: boolean;
+        /** Disables automatic escaping of relationship types.
+         *
+         * If disabled, any types passed should be properly escaped with `utils.escapeType`.
+         *
+         * **WARNING**: Disabling type escaping may lead to code injection and unsafe Cypher.
+         */
+        disableRelationshipTypeEscaping: boolean;
+    }>;
 }>;
 
 /** Represents a clause AST node
@@ -41,11 +79,18 @@ export abstract class Clause extends CypherASTNode {
     protected nextClause: Clause | undefined;
 
     /** Compiles a clause into Cypher and params */
-    public build({ prefix, extraParams = {}, labelOperator = ":", cypherVersion }: BuildConfig = {}): CypherResult {
+    public build({
+        prefix,
+        extraParams = {},
+        labelOperator = ":",
+        cypherVersion,
+        unsafeEscapeOptions = {},
+    }: BuildConfig = {}): CypherResult {
         if (this.isRoot) {
             const env = this.getEnv(prefix, {
                 labelOperator,
                 cypherVersion,
+                unsafeEscapeOptions,
             });
             const cypher = this.getCypher(env);
 
@@ -58,7 +103,7 @@ export abstract class Clause extends CypherASTNode {
         }
         const root = this.getRoot();
         if (root instanceof Clause) {
-            return root.build({ prefix, extraParams, labelOperator, cypherVersion });
+            return root.build({ prefix, extraParams, labelOperator, cypherVersion, unsafeEscapeOptions });
         }
         throw new Error(`Cannot build root: ${root.constructor.name}`);
     }

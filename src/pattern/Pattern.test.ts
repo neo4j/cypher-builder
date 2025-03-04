@@ -517,4 +517,16 @@ describe("Patterns", () => {
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Pattern with empty strings as labels and types", () => {
+        const a = new Cypher.Node();
+        const b = new Cypher.Node();
+        const rel = new Cypher.Relationship();
+
+        const query = new TestClause(new Cypher.Pattern(a, { labels: [""] }).related(rel, { type: "" }).to(b));
+        const queryResult = query.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[this1]->(this2)"`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });

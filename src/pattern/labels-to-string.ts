@@ -21,20 +21,26 @@ import type { CypherEnvironment } from "../Environment";
 import { LabelExpr } from "../expressions/labels/label-expressions";
 import { addLabelToken } from "../utils/add-label-token";
 import { asArray } from "../utils/as-array";
-import { escapeLabel } from "../utils/escape";
+import { escapeLabel, escapeType } from "../utils/escape";
 
 export function labelsToString(labels: string | string[] | LabelExpr, env: CypherEnvironment): string {
     if (labels instanceof LabelExpr) {
-        const labelsStr = labels.getCypher(env);
-        if (!labelsStr) {
-            return "";
-        }
         return addLabelToken(env.config.labelOperator, labels.getCypher(env));
     } else {
-        const escapedLabels = asArray(labels).map(escapeLabel);
-        if (escapedLabels.length === 0) {
-            return "";
-        }
+        const shouldEscape = !env.config.unsafeEscapeOptions.disableLabelEscaping;
+        const escapedLabels = shouldEscape ? asArray(labels).map(escapeLabel) : asArray(labels);
+
         return addLabelToken(env.config.labelOperator, ...escapedLabels);
+    }
+}
+
+export function typeToString(type: string | LabelExpr, env: CypherEnvironment): string {
+    if (type instanceof LabelExpr) {
+        return addLabelToken(env.config.labelOperator, type.getCypher(env));
+    } else {
+        const shouldEscape = !env.config.unsafeEscapeOptions.disableRelationshipTypeEscaping;
+        const escapedType = shouldEscape ? escapeType(type) : type;
+
+        return addLabelToken(env.config.labelOperator, escapedType);
     }
 }

@@ -346,3 +346,92 @@ And the following parameters:
 The callback passed into `Raw` is producing the string `this0.prop = $myParam`. 
 To achieve this, it uses the utility method `utils.compileCypher` and passes the variable `movie` and the `context` parameter, which then returns the string `this0`. 
 Finally, the custom parameter `$myParam` is returned in the tuple `[cypher, params]`, ensuring that it is available when executing `match.build()`.
+
+
+== Disable automatic escaping
+
+[WARNING]
+====
+Changing these options may lead to code injection and unsafe Cypher.
+====
+
+Cypher Builder automatically escapes unsafe strings that could lead to code injection. This behavior can be configured using the `unsafeEscapeOptions` parameter in the `.build` method of clauses:
+
+- `disableLabelEscaping` (defaults to `false`): If set to `true`, node labels will not be escaped, even if unsafe.
+- `disableRelationshipTypeEscaping` (defaults to `false`): If set to `true`, relationship types will not be escaped, even if unsafe.
+
+For example:
+
+[source, javascript]
+----
+const personNode = new Cypher.Node();
+const movieNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(
+    new Cypher.Pattern(personNode, {
+        labels: ["Person"],
+        properties: {
+            ["person name"]: new Cypher.Literal(`Uneak "Seveer`),
+        },
+    })
+        .related({ type: "ACTED IN" })
+        .to(movieNode, { labels: ["A Movie"] })
+).return(personNode);
+
+const queryResult = matchQuery.build({
+    unsafeEscapeOptions: {
+        disableLabelEscaping: true,
+        disableRelationshipTypeEscaping: true,
+    },
+});
+----
+
+This query will generate the following (invalid) Cypher:
+
+
+[source]
+----
+MATCH (this0:Person { `person name`: "Uneak \"Seveer" })-[:ACTED IN]->(this1:A Movie)
+RETURN this0
+----
+
+Instead of the default (safe) Cypher:
+
+[source, cypher]
+----
+MATCH (this0:Person { `person name`: "Uneak \"Seveer" })-[:`ACTED IN`]->(this1:`A Movie`)
+RETURN this0
+----
+
+=== Manually escaping labels and types
+
+If automatic escaping is disabled, strings used for labels and relationship types must be escaped manually. This can be done using the following utility functions:
+
+* `Cypher.utils.escapeLabel(str)`
+* `Cypher.utils.escapeType(str)`
+
+In the previous example, labels and types can be escaped manually to produce valid Cypher:
+
+[source, javascript]
+----
+const personNode = new Cypher.Node();
+const movieNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(
+    new Cypher.Pattern(personNode, {
+        labels: [Cypher.utils.escapeLabel("Person")],
+        properties: {
+            ["person name"]: new Cypher.Literal(`Uneak "Seveer`),
+        },
+    })
+        .related({ type: Cypher.utils.escapeType("ACTED IN") })
+        .to(movieNode, { labels: [Cypher.utils.escapeLabel("A Movie")] })
+).return(personNode);
+
+const queryResult = matchQuery.build({
+    unsafeEscapeOptions: {
+        disableLabelEscaping: true,
+        disableRelationshipTypeEscaping: true,
+    },
+});
+----

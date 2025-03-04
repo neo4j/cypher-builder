@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import type { BuildConfig } from "./Cypher";
 import { Param } from "./references/Param";
 import type { NamedReference, Variable } from "./references/Variable";
 
@@ -26,12 +27,15 @@ export type EnvPrefix = {
 };
 
 export type EnvConfig = {
-    labelOperator: ":" | "&";
-    cypherVersion?: "5";
+    labelOperator: NonNullable<BuildConfig["labelOperator"]>;
+    unsafeEscapeOptions: NonNullable<BuildConfig["unsafeEscapeOptions"]>;
+    cypherVersion: BuildConfig["cypherVersion"];
 };
 
 const defaultConfig: EnvConfig = {
     labelOperator: ":",
+    unsafeEscapeOptions: {},
+    cypherVersion: undefined,
 };
 
 /** Hold the internal references of Cypher parameters and variables

@@ -39,4 +39,13 @@ describe("stringifyObject", () => {
 
         expect(result).toBe(`{ nobody: expects }`);
     });
+
+    test("escape keys", () => {
+        const result = stringifyObject({
+            ["this name"]: "this",
+            that: `"that"`,
+        });
+
+        expect(result).toBe(`{ \`this name\`: this, that: "that" }`);
+    });
 });
