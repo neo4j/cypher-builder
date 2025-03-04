@@ -51,7 +51,7 @@ export class Foreach extends Clause {
     private mapClause: ForeachClauses | undefined;
 
     constructor(variable: Variable);
-    /** @deprecated Use `in` and `map` instead of passing the constructor */
+    /** @deprecated Use `in` and `do` instead of passing the constructor */
     constructor(variable: Variable, listExpr: Expr, mapClause: ForeachClauses);
     constructor(variable: Variable, listExpr?: Expr, mapClause?: ForeachClauses) {
         super();
