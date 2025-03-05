@@ -70,7 +70,7 @@ const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["P
 ]);
 ----
 
-This generates the cypher:
+This generates the Cypher:
 
 
 [source, cypher]
