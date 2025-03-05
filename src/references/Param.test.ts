@@ -23,7 +23,7 @@ import { TestClause } from "../utils/TestClause";
 describe("Params", () => {
     test("Ignore unused parameters", () => {
         const param1 = new Cypher.Param(1999);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
         const param2 = new Cypher.Param(2000); // Param created but not used by cypher builder
 
         const movieNode = new Cypher.Node();
@@ -34,6 +34,8 @@ describe("Params", () => {
 
         const { params } = query.build();
 
+        // Param 2 should exist for this test to be relevant
+        expect(param2).toBeInstanceOf(Cypher.Param);
         expect(params).toMatchInlineSnapshot(`
             {
               "param0": 1999,

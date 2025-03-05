@@ -59,8 +59,8 @@ If merging these queries before executing `.build()` (e.g. using `Cypher.utils.c
 [source, javascript]
 ----
 const cypher=`
-${match1.build("movie")}
-${match2.build("person")}
+${match1.build({prefix: "movie"})}
+${match2.build({prefix: "person"})}
 `
 ----
 
