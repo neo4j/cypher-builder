@@ -357,7 +357,7 @@ Changing these options may lead to code injection and unsafe Cypher.
 
 Cypher Builder automatically escapes unsafe strings that could lead to code injection. This behavior can be configured using the `unsafeEscapeOptions` parameter in the `.build` method of clauses:
 
-- `disableLabelEscaping` (defaults to `false`): If set to `true`, node labels will not be escaped, even if unsafe.
+- `disableNodeLabelEscaping` (defaults to `false`): If set to `true`, node labels will not be escaped, even if unsafe.
 - `disableRelationshipTypeEscaping` (defaults to `false`): If set to `true`, relationship types will not be escaped, even if unsafe.
 
 For example:
@@ -380,7 +380,7 @@ const matchQuery = new Cypher.Match(
 
 const queryResult = matchQuery.build({
     unsafeEscapeOptions: {
-        disableLabelEscaping: true,
+        disableNodeLabelEscaping: true,
         disableRelationshipTypeEscaping: true,
     },
 });
@@ -430,7 +430,7 @@ const matchQuery = new Cypher.Match(
 
 const queryResult = matchQuery.build({
     unsafeEscapeOptions: {
-        disableLabelEscaping: true,
+        disableNodeLabelEscaping: true,
         disableRelationshipTypeEscaping: true,
     },
 });

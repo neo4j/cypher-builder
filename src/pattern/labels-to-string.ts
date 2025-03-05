@@ -27,7 +27,7 @@ export function labelsToString(labels: string | string[] | LabelExpr, env: Cyphe
     if (labels instanceof LabelExpr) {
         return addLabelToken(env.config.labelOperator, labels.getCypher(env));
     } else {
-        const shouldEscape = !env.config.unsafeEscapeOptions.disableLabelEscaping;
+        const shouldEscape = !env.config.unsafeEscapeOptions.disableNodeLabelEscaping;
         const escapedLabels = shouldEscape ? asArray(labels).map(escapeLabel) : asArray(labels);
 
         return addLabelToken(env.config.labelOperator, ...escapedLabels);
