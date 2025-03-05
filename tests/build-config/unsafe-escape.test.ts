@@ -39,7 +39,7 @@ describe("escapeUnsafeLabels", () => {
 
         const queryResult = matchQuery.build({
             unsafeEscapeOptions: {
-                disableLabelEscaping: false,
+                disableNodeLabelEscaping: false,
                 disableRelationshipTypeEscaping: false,
             },
         });
@@ -76,7 +76,7 @@ RETURN this0 AS \`My Result\`"
 
         const queryResult = matchQuery.build({
             unsafeEscapeOptions: {
-                disableLabelEscaping: true,
+                disableNodeLabelEscaping: true,
                 disableRelationshipTypeEscaping: true,
             },
         });
@@ -113,7 +113,7 @@ RETURN this0 AS \`My Result\`"
 
         const queryResult = matchQuery.build({
             unsafeEscapeOptions: {
-                disableLabelEscaping: true,
+                disableNodeLabelEscaping: true,
             },
         });
         expect(queryResult.cypher).toMatchInlineSnapshot(`
@@ -182,7 +182,7 @@ RETURN this0 AS \`My Result\`"
 
         const queryResult = matchQuery.build({
             unsafeEscapeOptions: {
-                disableLabelEscaping: true,
+                disableNodeLabelEscaping: true,
                 disableRelationshipTypeEscaping: true,
             },
         });
@@ -211,7 +211,7 @@ RETURN this0"
 
         const queryResult = matchQuery.build({
             unsafeEscapeOptions: {
-                disableLabelEscaping: true,
+                disableNodeLabelEscaping: true,
                 disableRelationshipTypeEscaping: true,
             },
         });
