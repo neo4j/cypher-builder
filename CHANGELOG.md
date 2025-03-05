@@ -1,5 +1,42 @@
 # @neo4j/cypher-builder
 
+## 2.4.0
+
+### Minor Changes
+
+- [#508](https://github.com/neo4j/cypher-builder/pull/508) [`12a78f0`](https://github.com/neo4j/cypher-builder/commit/12a78f0b1e6e20e8b27f6dd986730918c521b05c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `+=` operator on `SET`
+
+    ```js
+    const movie = new Cypher.Node();
+    const clause = new Cypher.Match(new Cypher.Pattern(movie)).set([
+        movie,
+        "+=",
+        new Cypher.Map({
+            title: new Cypher.Param("The Matrix"),
+            year: new Cypher.Param(1999),
+        }),
+    ]);
+    ```
+
+    ```cypher
+    MATCH (this0)
+    SET
+        this0 += { title: $param0, year: $param1 }
+    ```
+
+### Patch Changes
+
+- [#513](https://github.com/neo4j/cypher-builder/pull/513) [`d4337b9`](https://github.com/neo4j/cypher-builder/commit/d4337b9f9973e8f5583295bab848c71970586e7f) Thanks [@angrykoala](https://github.com/angrykoala)! - Rename `disableLabelEscaping` to `disableNodeLabelEscaping` in `unsafeEscapeOptions`:
+
+    ```js
+    const queryResult = matchQuery.build({
+        unsafeEscapeOptions: {
+            disableNodeLabelEscaping: true,
+            disableRelationshipTypeEscaping: true,
+        },
+    });
+    ```
+
 ## 2.3.2
 
 ### Patch Changes
