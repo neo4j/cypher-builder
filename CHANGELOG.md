@@ -48,7 +48,7 @@
     RETURN this0
     ```
 
-    **WARNING:**: Changing these options may lead to code injection and unsafe Cypher.
+    **WARNING**: Changing these options may lead to code injection and unsafe Cypher.
 
 ## 2.3.1
 
