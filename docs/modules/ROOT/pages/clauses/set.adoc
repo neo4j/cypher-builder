@@ -97,6 +97,34 @@ SET
     this1 = this0
 ----
 
+==== Using operator `+=`
+
+When passing a map to update a node properties with `SET`, it is possible to use the operator `+=` to add new properties, instead of replacing them:
+
+[source, javascript]
+----
+const personNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["Person"] })).set([
+    personNode, "+=", new Cypher.Map({
+        name: new Cypher.Param("Keanu"),
+        year: new Cypher.Param(1999)
+    })
+]);
+----
+
+This generates the cypher:
+
+
+[source, cypher]
+----
+CREATE (this0:Movie)
+SET
+    this0 += { title: $param0, year: $param1 }
+----
+
+
+
 == Set with labels
 
 Set can be used to update the labels of a node or the type of a relationship. More information on xref:../../how-to/update-labels.adoc#_add_labels[How to update labels].

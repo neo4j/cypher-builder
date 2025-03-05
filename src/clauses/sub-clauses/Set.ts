@@ -27,7 +27,11 @@ import type { PropertyRef } from "../../references/PropertyRef";
 import type { Expr } from "../../types";
 import { padBlock } from "../../utils/pad-block";
 
-export type SetParam = [PropertyRef, Exclude<Expr, MapExpr | MapProjection>] | [Variable, MapExpr | Variable] | Label;
+export type SetParam =
+    | [PropertyRef, Exclude<Expr, MapExpr | MapProjection>]
+    | [Variable, MapExpr | Variable]
+    | [Variable, "+=", MapExpr | Variable]
+    | Label;
 
 export class SetClause extends CypherASTNode {
     protected params: SetParam[];
@@ -56,6 +60,9 @@ export class SetClause extends CypherASTNode {
     private composeParam(env: CypherEnvironment, setParam: SetParam): string {
         if (setParam instanceof Label) {
             return setParam.getCypher(env);
+        } else if (setParam.length === 3) {
+            const [ref, operator, param] = setParam;
+            return `${ref.getCypher(env)} ${operator} ${param.getCypher(env)}`;
         } else {
             const [ref, param] = setParam;
             return `${ref.getCypher(env)} = ${param.getCypher(env)}`;

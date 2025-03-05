@@ -154,4 +154,46 @@ SET
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Operator += with a map", () => {
+        const movie = new Cypher.Node();
+        const clause = new Cypher.Match(new Cypher.Pattern(movie)).set([
+            movie,
+            "+=",
+            new Cypher.Map({
+                title: new Cypher.Param("The Matrix"),
+                year: new Cypher.Param(1999),
+            }),
+        ]);
+
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+SET
+    this0 += { title: $param0, year: $param1 }"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "The Matrix",
+  "param1": 1999,
+}
+`);
+    });
+
+    test("Operator += with a variable", () => {
+        const movie = new Cypher.Node();
+        const actor = new Cypher.Node();
+        const clause = new Cypher.Match(new Cypher.Pattern(movie, { labels: ["Movie"] }))
+            .match(new Cypher.Pattern(actor, { labels: ["Actor"] }))
+            .set([movie, "+=", actor]);
+
+        const queryResult = clause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+MATCH (this1:Actor)
+SET
+    this0 += this1"
+`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });
