@@ -128,7 +128,6 @@ export class Call extends Clause {
     private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
         // This ensures the import with is added to all the union subqueries
         if (this.subquery instanceof Union || this.subquery instanceof CompositeClause) {
-            //TODO: try to embed the importWithCypher in the environment for a more generic solution
             return this.subquery.getCypher(env, importWithCypher);
         }
         return this.subquery.getCypher(env);
