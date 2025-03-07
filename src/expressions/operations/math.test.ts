@@ -52,6 +52,12 @@ describe("math operators", () => {
         expect(cypher).toMatchInlineSnapshot(`"(10 + 3)"`);
     });
 
+    test("plus for concatenating strings", () => {
+        const concatPlus = Cypher.plus(new Cypher.Literal("Hello"), new Cypher.Literal("World!"));
+        const { cypher } = new TestClause(concatPlus).build();
+        expect(cypher).toMatchInlineSnapshot(`"(\\"Hello\\" + \\"World!\\")"`);
+    });
+
     test("minus", () => {
         const subtract = Cypher.minus(new Cypher.Literal(10), new Cypher.Literal(3));
         const { cypher } = new TestClause(subtract).build();
