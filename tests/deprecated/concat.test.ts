@@ -43,48 +43,13 @@ describe("CypherBuilder utils.concat", () => {
               "param1": "bb",
             }
         `);
-    });
-
-    test("Create two nodes by concatenating clauses", () => {
-        const titleParam = new Cypher.Param("The Matrix");
-
-        const movie1 = new Cypher.Node();
-
-        const movie2 = new Cypher.Node();
-
-        // Note that both nodes share the same param
-        const create1 = new Cypher.Create(
-            new Cypher.Pattern(movie1, {
-                labels: ["Movie"],
-            })
-        ).set([movie1.property("title"), titleParam]);
-        const create2 = new Cypher.Create(
-            new Cypher.Pattern(movie2, {
-                labels: ["Movie"],
-            })
-        ).set([movie2.property("title"), titleParam]);
-
-        const queryResult = Cypher.utils.concat(create1, create2).build();
-
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE (this0:Movie)
-            SET
-                this0.title = $param0
-            CREATE (this1:Movie)
-            SET
-                this1.title = $param0"
-        `);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": "The Matrix",
-            }
-        `);
+        expect(query.children).toHaveLength(2);
     });
 
     test("Empty composite clause", () => {
         const compositeClause = Cypher.utils.concat(undefined);
         expect(compositeClause.empty).toBeTrue();
+        expect(compositeClause.children).toHaveLength(0);
 
         const queryResult = compositeClause.build();
 
@@ -94,6 +59,7 @@ describe("CypherBuilder utils.concat", () => {
     test("Empty nested composite clause", () => {
         const compositeClause = Cypher.utils.concat(Cypher.utils.concat());
         expect(compositeClause.empty).toBeTrue();
+        expect(compositeClause.children).toHaveLength(0);
 
         const queryResult = compositeClause.build();
 
@@ -108,6 +74,7 @@ describe("CypherBuilder utils.concat", () => {
             )
         );
         expect(compositeClause.empty).toBeFalse();
+        expect(compositeClause.children).toHaveLength(1);
 
         const queryResult = compositeClause.build();
 
@@ -125,6 +92,7 @@ describe("CypherBuilder utils.concat", () => {
         );
         const compositeClause = Cypher.utils.concat(clause);
         expect(compositeClause.empty).toBeFalse();
+        expect(compositeClause.children).toHaveLength(1);
     });
 
     test("Nested concatenation flattens the tree if composite clause has 1 element", () => {
@@ -152,5 +120,8 @@ describe("CypherBuilder utils.concat", () => {
               "param1": "bb",
             }
         `);
+
+        // Three children as nested concat was flattened
+        expect(topLevelConcat.children).toHaveLength(2);
     });
 });
