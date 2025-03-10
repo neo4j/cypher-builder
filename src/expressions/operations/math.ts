@@ -51,7 +51,7 @@ function createOp(op: MathOperator, exprs: Expr[]): MathOp {
 
 /** Plus (+) operator. This operator may be used for addition operations between numbers or for string concatenation.
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical | Cypher Documentation}
- * @see [String Concatenation](https://neo4j.com/docs/cypher-manual/current/syntax/operators/#syntax-concatenating-two-strings)
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#syntax-concatenating-two-strings | String Concatenation}
  * @group Operators
  * @category Math
  */
