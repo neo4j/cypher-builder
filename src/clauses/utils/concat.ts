@@ -27,7 +27,7 @@ import { Clause } from "../Clause";
  * @category Clauses
  */
 export class CompositeClause extends Clause {
-    private _children: CypherASTNode[];
+    protected _children: CypherASTNode[];
 
     /**
      * @internal
@@ -52,6 +52,7 @@ export class CompositeClause extends Clause {
         return this._children.length === 0;
     }
 
+    /** @deprecated Children from a composite clause should not be accessed as this will lead to unexpected behaviour */
     public get children(): Array<CypherASTNode> {
         return this._children;
     }
@@ -87,8 +88,8 @@ export class CompositeClause extends Clause {
     }
 
     private unwrapComposite(clause: CompositeClause): CypherASTNode {
-        if (clause.children.length === 1) {
-            return clause.children[0]!;
+        if (clause._children.length === 1) {
+            return clause._children[0]!;
         } else return clause;
     }
 }
