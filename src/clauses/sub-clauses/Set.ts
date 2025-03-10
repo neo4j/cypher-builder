@@ -29,8 +29,8 @@ import { padBlock } from "../../utils/pad-block";
 
 export type SetParam =
     | [PropertyRef, Exclude<Expr, MapExpr | MapProjection>]
-    | [Variable, MapExpr | Variable]
-    | [Variable, "+=", MapExpr | Variable]
+    | [Variable, MapExpr | Variable | PropertyRef]
+    | [Variable, "+=", MapExpr | Variable | PropertyRef]
     | Label;
 
 export class SetClause extends CypherASTNode {
