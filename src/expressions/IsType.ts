@@ -79,8 +79,8 @@ export const CypherTypes = {
  * val IS :: INTEGER
  * ```
  */
-export function isType(expr: Expr, type: Type | Type[]): IsType {
-    return new IsType(expr, asArray(type));
+export function isType(expr: Expr, type: Type | Type[]): IsTypeExpr {
+    return new IsTypeExpr(expr, asArray(type));
 }
 
 /**
@@ -91,8 +91,8 @@ export function isType(expr: Expr, type: Type | Type[]): IsType {
  * val IS NOT :: INTEGER
  * ```
  */
-export function isNotType(expr: Expr, type: Type | Type[]): IsType {
-    return new IsType(expr, asArray(type), true);
+export function isNotType(expr: Expr, type: Type | Type[]): IsTypeExpr {
+    return new IsTypeExpr(expr, asArray(type), true);
 }
 
 export class ListType {
@@ -124,7 +124,10 @@ export class ListType {
     }
 }
 
-export class IsType extends CypherASTNode {
+/** @deprecated Use {@link IsTypeExpr} instead */
+export type IsType = IsTypeExpr;
+
+export class IsTypeExpr extends CypherASTNode {
     private readonly expr: Expr;
     private readonly types: Type[];
     private readonly not: boolean;

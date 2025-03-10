@@ -39,7 +39,7 @@ export { QuantifiedPath } from "./pattern/quantified-patterns/QuantifiedPath";
 export { type QuantifiedPattern, type Quantifier } from "./pattern/quantified-patterns/QuantifiedPattern";
 
 // Variables and references
-export { Literal, CypherNull as Null, CypherFalse as false, CypherTrue as true } from "./references/Literal";
+export { CypherFalse as false, Literal, CypherNull as Null, CypherTrue as true } from "./references/Literal";
 export { NamedNode, NodeRef as Node } from "./references/NodeRef";
 export { NamedParam, Param } from "./references/Param";
 export { NamedPathVariable, PathVariable } from "./references/Path";
@@ -49,7 +49,14 @@ export { NamedVariable, Variable } from "./references/Variable";
 
 // Expressions
 export { Case, type When } from "./expressions/Case";
-export { CypherTypes as TYPE, isNotType, isType, type IsType, type ListType } from "./expressions/IsType";
+export {
+    isNotType,
+    isType,
+    CypherTypes as TYPE,
+    type IsType,
+    type IsTypeExpr,
+    type ListType,
+} from "./expressions/IsType";
 
 // Subquery Expressions
 export { Collect } from "./expressions/subquery/Collect";
@@ -114,7 +121,6 @@ export * as graph from "./expressions/functions/graph";
 export * from "./expressions/functions/list";
 export { file, linenumber } from "./expressions/functions/load-csv";
 export {
-    ROUND_PRECISION_MODE,
     abs,
     acos,
     asin,
@@ -135,6 +141,7 @@ export {
     radians,
     rand,
     round,
+    ROUND_PRECISION_MODE,
     sign,
     sin,
     sqrt,
@@ -146,12 +153,12 @@ export * from "./expressions/functions/scalar";
 export * from "./expressions/functions/spatial";
 export * from "./expressions/functions/string";
 export {
-    TemporalUnit,
     cypherDate as date,
     cypherDatetime as datetime,
     duration,
     cypherLocalDatetime as localdatetime,
     cypherLocalTime as localtime,
+    TemporalUnit,
     cypherTime as time,
 } from "./expressions/functions/temporal";
 
