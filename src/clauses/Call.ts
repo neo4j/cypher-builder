@@ -48,7 +48,7 @@ export interface Call
         WithMerge,
         WithOrder {}
 
-type InTransactionConfig = {
+export type CallInTransactionOptions = {
     ofRows?: number;
     onError?: "continue" | "break" | "fail";
     concurrentTransactions?: number;
@@ -62,7 +62,7 @@ type InTransactionConfig = {
 export class Call extends Clause {
     private readonly subquery: CypherASTNode;
     private _importWith?: ImportWith;
-    private inTransactionsConfig?: InTransactionConfig;
+    private inTransactionsConfig?: CallInTransactionOptions;
     private readonly variableScope?: Variable[] | "*";
     private _optional: boolean = false;
 
@@ -91,7 +91,7 @@ export class Call extends Clause {
         return this;
     }
 
-    public inTransactions(config: InTransactionConfig = {}): this {
+    public inTransactions(config: CallInTransactionOptions = {}): this {
         this.inTransactionsConfig = config;
         return this;
     }

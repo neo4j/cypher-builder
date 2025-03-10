@@ -20,7 +20,7 @@
 import type { CypherCompilable } from "../types";
 import { escapeLiteralString } from "../utils/escape";
 
-type LiteralValue = string | number | boolean | null | Array<LiteralValue>;
+export type LiteralValue = string | number | boolean | null | Array<LiteralValue>;
 
 /** Represents a literal value
  * @group Variables

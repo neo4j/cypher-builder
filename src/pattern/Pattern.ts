@@ -26,24 +26,30 @@ import { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
-import type { LengthOption } from "./PartialPattern";
 import { PartialPattern } from "./PartialPattern";
 import { PathAssign } from "./PathAssign";
 import { PatternElement } from "./PatternElement";
 import { labelsToString } from "./labels-to-string";
 import { QuantifiedPattern, type Quantifier } from "./quantified-patterns/QuantifiedPattern";
 
-export type NodePattern = {
+export type NodePatternOptions = {
     labels?: string | string[] | LabelExpr;
     properties?: Record<string, Expr>;
 };
 
-export type RelationshipPattern = {
+export type RelationshipPatternOptions = {
     type?: string | LabelExpr;
     properties?: Record<string, Expr>;
     direction?: "left" | "right" | "undirected";
-    length?: LengthOption;
+    length?:
+        | number
+        | "*"
+        | { min: number; max?: number }
+        | { min?: number; max: number }
+        | { min: number; max: number };
 };
+
+export type LengthOption = RelationshipPatternOptions["length"];
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Pattern extends WithWhere {}
@@ -59,9 +65,9 @@ export class Pattern extends PatternElement {
 
     protected previous: PartialPattern | undefined;
 
-    constructor(nodeConfig?: NodePattern);
-    constructor(node: Variable | undefined, options?: NodePattern);
-    constructor(nodeVariable: Variable | NodePattern | undefined, options: NodePattern = {}) {
+    constructor(nodeConfig?: NodePatternOptions);
+    constructor(node: Variable | undefined, options?: NodePatternOptions);
+    constructor(nodeVariable: Variable | NodePatternOptions | undefined, options: NodePatternOptions = {}) {
         const firstArgumentIsVar = nodeVariable instanceof Variable;
         const variable = firstArgumentIsVar ? nodeVariable : undefined;
         super(variable);
@@ -74,9 +80,9 @@ export class Pattern extends PatternElement {
         this.properties = options.properties;
     }
 
-    public related(ref?: Variable, options?: RelationshipPattern): PartialPattern;
-    public related(ref: RelationshipPattern): PartialPattern;
-    public related(ref?: Variable | RelationshipPattern, options?: RelationshipPattern): PartialPattern {
+    public related(ref?: Variable, options?: RelationshipPatternOptions): PartialPattern;
+    public related(ref: RelationshipPatternOptions): PartialPattern;
+    public related(ref?: Variable | RelationshipPatternOptions, options?: RelationshipPatternOptions): PartialPattern {
         if (ref instanceof Variable) {
             return new PartialPattern(ref, options ?? {}, this);
         } else {
@@ -119,7 +125,11 @@ export class Pattern extends PatternElement {
 
 // This exists to support a "previous" parameter without exposing this to the user
 export class NestedPattern extends Pattern {
-    constructor(nodeVariable?: Variable | NodePattern, options: NodePattern = {}, previous?: PartialPattern) {
+    constructor(
+        nodeVariable?: Variable | NodePatternOptions,
+        options: NodePatternOptions = {},
+        previous?: PartialPattern
+    ) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
         super(nodeVariable as any, options);
         this.previous = previous;

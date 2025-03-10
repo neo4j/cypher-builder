@@ -31,14 +31,11 @@ import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
-import type { DeleteClause } from "./sub-clauses/Delete";
-import type { RemoveClause } from "./sub-clauses/Remove";
-import type { SetClause } from "./sub-clauses/Set";
 import { mixin } from "./utils/mixin";
 
 export interface Foreach extends WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge {}
 
-type ForeachClauses = Foreach | SetClause | RemoveClause | Create | Merge | DeleteClause;
+export type ForeachClauses = Foreach | Create | Merge;
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/foreach/ | Cypher Documentation}

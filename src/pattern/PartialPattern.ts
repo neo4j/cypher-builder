@@ -24,34 +24,28 @@ import type { LabelExpr } from "../expressions/labels/label-expressions";
 import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { NestedPattern, type NodePattern, type Pattern, type RelationshipPattern } from "./Pattern";
+import type { LengthOption, RelationshipPatternOptions } from "./Pattern";
+import { NestedPattern, type NodePatternOptions, type Pattern } from "./Pattern";
 import { PatternElement } from "./PatternElement";
 import { typeToString } from "./labels-to-string";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PartialPattern extends WithWhere {}
 
-export type LengthOption =
-    | number
-    | "*"
-    | { min: number; max?: number }
-    | { min?: number; max: number }
-    | { min: number; max: number };
-
-/** Partial pattern, cannot be used until connected to a node
+/** Partial pattern, cannot be used until connected to a node with {@link to}
  * @group Patterns
  */
 
 @mixin(WithWhere)
 export class PartialPattern extends PatternElement {
-    private readonly length: LengthOption | undefined;
+    private readonly length: LengthOption;
     private readonly direction: "left" | "right" | "undirected";
     private readonly previous: Pattern;
     private readonly properties: Record<string, Expr> | undefined;
 
     private readonly type: string | LabelExpr | undefined;
 
-    constructor(variable: Variable | undefined, options: RelationshipPattern, previous: Pattern) {
+    constructor(variable: Variable | undefined, options: RelationshipPatternOptions, previous: Pattern) {
         super(variable);
 
         this.type = options.type;
@@ -61,9 +55,10 @@ export class PartialPattern extends PatternElement {
         this.length = options.length;
     }
 
-    public to(node: Variable | undefined, options?: NodePattern): Pattern;
-    public to(nodeConfig?: NodePattern): Pattern;
-    public to(node?: Variable | NodePattern, options?: NodePattern): Pattern {
+    /** Connects pattern to a target Node */
+    public to(node: Variable | undefined, options?: NodePatternOptions): Pattern;
+    public to(nodeConfig?: NodePatternOptions): Pattern;
+    public to(node?: Variable | NodePatternOptions, options?: NodePatternOptions): Pattern {
         return new NestedPattern(node, options, this);
     }
 
