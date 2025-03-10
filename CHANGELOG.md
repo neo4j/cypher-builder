@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 2.4.1
+
+### Patch Changes
+
+- [#514](https://github.com/neo4j/cypher-builder/pull/514) [`9f6966e`](https://github.com/neo4j/cypher-builder/commit/9f6966e63eef297ab78c8fcba0fc3f59ff5392ab) Thanks [@i-like-robots](https://github.com/i-like-robots)! - Refactored SetParam type definition to allow PropertyRef values
+
 ## 2.4.0
 
 ### Minor Changes
