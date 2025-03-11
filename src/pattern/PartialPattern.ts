@@ -24,8 +24,13 @@ import type { LabelExpr } from "../expressions/labels/label-expressions";
 import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import type { LengthOption, RelationshipPatternOptions } from "./Pattern";
-import { NestedPattern, type NodePatternOptions, type Pattern } from "./Pattern";
+import {
+    NestedPattern,
+    type LengthOption,
+    type NodePatternOptions,
+    type Pattern,
+    type RelationshipPatternOptions,
+} from "./Pattern";
 import { PatternElement } from "./PatternElement";
 import { typeToString } from "./labels-to-string";
 
