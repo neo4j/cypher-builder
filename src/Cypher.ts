@@ -179,7 +179,7 @@ export type { PredicateFunction } from "./expressions/functions/predicate";
 export type { HasLabel } from "./expressions/HasLabel";
 export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
 export type { PathAssign } from "./pattern/PathAssign";
-export type { Yield } from "./procedures/Yield";
+export type { Yield, YieldProjectionColumn } from "./procedures/Yield";
 export type { Label } from "./references/Label";
 export type { CypherResult, Expr, NormalizationType, Operation, Predicate } from "./types";
 export type { InputArgument } from "./utils/normalize-variable";

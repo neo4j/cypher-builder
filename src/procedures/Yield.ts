@@ -101,7 +101,7 @@ export class Yield<T extends string = string> extends Clause {
     }
 }
 
-export class YieldProjection extends Projection {
+class YieldProjection extends Projection {
     constructor(columns: Array<YieldProjectionColumn<string>>) {
         super([]);
         this.addYieldColumns(columns);
