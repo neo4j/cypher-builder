@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import type { ConcatOp } from ".";
 import type { CypherEnvironment } from "./Environment";
 import type { Raw } from "./clauses/Raw";
 import type { Case } from "./expressions/Case";
@@ -40,7 +41,7 @@ import type { Literal } from "./references/Literal";
 import type { PropertyRef } from "./references/PropertyRef";
 import type { Variable } from "./references/Variable";
 
-export type Operation = BooleanOp | ComparisonOp | MathOp;
+export type Operation = BooleanOp | ComparisonOp | MathOp | ConcatOp;
 
 /** Represents a Cypher Expression
  *  @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/ | Cypher Documentation}
