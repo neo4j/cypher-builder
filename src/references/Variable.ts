@@ -53,6 +53,7 @@ export class Variable {
     }
 }
 
+/** @internal */
 export interface NamedReference extends Variable {
     readonly id: string;
 }

@@ -61,7 +61,7 @@ export class CypherEnvironment {
         };
     }
 
-    public getReferenceId(reference: Variable | NamedReference): string {
+    public getReferenceId(reference: Variable): string {
         if (this.isNamedReference(reference)) return reference.id; // Overrides ids for compatibility reasons
         const id = this.references.get(reference);
         if (!id) {
@@ -117,8 +117,7 @@ export class CypherEnvironment {
         return varId;
     }
 
-    private isNamedReference(ref: Variable | NamedReference): ref is NamedReference {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-        return Boolean((ref as any).id);
+    private isNamedReference(ref: Variable): ref is NamedReference {
+        return "id" in ref;
     }
 }

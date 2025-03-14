@@ -79,13 +79,9 @@ export abstract class Clause extends CypherASTNode {
     protected nextClause: Clause | undefined;
 
     /** Compiles a clause into Cypher and params */
-    public build({
-        prefix,
-        extraParams = {},
-        labelOperator = ":",
-        cypherVersion,
-        unsafeEscapeOptions = {},
-    }: BuildConfig = {}): CypherResult {
+    public build(config?: BuildConfig): CypherResult {
+        const { prefix, extraParams = {}, labelOperator = ":", cypherVersion, unsafeEscapeOptions = {} } = config ?? {};
+
         if (this.isRoot) {
             const env = this.getEnv(prefix, {
                 labelOperator,

@@ -18,5 +18,5 @@
     "validation": {
         "invalidLink": true
     },
-    "intentionallyNotExported": ["CypherCompilable"]
+    "intentionallyNotExported": ["CypherCompilable", "NamedReference"]
 }

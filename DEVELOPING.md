@@ -1,6 +1,6 @@
 # Development
 
-- `npm test` to run cypher builder tests
+- `npm test` to run cypher builder tests. Most tests are located next to the code that are testing as a `.test.ts` file
 - `npm run build` to compile cypher builder library
 - `npm run docs` to generate the API reference docs
 

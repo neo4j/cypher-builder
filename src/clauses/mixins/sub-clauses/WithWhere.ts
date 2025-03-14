@@ -28,7 +28,7 @@ import type { Predicate } from "../../../types";
 import { Where } from "../../sub-clauses/Where";
 import { Mixin } from "../Mixin";
 
-export type VariableLike = Variable | Literal | PropertyRef;
+type VariableLike = Variable | Literal | PropertyRef;
 
 export abstract class WithWhere extends Mixin {
     protected whereSubClause: Where | undefined;

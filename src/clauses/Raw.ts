@@ -31,7 +31,9 @@ type RawCypherCallback = (context: RawCypherContext) => [string, Record<string, 
 export class Raw extends Clause {
     private readonly callback: RawCypherCallback;
 
-    constructor(callback: RawCypherCallback | string) {
+    constructor(
+        callback: ((context: RawCypherContext) => [string, Record<string, unknown>] | string | undefined) | string
+    ) {
         super();
         if (typeof callback === "string") {
             this.callback = this.stringToCallback(callback);
@@ -62,6 +64,7 @@ export class Raw extends Clause {
 export class RawCypherContext {
     private readonly env: CypherEnvironment;
 
+    /** @internal */
     constructor(env: CypherEnvironment) {
         this.env = env;
     }
