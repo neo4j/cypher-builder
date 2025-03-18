@@ -131,7 +131,7 @@ function labelNot(label: string | LabelExpr): LabelExpr {
  * @group Expressions
  * @category Operators
  */
-const wildcard = new WildcardLabelExpr();
+const wildcard: LabelExpr = new WildcardLabelExpr();
 
 export const labelExpr = {
     and: labelAnd,

@@ -109,6 +109,7 @@ export class ListType {
         return this;
     }
 
+    /** @internal */
     public getCypher(env: CypherEnvironment): string {
         // Note that all types must be nullable or non nullable
         const notNullStr = this._notNull ? " NOT NULL" : "";
@@ -143,6 +144,7 @@ export class IsType extends CypherASTNode {
         return this;
     }
 
+    /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const exprCypher = this.expr.getCypher(env);
         const isStr = this.not ? "IS NOT" : "IS";

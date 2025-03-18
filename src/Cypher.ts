@@ -18,10 +18,10 @@
  */
 
 // Clauses
-export { Call, OptionalCall } from "./clauses/Call";
+export { Call, OptionalCall, type CallInTransactionOptions } from "./clauses/Call";
 export { Create } from "./clauses/Create";
 export { Finish } from "./clauses/Finish";
-export { Foreach } from "./clauses/Foreach";
+export { Foreach, type ForeachClauses } from "./clauses/Foreach";
 export { LoadCSV } from "./clauses/LoadCSV";
 export { Match, OptionalMatch } from "./clauses/Match";
 export { Merge } from "./clauses/Merge";
@@ -34,12 +34,19 @@ export { With } from "./clauses/With";
 
 // Patterns
 export { labelExpr } from "./expressions/labels/label-expressions";
-export { Pattern } from "./pattern/Pattern";
+export type { PartialPattern } from "./pattern/PartialPattern";
+export { Pattern, type NodePatternOptions, type RelationshipPatternOptions } from "./pattern/Pattern";
 export { QuantifiedPath } from "./pattern/quantified-patterns/QuantifiedPath";
-export { type QuantifiedPattern, type Quantifier } from "./pattern/quantified-patterns/QuantifiedPattern";
+export type { QuantifiedPattern, Quantifier } from "./pattern/quantified-patterns/QuantifiedPattern";
 
 // Variables and references
-export { CypherFalse as false, Literal, CypherNull as Null, CypherTrue as true } from "./references/Literal";
+export {
+    CypherFalse as false,
+    Literal,
+    CypherNull as Null,
+    CypherTrue as true,
+    type LiteralValue,
+} from "./references/Literal";
 export { NamedNode, NodeRef as Node } from "./references/NodeRef";
 export { NamedParam, Param } from "./references/Param";
 export { NamedPathVariable, PathVariable } from "./references/Path";
@@ -67,6 +74,7 @@ export * as vector from "./namespaces/vector/vector";
 // --Lists
 export { ListComprehension } from "./expressions/list/ListComprehension";
 export { ListExpr as List } from "./expressions/list/ListExpr";
+export type { ListIndex } from "./expressions/list/ListIndex";
 export { PatternComprehension } from "./expressions/list/PatternComprehension";
 
 // --Map
@@ -161,6 +169,7 @@ export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } fr
 
 // Types
 export type { BuildConfig, Clause } from "./clauses/Clause";
+export type { DeleteInput } from "./clauses/sub-clauses/Delete";
 export type { Order } from "./clauses/sub-clauses/OrderBy";
 export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
@@ -170,7 +179,7 @@ export type { PredicateFunction } from "./expressions/functions/predicate";
 export type { HasLabel } from "./expressions/HasLabel";
 export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
 export type { PathAssign } from "./pattern/PathAssign";
-export type { Yield } from "./procedures/Yield";
+export type { Yield, YieldProjectionColumn } from "./procedures/Yield";
 export type { Label } from "./references/Label";
 export type { CypherResult, Expr, NormalizationType, Operation, Predicate } from "./types";
 export type { InputArgument } from "./utils/normalize-variable";
