@@ -43,11 +43,12 @@ export interface Unwind
         WithMerge,
         WithOrder {}
 
+/** @group Clauses */
 export type UnwindProjectionColumn = [Expr, string | Variable | Literal];
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/unwind/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 @mixin(WithWith, WithDelete, WithMatch, WithReturn, WithSetRemove, WithCreate, WithMerge, WithOrder)
 export class Unwind extends Clause {

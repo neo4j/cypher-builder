@@ -18,5 +18,24 @@
     "validation": {
         "invalidLink": true
     },
-    "intentionallyNotExported": ["CypherCompilable", "NamedReference"]
+    "intentionallyNotExported": ["CypherCompilable", "NamedReference"],
+    "navigation": {
+        "includeCategories": true,
+        "includeGroups": true
+    },
+    "categorizeByGroup": true,
+    "groupOrder": [
+        "Clauses",
+        "Subqueries",
+        "Patterns",
+        "Variables",
+        "Functions",
+        "Procedures",
+        "Namespaces",
+        "Expressions",
+        "Operators",
+        "Maps",
+        "Lists",
+        "Utils"
+    ]
 }

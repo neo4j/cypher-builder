@@ -22,7 +22,7 @@ import { Literal, toString } from "../..";
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 
 /**
- * @group Cypher Functions
+ * @group Functions
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.date/apoc.date.convertFormat/)
  * @example
  * ```ts

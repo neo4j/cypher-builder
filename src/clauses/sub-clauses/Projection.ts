@@ -17,12 +17,13 @@
  * limitations under the License.
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { Expr } from "../../types";
 import { CypherASTNode } from "../../CypherASTNode";
-import type { Variable } from "../../references/Variable";
+import type { CypherEnvironment } from "../../Environment";
 import type { Literal } from "../../references/Literal";
+import type { Variable } from "../../references/Variable";
+import type { Expr } from "../../types";
 
+/** @group Clauses */
 export type ProjectionColumn = Expr | [Expr, string | Variable | Literal];
 
 export class Projection extends CypherASTNode {

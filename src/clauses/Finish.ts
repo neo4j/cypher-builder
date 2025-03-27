@@ -21,7 +21,7 @@ import { Clause } from "./Clause";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/finish/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 export class Finish extends Clause {
     /** @internal */

@@ -23,6 +23,10 @@ import type { Expr } from "../../types";
 
 type MathOperator = "+" | "-" | "*" | "/" | "%" | "^";
 
+/**
+ * @group Operators
+ * @category Math
+ */
 export class MathOp extends CypherASTNode {
     private readonly operator: MathOperator;
     private readonly exprs: Expr[];
@@ -35,7 +39,7 @@ export class MathOp extends CypherASTNode {
     }
 
     /**
-     * @hidden
+     * @internal
      */
     public getCypher(env: CypherEnvironment): string {
         const exprs = this.exprs.map((e) => e.getCypher(env));

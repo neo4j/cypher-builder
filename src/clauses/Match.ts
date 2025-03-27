@@ -60,7 +60,7 @@ type ShortestStatement = {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/match/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 @mixin(
     WithReturn,
@@ -190,7 +190,7 @@ export class Match extends Clause {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 export class OptionalMatch extends Match {
     constructor(pattern: Pattern) {

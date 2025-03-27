@@ -48,6 +48,7 @@ export interface Call
         WithMerge,
         WithOrder {}
 
+/** @group Subqueries */
 export type CallInTransactionOptions = {
     ofRows?: number;
     onError?: "continue" | "break" | "fail";
@@ -56,7 +57,7 @@ export type CallInTransactionOptions = {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/ | Cypher Documentation}
- * @category Clauses
+ * @group Subqueries
  */
 @mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSetRemove, WithMatch, WithCreate, WithMerge, WithOrder)
 export class Call extends Clause {
@@ -179,7 +180,7 @@ export class Call extends Clause {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call | Cypher Documentation}
- * @category Clauses
+ * @group Subqueries
  */
 export class OptionalCall extends Call {
     constructor(subquery: Clause, variableScope?: Variable[] | "*") {

@@ -37,6 +37,7 @@ import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
 // With requires an alias for expressions that are not variables
+/** @inline */
 export type WithProjection = Variable | [Expr, string | Variable | Literal];
 
 export interface With
@@ -53,7 +54,7 @@ export interface With
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/with/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 @mixin(
     WithOrder,

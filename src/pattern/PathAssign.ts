@@ -21,6 +21,9 @@ import type { PathVariable, Pattern, QuantifiedPath } from "..";
 import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 
+/**
+ * @group Patterns
+ */
 export class PathAssign<T extends Pattern | QuantifiedPath> extends CypherASTNode {
     private readonly variable: PathVariable;
     private readonly pattern: T;

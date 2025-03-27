@@ -27,6 +27,7 @@ import type { PropertyRef } from "../../references/PropertyRef";
 import type { Expr } from "../../types";
 import { padBlock } from "../../utils/pad-block";
 
+/** @group Clauses */
 export type SetParam =
     | [PropertyRef, Exclude<Expr, MapExpr | MapProjection>]
     | [Variable, MapExpr | Variable | PropertyRef]

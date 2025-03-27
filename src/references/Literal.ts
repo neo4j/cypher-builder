@@ -20,10 +20,14 @@
 import type { CypherCompilable } from "../types";
 import { escapeLiteralString } from "../utils/escape";
 
+/**
+ * Possible types of a {@link Literal} expression
+ * @group Expressions
+ */
 export type LiteralValue = string | number | boolean | null | Array<LiteralValue>;
 
 /** Represents a literal value
- * @group Variables
+ * @group Expressions
  */
 export class Literal<T extends LiteralValue = LiteralValue> implements CypherCompilable {
     public value: T;
@@ -53,16 +57,16 @@ export class Literal<T extends LiteralValue = LiteralValue> implements CypherCom
 }
 
 /** Represents a `NULL` literal value
- * @group Variables
+ * @group Expressions
  */
 export const CypherNull = new Literal(null);
 
 /** Represents a `true` literal value
- * @group Variables
+ * @group Expressions
  */
 export const CypherTrue = new Literal(true);
 
 /** Represents a `false` literal value
- * @group Variables
+ * @group Expressions
  */
 export const CypherFalse = new Literal(false);

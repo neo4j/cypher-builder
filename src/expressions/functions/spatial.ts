@@ -22,7 +22,7 @@ import { CypherFunction } from "./CypherFunctions";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/spatial/ | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Spatial
  */
 export function point(variable: Expr): CypherFunction {
@@ -31,7 +31,7 @@ export function point(variable: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/4.3/functions/spatial/#functions-distance | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Spatial
  * @deprecated No longer supported in Neo4j 5. Use {@link point.distance} instead.
  */
@@ -41,7 +41,7 @@ export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Spatial
  * @example Generated Cypher: `point.distance(point1, point2)`
  */
@@ -51,7 +51,7 @@ point.distance = (lexpr: Expr, rexpr: Expr): CypherFunction => {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-withinBBox | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Spatial
  */
 point.withinBBox = (point: Expr, lexpr: Expr, rexpr: Expr): CypherFunction => {

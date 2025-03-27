@@ -32,11 +32,13 @@ import { PatternElement } from "./PatternElement";
 import { labelsToString } from "./labels-to-string";
 import { QuantifiedPattern, type Quantifier } from "./quantified-patterns/QuantifiedPattern";
 
+/** @group Patterns */
 export type NodePatternOptions = {
     labels?: string | string[] | LabelExpr;
     properties?: Record<string, Expr>;
 };
 
+/** @group Patterns */
 export type RelationshipPatternOptions = {
     type?: string | LabelExpr;
     properties?: Record<string, Expr>;

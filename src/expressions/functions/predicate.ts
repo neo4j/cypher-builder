@@ -27,14 +27,14 @@ import { CypherFunction } from "./CypherFunctions";
 
 /** Represents a predicate function that can be used in a WHERE statement
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/predicate/ | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Predicate
  */
 export class PredicateFunction extends CypherFunction {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-all | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Predicate
  */
 export function all(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
@@ -43,7 +43,7 @@ export function all(variable: Variable, listExpr: Expr, whereFilter: Predicate):
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-any | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Predicate
  */
 export function any(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
@@ -52,7 +52,7 @@ export function any(variable: Variable, listExpr: Expr, whereFilter: Predicate):
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-exists | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Predicate
  */
 export function exists(pattern: Pattern): PredicateFunction {
@@ -61,7 +61,7 @@ export function exists(pattern: Pattern): PredicateFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-isempty | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Predicate
  */
 export function isEmpty(list: Expr): PredicateFunction {
@@ -70,7 +70,7 @@ export function isEmpty(list: Expr): PredicateFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-none | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Predicate
  */
 export function none(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {
@@ -79,7 +79,7 @@ export function none(variable: Variable, listExpr: Expr, whereFilter: Predicate)
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/predicate/#functions-single | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Predicate
  */
 export function single(variable: Variable, listExpr: Expr, whereFilter: Predicate): PredicateFunction {

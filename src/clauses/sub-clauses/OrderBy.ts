@@ -23,6 +23,7 @@ import type { Expr } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 import { normalizeExpr } from "../../utils/normalize-variable";
 
+/** @group Clauses */
 export type Order = "ASC" | "DESC";
 
 type OrderProjectionElement = [Expr, Order];

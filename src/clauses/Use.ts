@@ -23,7 +23,7 @@ import { Clause } from "./Clause";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/5/clauses/use/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 export class Use extends Clause {
     private readonly graph: string;
