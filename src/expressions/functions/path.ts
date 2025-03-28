@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import type { PathVariable } from "../..";
+import type { PathVariable } from "../../references/Path";
 import { CypherFunction } from "./CypherFunctions";
 
 /**

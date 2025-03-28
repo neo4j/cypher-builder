@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import type { Expr } from "../..";
 import { CypherProcedure } from "../../procedures/CypherProcedure";
+import type { Expr } from "../../types";
 import { normalizeExpr, normalizeList } from "../../utils/normalize-variable";
 
 const CDC_NAMESPACE = "db.cdc";

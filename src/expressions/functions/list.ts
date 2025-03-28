@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import type { Variable } from "../..";
 import type { CypherEnvironment } from "../../Environment";
+import type { Variable } from "../../references/Variable";
 import type { Expr } from "../../types";
 import { filterTruthy } from "../../utils/filter-truthy";
 import { normalizeExpr } from "../../utils/normalize-variable";

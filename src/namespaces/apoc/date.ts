@@ -17,9 +17,10 @@
  * limitations under the License.
  */
 
-import type { Expr } from "../..";
-import { Literal, toString } from "../..";
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
+import { toString } from "../../expressions/functions/string";
+import { Literal } from "../../references/Literal";
+import type { Expr } from "../../types";
 
 /**
  * @group Functions

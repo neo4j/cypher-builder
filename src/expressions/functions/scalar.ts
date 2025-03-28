@@ -17,7 +17,8 @@
  * limitations under the License.
  */
 
-import { Raw, type Pattern } from "../..";
+import { Raw } from "../../clauses/Raw";
+import type { Pattern } from "../../pattern/Pattern";
 import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
