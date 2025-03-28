@@ -41,13 +41,21 @@ import type { Literal } from "./references/Literal";
 import type { PropertyRef } from "./references/PropertyRef";
 import type { Variable } from "./references/Variable";
 
+/**
+ * @group Expressions
+ * @deprecated This type will no longer be exported, use {@link Expr} instead
+ */
 export type Operation = BooleanOp | ComparisonOp | MathOp | ConcatOp;
 
 /** Represents a Cypher Expression
- *  @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/ | Cypher Documentation}
+ * @group Expressions
+ * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/ | Cypher Documentation}
  */
 export type Expr =
-    | Operation
+    | BooleanOp
+    | ComparisonOp
+    | MathOp
+    | ConcatOp
     | Variable
     | Literal
     | PropertyRef
@@ -62,7 +70,9 @@ export type Expr =
     | Case<ComparisonOp>
     | Collect;
 
-/** Represents a predicate statement (i.e returns a boolean). Note that Raw is only added for compatibility */
+/** Represents a predicate expression (i.e returns a boolean). Note that {@link Raw} is only added for compatibility
+ *  @group Expressions
+ */
 export type Predicate =
     | BooleanOp
     | ComparisonOp
@@ -75,11 +85,16 @@ export type Predicate =
     | HasLabel
     | IsType;
 
+/** @group Utils */
 export type CypherResult = {
     cypher: string;
     params: Record<string, unknown>;
 };
 
+/**
+ * @group Operators
+ * @category Comparison
+ */
 export type NormalizationType = "NFC" | "NFD" | "NFKC" | "NFKD";
 
 /** Defines the interface for a class that can be compiled into Cypher */

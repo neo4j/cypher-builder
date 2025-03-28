@@ -24,8 +24,8 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 
 /** Case statement
+ * @group Expressions
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#query-syntax-case | Cypher Documentation}
- * @group Other
  */
 export class Case<C extends Expr | undefined = undefined> extends CypherASTNode {
     private readonly comparator: Expr | undefined;
@@ -63,6 +63,9 @@ export class Case<C extends Expr | undefined = undefined> extends CypherASTNode 
     }
 }
 
+/**
+ * @group Expressions
+ */
 export class When<T extends Expr | undefined> extends CypherASTNode {
     protected parent: Case<T>;
     private readonly predicates: Expr[];

@@ -26,7 +26,9 @@ import { toCypherParams } from "../utils/to-cypher-params";
 
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 
-/** Config fields for the .build method */
+/** Config fields of the .build() method
+ * @group Clauses
+ */
 export type BuildConfig = Partial<{
     /** Defines the default operator for adding multiple labels in a Pattern. Defaults to `":"`
      *
@@ -73,7 +75,7 @@ export type BuildConfig = Partial<{
 }>;
 
 /** Represents a clause AST node
- *  @group Internal
+ *  @group Clauses
  */
 export abstract class Clause extends CypherASTNode {
     protected nextClause: Clause | undefined;

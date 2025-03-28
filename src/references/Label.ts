@@ -24,16 +24,25 @@ import type { NodeRef } from "../references/NodeRef";
 import { addLabelToken } from "../utils/add-label-token";
 import { escapeLabel } from "../utils/escape";
 
-/** A node Label
- * @group Other
- * @example `:Movie`
+/** Represents a label attached to a {@link NodeRef | Node}
+ * @group Variables
+ * @example
+ *
+ * ```js
+ * movies.label("Movie")
+ * ```
+ *
+ * _Cypher:_
+ * ```cypher
+ * this0:Movie
+ * ```
  */
 export class Label extends CypherASTNode {
     protected readonly node: NodeRef;
     private readonly label: string;
 
     /**
-     * @hidden
+     * @internal
      */
     constructor(node: NodeRef, label: string) {
         super();
@@ -57,7 +66,7 @@ export class DynamicLabel extends Label {
     private readonly expr: Expr;
 
     /**
-     * @hidden
+     * @internal
      */
     constructor(node: NodeRef, expr: Expr) {
         super(node, "");

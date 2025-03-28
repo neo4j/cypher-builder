@@ -17,12 +17,12 @@
  * limitations under the License.
  */
 
-import type { PathVariable } from "../..";
+import type { PathVariable } from "../../references/Path";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Path
  */
 export function nodes(path: PathVariable): CypherFunction {
@@ -31,7 +31,7 @@ export function nodes(path: PathVariable): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Path
  */
 export function relationships(path: PathVariable): CypherFunction {

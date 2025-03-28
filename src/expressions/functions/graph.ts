@@ -22,24 +22,21 @@ import { CypherFunction } from "./CypherFunctions";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-names | Cypher Documentation}
- * @group Cypher Functions
- * @category Graph
+ * @group Functions
  */
 export function names(): CypherFunction {
     return new CypherFunction("graph.names");
 }
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-propertiesByName | Cypher Documentation}
- * @group Cypher Functions
- * @category Graph
+ * @group Functions
  */
 export function propertiesByName(name: Expr): CypherFunction {
     return new CypherFunction("graph.propertiesByName", [name]);
 }
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/graph/#functions-graph-byname | Cypher Documentation}
- * @group Cypher Functions
- * @category Graph
+ * @group Functions
  */
 export function byName(graphName: Expr): CypherFunction {
     return new CypherFunction("graph.propertiesByName", [graphName]);

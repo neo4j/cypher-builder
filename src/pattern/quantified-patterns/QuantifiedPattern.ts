@@ -21,6 +21,7 @@ import type { CypherEnvironment } from "../../Environment";
 import type { CypherCompilable } from "../../types";
 import type { Pattern } from "../Pattern";
 
+/** @group Patterns */
 export type Quantifier =
     | number
     | "*"

@@ -20,10 +20,16 @@
 import { Clause } from "../clauses/Clause";
 import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
+import type { Literal } from "../references/Literal";
+import type { Param } from "../references/Param";
+import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { YieldProjectionColumn } from "./Yield";
 import { Yield } from "./Yield";
+
+/** @group Procedures */
+export type InputArgument<T extends string | number> = T | Variable | Literal<T> | Param<T>;
 
 /** Cypher Procedure that does not yield columns
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call/ | Cypher Documentation}

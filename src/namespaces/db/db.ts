@@ -23,6 +23,9 @@ import type { Expr } from "../../types";
 import { normalizeExpr } from "../../utils/normalize-variable";
 
 export * as cdc from "./cdc";
+/**
+ * @hideGroups
+ */
 export * as index from "./index/dbIndex";
 export * as schema from "./schema";
 

@@ -23,6 +23,7 @@ import type { NodeRef } from "../../references/NodeRef";
 import type { RelationshipRef } from "../../references/RelationshipRef";
 import type { Variable } from "../../references/Variable";
 
+/** @group Clauses */
 export type DeleteInput = Array<NodeRef | RelationshipRef | Variable>;
 
 type DetachKeyword = "DETACH" | "NODETACH";

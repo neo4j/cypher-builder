@@ -24,7 +24,7 @@ import { CypherFunction } from "./CypherFunctions";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-count | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function count(expr: Expr | "*"): CypherAggregationFunction {
@@ -33,7 +33,7 @@ export function count(expr: Expr | "*"): CypherAggregationFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-min | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function min(expr: Expr): CypherAggregationFunction {
@@ -42,7 +42,7 @@ export function min(expr: Expr): CypherAggregationFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-max | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function max(expr: Expr): CypherAggregationFunction {
@@ -51,7 +51,7 @@ export function max(expr: Expr): CypherAggregationFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-avg | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function avg(expr: Expr): CypherAggregationFunction {
@@ -60,7 +60,7 @@ export function avg(expr: Expr): CypherAggregationFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-sum | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function sum(expr: Expr): CypherAggregationFunction {
@@ -69,7 +69,7 @@ export function sum(expr: Expr): CypherAggregationFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-collect | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function collect(expr: Expr): CypherAggregationFunction {
@@ -78,7 +78,7 @@ export function collect(expr: Expr): CypherAggregationFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-percentilecont | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function percentileCont(expr: Expr, percentile: number | Expr): CypherAggregationFunction {
@@ -88,7 +88,7 @@ export function percentileCont(expr: Expr, percentile: number | Expr): CypherAgg
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-percentiledisc | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function percentileDisc(expr: Expr, percentile: number | Expr): CypherAggregationFunction {
@@ -98,7 +98,7 @@ export function percentileDisc(expr: Expr, percentile: number | Expr): CypherAgg
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-stdev | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function stDev(expr: Expr): CypherAggregationFunction {
@@ -107,7 +107,7 @@ export function stDev(expr: Expr): CypherAggregationFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-stdevp | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export function stDevP(expr: Expr): CypherAggregationFunction {
@@ -116,7 +116,7 @@ export function stDevP(expr: Expr): CypherAggregationFunction {
 
 /** Represents a Cypher Aggregation function
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Aggregations
  */
 export class CypherAggregationFunction extends CypherFunction {

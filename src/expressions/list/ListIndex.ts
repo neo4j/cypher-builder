@@ -23,12 +23,15 @@ import type { Variable } from "../../references/Variable";
 import type { CypherCompilable } from "../../types";
 import type { ListExpr } from "./ListExpr";
 
+/**
+ * @group Lists
+ */
 export class ListIndex implements CypherCompilable {
     private readonly value: Variable | ListExpr | PropertyRef;
     private readonly index: number;
 
     /**
-     * @hidden
+     * @internal
      */
     constructor(variable: Variable | ListExpr | PropertyRef, index: number) {
         this.value = variable;

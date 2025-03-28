@@ -25,7 +25,7 @@ import type { Variable } from "../../../references/Variable";
 import type { Expr } from "../../../types";
 
 /**
- * @group Cypher Functions
+ * @group Functions
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.cypher/apoc.cypher.runFirstColumnMany/)
  */
 export function runFirstColumnMany(
@@ -36,7 +36,7 @@ export function runFirstColumnMany(
 }
 
 /**
- * @group Cypher Functions
+ * @group Functions
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.cypher/apoc.cypher.runFirstColumnSingle/)
  */
 export function runFirstColumnSingle(

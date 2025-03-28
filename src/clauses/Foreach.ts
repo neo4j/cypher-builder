@@ -35,11 +35,14 @@ import { mixin } from "./utils/mixin";
 
 export interface Foreach extends WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge {}
 
+/**
+ * Valid Clauses to be used inside {@link Foreach}
+ * @group Clauses */
 export type ForeachClauses = Foreach | Create | Merge;
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/foreach/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 @mixin(WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge)
 export class Foreach extends Clause {

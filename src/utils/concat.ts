@@ -21,7 +21,6 @@ import type { Clause } from "../clauses/Clause";
 import { CompositeClause } from "../clauses/utils/concat";
 
 /** Concatenates multiple {@link Clause | clauses} into a single clause
- * @category Clauses
  */
 export function concat(...clauses: Array<Clause | undefined>): CompositeClause {
     return new CompositeClause(clauses, "\n");

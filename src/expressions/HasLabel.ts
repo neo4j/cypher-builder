@@ -27,7 +27,7 @@ import { escapeLabel } from "../utils/escape";
 
 /** Generates a predicate to check if a node has a label or a relationship has a type
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/where/#filter-on-node-label | Cypher Documentation}
- * @group Other
+ * @group Expressions
  * @example
  * ```cypher
  * MATCH(this)
@@ -39,7 +39,7 @@ export class HasLabel extends CypherASTNode {
     private readonly expectedLabels: string[] | LabelExpr;
 
     /**
-     * @hidden
+     * @internal
      */
     constructor(node: NodeRef | RelationshipRef, expectedLabels: string[] | LabelExpr) {
         super();

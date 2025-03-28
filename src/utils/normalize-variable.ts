@@ -27,8 +27,6 @@ import { isCypherCompilable } from "./is-cypher-compilable";
 
 type VariableInput = string | number | Variable | Literal | Param;
 
-export type InputArgument<T extends string | number> = T | Variable | Literal<T> | Param<T>;
-
 export function normalizeVariable(value: VariableInput): Variable | Literal | Param {
     if (isCypherCompilable(value)) return value;
     return new Literal(value);

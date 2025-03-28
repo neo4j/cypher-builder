@@ -23,7 +23,7 @@ import { Subquery } from "./Subquery";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/collect/ | Cypher Documentation}
- * @group Other
+ * @group Subqueries
  */
 export class Collect extends Subquery {
     /**

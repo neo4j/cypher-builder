@@ -17,14 +17,14 @@
  * limitations under the License.
  */
 
-import { Union } from "../..";
 import type { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import { filterTruthy } from "../../utils/filter-truthy";
 import { Clause } from "../Clause";
+import { Union } from "../Union";
 
-/** The result of multiple clauses concatenated with {@link concat}
- * @category Clauses
+/** The result of multiple clauses concatenated with `Cypher.utils.concat`
+ * @group Utils
  */
 export class CompositeClause extends Clause {
     protected _children: CypherASTNode[];

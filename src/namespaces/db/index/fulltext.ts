@@ -17,10 +17,12 @@
  * limitations under the License.
  */
 
-import type { Literal, Param, Variable } from "../../../Cypher";
+import type { InputArgument } from "../../../procedures/CypherProcedure";
 import { CypherProcedure, VoidCypherProcedure } from "../../../procedures/CypherProcedure";
+import type { Literal } from "../../../references/Literal";
+import type { Param } from "../../../references/Param";
+import type { Variable } from "../../../references/Variable";
 import type { Expr } from "../../../types";
-import type { InputArgument } from "../../../utils/normalize-variable";
 import { normalizeMap, normalizeVariable } from "../../../utils/normalize-variable";
 
 type FulltextPhrase = string | Literal<string> | Param | Variable;

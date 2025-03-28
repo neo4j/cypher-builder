@@ -25,7 +25,8 @@ import { filterTruthy } from "../../utils/filter-truthy";
 type BooleanOperator = "AND" | "NOT" | "OR" | "XOR";
 
 /**
- *  @group Internal
+ * @group Operators
+ * @category Boolean
  */
 export abstract class BooleanOp extends CypherASTNode {
     protected operator: BooleanOperator;
@@ -48,7 +49,7 @@ class BinaryOp extends BooleanOp {
     }
 
     /**
-     * @hidden
+     * @internal
      */
     public getCypher(env: CypherEnvironment): string {
         const childrenStrs = this.children.map((c) => c.getCypher(env)).filter(Boolean);
@@ -72,7 +73,7 @@ class NotOp extends BooleanOp {
     }
 
     /**
-     * @hidden
+     * @internal
      */
     public getCypher(env: CypherEnvironment): string {
         const childStr = this.child.getCypher(env);

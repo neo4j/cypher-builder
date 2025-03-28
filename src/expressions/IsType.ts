@@ -49,6 +49,9 @@ const BaseTypes = {
     TIME_WITH_TIME_ZONE: "TIME WITH TIME ZONE",
 } as const;
 
+/**
+ * @inline
+ */
 type Type = ValueOf<typeof BaseTypes> | ListType;
 
 /**
@@ -73,6 +76,7 @@ export const CypherTypes = {
 
 /**
  * Type predicate expression
+ * @group Expressions
  * @see {@link https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/ | Cypher Documentation}
  * @example
  * ```cypher
@@ -85,6 +89,7 @@ export function isType(expr: Expr, type: Type | Type[]): IsType {
 
 /**
  * Type predicate expression with NOT
+ * @group Expressions
  * @see {@link https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/#type-predicate-not | Cypher Documentation}
  * @example
  * ```cypher
@@ -95,6 +100,9 @@ export function isNotType(expr: Expr, type: Type | Type[]): IsType {
     return new IsType(expr, asArray(type), true);
 }
 
+/**
+ * @group Expressions
+ */
 export class ListType {
     private readonly types: Type[];
     private _notNull: boolean = false;
@@ -125,6 +133,9 @@ export class ListType {
     }
 }
 
+/**
+ * @group Expressions
+ */
 export class IsType extends CypherASTNode {
     private readonly expr: Expr;
     private readonly types: Type[];

@@ -22,10 +22,11 @@ import type { CypherCompilable } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 import { escapeLabel } from "../../utils/escape";
 
+/** @group Patterns */
 export type LabelOperator = "&" | "|" | "!" | "%";
 
 /**
- * Label Expression
+ * Label Expression to be used as part of a Pattern
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#label-expressions | Cypher Documentation}
  * @group Patterns
  */

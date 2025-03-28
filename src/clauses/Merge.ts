@@ -38,7 +38,7 @@ export interface Merge extends WithReturn, WithSetRemove, WithDelete, WithWith, 
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 @mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder)
 export class Merge extends Clause {
