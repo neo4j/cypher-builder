@@ -32,7 +32,7 @@ export interface LoadCSV extends WithReturn, WithCreate, WithMerge, WithWith, Wi
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 @mixin(WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure)
 export class LoadCSV extends Clause {

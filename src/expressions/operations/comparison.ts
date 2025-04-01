@@ -39,7 +39,13 @@ type ComparisonOperator =
     | "IS NOT NORMALIZED";
 
 /**
- *  @group Internal
+ * Comparison operator expression. Created using comparison operator functions.
+ * @group Operators
+ * @category Comparison
+ * @example
+ * ```
+ * const op = Cypher.gt(var1, var2);
+ * ```
  */
 export class ComparisonOp extends CypherASTNode {
     protected operator: ComparisonOperator;
@@ -55,7 +61,7 @@ export class ComparisonOp extends CypherASTNode {
     }
 
     /**
-     * @hidden
+     * @internal
      */
     public getCypher(env: CypherEnvironment): string {
         const leftStr = `${this.leftExpr.getCypher(env)} `;
@@ -78,7 +84,7 @@ export class NormalizationOperator extends ComparisonOp {
     }
 
     /**
-     * @hidden
+     * @internal
      */
     public getCypher(env: CypherEnvironment): string {
         const leftStr = `${this.leftExpr.getCypher(env)} `;

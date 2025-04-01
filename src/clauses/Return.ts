@@ -30,7 +30,7 @@ export interface Return extends WithOrder {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/return/ | Cypher Documentation}
- * @category Clauses
+ * @group Clauses
  */
 @mixin(WithOrder)
 export class Return extends Clause {

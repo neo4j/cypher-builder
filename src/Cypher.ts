@@ -63,12 +63,20 @@ export { Collect } from "./expressions/subquery/Collect";
 export { Count } from "./expressions/subquery/Count";
 export { Exists } from "./expressions/subquery/Exists";
 
-// --Apoc
+/**
+ * @hideGroups
+ */
 export * as apoc from "./namespaces/apoc/apoc";
 
 export * as db from "./namespaces/db/db";
+/**
+ * @hideGroups
+ */
 export * as genai from "./namespaces/genai/genai";
 export * as tx from "./namespaces/tx";
+/**
+ * @hideGroups
+ */
 export * as vector from "./namespaces/vector/vector";
 
 // --Lists
@@ -179,10 +187,14 @@ export type { PredicateFunction } from "./expressions/functions/predicate";
 export type { HasLabel } from "./expressions/HasLabel";
 export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
 export type { PathAssign } from "./pattern/PathAssign";
+export type { InputArgument } from "./procedures/CypherProcedure";
 export type { Yield, YieldProjectionColumn } from "./procedures/Yield";
 export type { Label } from "./references/Label";
 export type { CypherResult, Expr, NormalizationType, Operation, Predicate } from "./types";
-export type { InputArgument } from "./utils/normalize-variable";
 
-// utils
+/**
+ * Utility functions
+ * @group Utils
+ * @hideGroups
+ */
 export * as utils from "./utils/utils";

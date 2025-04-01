@@ -23,7 +23,7 @@ import { Subquery } from "./Subquery";
 
 /** COUNT subquery expression
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#count-subqueries | Cypher Documentation}
- * @group Other
+ * @group Subqueries
  */
 export class Count extends Subquery {
     /**

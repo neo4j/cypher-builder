@@ -26,7 +26,7 @@ import { Clause } from "./Clause";
 type RawCypherCallback = (context: RawCypherContext) => [string, Record<string, unknown>] | string | undefined;
 
 /** Allows for a raw string to be used as a clause
- * @group Other
+ * @group Utils
  */
 export class Raw extends Clause {
     private readonly callback: RawCypherCallback;
@@ -61,6 +61,9 @@ export class Raw extends Clause {
     }
 }
 
+/**
+ * @group Utils
+ */
 export class RawCypherContext {
     private readonly env: CypherEnvironment;
 

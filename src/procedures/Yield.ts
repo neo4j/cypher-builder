@@ -39,6 +39,7 @@ import type { Expr } from "../types";
 import { asArray } from "../utils/as-array";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 
+/** @group Clauses */
 export type YieldProjectionColumn<T extends string> = T | [T, Variable | Literal | string];
 
 export interface Yield

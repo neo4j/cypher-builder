@@ -25,6 +25,9 @@ import { PathAssign } from "../PathAssign";
 import type { Pattern } from "../Pattern";
 import type { QuantifiedPattern } from "./QuantifiedPattern";
 
+/**
+ * @group Patterns
+ */
 export class QuantifiedPath implements CypherCompilable {
     private readonly patterns: Array<QuantifiedPattern | Pattern> = [];
 

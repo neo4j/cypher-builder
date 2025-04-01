@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
+import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 import type { ListExpr as List } from "../../expressions/list/ListExpr";
 import type { MapExpr as Map } from "../../expressions/map/MapExpr";
-import { Literal } from "../../references/Literal";
-import { normalizeVariable } from "../../utils/normalize-variable";
 import { VoidCypherProcedure } from "../../procedures/CypherProcedure";
-import { CypherFunction } from "../../expressions/functions/CypherFunctions";
+import { Literal } from "../../references/Literal";
 import type { Predicate } from "../../types";
+import { normalizeVariable } from "../../utils/normalize-variable";
 
 /**
  * @group Procedures
@@ -39,7 +39,7 @@ export function validate(
 }
 
 /**
- * @group Cypher Functions
+ * @group Functions
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.util/apoc.util.validatePredicate/)
  */
 export function validatePredicate(predicate: Predicate, message: string): CypherFunction {

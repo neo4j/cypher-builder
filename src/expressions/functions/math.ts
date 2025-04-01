@@ -24,7 +24,7 @@ import { CypherFunction } from "./CypherFunctions";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-abs | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function abs(expr: Expr): CypherFunction {
@@ -33,7 +33,7 @@ export function abs(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-ceil | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function ceil(expr: Expr): CypherFunction {
@@ -42,7 +42,7 @@ export function ceil(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-floor | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function floor(expr: Expr): CypherFunction {
@@ -51,7 +51,7 @@ export function floor(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-isnan | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function cypherIsNaN(expr: Expr): CypherFunction {
@@ -60,7 +60,7 @@ export function cypherIsNaN(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-rand | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function rand(): CypherFunction {
@@ -69,6 +69,8 @@ export function rand(): CypherFunction {
 
 /**
  * Precision mode for `Cypher.round()`
+ * @group Functions
+ * @category Math
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-round3 | Cypher Documentation}
  * @see {@link round}
  */
@@ -76,7 +78,7 @@ export type ROUND_PRECISION_MODE = "UP" | "DOWN" | "CEILING" | "FLOOR" | "HALF_U
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-round | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function round(expr: Expr, precision?: Expr | number, mode?: ROUND_PRECISION_MODE): CypherFunction {
@@ -94,7 +96,7 @@ export function round(expr: Expr, precision?: Expr | number, mode?: ROUND_PRECIS
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-sign | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function sign(expr: Expr): CypherFunction {
@@ -103,7 +105,7 @@ export function sign(expr: Expr): CypherFunction {
 
 /** Cypher function `e()` that returns the returns the base of the natural logarithm.
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-e | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function e(): CypherFunction {
@@ -112,7 +114,7 @@ export function e(): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-exp | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function exp(expr: Expr): CypherFunction {
@@ -121,7 +123,7 @@ export function exp(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-log | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function log(expr: Expr): CypherFunction {
@@ -130,7 +132,7 @@ export function log(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-log10 | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function log10(expr: Expr): CypherFunction {
@@ -139,7 +141,7 @@ export function log10(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-logarithmic/#functions-sqrt | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function sqrt(expr: Expr): CypherFunction {
@@ -148,7 +150,7 @@ export function sqrt(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-acos | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function acos(expr: Expr): CypherFunction {
@@ -157,7 +159,7 @@ export function acos(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-asin | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function asin(expr: Expr): CypherFunction {
@@ -166,7 +168,7 @@ export function asin(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-atan | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function atan(expr: Expr): CypherFunction {
@@ -175,7 +177,7 @@ export function atan(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-atan2 | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function atan2(expr: Expr): CypherFunction {
@@ -184,7 +186,7 @@ export function atan2(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-cos | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function cos(expr: Expr): CypherFunction {
@@ -193,7 +195,7 @@ export function cos(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-cot | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function cot(expr: Expr): CypherFunction {
@@ -202,7 +204,7 @@ export function cot(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-degrees | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function degrees(expr: Expr): CypherFunction {
@@ -211,7 +213,7 @@ export function degrees(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-haversin | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function haversin(expr: Expr): CypherFunction {
@@ -221,7 +223,7 @@ export function haversin(expr: Expr): CypherFunction {
 /** 3.141592653589793
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-pi | Cypher Documentation}
  * @see https://www.piday.org/
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function pi(): CypherFunction {
@@ -230,7 +232,7 @@ export function pi(): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-radians | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function radians(expr: Expr): CypherFunction {
@@ -239,7 +241,7 @@ export function radians(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-sin | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function sin(expr: Expr): CypherFunction {
@@ -248,7 +250,7 @@ export function sin(expr: Expr): CypherFunction {
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-trigonometric/#functions-tan | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @category Math
  */
 export function tan(expr: Expr): CypherFunction {

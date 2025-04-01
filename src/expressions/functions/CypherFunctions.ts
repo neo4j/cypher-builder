@@ -23,7 +23,7 @@ import type { Expr } from "../../types";
 
 /** Represents a Cypher Function, all Cypher functions provided by the library extend from this class, and it can be used to use custom functions
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/ | Cypher Documentation}
- * @group Cypher Functions
+ * @group Functions
  * @example
  * ```ts
  * const myFunction = new Cypher.Function("myFunction", [new Cypher.Literal("test"), new Cypher.Param("test2")]);
