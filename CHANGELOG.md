@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 2.5.1
+
+### Patch Changes
+
+- [#523](https://github.com/neo4j/cypher-builder/pull/523) [`5805532`](https://github.com/neo4j/cypher-builder/commit/5805532d7ede2c1600a4d6a87ea18a3a8354fd54) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates type `Operation` in favor of the more general `Expr`
+
 ## 2.5.0
 
 ### Minor Changes
