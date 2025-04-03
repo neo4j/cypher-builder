@@ -28,6 +28,7 @@ import { CypherFunction } from "./CypherFunctions";
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-btrim | Cypher Documentation}
  * @group Functions
  * @category String
+ * @since Neo4j 5.20
  */
 export function btrim(original: string | Expr, trimCharacter?: string | Expr): CypherFunction {
     const normalizedOriginal = normalizeExpr(original);
@@ -48,6 +49,7 @@ export function left(original: Expr, length: Expr): CypherFunction {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-lower | Cypher Documentation}
  * @group Functions
  * @category String
+ * @since Neo4j 5.21
  */
 export function lower(original: Expr): CypherFunction {
     return new CypherFunction("lower", [original]);
@@ -69,6 +71,7 @@ export function ltrim(original: Expr | string, trimCharacter?: string | Expr): C
  * @group Functions
  * @category String
  * @param normalForm - A string with the normal form to use or a Cypher expression
+ * @since Neo4j 5.17
  * @example `Cypher.normalize(param, "NFC")`
  */
 export function normalize(input: Expr, normalForm?: NormalizationType | Expr): CypherFunction {
@@ -206,6 +209,7 @@ export function trim(
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/string/#functions-upper | Cypher Documentation}
  * @group Functions
  * @category String
+ * @since Neo4j 5.21
  */
 export function upper(original: Expr): CypherFunction {
     return new CypherFunction("upper", [original]);

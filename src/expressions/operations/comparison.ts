@@ -229,6 +229,7 @@ export function matches(leftExpr: Expr, rightExpr: Expr): ComparisonOp {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-comparison | Cypher Documentation}
  * @group Operators
  * @category Comparison
+ * @since Neo4j 5.17
  */
 export function isNormalized(leftExpr: Expr, normalizationType?: NormalizationType): ComparisonOp {
     return new NormalizationOperator("IS NORMALIZED", leftExpr, normalizationType);

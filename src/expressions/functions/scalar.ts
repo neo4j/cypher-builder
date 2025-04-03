@@ -207,6 +207,7 @@ export function type(relationship: Expr): CypherFunction {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-valueType | Cypher Documentation}
  * @group Functions
  * @category Scalar
+ * @since Neo4j 5.13
  */
 export function valueType(expr: Expr): CypherFunction {
     return new CypherFunction("valueType", [expr]);
@@ -216,6 +217,7 @@ export function valueType(expr: Expr): CypherFunction {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-char_length | Cypher Documentation}
  * @group Functions
  * @category Scalar
+ * @since Neo4j 5.13
  */
 export function char_length(expr: Expr): CypherFunction {
     return new CypherFunction("char_length", [expr]);
@@ -225,7 +227,7 @@ export function char_length(expr: Expr): CypherFunction {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-character_length | Cypher Documentation}
  * @group Functions
  * @category Scalar
- * @version Neo4j 5.13
+ * @since Neo4j 5.13
  */
 export function character_length(expr: Expr): CypherFunction {
     return new CypherFunction("character_length", [expr]);
@@ -235,7 +237,7 @@ export function character_length(expr: Expr): CypherFunction {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-nullIf | Cypher Documentation}
  * @group Functions
  * @category Scalar
- * @version Neo4j 5.14
+ * @since Neo4j 5.14
  */
 export function nullIf(expr1: Expr, expr2: Expr): CypherFunction {
     return new CypherFunction("nullIf", [expr1, expr2]);

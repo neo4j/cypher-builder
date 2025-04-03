@@ -43,7 +43,7 @@ export abstract class WithDelete extends Mixin {
 
     /** Add a `NODETACH DELETE` subclause
      * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/delete/#delete-nodetach | Cypher Documentation}
-     * @version Neo4j 5.14
+     * @since Neo4j 5.14
      */
     public noDetachDelete(...deleteInput: DeleteInput): this {
         const deleteClause = this.createDeleteClause(deleteInput);
