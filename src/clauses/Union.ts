@@ -41,6 +41,10 @@ export class Union extends Clause {
         return this;
     }
 
+    /**
+     * Adds the clause `DISTINCT` after `UNION`
+     * @since Neo4j.19
+     */
     public distinct(): this {
         this.unionType = "DISTINCT";
         return this;

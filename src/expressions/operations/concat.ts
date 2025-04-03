@@ -52,6 +52,7 @@ export class ConcatOp extends CypherASTNode {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#syntax-concatenating-two-strings-doublebar | Cypher Documentation}
  * @group Operators
  * @category String
+ * @since Neo4j 5.19
  */
 export function concat(leftExpr: Expr, rightExpr: Expr): ConcatOp;
 export function concat(...exprs: Expr[]): ConcatOp;

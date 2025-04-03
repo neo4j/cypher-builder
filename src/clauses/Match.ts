@@ -128,6 +128,9 @@ export class Match extends Clause {
         return matchClause;
     }
 
+    /**
+     * @since Neo4j 5.21
+     */
     public shortest(k: number): this {
         this.shortestStatement = {
             type: "SHORTEST",
@@ -135,6 +138,10 @@ export class Match extends Clause {
         };
         return this;
     }
+
+    /**
+     * @since Neo4j 5.21
+     */
     public shortestGroups(k: number): this {
         this.shortestStatement = {
             type: "SHORTEST_GROUPS",
@@ -142,12 +149,20 @@ export class Match extends Clause {
         };
         return this;
     }
+
+    /**
+     * @since Neo4j 5.21
+     */
     public allShortest(): this {
         this.shortestStatement = {
             type: "ALL SHORTEST",
         };
         return this;
     }
+
+    /**
+     * @since Neo4j 5.21
+     */
     public any(): this {
         this.shortestStatement = {
             type: "ANY",
