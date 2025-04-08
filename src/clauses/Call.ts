@@ -99,7 +99,7 @@ export class Call extends Clause {
 
     /** Makes the subquery an OPTIONAL CALL
      * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call | Cypher Documentation}
-     * @version Neo4j 5.24
+     * @since Neo4j 5.24
      */
     public optional(): this {
         this._optional = true;
@@ -115,7 +115,7 @@ export class Call extends Clause {
         const setCypher = this.compileSetCypher(env);
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
-        const inTransactionCypher = this.generateInTransactionStr();
+        const inTransactionCypher = this.generateInTransactionsStr();
 
         const inCallBlock = `${importWithCypher}${subQueryStr}`;
         const variableScopeStr = this.generateVariableScopeStr(env);
@@ -147,7 +147,7 @@ export class Call extends Clause {
         return ` (${variablesString.join(", ")})`;
     }
 
-    private generateInTransactionStr(): string {
+    private generateInTransactionsStr(): string {
         if (!this.inTransactionsConfig) {
             return "";
         }

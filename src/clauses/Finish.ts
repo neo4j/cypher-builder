@@ -22,6 +22,7 @@ import { Clause } from "./Clause";
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/finish/ | Cypher Documentation}
  * @group Clauses
+ * @since Neo4j 5.19
  */
 export class Finish extends Clause {
     /** @internal */
