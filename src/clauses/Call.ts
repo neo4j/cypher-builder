@@ -21,6 +21,7 @@ import type { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 import type { Variable } from "../references/Variable";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { isNumber } from "../utils/is-number";
 import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
 import { Union } from "./Union";
@@ -53,6 +54,10 @@ export type CallInTransactionOptions = {
     ofRows?: number;
     onError?: "continue" | "break" | "fail";
     concurrentTransactions?: number;
+    /** Adds `ON ERROR RETRY`, if using number, it will generate `ON ERROR RETRY FOR x SECONDS`
+     * @since Neo4j 2025.03
+     */
+    retry?: number | boolean;
 };
 
 /**
@@ -155,13 +160,28 @@ export class Call extends Clause {
         const rows = this.inTransactionsConfig.ofRows;
         const error = this.inTransactionsConfig.onError;
         const ofRowsStr = rows ? ` OF ${rows} ROWS` : "";
-        const onErrorStr = error ? ` ON ERROR ${this.getOnErrorStr(error)}` : "";
+
+        let onErrorStr = "";
+        if (this.inTransactionsConfig.retry !== undefined && this.inTransactionsConfig.retry !== false) {
+            onErrorStr = this.generateRetryErrorStr(this.inTransactionsConfig);
+        } else if (error) {
+            onErrorStr = ` ON ERROR ${this.getOnErrorStr(error)}`;
+        }
 
         const concurrentTransactions = this.inTransactionsConfig.concurrentTransactions;
         const concurrentTransactionsStr =
             typeof concurrentTransactions === "number" ? ` ${concurrentTransactions} CONCURRENT` : "";
 
         return ` IN${concurrentTransactionsStr} TRANSACTIONS${ofRowsStr}${onErrorStr}`;
+    }
+
+    private generateRetryErrorStr(transactionConfig: CallInTransactionOptions) {
+        const error = transactionConfig.onError;
+        const hasTime = isNumber(transactionConfig.retry);
+
+        const thenStr = error ? ` THEN ${this.getOnErrorStr(error)}` : "";
+        const timeStr = hasTime ? ` FOR ${transactionConfig.retry} SECONDS` : "";
+        return ` ON ERROR RETRY${timeStr}${thenStr}`;
     }
 
     private getOnErrorStr(err: "continue" | "break" | "fail"): "CONTINUE" | "BREAK" | "FAIL" {

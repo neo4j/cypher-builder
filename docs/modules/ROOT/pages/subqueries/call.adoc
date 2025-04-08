@@ -125,9 +125,10 @@ CALL {
 
 The method `inTransaction` accepts an object with the following options:
 
-* `ofRows`: A number to define the batch of rows. Translates to `IN TRANSACTIONS OF 10 ROWS`
-* `onError`: A behavior for error handling. This can be `continue`, `break` or `fail`. Translates to `ON ERROR CONTINUE`
-* `concurrentTransactions`: A number to execute concurrent transactions. Translates to `IN x CONCURRENT TRANSACTIONS`
+* `ofRows`: A number to define the batch of rows. Translates to `IN TRANSACTIONS OF 10 ROWS`.
+* `onError`: A behavior for error handling. This can be `continue`, `break` or `fail`. Translates to `ON ERROR CONTINUE`.
+* `concurrentTransactions`: A number to execute concurrent transactions. Translates to `IN x CONCURRENT TRANSACTIONS`.
+* `retry`: Either a boolean or a number. Translates to `ON ERROR RETRY [FOR x SECONDS]`. If `onError` is also defined, it will add `THEN [error]`.
 
 == Optional Call
 
