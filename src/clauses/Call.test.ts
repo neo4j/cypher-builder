@@ -397,7 +397,7 @@ RETURN var1"
         `);
     });
 
-    describe("Call in transaction", () => {
+    describe("Call in transactions", () => {
         let subquery: Cypher.Clause;
         let node: Cypher.Node;
 
@@ -406,7 +406,7 @@ RETURN var1"
             subquery = new Cypher.With(node).detachDelete(node);
         });
 
-        test("Call in transaction", () => {
+        test("Call in transactions with no options", () => {
             const query = Cypher.utils.concat(
                 new Cypher.Match(new Cypher.Pattern(node)),
                 new Cypher.Call(subquery).inTransactions()
@@ -457,22 +457,116 @@ CALL {
 } IN TRANSACTIONS ON ERROR FAIL"
 `);
         });
-        test("Call in transaction on error break", () => {
-            const query = Cypher.utils.concat(
-                new Cypher.Match(new Cypher.Pattern(node)),
-                new Cypher.Call(subquery).inTransactions({
-                    onError: "break",
-                })
-            );
 
-            const queryResult = query.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`
+        describe("Retry", () => {
+            test("Call in transaction on error retry", () => {
+                const query = Cypher.utils.concat(
+                    new Cypher.Match(new Cypher.Pattern(node)),
+                    new Cypher.Call(subquery).inTransactions({
+                        retry: true,
+                    })
+                );
+
+                const queryResult = query.build();
+                expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
     WITH this0
     DETACH DELETE this0
-} IN TRANSACTIONS ON ERROR BREAK"
+} IN TRANSACTIONS ON ERROR RETRY"
 `);
+            });
+
+            test("Call in transaction on error retry seconds", () => {
+                const query = Cypher.utils.concat(
+                    new Cypher.Match(new Cypher.Pattern(node)),
+                    new Cypher.Call(subquery).inTransactions({
+                        retry: 10,
+                    })
+                );
+
+                const queryResult = query.build();
+                expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN TRANSACTIONS ON ERROR RETRY FOR 10 SECONDS"
+`);
+            });
+            test("Call in transaction on error retry then", () => {
+                const query = Cypher.utils.concat(
+                    new Cypher.Match(new Cypher.Pattern(node)),
+                    new Cypher.Call(subquery).inTransactions({
+                        retry: true,
+                        onError: "continue",
+                    })
+                );
+
+                const queryResult = query.build();
+                expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN TRANSACTIONS ON ERROR RETRY THEN CONTINUE"
+`);
+            });
+
+            test("Call in transaction on error retry seconds then", () => {
+                const query = Cypher.utils.concat(
+                    new Cypher.Match(new Cypher.Pattern(node)),
+                    new Cypher.Call(subquery).inTransactions({
+                        retry: 10,
+                        onError: "break",
+                    })
+                );
+
+                const queryResult = query.build();
+                expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN TRANSACTIONS ON ERROR RETRY FOR 10 SECONDS THEN BREAK"
+`);
+            });
+
+            test("Call in transaction on error  set to false", () => {
+                const query = Cypher.utils.concat(
+                    new Cypher.Match(new Cypher.Pattern(node)),
+                    new Cypher.Call(subquery).inTransactions({
+                        retry: false,
+                    })
+                );
+
+                const queryResult = query.build();
+                expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN TRANSACTIONS"
+`);
+            });
+
+            test("Call in transaction on error  set to 0", () => {
+                const query = Cypher.utils.concat(
+                    new Cypher.Match(new Cypher.Pattern(node)),
+                    new Cypher.Call(subquery).inTransactions({
+                        retry: 0,
+                    })
+                );
+
+                const queryResult = query.build();
+                expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN TRANSACTIONS ON ERROR RETRY FOR 0 SECONDS"
+`);
+            });
         });
 
         test("Call in transaction on error continue", () => {
@@ -556,6 +650,27 @@ CALL {
     WITH this0
     DETACH DELETE this0
 } IN 5 CONCURRENT TRANSACTIONS OF 10 ROWS ON ERROR FAIL"
+`);
+        });
+
+        test("In transaction with all options", () => {
+            const query = Cypher.utils.concat(
+                new Cypher.Match(new Cypher.Pattern(node)),
+                new Cypher.Call(subquery).inTransactions({
+                    ofRows: 10,
+                    onError: "break",
+                    concurrentTransactions: 2,
+                    retry: 5,
+                })
+            );
+
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+CALL {
+    WITH this0
+    DETACH DELETE this0
+} IN 2 CONCURRENT TRANSACTIONS OF 10 ROWS ON ERROR RETRY FOR 5 SECONDS THEN BREAK"
 `);
         });
     });
