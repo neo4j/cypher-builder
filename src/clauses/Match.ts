@@ -58,6 +58,9 @@ type ShortestStatement = {
     k?: number;
 };
 
+/** Patterns supported by Match */
+export type MatchClausePattern = Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>;
+
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/match/ | Cypher Documentation}
  * @group Clauses
@@ -78,11 +81,11 @@ type ShortestStatement = {
     WithForeach
 )
 export class Match extends Clause {
-    private readonly pattern: Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>;
+    private readonly pattern: MatchClausePattern;
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
 
-    constructor(pattern: Pattern | QuantifiedPath | PathAssign<Pattern | QuantifiedPath>) {
+    constructor(pattern: MatchClausePattern) {
         super();
         this.pattern = pattern;
     }
@@ -106,7 +109,7 @@ export class Match extends Clause {
     /** Add a {@link Match} clause
      * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/match/ | Cypher Documentation}
      */
-    public match(clauseOrPattern: Match | Pattern): Match {
+    public match(clauseOrPattern: Match | MatchClausePattern): Match {
         if (clauseOrPattern instanceof Match) {
             this.addNextClause(clauseOrPattern);
             return clauseOrPattern;
@@ -121,8 +124,12 @@ export class Match extends Clause {
     /** Add an {@link OptionalMatch} clause
      * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/ | Cypher Documentation}
      */
-    public optionalMatch(pattern: Pattern): OptionalMatch {
-        const matchClause = new OptionalMatch(pattern);
+    public optionalMatch(clauseOrPattern: OptionalMatch | MatchClausePattern): OptionalMatch {
+        if (clauseOrPattern instanceof OptionalMatch) {
+            this.addNextClause(clauseOrPattern);
+            return clauseOrPattern;
+        }
+        const matchClause = new OptionalMatch(clauseOrPattern);
         this.addNextClause(matchClause);
 
         return matchClause;
@@ -208,7 +215,7 @@ export class Match extends Clause {
  * @group Clauses
  */
 export class OptionalMatch extends Match {
-    constructor(pattern: Pattern) {
+    constructor(pattern: MatchClausePattern) {
         super(pattern);
         this.optional();
     }

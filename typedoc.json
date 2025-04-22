@@ -18,7 +18,7 @@
     "validation": {
         "invalidLink": true
     },
-    "intentionallyNotExported": ["CypherCompilable", "NamedReference"],
+    "intentionallyNotExported": ["CypherCompilable", "NamedReference", "MatchClausePattern"],
     "navigation": {
         "includeCategories": true,
         "includeGroups": true
