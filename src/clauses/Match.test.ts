@@ -113,28 +113,33 @@ RETURN this0.id"
         `);
     });
 
-    test("Optional match", () => {
-        const movieNode = new Cypher.Node();
+    test("With foreach", () => {
+        const start = new Cypher.Node();
+        const path = new Cypher.PathVariable();
+        const end = new Cypher.Node();
+        const n = new Cypher.Variable();
 
-        const pattern = new Cypher.Pattern(movieNode, {
-            labels: ["Movie"],
-            properties: {
-                test: new Cypher.Param("test-value"),
-            },
-        });
-        const matchQuery = new Cypher.OptionalMatch(pattern).return(movieNode);
+        const matchQuery = new Cypher.Match(
+            new Cypher.Pattern(start)
+                .related({
+                    length: "*",
+                })
+                .to(end)
+                .assignTo(path)
+        )
+            .foreach(n)
+            .in(Cypher.nodes(path))
+            .do(new Cypher.Merge(new Cypher.Pattern(n).related().to(end)));
 
         const queryResult = matchQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "OPTIONAL MATCH (this0:Movie { test: $param0 })
-            RETURN this0"
-        `);
+"MATCH p2 = (this0)-[*]->(this1)
+FOREACH (var3 IN nodes(p2) |
+    MERGE (var3)-[]->(this1)
+)"
+`);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": "test-value",
-            }
-        `);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
     test("Quantified pattern", () => {
@@ -762,32 +767,6 @@ WHERE this0.title = $param1"
 }
 `);
         });
-
-        test("Match.optionalMatch()", () => {
-            const movie1 = new Cypher.Node();
-
-            const movie2 = new Cypher.Node();
-
-            const matchQuery = new Cypher.Match(new Cypher.Pattern(movie1, { labels: ["Movie"] }))
-                .where(Cypher.eq(movie1.property("title"), new Cypher.Param("movie1")))
-                .optionalMatch(new Cypher.Pattern(movie2, { labels: ["Movie"] }))
-                .where(Cypher.eq(movie1.property("title"), new Cypher.Param("movie2")));
-
-            const queryResult = matchQuery.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Movie)
-WHERE this0.title = $param0
-OPTIONAL MATCH (this1:Movie)
-WHERE this0.title = $param1"
-`);
-
-            expect(queryResult.params).toMatchInlineSnapshot(`
-{
-  "param0": "movie1",
-  "param1": "movie2",
-}
-`);
-        });
     });
 
     describe("Match.callProcedure", () => {
@@ -1009,32 +988,107 @@ RETURN this0"
         });
     });
 
-    test("With foreach", () => {
-        const start = new Cypher.Node();
-        const path = new Cypher.PathVariable();
-        const end = new Cypher.Node();
-        const n = new Cypher.Variable();
+    describe("Optional Match", () => {
+        test("Optional match", () => {
+            const movieNode = new Cypher.Node();
 
-        const matchQuery = new Cypher.Match(
-            new Cypher.Pattern(start)
-                .related({
-                    length: "*",
-                })
-                .to(end)
-                .assignTo(path)
-        )
-            .foreach(n)
-            .in(Cypher.nodes(path))
-            .do(new Cypher.Merge(new Cypher.Pattern(n).related().to(end)));
+            const pattern = new Cypher.Pattern(movieNode, {
+                labels: ["Movie"],
+                properties: {
+                    test: new Cypher.Param("test-value"),
+                },
+            });
+            const matchQuery = new Cypher.OptionalMatch(pattern).return(movieNode);
 
-        const queryResult = matchQuery.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH p2 = (this0)-[*]->(this1)
-FOREACH (var3 IN nodes(p2) |
-    MERGE (var3)-[]->(this1)
-)"
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+                "OPTIONAL MATCH (this0:Movie { test: $param0 })
+                RETURN this0"
+            `);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                {
+                  "param0": "test-value",
+                }
+            `);
+        });
+
+        test("Match.optionalMatch()", () => {
+            const movie1 = new Cypher.Node();
+
+            const movie2 = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(new Cypher.Pattern(movie1, { labels: ["Movie"] }))
+                .where(Cypher.eq(movie1.property("title"), new Cypher.Param("movie1")))
+                .optionalMatch(new Cypher.Pattern(movie2, { labels: ["Movie"] }))
+                .where(Cypher.eq(movie1.property("title"), new Cypher.Param("movie2")));
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+WHERE this0.title = $param0
+OPTIONAL MATCH (this1:Movie)
+WHERE this0.title = $param1"
 `);
 
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+            expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "movie1",
+  "param1": "movie2",
+}
+`);
+        });
+
+        test("Match.optionalMatch() passing existing OptionalMatch clause", () => {
+            const movie1 = new Cypher.Node();
+
+            const movie2 = new Cypher.Node();
+
+            const secondMatch = new Cypher.OptionalMatch(new Cypher.Pattern(movie2, { labels: ["Movie"] })).where(
+                Cypher.eq(movie1.property("title"), new Cypher.Param("movie2"))
+            );
+
+            const matchQuery = new Cypher.Match(new Cypher.Pattern(movie1, { labels: ["Movie"] }))
+                .where(Cypher.eq(movie1.property("title"), new Cypher.Param("movie1")))
+                .optionalMatch(secondMatch);
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+WHERE this0.title = $param0
+OPTIONAL MATCH (this1:Movie)
+WHERE this0.title = $param1"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "movie1",
+  "param1": "movie2",
+}
+`);
+        });
+
+        test("With.optionalMatch() passing existing OptionalMatch clause", () => {
+            const movie1 = new Cypher.Node();
+
+            const movie2 = new Cypher.Node();
+
+            const secondMatch = new Cypher.OptionalMatch(new Cypher.Pattern(movie2, { labels: ["Movie"] })).where(
+                Cypher.eq(movie1.property("title"), new Cypher.Param("movie2"))
+            );
+
+            const query = new Cypher.With(movie1).optionalMatch(secondMatch);
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH this0
+OPTIONAL MATCH (this1:Movie)
+WHERE this0.title = $param0"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "movie2",
+}
+`);
+        });
     });
 });
