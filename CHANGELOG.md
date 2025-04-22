@@ -1,5 +1,22 @@
 # @neo4j/cypher-builder
 
+## 2.5.2
+
+### Patch Changes
+
+- [#530](https://github.com/neo4j/cypher-builder/pull/530) [`35fdd7e`](https://github.com/neo4j/cypher-builder/commit/35fdd7ece8425601501d1bf55b690f8039e0075c) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix types to support paths on chained `.match` and `.optionalMatch`:
+
+    ```js
+    const path = new Cypher.PathVariable();
+    const query = new Cypher.Match(new Cypher.Node()).match(pattern.assignTo(path)).return(path);
+    ```
+
+    ```cypher
+    MATCH (this0)
+    MATCH p3 = (this0)-[this1:ACTED_IN]->(this2)
+    RETURN p3
+    ```
+
 ## 2.5.1
 
 ### Patch Changes
