@@ -206,6 +206,60 @@ RETURN p3"
             `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
+
+        test("using fluent match.match method", () => {
+            const path = new Cypher.PathVariable();
+
+            const query = new Cypher.Match(new Cypher.Pattern(a)).match(pattern.assignTo(path)).return(path);
+
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+MATCH p3 = (this0)-[this1:ACTED_IN]->(this2)
+RETURN p3"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("using fluent with.match method", () => {
+            const path = new Cypher.PathVariable();
+
+            const query = new Cypher.With(a).match(pattern.assignTo(path)).return(path);
+
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH this0
+MATCH p3 = (this0)-[this1:ACTED_IN]->(this2)
+RETURN p3"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("in OptionalMatch", () => {
+            const path = new Cypher.PathVariable();
+
+            const query = new Cypher.OptionalMatch(pattern.assignTo(path)).return(path);
+
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"OPTIONAL MATCH p3 = (this0)-[this1:ACTED_IN]->(this2)
+RETURN p3"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+        test("with chained .optionalMatch", () => {
+            const path = new Cypher.PathVariable();
+
+            const query = new Cypher.Match(new Cypher.Pattern(a)).optionalMatch(pattern.assignTo(path)).return(path);
+
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+OPTIONAL MATCH p3 = (this0)-[this1:ACTED_IN]->(this2)
+RETURN p3"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
     });
 
     describe("With where", () => {
@@ -923,7 +977,10 @@ RETURN this0"
             const m2 = new Cypher.Node();
 
             const quantifiedPath = new Cypher.QuantifiedPath(
-                new Cypher.Pattern(m, { labels: ["Movie"], properties: { title: new Cypher.Param("V for Vendetta") } }),
+                new Cypher.Pattern(m, {
+                    labels: ["Movie"],
+                    properties: { title: new Cypher.Param("V for Vendetta") },
+                }),
                 new Cypher.Pattern({ labels: ["Movie"] })
                     .related({ type: "ACTED_IN" })
                     .to({ labels: ["Person"] })
