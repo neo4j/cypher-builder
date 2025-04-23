@@ -1,0 +1,13 @@
+[[compatibility]]
+:description: This page outlines the compatibility requirements for `@neo4j/cypher-builder` version 2 with Cypher and Node.js.
+= Compatibility
+
+This page outlines the compatibility requirements for `@neo4j/cypher-builder` version 2 with Cypher and Node.js.
+
+* Targets link:https://neo4j.com/docs/cypher-manual/5/introduction/[Cypher 5], with support for link:https://neo4j.com/docs/cypher-manual/4.4/introduction/[Cypher 4.4].
+* Compatible with Node.js version 16.0.0 and later.
+
+[NOTE]
+====
+`@neo4j/cypher-builder` version 1 is no longer supported. Version 2 is a full replacement and maintains the same compatibility with Cypher and Node.js.
+====

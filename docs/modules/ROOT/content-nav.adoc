@@ -41,6 +41,7 @@
 ** xref:how-to/filter-by-labels.adoc[]
 ** xref:how-to/update-labels.adoc[]
 ** xref:how-to/define-cypher-version.adoc[]
+* xref:compatibility.adoc[]
 * xref:migration-guide-2.adoc[]
 * link:https://github.com/neo4j/cypher-builder/tree/main/examples[Examples]
 * link:https://neo4j.github.io/cypher-builder/reference/[Reference]
