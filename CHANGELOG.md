@@ -1,5 +1,39 @@
 # @neo4j/cypher-builder
 
+## 2.6.0
+
+### Minor Changes
+
+- [#528](https://github.com/neo4j/cypher-builder/pull/528) [`2f8dfa6`](https://github.com/neo4j/cypher-builder/commit/2f8dfa626adf814cce2543792db152521e8d4682) Thanks [@angrykoala](https://github.com/angrykoala)! - Add option `retry` to `Call.inTransactions` configuration to add a `RETRY` statement to `CALL {} IN TRANSACTIONS`.
+  This option can be a boolean set to true or a number to define the retry seconds:
+
+    ```js
+    new Cypher.Call(subquery).inTransactions({
+        retry: true,
+    });
+    ```
+
+    ```cypher
+    CALL {
+        // ...
+    } IN TRANSACTIONS ON ERROR RETRY
+    ```
+
+    Using it in conjuntion with `onError` and with a defined seconds of retry:
+
+    ```js
+    new Cypher.Call(subquery).inTransactions({
+        retry: 10,
+        onError: "break",
+    });
+    ```
+
+    ```cypher
+    CALL {
+        // ...
+    } IN TRANSACTIONS ON ERROR RETRY FOR 10 SECONDS THEN BREAK
+    ```
+
 ## 2.5.2
 
 ### Patch Changes
