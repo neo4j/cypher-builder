@@ -38,6 +38,7 @@ export type InputArgument<T extends string | number> = T | Variable | Literal<T>
 export class VoidCypherProcedure extends Clause {
     protected name: string;
     private readonly params: Array<Expr>;
+    protected _optional: boolean = false;
 
     constructor(name: string, params: Array<Expr> = [], namespace?: string) {
         super();
@@ -50,16 +51,26 @@ export class VoidCypherProcedure extends Clause {
         }
     }
 
+    public optional(): this {
+        this._optional = true;
+        return this;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const procedureCypher = this.getProcedureCypher(env);
-        return `CALL ${procedureCypher}`;
+        const optionalStr = this.generateOptionalStr();
+        return `${optionalStr}CALL ${procedureCypher}`;
     }
 
     private getProcedureCypher(env: CypherEnvironment): string {
         const argsStr = this.params.map((expr) => expr.getCypher(env)).join(", ");
 
         return `${this.name}(${argsStr})`;
+    }
+
+    protected generateOptionalStr(): string {
+        return this._optional ? "OPTIONAL " : "";
     }
 }
 
@@ -84,5 +95,11 @@ export class CypherProcedure<T extends string = string> extends VoidCypherProced
         const yieldCypher = compileCypherIfExists(this.yieldStatement, env, { prefix: " " });
 
         return `${callCypher}${yieldCypher}`;
+    }
+
+    protected generateOptionalStr(): string {
+        const yieldOptional = Boolean(this.yieldStatement?._optional);
+        const hasOptional = this._optional || yieldOptional;
+        return hasOptional ? "OPTIONAL " : "";
     }
 }

@@ -96,6 +96,14 @@ describe("db procedures", () => {
                 Cypher.db.labels().yield();
             }).toThrow("Empty projection in CALL ... YIELD");
         });
+
+        test("db.labels with yield *", () => {
+            const dbLabels = Cypher.db.labels().yield("*").optional();
+            const { cypher, params } = dbLabels.build();
+
+            expect(cypher).toMatchInlineSnapshot(`"OPTIONAL CALL db.labels() YIELD *"`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
     });
 
     test("db.ping", () => {

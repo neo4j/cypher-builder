@@ -100,6 +100,51 @@ describe("Procedures", () => {
         expect(params).toMatchInlineSnapshot(`{}`);
     });
 
+    describe("Optional", () => {
+        test("Procedure with optional", () => {
+            const targetNode = new Cypher.Node();
+            const customProcedure = new Cypher.Procedure("customProcedure", [targetNode]).optional();
+
+            const { cypher, params } = customProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`"OPTIONAL CALL customProcedure(this0)"`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+        test("VoidProcedure with optional", () => {
+            const targetNode = new Cypher.Node();
+            const customProcedure = new Cypher.VoidProcedure("customProcedure", [targetNode]).optional();
+
+            const { cypher, params } = customProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`"OPTIONAL CALL customProcedure(this0)"`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Procedure with yield with optional", () => {
+            const targetNode = new Cypher.Node();
+            const customProcedure = new Cypher.Procedure<"test">("customProcedure", [targetNode])
+                .yield("test")
+                .optional();
+
+            const { cypher, params } = customProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`"OPTIONAL CALL customProcedure(this0) YIELD test"`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Optional procedure with yield with optional", () => {
+            const targetNode = new Cypher.Node();
+            const customProcedure = new Cypher.Procedure<"test">("customProcedure", [targetNode])
+                .optional()
+                .yield("test");
+
+            const { cypher, params } = customProcedure.build();
+
+            expect(cypher).toMatchInlineSnapshot(`"OPTIONAL CALL customProcedure(this0) YIELD test"`);
+            expect(params).toMatchInlineSnapshot(`{}`);
+        });
+    });
+
     describe("Procedure with Yield and nested clauses", () => {
         it("Procedure with Where", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
