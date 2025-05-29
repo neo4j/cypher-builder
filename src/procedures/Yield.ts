@@ -17,103 +17,21 @@
  * limitations under the License.
  */
 
-import type { CypherEnvironment } from "../Environment";
-import { Clause } from "../clauses/Clause";
-import { WithCreate } from "../clauses/mixins/clauses/WithCreate";
-import { WithMatch } from "../clauses/mixins/clauses/WithMatch";
-import { WithMerge } from "../clauses/mixins/clauses/WithMerge";
-import { WithReturn } from "../clauses/mixins/clauses/WithReturn";
-import { WithUnwind } from "../clauses/mixins/clauses/WithUnwind";
-import { WithWith } from "../clauses/mixins/clauses/WithWith";
-import { WithDelete } from "../clauses/mixins/sub-clauses/WithDelete";
-import { WithOrder } from "../clauses/mixins/sub-clauses/WithOrder";
-import { WithSetRemove } from "../clauses/mixins/sub-clauses/WithSetRemove";
-import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
+import type { Procedure } from "..";
 import type { ProjectionColumn } from "../clauses/sub-clauses/Projection";
 import { Projection } from "../clauses/sub-clauses/Projection";
-import { mixin } from "../clauses/utils/mixin";
 import type { Literal } from "../references/Literal";
 import type { Variable } from "../references/Variable";
 import { NamedVariable } from "../references/Variable";
 import type { Expr } from "../types";
-import { asArray } from "../utils/as-array";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+
+/** @deprecated Yield type is deprecated in favor of {@link Procedure} */
+export type Yield<T extends string = string> = Procedure<T>;
 
 /** @group Clauses */
 export type YieldProjectionColumn<T extends string> = T | [T, Variable | Literal | string];
 
-export interface Yield
-    extends WithReturn,
-        WithWhere,
-        WithWith,
-        WithMatch,
-        WithUnwind,
-        WithDelete,
-        WithMerge,
-        WithCreate,
-        WithSetRemove,
-        WithOrder {}
-
-/** Yield statement after a Procedure CALL
- * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call/#call-call-a-procedure-call-yield-star | Cypher Documentation}
- * @group Procedures
- */
-@mixin(
-    WithReturn,
-    WithWhere,
-    WithWith,
-    WithMatch,
-    WithUnwind,
-    WithDelete,
-    WithMerge,
-    WithCreate,
-    WithSetRemove,
-    WithOrder
-)
-export class Yield<T extends string = string> extends Clause {
-    private readonly projection: YieldProjection;
-    /**
-     * Used for `OPTIONAL CALL`
-     * @internal
-     *
-     */
-    public _optional: boolean = false;
-
-    constructor(yieldColumns: Array<YieldProjectionColumn<T>>) {
-        super();
-
-        const columns = asArray(yieldColumns);
-        this.projection = new YieldProjection(columns);
-    }
-
-    public yield(...columns: Array<YieldProjectionColumn<T>>): this {
-        this.projection.addYieldColumns(columns);
-        return this;
-    }
-
-    public optional(): this {
-        this._optional = true;
-        return this;
-    }
-
-    /** @internal */
-    public getCypher(env: CypherEnvironment): string {
-        const yieldProjectionStr = this.projection.getCypher(env);
-
-        const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const setCypher = this.compileSetCypher(env);
-        const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
-
-        const whereStr = compileCypherIfExists(this.whereSubClause, env, {
-            prefix: "\n",
-        });
-
-        const nextClause = this.compileNextClause(env);
-        return `YIELD ${yieldProjectionStr}${whereStr}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
-    }
-}
-
-class YieldProjection extends Projection {
+export class YieldProjection extends Projection {
     constructor(columns: Array<YieldProjectionColumn<string>>) {
         super([]);
         this.addYieldColumns(columns);

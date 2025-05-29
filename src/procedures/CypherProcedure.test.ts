@@ -32,7 +32,10 @@ describe("Procedures", () => {
 
     test("Custom Procedure with yield", () => {
         const targetNode = new Cypher.Node();
-        const customProcedure = new Cypher.Procedure("customProcedure", [targetNode]).yield("result1", "result2");
+        const customProcedure: Cypher.Procedure = new Cypher.Procedure("customProcedure", [targetNode]).yield(
+            "result1",
+            "result2"
+        );
 
         const { cypher, params } = customProcedure.build();
 

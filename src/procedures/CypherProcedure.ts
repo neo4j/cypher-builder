@@ -18,6 +18,17 @@
  */
 
 import { Clause } from "../clauses/Clause";
+import { WithCreate } from "../clauses/mixins/clauses/WithCreate";
+import { WithMatch } from "../clauses/mixins/clauses/WithMatch";
+import { WithMerge } from "../clauses/mixins/clauses/WithMerge";
+import { WithReturn } from "../clauses/mixins/clauses/WithReturn";
+import { WithUnwind } from "../clauses/mixins/clauses/WithUnwind";
+import { WithWith } from "../clauses/mixins/clauses/WithWith";
+import { WithDelete } from "../clauses/mixins/sub-clauses/WithDelete";
+import { WithOrder } from "../clauses/mixins/sub-clauses/WithOrder";
+import { WithSetRemove } from "../clauses/mixins/sub-clauses/WithSetRemove";
+import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
+import { mixin } from "../clauses/utils/mixin";
 import { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
 import type { Literal } from "../references/Literal";
@@ -26,15 +37,40 @@ import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import type { YieldProjectionColumn } from "./Yield";
-import { Yield } from "./Yield";
+import { YieldProjection } from "./Yield";
 
 /** @group Procedures */
 export type InputArgument<T extends string | number> = T | Variable | Literal<T> | Param<T>;
+
+export interface VoidCypherProcedure
+    extends WithReturn,
+        WithWhere,
+        WithWith,
+        WithMatch,
+        WithUnwind,
+        WithDelete,
+        WithMerge,
+        WithCreate,
+        WithSetRemove,
+        WithOrder {}
 
 /** Cypher Procedure that does not yield columns
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call/ | Cypher Documentation}
  * @group Procedures
  */
+
+@mixin(
+    WithReturn,
+    WithWhere,
+    WithWith,
+    WithMatch,
+    WithUnwind,
+    WithDelete,
+    WithMerge,
+    WithCreate,
+    WithSetRemove,
+    WithOrder
+)
 export class VoidCypherProcedure extends Clause {
     protected name: string;
     private readonly params: Array<Expr>;
@@ -59,7 +95,7 @@ export class VoidCypherProcedure extends Clause {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const procedureCypher = this.getProcedureCypher(env);
-        const optionalStr = this.generateOptionalStr();
+        const optionalStr = this._optional ? "OPTIONAL " : "";
         return `${optionalStr}CALL ${procedureCypher}`;
     }
 
@@ -68,38 +104,49 @@ export class VoidCypherProcedure extends Clause {
 
         return `${this.name}(${argsStr})`;
     }
-
-    protected generateOptionalStr(): string {
-        return this._optional ? "OPTIONAL " : "";
-    }
 }
 
 /** Cypher Procedure
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call/ | Cypher Documentation}
  * @group Procedures
  */
+
 export class CypherProcedure<T extends string = string> extends VoidCypherProcedure {
-    private yieldStatement: Yield<T> | undefined;
+    private yieldProjection: YieldProjection | undefined;
 
-    public yield(...columns: Array<"*" | YieldProjectionColumn<T>>): Yield<T> {
+    public yield(...columns: Array<YieldProjectionColumn<T>>): this {
         if (columns.length === 0) throw new Error("Empty projection in CALL ... YIELD");
-        this.yieldStatement = new Yield(columns);
-        this.addChildren(this.yieldStatement);
-
-        return this.yieldStatement;
+        if (!this.yieldProjection) {
+            this.yieldProjection = new YieldProjection(columns);
+        } else {
+            this.yieldProjection.addYieldColumns(columns);
+        }
+        return this;
     }
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const callCypher = super.getCypher(env);
-        const yieldCypher = compileCypherIfExists(this.yieldStatement, env, { prefix: " " });
+        const yieldCypher = this.getYieldCypher(env);
 
         return `${callCypher}${yieldCypher}`;
     }
 
-    protected generateOptionalStr(): string {
-        const yieldOptional = Boolean(this.yieldStatement?._optional);
-        const hasOptional = this._optional || yieldOptional;
-        return hasOptional ? "OPTIONAL " : "";
+    private getYieldCypher(env: CypherEnvironment): string {
+        if (!this.yieldProjection) {
+            return "";
+        }
+        const yieldProjectionStr = this.yieldProjection.getCypher(env);
+
+        const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
+        const setCypher = this.compileSetCypher(env);
+        const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
+
+        const whereStr = compileCypherIfExists(this.whereSubClause, env, {
+            prefix: "\n",
+        });
+
+        const nextClause = this.compileNextClause(env);
+        return ` YIELD ${yieldProjectionStr}${whereStr}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 }
