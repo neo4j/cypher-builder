@@ -96,10 +96,4 @@ export class CypherProcedure<T extends string = string> extends VoidCypherProced
 
         return `${callCypher}${yieldCypher}`;
     }
-
-    protected generateOptionalStr(): string {
-        const yieldOptional = Boolean(this.yieldStatement?._optional);
-        const hasOptional = this._optional || yieldOptional;
-        return hasOptional ? "OPTIONAL " : "";
-    }
 }

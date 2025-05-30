@@ -98,7 +98,7 @@ describe("db procedures", () => {
         });
 
         test("db.labels with yield *", () => {
-            const dbLabels = Cypher.db.labels().yield("*").optional();
+            const dbLabels = Cypher.db.labels().optional().yield("*");
             const { cypher, params } = dbLabels.build();
 
             expect(cypher).toMatchInlineSnapshot(`"OPTIONAL CALL db.labels() YIELD *"`);

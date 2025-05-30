@@ -72,12 +72,6 @@ export interface Yield
 )
 export class Yield<T extends string = string> extends Clause {
     private readonly projection: YieldProjection;
-    /**
-     * Used for `OPTIONAL CALL`
-     * @internal
-     *
-     */
-    public _optional: boolean = false;
 
     constructor(yieldColumns: Array<YieldProjectionColumn<T>>) {
         super();
@@ -88,11 +82,6 @@ export class Yield<T extends string = string> extends Clause {
 
     public yield(...columns: Array<YieldProjectionColumn<T>>): this {
         this.projection.addYieldColumns(columns);
-        return this;
-    }
-
-    public optional(): this {
-        this._optional = true;
         return this;
     }
 

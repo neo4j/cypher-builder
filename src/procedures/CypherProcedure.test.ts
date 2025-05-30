@@ -120,18 +120,6 @@ describe("Procedures", () => {
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        test("Procedure with yield with optional", () => {
-            const targetNode = new Cypher.Node();
-            const customProcedure = new Cypher.Procedure<"test">("customProcedure", [targetNode])
-                .yield("test")
-                .optional();
-
-            const { cypher, params } = customProcedure.build();
-
-            expect(cypher).toMatchInlineSnapshot(`"OPTIONAL CALL customProcedure(this0) YIELD test"`);
-            expect(params).toMatchInlineSnapshot(`{}`);
-        });
-
         test("Optional procedure with yield with optional", () => {
             const targetNode = new Cypher.Node();
             const customProcedure = new Cypher.Procedure<"test">("customProcedure", [targetNode])

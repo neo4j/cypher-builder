@@ -1,11 +1,11 @@
 ---
-"@neo4j/cypher-builder": patch
+"@neo4j/cypher-builder": minor
 ---
 
 Add support for `OPTIONAL CALL` on procedures:
 
 ```js
-Cypher.db.labels().yield("*").optional();
+Cypher.db.labels().optional().yield("*");
 ```
 
 ```cypher
