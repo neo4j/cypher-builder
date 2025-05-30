@@ -78,6 +78,21 @@ const dbLabels = Cypher.db.labels().yield("label");
 CALL db.labels() YIELD label
 ----
 
+=== Optional
+
+Procedures can be called with `OPTIONAL CALL` by using the `.optional` method:
+
+[source, javascript]
+----
+Cypher.db.labels().yield("*").optional();
+----
+
+[source, cypher]
+----
+OPTIONAL CALL db.labels() YIELD *
+----
+
+
 == Reusing Custom Procedures
 
 Custom procedures can be wrapped within a function so these can be reused in the same fashion as built-in procedures:
