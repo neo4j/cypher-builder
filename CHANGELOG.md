@@ -1,5 +1,19 @@
 # @neo4j/cypher-builder
 
+## 2.7.0
+
+### Minor Changes
+
+- [#541](https://github.com/neo4j/cypher-builder/pull/541) [`6b02a4a`](https://github.com/neo4j/cypher-builder/commit/6b02a4ab23a4c3986ed395c3946beeb333b2da95) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `OPTIONAL CALL` on procedures:
+
+    ```js
+    Cypher.db.labels().optional().yield("*");
+    ```
+
+    ```cypher
+    OPTIONAL CALL db.labels() YIELD *
+    ```
+
 ## 2.6.0
 
 ### Minor Changes
