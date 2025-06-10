@@ -46,16 +46,16 @@ Relationships can be used in a match clause by creating the relevant xref:/patte
 
 [source, javascript]
 ----
-const actedInPattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
-    .related({ type: "ACTED_IN" direction: "left" })
-    .to(personNode, { labels: ["Person"] });
+const actedInPattern = new Cypher.Pattern(personNode, { labels: ["Person"] })
+    .related({ type: "ACTED_IN" })
+    .to(movieNode, { labels: ["Movie"] });
 
 const matchQuery = new Cypher.Match(actedInPattern)
 ----
 
 [source, cypher]
 ----
-MATCH (this0:Movie)<-[:ACTED_IN]-(this1:Person)
+MATCH (this0:Person)-[:ACTED_IN]->(this1:Movie)
 ----
 
 == Filtering with `WHERE`
