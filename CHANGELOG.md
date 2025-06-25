@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 2.7.1
+
+### Patch Changes
+
+- [#549](https://github.com/neo4j/cypher-builder/pull/549) [`7b5b625`](https://github.com/neo4j/cypher-builder/commit/7b5b6259aa01a062247f50faee61f6592908e990) Thanks [@angrykoala](https://github.com/angrykoala)! - Makes value of `Cypher.Param` writable so it can be overwritten before the query is built
+
 ## 2.7.0
 
 ### Minor Changes
@@ -101,7 +107,6 @@
     Using this method as part of query building can lead to incorrect behaviour and it is generally a bad practice.
 
 - [#518](https://github.com/neo4j/cypher-builder/pull/518) [`a48f9ed`](https://github.com/neo4j/cypher-builder/commit/a48f9ed65cc4778f2906318ed01908af86091920) Thanks [@angrykoala](https://github.com/angrykoala)! - Explicitly exports some types that were used or returned by public functions and methods:
-
     - `CallInTransactionOptions`
     - `ForeachClauses`
     - `PartialPattern`
@@ -162,7 +167,6 @@
 ### Patch Changes
 
 - [#505](https://github.com/neo4j/cypher-builder/pull/505) [`dd5acb5`](https://github.com/neo4j/cypher-builder/commit/dd5acb54d872053973fc289c09364f037dfc2d6b) Thanks [@angrykoala](https://github.com/angrykoala)! - New options to disable automatic escaping of labels and relationship types have been added to the `.build` method on clauses, inside the new object `unsafeEscapeOptions`:
-
     - `disableLabelEscaping` (defaults to `false`): If set to true, node labels will not be escaped if unsafe.
     - `disableRelationshipTypeEscaping` (defaults to `false`): If set to true, relationship types will not be escaped if unsafe
 
@@ -318,7 +322,6 @@
 ### Patch Changes
 
 - [#476](https://github.com/neo4j/cypher-builder/pull/476) [`79e1e87`](https://github.com/neo4j/cypher-builder/commit/79e1e8732b9a37d9143147b55ebb7219095ebc5a) Thanks [@angrykoala](https://github.com/angrykoala)! - Escapes variables using the following reserved words (case insensitive):
-
     - `where`
     - `is`
     - `contains`
@@ -386,7 +389,6 @@
 ### Patch Changes
 
 - [#457](https://github.com/neo4j/cypher-builder/pull/457) [`85aa393`](https://github.com/neo4j/cypher-builder/commit/85aa39378525f7c4d87363bad39310a94ceb9b00) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix types in `Unwind` to reflect its behaviour in Cypher:
-
     - Unwind without alias is not supported in Cypher.
     - Unwind does not support `*`
     - Unwind does not support multiple columns
@@ -448,7 +450,6 @@
 - [#447](https://github.com/neo4j/cypher-builder/pull/447) [`b82be57`](https://github.com/neo4j/cypher-builder/commit/b82be57dc5440e63aa5c7b4dc95edc5a778338f3) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove `Path` and `NamedPath` in favor of `PathVariable` and `NamedPathVariable`
 
 - [#389](https://github.com/neo4j/cypher-builder/pull/389) [`f5135f5`](https://github.com/neo4j/cypher-builder/commit/f5135f5396c7f86051282b214cf14b9e843cd3e8) Thanks [@angrykoala](https://github.com/angrykoala)! - Removes the following deprecated features:
-
     - `pointDistance`
     - `utils.compileCypher`
     - `RawCypher`
@@ -486,7 +487,6 @@
 - [#410](https://github.com/neo4j/cypher-builder/pull/410) [`961933f`](https://github.com/neo4j/cypher-builder/commit/961933f051d2359184f6dcc9d3407f1092feec83) Thanks [@angrykoala](https://github.com/angrykoala)! - Removes `previous` argument from `Pattern` constructor. This argument was never meant to be used externally and now it is not accessible
 
 - [#391](https://github.com/neo4j/cypher-builder/pull/391) [`d416ee6`](https://github.com/neo4j/cypher-builder/commit/d416ee6a623a9cbc8c573e11e1e155d799f19abf) Thanks [@angrykoala](https://github.com/angrykoala)! - Fix TypeScript typings for boolean operators when using array spread:
-
     - `Cypher.and`
     - `Cypher.or`
     - `Cypher.xor`
@@ -508,7 +508,6 @@
     Passing parameters without spread will still return a defined type
 
 - [#447](https://github.com/neo4j/cypher-builder/pull/447) [`b82be57`](https://github.com/neo4j/cypher-builder/commit/b82be57dc5440e63aa5c7b4dc95edc5a778338f3) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove `assignToPath` method from clauses, in favor of `assignTo` in Patterns for the following clauses:
-
     - `Match`
     - `Merge`
     - `Create`
@@ -638,7 +637,6 @@
     ```
 
 - [#425](https://github.com/neo4j/cypher-builder/pull/425) [`e899ceb`](https://github.com/neo4j/cypher-builder/commit/e899cebd0c12bdf80051f84c0574293329f74855) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for order by, skip and limit chaining after the following clauses:
-
     - Call
     - Merge
     - Create
@@ -651,7 +649,6 @@
 ### Minor Changes
 
 - [#413](https://github.com/neo4j/cypher-builder/pull/413) [`0f2dfe6`](https://github.com/neo4j/cypher-builder/commit/0f2dfe67a2d4386e6a565791f6a952c0e51c6b8b) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for SHORTEST keyword in match and its variations:
-
     - `.shortest(k)`
     - `.shortestGroups(k)`
     - `.allShortest`
@@ -728,7 +725,6 @@
     ```
 
 - [#396](https://github.com/neo4j/cypher-builder/pull/396) [`f39056f`](https://github.com/neo4j/cypher-builder/commit/f39056f11a68b384df763470b39909efe56da20f) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for GQL type aliases introduced in Neo4j 5.23:
-
     - `Cypher.TYPE.TIMESTAMP_WITHOUT_TIME_ZONE`
     - `Cypher.TYPE.TIME_WITHOUT_TIME_ZONE`
     - `Cypher.TYPE.TIMESTAMP_WITH_TIME_ZONE`
@@ -790,7 +786,6 @@
 ### Patch Changes
 
 - [#371](https://github.com/neo4j/cypher-builder/pull/371) [`6d1b0c4`](https://github.com/neo4j/cypher-builder/commit/6d1b0c44d0c7d8862dbbcf7e1c29897cb2e17c5c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add `LOAD CSV` related functions:
-
     - `file()`
     - `linenumber()`
 
@@ -828,19 +823,16 @@
 ### Patch Changes
 
 - [#357](https://github.com/neo4j/cypher-builder/pull/357) [`22f87f3`](https://github.com/neo4j/cypher-builder/commit/22f87f370508ebbad3ad6effc09756105cb61b55) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for procedures in the tx namespace:
-
     - `tx.getMetaData`
     - `tx.setMetaData`
 
 - [#363](https://github.com/neo4j/cypher-builder/pull/363) [`47ee1ef`](https://github.com/neo4j/cypher-builder/commit/47ee1ef9b3f687e789eae307486d1e320f183329) Thanks [@angrykoala](https://github.com/angrykoala)! - Add functions `lower` and `upper`
 
 - [#361](https://github.com/neo4j/cypher-builder/pull/361) [`e769f61`](https://github.com/neo4j/cypher-builder/commit/e769f612f1f3e904467209e7c477b23a1d086b0c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for missing fulltext procedures:
-
     - `db.index.fulltext.awaitEventuallyConsistentIndexRefresh`
     - `db.index.fulltext.listAvailableAnalyzers`
 
 - [#361](https://github.com/neo4j/cypher-builder/pull/361) [`e769f61`](https://github.com/neo4j/cypher-builder/commit/e769f612f1f3e904467209e7c477b23a1d086b0c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for missing db procedures:
-
     - `db.ping`
     - `db.propertyKeys`
     - `db.relationshipTypes`
@@ -852,7 +844,6 @@
 ### Patch Changes
 
 - [#355](https://github.com/neo4j/cypher-builder/pull/355) [`acddbc3`](https://github.com/neo4j/cypher-builder/commit/acddbc365d50390d152e180a8f0f6a04827ce7e1) Thanks [@angrykoala](https://github.com/angrykoala)! - Add the following procedures:
-
     - `db.nameFromElementId`
     - `db.info`
     - `db.createLabel`
@@ -908,7 +899,6 @@
 ### Patch Changes
 
 - [#310](https://github.com/neo4j/cypher-builder/pull/310) [`13fd317`](https://github.com/neo4j/cypher-builder/commit/13fd31777c6873f615d2f333cbbaabb90f7aaba5) Thanks [@angrykoala](https://github.com/angrykoala)! - The following methods in `Pattern` class and chains are deprecated:
-
     - `withoutLabels`
     - `withoutVariable`
     - `withProperties`
@@ -979,7 +969,6 @@
 ### Patch Changes
 
 - [#315](https://github.com/neo4j/cypher-builder/pull/315) [`e3a7505`](https://github.com/neo4j/cypher-builder/commit/e3a750521adb3af6a5653eb8093a3d69bd1d29b0) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate `Cypher.cdc` Procedures in favor of `Cypher.db.cdc`:
-
     - `Cypher.cdc.current` in favor of `Cypher.db.cdc.current`
     - `Cypher.cdc.earliest` in favor of `Cypher.db.cdc.earliest`
     - `Cypher.cdc.query` in favor of `Cypher.db.cdc.query`
@@ -1144,7 +1133,6 @@
 ### Minor Changes
 
 - [#269](https://github.com/neo4j/cypher-builder/pull/269) [`6d9d3e2`](https://github.com/neo4j/cypher-builder/commit/6d9d3e226ecc72252b3609dd22f367ae909b1dca) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained clauses to Procedures after YIELD:
-
     - `.unwind`
     - `.match`
     - `.optionalMatch`
@@ -1298,13 +1286,11 @@
 ### Minor Changes
 
 - [#218](https://github.com/neo4j/cypher-builder/pull/218) [`81dc823`](https://github.com/neo4j/cypher-builder/commit/81dc82377cc93a50d373cf05824ab8ef45efa93a) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for CDC procedures:
-
     - `cdc.current`
     - `cdc.earliest`
     - `cdc.query`
 
 - [#224](https://github.com/neo4j/cypher-builder/pull/224) [`c872abd`](https://github.com/neo4j/cypher-builder/commit/c872abd611e22db3ae1fd3b6c8162f44f7e47eb6) Thanks [@angrykoala](https://github.com/angrykoala)! - Implement functions from Cypher 5.13:
-
     - `valueType`
     - `char_length`
     - `character_length`
@@ -1318,18 +1304,15 @@
 ### Minor Changes
 
 - [#211](https://github.com/neo4j/cypher-builder/pull/211) [`2e76445`](https://github.com/neo4j/cypher-builder/commit/2e76445174843dcb77fcd68633f22a4cc427a508) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained clauses in unwind:
-
     - `Unwind.return`
     - `Unwind.remove`
     - `Unwind.set`
 
 - [`fa3d246`](https://github.com/neo4j/cypher-builder/commit/fa3d24612c7094ec947b036bf7bd00f660916e33) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained methods in Merge:
-
     - `Merge.remove`
     - `Merge.with`
 
 - [#213](https://github.com/neo4j/cypher-builder/pull/213) [`64edcdd`](https://github.com/neo4j/cypher-builder/commit/64edcdd580fb72cf8e859edf4f6331ffee65c189) Thanks [@angrykoala](https://github.com/angrykoala)! - Add methods for chained Merge:
-
     - `Match.merge`
     - `Create.merge`
     - `Call.merge`
@@ -1339,7 +1322,6 @@
     - `With.merge`
 
 - [#206](https://github.com/neo4j/cypher-builder/pull/206) [`1ef6244`](https://github.com/neo4j/cypher-builder/commit/1ef6244df80dd1f48e69623b0f3ea0cdb62b6376) Thanks [@angrykoala](https://github.com/angrykoala)! - Add methods for chained match clauses:
-
     - `With.match`
     - `With.optionalMatch`
     - `Unwind.match`
@@ -1348,14 +1330,12 @@
     - `Call.optionalMatch`
 
 - [#204](https://github.com/neo4j/cypher-builder/pull/204) [`8227ade`](https://github.com/neo4j/cypher-builder/commit/8227ade6f7174d6c61bf5d2475fea04912e9a2c8) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained clauses in CALL clause:
-
     - `Call.remove`
     - `Call.set`
     - `Call.delete`
     - `Call.detachDelete`
 
 - [#212](https://github.com/neo4j/cypher-builder/pull/212) [`33ceb71`](https://github.com/neo4j/cypher-builder/commit/33ceb71a5eeea0af2f46d52417015643a0a9f2fb) Thanks [@angrykoala](https://github.com/angrykoala)! - Add methods for chained Create method:
-
     - `Match.create`
     - `Call.create`
     - `Foreach.create`
@@ -1364,12 +1344,10 @@
     - `With.create`
 
 - [#200](https://github.com/neo4j/cypher-builder/pull/200) [`d582e1a`](https://github.com/neo4j/cypher-builder/commit/d582e1ace8665de5ea3ed2abcfc9ad6c571fdfbf) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support nested match clauses #90:
-
     - `Match.match()`
     - `Match.optionalMatch()`
 
 - [#210](https://github.com/neo4j/cypher-builder/pull/210) [`9388048`](https://github.com/neo4j/cypher-builder/commit/9388048f65f1850d9eee6c0fa666328da27d46ea) Thanks [@angrykoala](https://github.com/angrykoala)! - Add chained subclauses for foreach:
-
     - `Foreach.return`
     - `Foreach.remove`
     - `Foreach.set`
@@ -1377,13 +1355,11 @@
     - `Foreach.detachDelete`
 
 - [#201](https://github.com/neo4j/cypher-builder/pull/201) [`70c60b1`](https://github.com/neo4j/cypher-builder/commit/70c60b1edbb672c32d4394401d37c60a85d45633) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for chained unwind:
-
     - `Unwind.unwind`
     - `Match.unwind`
     - `With.unwind`
 
 - [#203](https://github.com/neo4j/cypher-builder/pull/203) [`d7d0d2f`](https://github.com/neo4j/cypher-builder/commit/d7d0d2f8d2262d854deea49faf611d2581cb3392) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for chained methods on Create clause:
-
     - `Create.remove`
     - `Create.delete`
     - `Create.detachDelete`
@@ -1506,7 +1482,6 @@
 ### Minor Changes
 
 - [#106](https://github.com/neo4j/cypher-builder/pull/106) [`7474e62`](https://github.com/neo4j/cypher-builder/commit/7474e62ef8336b394d43021d459686096f0cae4c) Thanks [@angrykoala](https://github.com/angrykoala)! - Add instant temporal functions:
-
     - time
     - localtime
     - localdatetime
@@ -1514,7 +1489,6 @@
     - date
 
     As well as the related nested functions:
-
     - \*.realtime
     - \*.statement
     - \*.transaction
@@ -1540,7 +1514,6 @@
 ### Minor Changes
 
 - [#96](https://github.com/neo4j/cypher-builder/pull/96) [`7cb59d1`](https://github.com/neo4j/cypher-builder/commit/7cb59d1f44d479b878dca435c0ad8d56a380bd19) Thanks [@angrykoala](https://github.com/angrykoala)! - Add missing spatial functions:
-
     - withinBBox
 
 - [#91](https://github.com/neo4j/cypher-builder/pull/91) [`0940e2b`](https://github.com/neo4j/cypher-builder/commit/0940e2b88ed229510b431d0db4c9fb53c1c74cab) Thanks [@angrykoala](https://github.com/angrykoala)! - Add missing aggregation functions:
@@ -1620,7 +1593,6 @@
 ### Patch Changes
 
 - [#50](https://github.com/neo4j/cypher-builder/pull/50) [`91ee39c`](https://github.com/neo4j/cypher-builder/commit/91ee39c9e38ea1e7ba6bfe142c604694355ddca9) Thanks [@angrykoala](https://github.com/angrykoala)! - Updates escape logic so names with numbers are not escaped unless they begin with a number:
-
     - `this0` OK
     - `0this` Should be escaped
 
