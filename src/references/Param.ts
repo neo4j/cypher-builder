@@ -24,7 +24,7 @@ import { Variable } from "./Variable";
  * @group Variables
  */
 export class Param<T = unknown> extends Variable {
-    public readonly value: T;
+    public value: T;
 
     constructor(value: T) {
         super();
