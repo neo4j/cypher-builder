@@ -22,7 +22,6 @@ import type { CypherEnvironment } from "../../Environment";
 import type { Param } from "../../references/Param";
 import type { PropertyRef } from "../../references/PropertyRef";
 import type { Variable } from "../../references/Variable";
-import type { Call } from "../Call";
 
 export type SetParam = [PropertyRef, Param<unknown>];
 
@@ -31,7 +30,7 @@ export class ImportWith extends CypherASTNode {
     private readonly params: Variable[];
     private hasStar = false;
 
-    constructor(parent: Call, params: Array<"*" | Variable>) {
+    constructor(parent: CypherASTNode, params: Array<"*" | Variable>) {
         super(parent);
         this.params = this.filterParams(params);
     }
