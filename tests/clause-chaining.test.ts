@@ -99,7 +99,7 @@ describe("Clause chaining", () => {
         const movieNode = new Cypher.Node();
         const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode)).set([movieNode.property("id"), variable]);
 
-        const clause = new Cypher.Foreach(variable, list, createMovie);
+        const clause = new Cypher.Foreach(variable).in(list).do(createMovie);
 
         it.each(["return", "remove", "set", "delete", "detachDelete", "with", "merge", "create"] as const)(
             "Foreach.%s",
