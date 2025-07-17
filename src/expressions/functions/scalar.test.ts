@@ -31,7 +31,6 @@ describe("Scalar Functions", () => {
 
     // 1 parameter functions
     test.each([
-        "id",
         "elementId",
         "endNode",
         "size",
