@@ -32,7 +32,7 @@ export class DeleteClause extends CypherASTNode {
     private readonly deleteInput: DeleteInput;
     private detachKeyword: DetachKeyword | undefined;
 
-    constructor(parent: CypherASTNode | undefined, deleteInput: DeleteInput) {
+    constructor(parent: CypherASTNode, deleteInput: DeleteInput) {
         super(parent);
         this.deleteInput = deleteInput;
     }

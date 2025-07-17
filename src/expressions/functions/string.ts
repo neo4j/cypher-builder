@@ -163,13 +163,16 @@ export function toUpper(original: Expr): CypherFunction {
     return new CypherFunction("toUpper", [original]);
 }
 
+/** @inline */
+type TrimOption = "BOTH" | "LEADING" | "TRAILING";
+
 /** Implements a trim function with a trim expression `trim(BOTH 'x' FROM 'xxxhelloxxx')` */
 class TrimFunction extends CypherFunction {
-    private readonly typeOrInput: "BOTH" | "LEADING" | "TRAILING";
+    private readonly typeOrInput: TrimOption;
     private readonly trimChar: Expr;
     private readonly input: Expr;
 
-    constructor(typeOrInput: "BOTH" | "LEADING" | "TRAILING", trimChar: Expr, input: Expr) {
+    constructor(typeOrInput: TrimOption, trimChar: Expr, input: Expr) {
         super("trim");
         this.typeOrInput = typeOrInput;
         this.trimChar = trimChar;
@@ -189,13 +192,9 @@ class TrimFunction extends CypherFunction {
  * @group Functions
  * @category String
  */
-export function trim(type: "BOTH" | "LEADING" | "TRAILING", trimChar: Expr, input: Expr): CypherFunction;
+export function trim(type: TrimOption, trimChar: Expr, input: Expr): CypherFunction;
 export function trim(input: Expr): CypherFunction;
-export function trim(
-    typeOrInput: "BOTH" | "LEADING" | "TRAILING" | Expr,
-    trimChar?: Expr,
-    input?: Expr
-): CypherFunction {
+export function trim(typeOrInput: TrimOption | Expr, trimChar?: Expr, input?: Expr): CypherFunction {
     if (typeof typeOrInput === "string") {
         if (!trimChar || !input) {
             throw new Error("Invalid parameters in trim. trimChar and input must be valid Expr");
