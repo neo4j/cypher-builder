@@ -42,6 +42,10 @@ _Params_
 }
 ```
 
+# Contributing
+
+See our [contributing guide](./CONTRIBUTING.md) for development instructions.
+
 # Examples
 
 You can find usage examples in the [examples](https://github.com/neo4j/cypher-builder/tree/main/examples) folder.
