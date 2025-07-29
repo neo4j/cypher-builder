@@ -26,18 +26,18 @@ This differentiates functions from clauses and other elements of the Cypher Buil
 ====
 
 Exposed functions have the closest possible name to their Cypher counterpart, and reside in the same namespace.
-For example, this query:
+For example:
 
 [source, javascript]
 ----
-Cypher.apoc.cypher.runFirstColumnSingle()
+Cypher.db.nameFromElementId("1234")
 ----
 
-Is equivalent to the Cypher function:
+Generates the Cypher function:
 
 [source, cypher]
 ----
-apoc.cypher.runFirstColumnSingle()
+db.nameFromElementId("1234")
 ----
 
 == Custom functions

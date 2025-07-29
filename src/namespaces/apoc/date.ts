@@ -25,6 +25,7 @@ import type { Expr } from "../../types";
 /**
  * @group Functions
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.date/apoc.date.convertFormat/)
+ * @deprecated apoc methods will no longer be supported in Cypher Builder version 3
  * @example
  * ```ts
  * Cypher.apoc.date.convertFormat(
