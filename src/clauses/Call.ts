@@ -60,7 +60,9 @@ export type CallInTransactionOptions = {
     retry?: number | boolean;
 };
 
-/**
+/** Adds a `CALL` subquery
+ * @param subquery - A clause to be wrapped in a `CALL` clause
+ * @param variableScope - A list of variables to pass to the scope of the clause: `CALL (var0) {`
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/ | Cypher Documentation}
  * @group Subqueries
  */
@@ -81,7 +83,8 @@ export class Call extends Clause {
     }
 
     /** Adds a `WITH` statement inside `CALL {`, this `WITH` can is used to import variables outside of the subquery
-     *  @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#call-importing-variables | Cypher Documentation}
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#call-importing-variables | Cypher Documentation}
+     * @deprecated Use constructor parameter `variableScope` instead
      */
     public importWith(...params: Array<Variable | "*">): this {
         if (this._importWith) {

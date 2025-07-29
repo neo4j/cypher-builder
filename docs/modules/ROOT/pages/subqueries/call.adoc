@@ -73,7 +73,12 @@ CALL (*) {
 
 [WARNING]
 ====
-Import with cannot be used if scope variables are defined and will throw an error
+This method is deprecated in favor of <<_variable_scope>> 
+====
+
+[WARNING]
+====
+Import with cannot be used if scope variables are defined and will throw an error.
 ====
 
 
