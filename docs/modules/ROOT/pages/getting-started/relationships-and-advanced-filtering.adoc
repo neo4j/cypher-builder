@@ -19,7 +19,7 @@ It also adds the property `roles` from the relationship to the projection, alias
 Querying it on the Movies Dataset should prompt this result:
 
 .Result
-[role="queryresult",options="header,footer",cols="4*<m"]
+[role="queryresult",options="header",cols="4*<m"]
 |===
 | m.title | m.tagline | m.released | actingRoles
 | "The Matrix" | "Welcome to the Real World" | 1999 | ["Neo"] 
