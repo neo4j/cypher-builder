@@ -26,6 +26,7 @@ import type { Expr } from "../../../types";
 
 /**
  * @group Functions
+ * @deprecated apoc methods will no longer be supported in Cypher Builder version 3
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.cypher/apoc.cypher.runFirstColumnMany/)
  */
 export function runFirstColumnMany(
@@ -37,6 +38,7 @@ export function runFirstColumnMany(
 
 /**
  * @group Functions
+ * @deprecated apoc methods will no longer be supported in Cypher Builder version 3
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.cypher/apoc.cypher.runFirstColumnSingle/)
  */
 export function runFirstColumnSingle(

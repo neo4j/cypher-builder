@@ -27,6 +27,7 @@ import { normalizeVariable } from "../../utils/normalize-variable";
 
 /**
  * @group Procedures
+ * @deprecated apoc methods will no longer be supported in Cypher Builder version 3
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.util/apoc.util.validate/)
  */
 export function validate(
@@ -40,6 +41,7 @@ export function validate(
 
 /**
  * @group Functions
+ * @deprecated apoc methods will no longer be supported in Cypher Builder version 3
  * @see [Apoc Documentation](https://neo4j.com/docs/apoc/current/overview/apoc.util/apoc.util.validatePredicate/)
  */
 export function validatePredicate(predicate: Predicate, message: string): CypherFunction {
