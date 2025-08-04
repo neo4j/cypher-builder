@@ -87,6 +87,7 @@ CALL (*) {
 }
 ----
 
+[role=label--deprecated]
 == `.importWith`
 
 [WARNING]
@@ -96,7 +97,7 @@ This method is deprecated in favor of <<_variable_scope>>.
 
 [WARNING]
 ====
-ImportWith cannot be used if scope variables are defined and will throw an error.
+`ImportWith` cannot be used if scope variables are defined and will throw an error.
 ====
 
 

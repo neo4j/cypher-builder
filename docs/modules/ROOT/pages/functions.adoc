@@ -26,18 +26,18 @@ This differentiates functions from clauses and other elements of the Cypher Buil
 ====
 
 Exposed functions have the closest possible name to their Cypher counterpart, and reside in the same namespace.
-For example, this query:
+For example:
 
 [source, javascript]
 ----
-Cypher.apoc.cypher.runFirstColumnSingle()
+Cypher.db.nameFromElementId("1234")
 ----
 
-Is equivalent to the Cypher function:
+Generates the Cypher function:
 
 [source, cypher]
 ----
-apoc.cypher.runFirstColumnSingle()
+db.nameFromElementId("1234")
 ----
 
 == Custom functions
@@ -46,7 +46,7 @@ In some cases, you may need to use functions that are not available in Cypher Bu
 For instance, if you are using plugins or some of the newest features of Neo4j.
 
 For these cases, you can use the class `Function` to create custom functions. 
-This example calls link:https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-isnan[`isNan`] as a custom function:
+This example calls an arbitrary function `myFunction`:
 
 [source, javascript]
 ----
