@@ -4,6 +4,30 @@
 
 Cypher Builder is a programmatic API for building link:https://neo4j.com/docs/cypher-manual/[Cypher] queries for Neo4j in JavaScript and TypeScript.
 
+For example, the following code:
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] });
+
+const matchQuery = new Cypher.Match(pattern)
+    .where(movieNode, {
+        title: new Cypher.Param("The Matrix"),
+    })
+    .return(movieNode.property("title"));
+----
+
+Generates the following Cypher query:
+
+[source, cypher]
+----
+MATCH (this0:Movie)
+WHERE this0.title = $param0
+RETURN this0.title
+----
+
+
 
 
 If you are using Java, check link:https://neo4j.github.io/cypher-dsl[Neo4j Cypher-DSL].

@@ -204,6 +204,7 @@ export class Call extends Clause {
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call | Cypher Documentation}
  * @group Subqueries
+ * @since Neo4j 5.24
  */
 export class OptionalCall extends Call {
     constructor(subquery: Clause, variableScope?: Variable[] | "*") {
