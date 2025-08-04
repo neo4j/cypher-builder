@@ -1,5 +1,28 @@
 # @neo4j/cypher-builder
 
+## 2.7.2
+
+### Patch Changes
+
+- [#554](https://github.com/neo4j/cypher-builder/pull/554) [`e3278f8`](https://github.com/neo4j/cypher-builder/commit/e3278f824bb28714c64edb94d1e1baf537394eb7) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates `Call.importWith` in favor of scope variables in `Call` constructor
+
+- [#554](https://github.com/neo4j/cypher-builder/pull/554) [`a9af397`](https://github.com/neo4j/cypher-builder/commit/a9af3979cf19f56bcc30b18224507ca7a498e906) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecate apoc functions and procedures. These will no longer be supported in version 3 of Cypher Builder:
+    - `apoc.date.convertFormat`
+    - `apoc.util.validate`
+    - `apoc.util.validatePredicate`
+    - `apoc.cypher.runFirstColumnMany`
+    - `apoc.cypher.runFirstColumnSingle`
+
+    These can still be used by using the `Function` class directly:
+
+    ```js
+    const convertFormat = new Cypher.Function("apoc.date.convertFormat", [
+        new Cypher.Variable(),
+        new Cypher.Literal("iso_zoned_date_time"),
+        new Cypher.Literal("iso_offset_date_time"),
+    ]);
+    ```
+
 ## 2.7.1
 
 ### Patch Changes
