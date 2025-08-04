@@ -37,14 +37,14 @@ RETURN dogName
 
 == Variable scope
 
-`Call` clauses accept an array of xref:../variables-and-params/variables.adoc[Cypher Variables] as the second parameter of its constructor. These variables will be available within the scope of the subquery in the generated Cypher.
+xref:../variables-and-params/variables.adoc[Variables] can be added to the `CALL` scope by passing the to the second parameter of the constructor, as an array. These variables will be available within the scope of the subquery in the generated Cypher.
 
 [source, javascript]
 ----
 new Cypher.Call(subquery, [var1, var2]);
 ----
 
-For example, the following code will make two node variables available in the `CREATE` statement inside `CALL`.
+The following code will make two node variables available in the `CREATE` statement inside `CALL`.
 
 [source, javascript]
 ----
