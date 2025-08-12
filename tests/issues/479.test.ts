@@ -180,4 +180,82 @@ RETURN count(this0)"
 `);
         });
     });
+
+    describe("relationship types", () => {
+        test("string with $ is properly escaped", () => {
+            const movie = new Cypher.Node();
+            const movieLabel = new Cypher.Variable();
+
+            const query = new Cypher.With([new Cypher.Param("Movie"), movieLabel])
+                .match(
+                    new Cypher.Pattern(movie)
+                        .related({
+                            type: "$(REL)",
+                        })
+                        .to()
+                )
+                .return(Cypher.count(movie));
+
+            const queryResult = query.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"WITH $param0 AS var0
+MATCH (this1)-[:\`$(REL)\`]->()
+RETURN count(this1)"
+`);
+        });
+
+        test("Simple relationship with dynamic type", () => {
+            const movie = new Cypher.Node();
+
+            const query = new Cypher.Match(
+                new Cypher.Pattern(movie, {
+                    labels: new Cypher.Param("Movie"),
+                })
+                    .related({
+                        type: new Cypher.Param("ACTED_IN"),
+                    })
+                    .to()
+            ).return(Cypher.count(movie));
+
+            const queryResult = query.build();
+
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:$($param0))-[:$($param1)]->()
+RETURN count(this0)"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "Movie",
+  "param1": "ACTED_IN",
+}
+`);
+        });
+
+        test("Relationship with dynamic type in labelExpr", () => {
+            const movie = new Cypher.Node();
+
+            const query = new Cypher.Match(
+                new Cypher.Pattern(movie, {
+                    labels: new Cypher.Param("Movie"),
+                })
+                    .related({
+                        type: Cypher.labelExpr.or(new Cypher.Param("ACTED_IN"), "NOT_ACTED_IN"),
+                    })
+                    .to()
+            ).return(Cypher.count(movie));
+
+            const queryResult = query.build();
+
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:$($param0))-[:($($param1)|NOT_ACTED_IN)]->()
+RETURN count(this0)"
+`);
+            expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "Movie",
+  "param1": "ACTED_IN",
+}
+`);
+        });
+    });
 });

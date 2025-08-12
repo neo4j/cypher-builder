@@ -2,7 +2,7 @@
 "@neo4j/cypher-builder": minor
 ---
 
-Support for dynamic labels on patterns
+Support for dynamic labels in patterns
 
 ```javascript
 const movie = new Cypher.Node();

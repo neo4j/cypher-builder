@@ -48,7 +48,7 @@ export class PartialPattern extends PatternElement {
     private readonly previous: Pattern;
     private readonly properties: Record<string, Expr> | undefined;
 
-    private readonly type: string | LabelExpr | undefined;
+    private readonly type: string | LabelExpr | Expr | undefined;
 
     constructor(variable: Variable | undefined, options: RelationshipPatternOptions, previous: Pattern) {
         super(variable);

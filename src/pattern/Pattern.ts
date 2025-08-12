@@ -40,7 +40,7 @@ export type NodePatternOptions = {
 
 /** @group Patterns */
 export type RelationshipPatternOptions = {
-    type?: string | LabelExpr;
+    type?: string | LabelExpr | Expr;
     properties?: Record<string, Expr>;
     direction?: "left" | "right" | "undirected";
     length?:
