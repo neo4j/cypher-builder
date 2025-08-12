@@ -2,14 +2,14 @@
 :description: This page describes how to create CALL subqueries with the Cypher Builder.
 = `Call`
 
-`Cypher.Call` generates Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/[`CALL` subqueries]. To do this, instantiate `Cypher.Call` with a valid subquery as parameter in the constructor.
+`Cypher.Call` generates a Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/[`CALL` subquery]. To do this, instantiate `Cypher.Call` with a valid subquery as the first constructor argument.
 
 [source, javascript]
 ----
 new Cypher.Call(subquery);
 ----
 
-In the following example, `Cypher.Call` receives a `Cypher.Match` clause.
+In the following example, `Cypher.Call` receives a `Cypher.Match` clause. This creates a `CALL` clause with a `MATCH` subquery inside:
 
 [source, javascript]
 ----
@@ -17,14 +17,12 @@ const dog = new Cypher.Node({ labels: ["Dog"] });
 const person = new Cypher.Node({ labels: ["Person"] });
 const dogName = new Cypher.NamedVariable("dogName");
 
-const pattern = new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog)
+const pattern = new Cypher.Pattern(person).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog);
 const subquery = new Cypher.Match(pattern).return([dog.property("name"), dogName]);
 
 const callClause = new Cypher.Call(subquery).return(dogName);
 const { cypher, params } = callClause.build();
 ----
-
-This example builds a `CALL` clause with the `MATCH` subquery inside.
 
 [source, cypher]
 ----
@@ -37,14 +35,14 @@ RETURN dogName
 
 == Variable scope
 
-xref:../variables-and-params/variables.adoc[Variables] can be added to the `CALL` scope by passing the to the second parameter of the constructor, as an array. These variables will be available within the scope of the subquery in the generated Cypher.
+xref:../variables-and-params/variables.adoc[Variables] can be added to the scope of the `CALL` subquery by passing them as an array to the second argument of the constructor. These variables will then be available for use in the subquery.
 
 [source, javascript]
 ----
 new Cypher.Call(subquery, [var1, var2]);
 ----
 
-The following code will make two node variables available in the `CREATE` statement inside `CALL`.
+The following code includes two variables in the `CREATE` statement inside the `CALL`. The generated Cypher adds `movieNode` (`this0`) and `actorNode` (`this1`) in the subquery scope:
 
 [source, javascript]
 ----
@@ -58,8 +56,6 @@ const clause = new Cypher.Call(createSubquery, [
     actorNode,
 ]);
 ----
-
-The resulting Cypher adds the two variables `movieNode` (`this0`) and `actorNode` (`this1`) to the `CALL` scope:
 
 [source, cypher]
 ----
@@ -97,12 +93,11 @@ This method is deprecated in favor of <<_variable_scope>>.
 
 [WARNING]
 ====
-`ImportWith` cannot be used if scope variables are defined and will throw an error.
+`importWith` cannot be used if scope variables are defined and will throw an error.
 ====
 
 
-To add variables to a `CALL` subquery context, you need to add a `WITH` statement.
-This can be achieved by using the `.importWith` method:
+To add variables to a `CALL` subquery context, you need to add a `WITH` statement. This can be achieved by using the `.importWith` method.
 
 [source, javascript]
 ----
@@ -112,10 +107,15 @@ const person = new Cypher.Node();
 const dogName = new Cypher.NamedVariable("dogName");
 
 const subquery = new Cypher.Match(
-    new Cypher.Pattern(person, {labels: ["Person"]}).related(new Cypher.Relationship({ type: "HAS_DOG" })).to(dog, {labels: ["Dog"]})
+    new Cypher.Pattern(person, { labels: ["Person"] })
+        .related(new Cypher.Relationship({ type: "HAS_DOG" }))
+        .to(dog, { labels: ["Dog"] })
 ).return([dog.property("name"), dogName]);
 
-const clause = new Cypher.Match(new Cypher.Pattern(person, {labels: ["Person"]})).call(subquery).importWith(person).return(dogName);
+const clause = new Cypher.Match(new Cypher.Pattern(person, { labels: ["Person"] }))
+    .call(subquery)
+    .importWith(person)
+    .return(dogName);
 ----
 
 [source, cypher]
@@ -129,11 +129,11 @@ CALL {
 RETURN dogName
 ----
 
-Note how the previous example uses `.concat` to concatenate the first `MATCH` statement and the `CALL` clause.
+Note how this example uses `.concat` to combine the initial `MATCH` and `CALL` clauses.
 
 == `.inTransactions`
 
-The method `.inTransactions` appends the modifier `IN TRANSACTIONS` at the end of the `CALL` subquery, this way subqueries will link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/[execute in separate transactions]:
+The `.inTransactions` method appends the `IN TRANSACTIONS` modifier to a `CALL` subquery, causing it to link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/[execute in separate transactions]:
 
 [source, javascript]
 ----
@@ -147,7 +147,7 @@ CALL {
 } IN TRANSACTIONS
 ----
 
-The method `inTransactions` accepts multiple settings to change the behaviour of the transactions, such as, error handling, rows per transaction, or concurrency. You can pass one or more settings, as an object, to `.inTransaction`.
+The `inTransactions` method supports optional settings for customizing transactional behavior, including error handling, rows per transaction, and concurrency. Settings are passed as an object:
 
 [source, javascript]
 ----
@@ -156,19 +156,18 @@ new Call(subquery).inTransactions({
 });
 ----
 
-`inTransactions` supports the following settings:
+Supported settings:
 
 [cols="1,1,1",options="header"]
 |===
 | Setting | Description | Cypher
-| `ofRows` | Define the number of rows per transaction | link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/#batching[`IN TRANSACTIONS OF [n\] ROWS`]
-| `onError` | Error handling behaviour, can be  `continue`, `break` or `fail` | link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/#error-behavior[`ON ERROR [CONTINUE \| BREAK \| FAIL\]`]
-| `concurrentTransactions` | The maximum number of transactions to execute concurrently | link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/#concurrent-transactions[`IN [n\] CONCURRENT TRANSACTIONS`]
-| `retry` | If set to `true`, retries failing transactions. Can be a number to define the maximum duration, in seconds. | link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/#on-error-retry[`ON ERROR RETRY [FOR x SECONDS\]`] 
+| `ofRows` | Number of rows per transaction | link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/#batching[`IN TRANSACTIONS OF [n\] ROWS`]
+| `onError` | Error handling: `continue`, `break`, or `fail` | link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/#error-behavior[`ON ERROR [CONTINUE \| BREAK \| FAIL\]`]
+| `concurrentTransactions` | Maximum number of concurrent transactions | link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/#concurrent-transactions[`IN [n\] CONCURRENT TRANSACTIONS`]
+| `retry` | Retries failed transactions. Can be `true` or a number (duration in seconds) | link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/#on-error-retry[`ON ERROR RETRY [FOR x SECONDS\]`] 
 |===
 
-
-**Example 1: Concurrent transaction of rows**
+**Example 1: Concurrent transactions of rows**
 
 [source, javascript]
 ----
@@ -177,7 +176,6 @@ const clause = new Cypher.Call(subquery).inTransactions({
     concurrentTransactions: 5
 });
 ----
-
 
 [source, cypher]
 ----
@@ -195,7 +193,6 @@ const clause = new Cypher.Call(subquery).inTransactions({
 });
 ----
 
-
 [source, cypher]
 ----
 CALL {
@@ -203,7 +200,7 @@ CALL {
 } TRANSACTIONS ON ERROR RETRY FOR 10 SECONDS
 ----
 
-**Example 3: Retry error fallback**
+**Example 3: Retry with fallback strategy**
 
 [source, javascript]
 ----
@@ -213,7 +210,6 @@ const clause = new Cypher.Call(subquery).inTransactions({
 });
 ----
 
-
 [source, cypher]
 ----
 CALL {
@@ -221,24 +217,23 @@ CALL {
 } TRANSACTIONS ON ERROR RETRY THEN CONTINUE
 ----
 
-
 == Optional Call
 
-The method `.optional()` transforms a `CALL` subquery into link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call[`OPTIONAL CALL`] subquery.
+The `.optional()` method transforms a `CALL` subquery into an link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#optional-call[`OPTIONAL CALL`] subquery.
 
 [source, javascript]
 ----
 new Cypher.Call(subquery).optional();
 ----
 
-Alternatively, the clause `OptionalCall` creates an `OPTIONAL CALL` directly:
+Alternatively, you can use the `OptionalCall` clause to directly create an `OPTIONAL CALL`:
 
 [source, javascript]
 ----
 new Cypher.OptionalCall(deleteSubquery);
 ----
 
-Both generate the Cypher:
+Both will generate the same Cypher:
 
 [source, cypher]
 ----
