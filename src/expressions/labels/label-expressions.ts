@@ -18,7 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../../Environment";
-import type { CypherCompilable } from "../../types";
+import type { CypherCompilable, Expr } from "../../types";
 import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
 import { escapeLabel } from "../../utils/escape";
 
@@ -42,18 +42,21 @@ export abstract class LabelExpr implements CypherCompilable {
      */
     public abstract getCypher(env: CypherEnvironment): string;
 
-    protected compileLabel(expr: string | LabelExpr, env: CypherEnvironment) {
+    protected compileLabel(expr: string | LabelExpr | Expr, env: CypherEnvironment) {
         if (typeof expr === "string") {
             return escapeLabel(expr);
+        } else if (expr instanceof LabelExpr) {
+            return compileCypherIfExists(expr, env);
+        } else {
+            return `$(${compileCypherIfExists(expr, env)})`;
         }
-        return compileCypherIfExists(expr, env);
     }
 }
 
 class BinaryLabelExpr extends LabelExpr {
-    private readonly labels: Array<string | LabelExpr>;
+    private readonly labels: Array<string | LabelExpr | Expr>;
 
-    constructor(operator: "&" | "|", labels: Array<string | LabelExpr>) {
+    constructor(operator: "&" | "|", labels: Array<string | LabelExpr | Expr>) {
         super(operator);
         this.labels = labels;
     }
@@ -70,9 +73,9 @@ class BinaryLabelExpr extends LabelExpr {
 }
 
 class NotLabelExpr extends LabelExpr {
-    private readonly label: string | LabelExpr;
+    private readonly label: string | LabelExpr | Expr;
 
-    constructor(label: string | LabelExpr) {
+    constructor(label: string | LabelExpr | Expr) {
         super("!");
         this.label = label;
     }
@@ -105,7 +108,7 @@ class WildcardLabelExpr extends LabelExpr {
  * @group Expressions
  * @category Operators
  */
-function labelAnd(...labels: Array<string | LabelExpr>): LabelExpr {
+function labelAnd(...labels: Array<string | LabelExpr | Expr>): LabelExpr {
     return new BinaryLabelExpr("&", labels);
 }
 
@@ -114,7 +117,7 @@ function labelAnd(...labels: Array<string | LabelExpr>): LabelExpr {
  * @group Expressions
  * @category Operators
  */
-function labelOr(...labels: Array<string | LabelExpr>): LabelExpr {
+function labelOr(...labels: Array<string | LabelExpr | Expr>): LabelExpr {
     return new BinaryLabelExpr("|", labels);
 }
 
@@ -123,7 +126,7 @@ function labelOr(...labels: Array<string | LabelExpr>): LabelExpr {
  * @group Expressions
  * @category Operators
  */
-function labelNot(label: string | LabelExpr): LabelExpr {
+function labelNot(label: string | LabelExpr | Expr): LabelExpr {
     return new NotLabelExpr(label);
 }
 
