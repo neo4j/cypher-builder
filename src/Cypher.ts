@@ -151,7 +151,6 @@ export {
     radians,
     rand,
     round,
-    ROUND_PRECISION_MODE,
     sign,
     sin,
     sqrt,
@@ -168,7 +167,6 @@ export {
     duration,
     cypherLocalDatetime as localdatetime,
     cypherLocalTime as localtime,
-    TemporalUnit,
     cypherTime as time,
 } from "./expressions/functions/temporal";
 
@@ -183,7 +181,9 @@ export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
 export type { SetParam } from "./clauses/sub-clauses/Set";
 export type { CompositeClause } from "./clauses/utils/concat";
 export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation";
+export type { ROUND_PRECISION_MODE } from "./expressions/functions/math";
 export type { PredicateFunction } from "./expressions/functions/predicate";
+export type { TemporalUnit } from "./expressions/functions/temporal";
 export type { HasLabel } from "./expressions/HasLabel";
 export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
 export type { PathAssign } from "./pattern/PathAssign";
