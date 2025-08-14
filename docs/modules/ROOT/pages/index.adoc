@@ -16,9 +16,11 @@ const matchQuery = new Cypher.Match(pattern)
         title: new Cypher.Param("The Matrix"),
     })
     .return(movieNode.property("title"));
+
+const { cypher, params } = matchQuery.build();
 ----
 
-Generates the following Cypher query:
+Generates the following Cypher query and any required parameters:
 
 [source, cypher]
 ----
@@ -27,7 +29,7 @@ WHERE this0.title = $param0
 RETURN this0.title
 ----
 
-
-
-
+[TIP]
+====
 If you are using Java, check link:https://neo4j.github.io/cypher-dsl[Neo4j Cypher-DSL].
+====

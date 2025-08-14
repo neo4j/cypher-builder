@@ -34,6 +34,7 @@
 *** xref:subqueries/count.adoc[]
 *** xref:subqueries/collect.adoc[]
 ** xref:conditional-expressions.adoc[]
+** xref:build-configuration.adoc[]
 * How-to guides
 ** xref:how-to/concatenate-clauses.adoc[]
 ** xref:how-to/customize-cypher.adoc[]
