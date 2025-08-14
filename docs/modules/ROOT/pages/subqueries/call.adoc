@@ -2,14 +2,14 @@
 :description: This page describes how to create CALL subqueries with the Cypher Builder.
 = `Call`
 
-`Cypher.Call` generates Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/[`CALL` subqueries]. To do this, instantiate `Cypher.Call` with a valid subquery as parameter in the constructor.
+`Cypher.Call` generates Cypher link:https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/[`CALL` subqueries]. To do this, instantiate `Cypher.Call` with a valid subquery as a parameter in the constructor.
 
 [source, javascript]
 ----
 new Cypher.Call(subquery);
 ----
 
-In the following example, `Cypher.Call` receives a `Cypher.Match` clause.
+In the following example, `Cypher.Call` receives a `Cypher.Match` clause. This generates a `MATCH` clause wrapped by a `CALL`.
 
 [source, javascript]
 ----
@@ -23,8 +23,6 @@ const subquery = new Cypher.Match(pattern).return([dog.property("name"), dogName
 const callClause = new Cypher.Call(subquery).return(dogName);
 const { cypher, params } = callClause.build();
 ----
-
-This example builds a `CALL` clause with the `MATCH` subquery inside.
 
 [source, cypher]
 ----
