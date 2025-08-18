@@ -52,8 +52,6 @@ export type Operation = BooleanOp | ComparisonOp | MathOp | ConcatOp;
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/ | Cypher Documentation}
  */
 export type Expr =
-    | BooleanOp
-    | ComparisonOp
     | MathOp
     | ConcatOp
     | Variable
@@ -67,7 +65,6 @@ export type Expr =
     | MapProjection // NOTE this cannot be set as a property in a node
     | ListExpr
     | ListIndex
-    | Case<ComparisonOp>
     | Collect;
 
 /** Represents a predicate expression (i.e returns a boolean). Note that {@link Raw} is only added for compatibility
