@@ -34,13 +34,13 @@ import { QuantifiedPattern, type Quantifier } from "./quantified-patterns/Quanti
 
 /** @group Patterns */
 export type NodePatternOptions = {
-    labels?: string | string[] | LabelExpr;
+    labels?: string | Array<string | Expr> | LabelExpr | Expr;
     properties?: Record<string, Expr>;
 };
 
 /** @group Patterns */
 export type RelationshipPatternOptions = {
-    type?: string | LabelExpr;
+    type?: string | LabelExpr | Expr;
     properties?: Record<string, Expr>;
     direction?: "left" | "right" | "undirected";
     length?:
@@ -63,7 +63,7 @@ export interface Pattern extends WithWhere {}
 @mixin(WithWhere)
 export class Pattern extends PatternElement {
     private readonly properties: Record<string, Expr> | undefined;
-    private readonly labels: string | string[] | LabelExpr | undefined;
+    private readonly labels: NodePatternOptions["labels"];
 
     protected previous: PartialPattern | undefined;
 

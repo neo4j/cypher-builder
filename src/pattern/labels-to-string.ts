@@ -17,30 +17,43 @@
  * limitations under the License.
  */
 
+import type { Expr } from "..";
 import type { CypherEnvironment } from "../Environment";
 import { LabelExpr } from "../expressions/labels/label-expressions";
 import { addLabelToken } from "../utils/add-label-token";
 import { asArray } from "../utils/as-array";
 import { escapeLabel, escapeType } from "../utils/escape";
 
-export function labelsToString(labels: string | string[] | LabelExpr, env: CypherEnvironment): string {
-    if (labels instanceof LabelExpr) {
-        return addLabelToken(env.config.labelOperator, labels.getCypher(env));
-    } else {
-        const shouldEscape = !env.config.unsafeEscapeOptions.disableNodeLabelEscaping;
-        const escapedLabels = shouldEscape ? asArray(labels).map(escapeLabel) : asArray(labels);
-
-        return addLabelToken(env.config.labelOperator, ...escapedLabels);
-    }
+export function labelsToString(
+    labels: string | Array<string | Expr> | LabelExpr | Expr,
+    env: CypherEnvironment
+): string {
+    const shouldEscape = !env.config.unsafeEscapeOptions.disableNodeLabelEscaping;
+    return labelOrTypeToString(labels, env, shouldEscape, escapeLabel);
 }
 
-export function typeToString(type: string | LabelExpr, env: CypherEnvironment): string {
-    if (type instanceof LabelExpr) {
-        return addLabelToken(env.config.labelOperator, type.getCypher(env));
-    } else {
-        const shouldEscape = !env.config.unsafeEscapeOptions.disableRelationshipTypeEscaping;
-        const escapedType = shouldEscape ? escapeType(type) : type;
+export function typeToString(type: string | LabelExpr | Expr, env: CypherEnvironment): string {
+    const shouldEscape = !env.config.unsafeEscapeOptions.disableRelationshipTypeEscaping;
+    return labelOrTypeToString(type, env, shouldEscape, escapeType);
+}
 
-        return addLabelToken(env.config.labelOperator, escapedType);
+function labelOrTypeToString(
+    elements: string | Array<string | Expr> | LabelExpr | Expr,
+    env: CypherEnvironment,
+    shouldEscape: boolean,
+    escapeFunc: (s: string) => string
+): string {
+    if (elements instanceof LabelExpr) {
+        return addLabelToken(env.config.labelOperator, elements.getCypher(env));
+    } else {
+        const escapedLabels = asArray(elements).map((label: string | Expr) => {
+            if (typeof label === "string") {
+                return shouldEscape ? escapeFunc(label) : label;
+            } else {
+                return `$(${label.getCypher(env)})`;
+            }
+        });
+
+        return addLabelToken(env.config.labelOperator, ...escapedLabels);
     }
 }

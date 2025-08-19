@@ -288,6 +288,72 @@ matchQuery.build({
 ----
 ====
 
+=== Dynamic labels and types
+
+Labels and relationship types in patterns can be dynamic expressions. To make labels dynamic, simply pass any Cypher expressions to `labels` or `type`. This will wrap the expression on `$()`.
+
+**Example 1: Using a parameter as a node label** 
+
+[source, javascript]
+----
+const query = new Cypher.Match(
+    new Cypher.Pattern(new Cypher.Node(), {
+        labels: new Cypher.Param("Movie"),
+    })
+)
+----
+
+[source, cypher]
+----
+MATCH (this0:$($param0))
+----
+
+
+**Example 2: Dynamic type on relationship**
+
+Same for relationship types:
+
+[source, javascript]
+----
+const query = new Cypher.Match(
+    new Cypher.Pattern()
+        .related({
+            type: new Cypher.Param("ACTED_IN"),
+        })
+        .to()
+)
+----
+
+[source, cypher]
+----
+MATCH ()-[:$($param1)]->()
+----
+
+**Example 3: Using label expressions with dynamic labels**
+
+
+[source, javascript]
+----
+const movieLabel = new Cypher.Variable();
+
+const query = new Cypher.With([new Cypher.Literal("Movie"), movieLabel])
+    .match(
+        new Cypher.Pattern(new Cypher.Node(), {
+            labels: Cypher.labelExpr.or(
+                movieLabel,
+                Cypher.labelExpr.not(new Cypher.Param("paramLabel"))
+            ),
+        })
+    )
+
+----
+
+[source, cypher]
+----        
+WITH "Movie" AS var0
+MATCH (this1:($(var0)|!$($param1)))
+----
+
 == Quantified path patterns
 
 link:https://neo4j.com/docs/cypher-manual/current/patterns/variable-length-patterns/#quantified-path-patterns[Quantified path patterns] can be defined with the class `Cypher.QuantifiedPath`.
