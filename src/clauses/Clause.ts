@@ -38,10 +38,13 @@ export type BuildConfig = Partial<{
      * `MATCH (this:Movie:Film)`
      * `MATCH (this:Movie&Film)`
      *
+     * @deprecated This will be removed in the following major release and the value `"&"` will be used in the generated Cypher
+     *
      */
     labelOperator: ":" | "&";
     /** Will prefix generated queries with the Cypher version
-     * @example `CYPHER 5` */
+     * @example `CYPHER 5`
+     */
     cypherVersion: "5";
     /** Prefix variables with given string.
      *

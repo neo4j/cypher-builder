@@ -1,0 +1,88 @@
+[[build-configuration]]
+:description: This page describes the configuration options when building a query.
+= Build configuration
+
+Once a query is ready, the method `build` will generate the Cypher and parameters required to run the query.
+
+[source, javascript]
+----
+const { cypher, params } = query.build();
+----
+
+The method `build` accepts an object with options to configure the build process:
+
+[cols="2,1,1,3",options="header"]
+|===
+| Setting | Type | Default | Description 
+| `labelOperator` | String | `":"` | Define the default operator to use when using multiple labels in a Pattern. It can be either `:` or `&`
+| `cypherVersion` | String | `undefined` | If set, will prepend all queries with a `CYPHER [Version]` statement. The only valid value is `"5"`
+| `prefix` | String | `undefined` | If set, will add a prefix to all variable names. See xref:how-to/customize-cypher.adoc#_build_prefix[Customize Cypher]
+| `extraParams` | Object | `{}` | Add the provided parameters to the resulting params object. See xref:variables-and-params/parameters.adoc#_adding_extra_parameters[Parameters]
+| `unsafeEscapeOptions` | Object | `{}` | Set of options to disable escaping from generated Cypher. See xref:_unsafe_escape_options[Unsafe escape options]
+|===
+
+
+== Unsafe escape options
+
+[WARNING]
+====
+These options are dangerous, and changing them could lead to code injection.
+====
+
+By default, Cypher Builder will escape literal values, labels and relationship types when needed.
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(
+    new Cypher.Pattern(movieNode, {
+        labels: ["A Movie"]
+    })
+);
+
+const { cypher, params } = matchQuery.build();
+----
+
+
+[source, cypher]
+----
+MATCH (this0:`A Movie`)
+----
+
+
+The build options inside `unsafeEscapeOptions` change this behaviour:
+
+[cols="2,1,1,3",options="header"]
+|===
+| Setting | Type | Default | Description 
+| `disableNodeLabelEscaping` | Boolean | `false` | If set to true, labels will no longer be escaped
+| `disableRelationshipTypeEscaping` | Boolean | `false` | If set to true, relationship types will no longer be escaped
+|===
+
+**Example: Disable escaping for node labels and relationship types**
+
+[source, javascript]
+----
+const movieNode = new Cypher.Node();
+
+const matchQuery = new Cypher.Match(
+    new Cypher.Pattern(movieNode, {
+        labels: ["A Movie"]
+    }).related({type: "ACTED IN"}).to()
+);
+
+const { cypher, params } = matchQuery.build({
+    unsafeEscapeOptions: {
+        disableNodeLabelEscaping: true,
+        disableRelationshipTypeEscaping: true,
+    }
+});
+----
+
+Note that the following Cypher is invalid
+
+[source, cypher]
+----
+MATCH (this0:A Movie)-[:ACTED IN]->()
+----
