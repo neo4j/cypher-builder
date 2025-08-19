@@ -1,5 +1,43 @@
 # @neo4j/cypher-builder
 
+## 2.8.0
+
+### Minor Changes
+
+- [#559](https://github.com/neo4j/cypher-builder/pull/559) [`137a908`](https://github.com/neo4j/cypher-builder/commit/137a908c88bff2e02f9363118d36726096508d89) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for dynamic labels in patterns
+
+    ```javascript
+    const query = new Cypher.Match(
+        new Cypher.Pattern(new Cypher.Node(), {
+            labels: new Cypher.Param("Movie"),
+        })
+    );
+    ```
+
+    ```cypher
+    MATCH (this0:$($param0))
+    ```
+
+- [#559](https://github.com/neo4j/cypher-builder/pull/559) [`0223ca9`](https://github.com/neo4j/cypher-builder/commit/0223ca9157c1cc15ce83e3fbc8e914a6ffd5df3f) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for dynamic types in patterns
+
+    ```javascript
+    const query = new Cypher.Match(
+        new Cypher.Pattern(new Cypher.Node())
+            .related({
+                type: new Cypher.Param("ACTED_IN"),
+            })
+            .to()
+    );
+    ```
+
+    ```cypher
+    MATCH (this0)-[:$($param1)]->()
+    ```
+
+### Patch Changes
+
+- [#561](https://github.com/neo4j/cypher-builder/pull/561) [`83774e8`](https://github.com/neo4j/cypher-builder/commit/83774e8b12738bf36edb9d65f7dffd944933db20) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates the option `labelOperator`, this option only exists for compatibility with Cypher 4 and is no longer relevant for Cypher 5 or 25
+
 ## 2.7.2
 
 ### Patch Changes
