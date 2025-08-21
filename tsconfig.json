@@ -5,7 +5,6 @@
         "declarationMap": true,
         "sourceMap": true,
         "resolveJsonModule": true,
-        "experimentalDecorators": true,
         "noImplicitAny": true,
         "rootDir": ".",
         "baseUrl": ".",
