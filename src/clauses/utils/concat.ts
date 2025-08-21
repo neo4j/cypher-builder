@@ -52,11 +52,6 @@ export class CompositeClause extends Clause {
         return this._children.length === 0;
     }
 
-    /** @deprecated Children from a composite clause should not be accessed as this will lead to unexpected behaviour */
-    public get children(): Array<CypherASTNode> {
-        return this._children;
-    }
-
     /** @internal */
     public getCypher(env: CypherEnvironment, importWithCypher?: string): string {
         // NOTE: importWithCypher used to pass down import WITH to UNION clauses
