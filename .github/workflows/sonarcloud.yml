@@ -21,7 +21,7 @@ jobs:
           node-version: lts/*
       - run: npm install
       - name: "Download artifact"
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
