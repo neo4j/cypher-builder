@@ -190,7 +190,7 @@ export type { PathAssign } from "./pattern/PathAssign";
 export type { InputArgument } from "./procedures/CypherProcedure";
 export type { Yield, YieldProjectionColumn } from "./procedures/Yield";
 export type { Label } from "./references/Label";
-export type { CypherResult, Expr, NormalizationType, Operation, Predicate } from "./types";
+export type { CypherResult, Expr, NormalizationType, Predicate } from "./types";
 
 /**
  * Utility functions
