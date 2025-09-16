@@ -55,3 +55,11 @@ export function abs(expr: Expr): CypherFunction {}
 
 - `tsdoc.json` Defines the tsdoc shcema
 - `typedoc.json` Configures the tool typedoc
+
+## Branches
+
+These are the branches conventions on the repo:
+
+- `main` The main branch, this is the latest release version
+- `*.x` The cutoff of an older major version (e.g. `2.x`)
+- `*-dev` development of a new major version
