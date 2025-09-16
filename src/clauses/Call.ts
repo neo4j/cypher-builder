@@ -24,7 +24,6 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { isNumber } from "../utils/is-number";
 import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
-import { Union } from "./Union";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
@@ -34,8 +33,6 @@ import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
-import { ImportWith } from "./sub-clauses/ImportWith";
-import { CompositeClause } from "./utils/concat";
 import { mixin } from "./utils/mixin";
 
 export interface Call
@@ -69,7 +66,6 @@ export type CallInTransactionOptions = {
 @mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSetRemove, WithMatch, WithCreate, WithMerge, WithOrder)
 export class Call extends Clause {
     private readonly subquery: CypherASTNode;
-    private _importWith?: ImportWith;
     private inTransactionsConfig?: CallInTransactionOptions;
     private readonly variableScope?: Variable[] | "*";
     private _optional: boolean = false;
@@ -80,24 +76,6 @@ export class Call extends Clause {
         this.addChildren(rootQuery);
         this.subquery = rootQuery;
         this.variableScope = variableScope;
-    }
-
-    /** Adds a `WITH` statement inside `CALL {`, this `WITH` can is used to import variables outside of the subquery
-     * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/call-subquery/#call-importing-variables | Cypher Documentation}
-     * @deprecated Use constructor parameter `variableScope` instead
-     */
-    public importWith(...params: Array<Variable | "*">): this {
-        if (this._importWith) {
-            throw new Error(`Call import "WITH" already set`);
-        }
-        if (this.variableScope) {
-            throw new Error(`Call import cannot be used along with scope clauses "Call (<variable>)"`);
-        }
-        if (params.length > 0) {
-            this._importWith = new ImportWith(this, [...params]);
-            this.addChildren(this._importWith);
-        }
-        return this;
     }
 
     public inTransactions(config: CallInTransactionOptions = {}): this {
@@ -116,30 +94,19 @@ export class Call extends Clause {
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const importWithCypher = compileCypherIfExists(this._importWith, env, { suffix: "\n" });
-
-        const subQueryStr = this.getSubqueryCypher(env, importWithCypher);
+        const subQueryStr = this.subquery.getCypher(env);
 
         const setCypher = this.compileSetCypher(env);
         const deleteCypher = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const orderByCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const inTransactionCypher = this.generateInTransactionsStr();
 
-        const inCallBlock = `${importWithCypher}${subQueryStr}`;
         const variableScopeStr = this.generateVariableScopeStr(env);
         const nextClause = this.compileNextClause(env);
 
         const optionalStr = this._optional ? "OPTIONAL " : "";
 
-        return `${optionalStr}CALL${variableScopeStr} {\n${padBlock(inCallBlock)}\n}${inTransactionCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
-    }
-
-    private getSubqueryCypher(env: CypherEnvironment, importWithCypher: string | undefined): string {
-        // This ensures the import with is added to all the union subqueries
-        if (this.subquery instanceof Union || this.subquery instanceof CompositeClause) {
-            return this.subquery.getCypher(env, importWithCypher);
-        }
-        return this.subquery.getCypher(env);
+        return `${optionalStr}CALL${variableScopeStr} {\n${padBlock(subQueryStr)}\n}${inTransactionCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private generateVariableScopeStr(env: CypherEnvironment): string {
