@@ -59,16 +59,6 @@ export function head(expr: Expr): CypherFunction {
 }
 
 /**
- * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-id | Cypher Documentation}
- * @group Functions
- * @category Scalar
- * @deprecated Use {@link elementId} instead
- */
-export function id(variable: Expr): CypherFunction {
-    return new CypherFunction("id", [variable]);
-}
-
-/**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-last | Cypher Documentation}
  * @group Functions
  * @category Scalar
