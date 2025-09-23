@@ -51,13 +51,9 @@ export class Foreach extends Clause {
     private mapClause: ForeachClauses | undefined;
 
     constructor(variable: Variable);
-    /** @deprecated Use `in` and `do` instead of passing the constructor */
-    constructor(variable: Variable, listExpr: Expr, mapClause: ForeachClauses);
-    constructor(variable: Variable, listExpr?: Expr, mapClause?: ForeachClauses) {
+    constructor(variable: Variable) {
         super();
         this.variable = variable;
-        this.listExpr = listExpr;
-        this.mapClause = mapClause;
     }
 
     public in(listExpr: Expr): this {
