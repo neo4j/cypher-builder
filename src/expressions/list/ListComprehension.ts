@@ -43,8 +43,8 @@ export class ListComprehension extends CypherASTNode {
         this.variable = variable;
     }
 
+    /** Sets the list expression to be used for the comprehension. If called twice, the expression will be overriden */
     public in(listExpr: Expr): this {
-        if (this.listExpr) throw new Error("Cannot set 2 lists in list comprehension IN");
         this.listExpr = listExpr;
         return this;
     }
