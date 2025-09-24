@@ -3,7 +3,6 @@ import js from "@eslint/js";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import tsdoc from "eslint-plugin-tsdoc";
-import globals from "globals";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -32,10 +31,6 @@ export default [
         },
 
         languageOptions: {
-            globals: {
-                ...globals.node,
-            },
-
             parser: tsParser,
             ecmaVersion: 5,
             sourceType: "commonjs",
