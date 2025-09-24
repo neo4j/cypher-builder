@@ -91,7 +91,7 @@ describe("List comprehension", () => {
         `);
     });
 
-    it("Fails to set a expression twice", () => {
+    test("Fails to set a expression twice", () => {
         const variable = new Cypher.Variable();
         const exprVariable = new Cypher.Param([1, 2, 5]);
 
@@ -100,7 +100,7 @@ describe("List comprehension", () => {
         }).toThrow("Cannot set 2 lists in list comprehension IN");
     });
 
-    it("Fails to build if no expression is set", () => {
+    test("Fails to build if no expression is set", () => {
         const variable = new Cypher.Variable();
 
         const listComprehension = new Cypher.ListComprehension(variable);
