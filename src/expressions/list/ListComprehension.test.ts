@@ -25,7 +25,7 @@ describe("List comprehension", () => {
         const variable = new Cypher.Variable();
         const exprVariable = new Cypher.Param([1, 2, 5]);
 
-        const listComprehension = new Cypher.ListComprehension(variable, exprVariable);
+        const listComprehension = new Cypher.ListComprehension(variable).in(exprVariable);
 
         const queryResult = new TestClause(listComprehension).build();
 
@@ -47,7 +47,7 @@ describe("List comprehension", () => {
         const exprVariable = new Cypher.Param([1, 2, 5]);
         const andExpr = Cypher.eq(variable, new Cypher.Param(5));
 
-        const listComprehension = new Cypher.ListComprehension(variable, exprVariable).where(andExpr);
+        const listComprehension = new Cypher.ListComprehension(variable).in(exprVariable).where(andExpr);
 
         const queryResult = new TestClause(listComprehension).build();
 
@@ -96,7 +96,7 @@ describe("List comprehension", () => {
         const exprVariable = new Cypher.Param([1, 2, 5]);
 
         expect(() => {
-            new Cypher.ListComprehension(variable, exprVariable).in(exprVariable);
+            new Cypher.ListComprehension(variable).in(exprVariable).in(exprVariable);
         }).toThrow("Cannot set 2 lists in list comprehension IN");
     });
 

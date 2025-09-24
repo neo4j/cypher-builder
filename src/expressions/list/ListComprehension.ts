@@ -38,10 +38,9 @@ export class ListComprehension extends CypherASTNode {
     private listExpr: Expr | undefined;
     private mapExpr: Expr | undefined; //  Expression for list mapping
 
-    constructor(variable: Variable, listExpr?: Expr) {
+    constructor(variable: Variable) {
         super();
         this.variable = variable;
-        this.listExpr = listExpr;
     }
 
     public in(listExpr: Expr): this {
