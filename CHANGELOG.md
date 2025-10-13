@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 2.8.1
+
+### Patch Changes
+
+- [#586](https://github.com/neo4j/cypher-builder/pull/586) [`3dac2b8`](https://github.com/neo4j/cypher-builder/commit/3dac2b82e2b016a5eed9340ede6842cf276b3877) Thanks [@angrykoala](https://github.com/angrykoala)! - Deprecates second parameter of `new ListComprehension` in favor of `.in`
+
 ## 2.8.0
 
 ### Minor Changes
