@@ -25,7 +25,7 @@ describe("List comprehension", () => {
         const variable = new Cypher.Variable();
         const exprVariable = new Cypher.Param([1, 2, 5]);
 
-        const listComprehension = new Cypher.ListComprehension(variable, exprVariable);
+        const listComprehension = new Cypher.ListComprehension(variable).in(exprVariable);
 
         const queryResult = new TestClause(listComprehension).build();
 
@@ -47,7 +47,7 @@ describe("List comprehension", () => {
         const exprVariable = new Cypher.Param([1, 2, 5]);
         const andExpr = Cypher.eq(variable, new Cypher.Param(5));
 
-        const listComprehension = new Cypher.ListComprehension(variable, exprVariable).where(andExpr);
+        const listComprehension = new Cypher.ListComprehension(variable).in(exprVariable).where(andExpr);
 
         const queryResult = new TestClause(listComprehension).build();
 
@@ -91,16 +91,27 @@ describe("List comprehension", () => {
         `);
     });
 
-    it("Fails to set a expression twice", () => {
+    test("Overrides if a expression is set twice", () => {
         const variable = new Cypher.Variable();
         const exprVariable = new Cypher.Param([1, 2, 5]);
+        const exprVariable2 = new Cypher.Param([1, 3]);
 
-        expect(() => {
-            new Cypher.ListComprehension(variable, exprVariable).in(exprVariable);
-        }).toThrow("Cannot set 2 lists in list comprehension IN");
+        const listComprehension = new Cypher.ListComprehension(variable).in(exprVariable).in(exprVariable2);
+
+        const queryResult = new TestClause(listComprehension).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"[var0 IN $param0]"`);
+        expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": [
+                1,
+                3,
+              ],
+            }
+        `);
     });
 
-    it("Fails to build if no expression is set", () => {
+    test("Fails to build if no expression is set", () => {
         const variable = new Cypher.Variable();
 
         const listComprehension = new Cypher.ListComprehension(variable);
