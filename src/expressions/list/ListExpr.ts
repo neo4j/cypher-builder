@@ -19,7 +19,8 @@
 
 import type { CypherEnvironment } from "../../Environment";
 import type { CypherCompilable, Expr } from "../../types";
-import { ListIndex } from "./ListIndex";
+import type { ListIndex } from "./ListIndex";
+import { listIndex } from "./ListIndex";
 
 /** Represents a List
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/lists/ | Cypher Documentation}
@@ -56,6 +57,6 @@ export class ListExpr implements CypherCompilable {
 
     /** Access individual elements in the list */
     public index(index: number): ListIndex {
-        return new ListIndex(this, index);
+        return listIndex(this, index);
     }
 }
