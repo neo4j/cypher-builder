@@ -35,6 +35,7 @@ jobs:
         with:
           node-version: lts/*
           registry-url: "https://registry.npmjs.org"
+          scope: "@neo4j"
 
       - name: Install Dependencies
         run: npm install
