@@ -37,10 +37,6 @@ jobs:
           node-version: lts/*
           registry-url: "https://registry.npmjs.org"
 
-      - name: Configure npm registry
-        run: |
-          npm config set registry "https://registry.npmjs.org"
-
       - name: Install Dependencies
         run: npm install
 
