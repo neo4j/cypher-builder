@@ -35,11 +35,10 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: lts/*
-          registry-url: "https://registry.npmjs.org"
+          registry-url: https://registry.npmjs.org
 
       - name: Update npm # Need at least 11.5.1 for OIDC publishing
-        run: |
-          npm install -g npm@latest
+        run: npm install -g npm@latest
 
       - name: Install Dependencies
         run: npm install
