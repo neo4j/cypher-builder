@@ -8,6 +8,8 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
   id-token: write # Required for OIDC
+  contents: read # Required for docs
+  pages: write # Required for docs
 
 jobs:
   release:
