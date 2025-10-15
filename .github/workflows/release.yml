@@ -37,8 +37,11 @@ jobs:
           node-version: lts/*
           registry-url: "https://registry.npmjs.org"
 
-      - name: Configure npm registry
+      - name: Verify npm & enable provenance
         run: |
+          node -v
+          npm -v
+          npm config set provenance true
           npm config set registry "https://registry.npmjs.org"
 
       - name: Install Dependencies
