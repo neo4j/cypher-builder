@@ -19,15 +19,23 @@
 
 import Cypher from "../..";
 import { TestClause } from "../../utils/TestClause";
-import { ListIndex } from "./ListIndex";
 
 describe("ListIndex", () => {
-    test("get 0", () => {
+    test("get 0 from list", () => {
         const list = new Cypher.List([new Cypher.Literal("1"), new Cypher.Literal("2"), new Cypher.Literal("3")]);
-        const listIndex = new ListIndex(list, 0);
+        const listIndex = Cypher.listIndex(list, 0);
         const queryResult = new TestClause(listIndex).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][0]"`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
+    test("get index from arbitrary expression", () => {
+        const collect = Cypher.collect(new Cypher.Variable());
+        const listIndex = Cypher.listIndex(collect, 2);
+        const queryResult = new TestClause(listIndex).build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"collect(var0)[2]"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

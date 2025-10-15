@@ -18,7 +18,8 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { ListIndex } from "../expressions/list/ListIndex";
+import type { ListIndex } from "../expressions/list/ListIndex";
+import { listIndex } from "../expressions/list/ListIndex";
 import type { Expr } from "../types";
 import { escapeVariable } from "../utils/escape";
 import { PropertyRef } from "./PropertyRef";
@@ -43,7 +44,7 @@ export class Variable {
 
     /* Access individual elements via the ListIndex class, using the square bracket notation */
     public index(index: number): ListIndex {
-        return new ListIndex(this, index);
+        return listIndex(this, index);
     }
 
     /** @internal */
