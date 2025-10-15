@@ -6,6 +6,9 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+permissions:
+  id-token: write # Required for OIDC
+
 jobs:
   release:
     name: Release
@@ -29,6 +32,7 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: lts/*
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install Dependencies
         run: npm install
@@ -38,15 +42,6 @@ jobs:
           git config --global user.name 'Neo4j Team GraphQL'
           git config --global user.email 'team-graphql@neotechnology.com'
 
-      - name: Creating .npmrc
-        run: |
-          cat << EOF > "$HOME/.npmrc"
-            @neo4j:registry https://registry.npmjs.org
-            //registry.npmjs.org/:_authToken=$NPM_TOKEN
-          EOF
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
@@ -55,27 +50,9 @@ jobs:
           title: Release new version - changesets
         env:
           GITHUB_TOKEN: ${{ secrets.NEO4J_TEAM_GRAPHQL_PERSONAL_ACCESS_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   docs:
     needs:
       - release
     if: ${{ needs.release.outputs.published == 'true' }}
     uses: ./.github/workflows/docs.yml
     secrets: inherit
-
-  # slack-notify:
-  #   needs:
-  #     - release
-
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       package: ${{ fromJson(needs.release.outputs.published-packages) }}
-
-  #   steps:
-  #     - name: Send Slack announcement of release
-  #       uses: slackapi/slack-github-action@v1.24.0
-  #       with:
-  #         payload: '{"version":"${{ matrix.package.version }}"}'
-  #       env:
-  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASE_ANNOUNCEMENT_WEBHOOK_URL }}
