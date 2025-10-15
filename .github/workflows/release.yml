@@ -1,3 +1,5 @@
+# NOTE: This filename must be called release.yml. If changed, update the Trusted Publisher settings in npm
+
 name: Release
 
 on:
@@ -16,8 +18,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
 
-    environment:
-      name: npm
+    environment: npm # Should match the env authorized in npm Trusted Publisher settings
 
     outputs:
       published: ${{ steps.changesets.outputs.published }}
@@ -30,10 +31,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup Node.js 16.x
+      - name: Setup Node.js LTS
         uses: actions/setup-node@v5
         with:
           node-version: lts/*
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install Dependencies
         run: npm install
