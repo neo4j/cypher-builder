@@ -30,18 +30,6 @@ const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
  * @group Clauses
  */
 export type BuildConfig = Partial<{
-    /** Defines the default operator for adding multiple labels in a Pattern. Defaults to `":"`
-     *
-     * If the target Cypher is version 5 or above, `"&"` is recommended
-     *
-     * @example
-     * `MATCH (this:Movie:Film)`
-     * `MATCH (this:Movie&Film)`
-     *
-     * @deprecated This will be removed in the following major release and the value `"&"` will be used in the generated Cypher
-     *
-     */
-    labelOperator: ":" | "&";
     /** Will prefix generated queries with the Cypher version
      * @example `CYPHER 5`
      */
@@ -85,11 +73,10 @@ export abstract class Clause extends CypherASTNode {
 
     /** Compiles a clause into Cypher and params */
     public build(config?: BuildConfig): CypherResult {
-        const { prefix, extraParams = {}, labelOperator = ":", cypherVersion, unsafeEscapeOptions = {} } = config ?? {};
+        const { prefix, extraParams = {}, cypherVersion, unsafeEscapeOptions = {} } = config ?? {};
 
         if (this.isRoot) {
             const env = this.getEnv(prefix, {
-                labelOperator,
                 cypherVersion,
                 unsafeEscapeOptions,
             });
@@ -104,7 +91,7 @@ export abstract class Clause extends CypherASTNode {
         }
         const root = this.getRoot();
         if (root instanceof Clause) {
-            return root.build({ prefix, extraParams, labelOperator, cypherVersion, unsafeEscapeOptions });
+            return root.build({ prefix, extraParams, cypherVersion, unsafeEscapeOptions });
         }
         throw new Error(`Cannot build root: ${root.constructor.name}`);
     }

@@ -44,7 +44,7 @@ function labelOrTypeToString(
     escapeFunc: (s: string) => string
 ): string {
     if (elements instanceof LabelExpr) {
-        return addLabelToken(env.config.labelOperator, elements.getCypher(env));
+        return addLabelToken(elements.getCypher(env));
     } else {
         const escapedLabels = asArray(elements).map((label: string | Expr) => {
             if (typeof label === "string") {
@@ -54,6 +54,6 @@ function labelOrTypeToString(
             }
         });
 
-        return addLabelToken(env.config.labelOperator, ...escapedLabels);
+        return addLabelToken(...escapedLabels);
     }
 }

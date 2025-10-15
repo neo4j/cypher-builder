@@ -58,7 +58,7 @@ export class Label extends CypherASTNode {
     }
 
     private generateLabelExpressionStr(env: CypherEnvironment): string {
-        return addLabelToken(env.config.labelOperator, escapeLabel(this.label));
+        return addLabelToken(escapeLabel(this.label));
     }
 }
 
@@ -77,7 +77,7 @@ export class DynamicLabel extends Label {
     public getCypher(env: CypherEnvironment): string {
         const nodeId = this.node.getCypher(env);
         const exprStr = `$(${this.expr.getCypher(env)})`;
-        const labelStr = addLabelToken(env.config.labelOperator, exprStr);
+        const labelStr = addLabelToken(exprStr);
         return `${nodeId}${labelStr}`;
     }
 }
