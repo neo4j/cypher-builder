@@ -1,5 +1,19 @@
 # @neo4j/cypher-builder
 
+## 2.9.0
+
+### Minor Changes
+
+- [#591](https://github.com/neo4j/cypher-builder/pull/591) [`d8b28c2`](https://github.com/neo4j/cypher-builder/commit/d8b28c2b7f75504b98e6d0ca8c645f478e35f8ac) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for index operator on arbitrary expressions using `listIndex`
+
+    ```js
+    Cypher.listIndex(Cypher.collect(new Cypher.Variable()), 2);
+    ```
+
+    ```cypher
+    collect(var0)[2]
+    ```
+
 ## 2.8.1
 
 ### Patch Changes
