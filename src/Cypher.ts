@@ -63,11 +63,6 @@ export { Collect } from "./expressions/subquery/Collect";
 export { Count } from "./expressions/subquery/Count";
 export { Exists } from "./expressions/subquery/Exists";
 
-/**
- * @hideGroups
- */
-export * as apoc from "./namespaces/apoc/apoc";
-
 export * as db from "./namespaces/db/db";
 /**
  * @hideGroups
