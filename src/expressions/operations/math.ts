@@ -28,8 +28,8 @@ type MathOperator = "+" | "-" | "*" | "/" | "%" | "^";
  * @category Math
  */
 export class MathOp extends CypherASTNode {
-    private readonly operator: MathOperator;
-    private readonly exprs: Expr[];
+    protected readonly operator: MathOperator;
+    protected readonly exprs: Expr[];
 
     /** @internal */
     constructor(operator: MathOperator, exprs: Expr[]) {
@@ -49,6 +49,21 @@ export class MathOp extends CypherASTNode {
     }
 }
 
+class UnaryMathOp extends MathOp {
+    constructor(operator: MathOperator, expr: Expr) {
+        super(operator, [expr]);
+    }
+
+    /**
+     * @internal
+     */
+    public getCypher(env: CypherEnvironment): string {
+        const exprStr = this.exprs[0].getCypher(env);
+
+        return `${this.operator}${exprStr}`;
+    }
+}
+
 function createOp(op: MathOperator, exprs: Expr[]): MathOp {
     return new MathOp(op, exprs);
 }
@@ -65,12 +80,15 @@ export function plus(...exprs: Expr[]): MathOp {
     return createOp("+", exprs);
 }
 
-/**
+/** Minus (-) operator. This operator can be used as a mathematical operator between 2 expressions (3-2) or to negate a single expression (-1)
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/operators/#query-operators-mathematical | Cypher Documentation}
  * @group Operators
  * @category Math
  */
-export function minus(leftExpr: Expr, rightExpr: Expr): MathOp {
+export function minus(leftExpr: Expr, rightExpr?: Expr): MathOp {
+    if (rightExpr === undefined) {
+        return new UnaryMathOp("-", leftExpr);
+    }
     return createOp("-", [leftExpr, rightExpr]);
 }
 

@@ -64,6 +64,18 @@ describe("math operators", () => {
         expect(cypher).toMatchInlineSnapshot(`"(10 - 3)"`);
     });
 
+    test("minus with a single parameter", () => {
+        const subtract = Cypher.minus(new Cypher.Literal(10));
+        const { cypher } = new TestClause(subtract).build();
+        expect(cypher).toMatchInlineSnapshot(`"-10"`);
+    });
+
+    test("minus with a single expression", () => {
+        const subtract = Cypher.minus(Cypher.multiply(new Cypher.Literal(10), new Cypher.Literal(2)));
+        const { cypher } = new TestClause(subtract).build();
+        expect(cypher).toMatchInlineSnapshot(`"-(10 * 2)"`);
+    });
+
     test("divide", () => {
         const divide = Cypher.divide(new Cypher.Literal(10), new Cypher.Literal(3));
         const { cypher } = new TestClause(divide).build();
