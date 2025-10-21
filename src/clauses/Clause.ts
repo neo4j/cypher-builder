@@ -33,7 +33,7 @@ export type BuildConfig = Partial<{
     /** Will prefix generated queries with the Cypher version
      * @example `CYPHER 5`
      */
-    cypherVersion: "5";
+    cypherVersion: "5" | "25";
     /** Prefix variables with given string.
      *
      * This is useful to avoid name collisions if separate Cypher queries are generated and merged after generating the strings.
