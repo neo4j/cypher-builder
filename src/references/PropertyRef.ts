@@ -18,7 +18,9 @@
  */
 
 import type { CypherEnvironment } from "../Environment";
-import { ListIndex } from "../expressions/list/ListIndex";
+import { listIndex, type ListIndex } from "../expressions/list/ListIndex";
+import type { ListRange } from "../expressions/list/ListRange";
+import { listRange } from "../expressions/list/ListRange";
 import type { CypherCompilable, Expr } from "../types";
 import { escapeProperty } from "../utils/escape";
 import type { Variable } from "./Variable";
@@ -48,9 +50,14 @@ export class PropertyRef implements CypherCompilable {
         return new PropertyRef(this._variable, ...this.propertyPath, prop);
     }
 
-    /* Access individual elements via the ListIndex class, using the square bracket notation */
+    /** Access individual elements in the list */
     public index(index: number): ListIndex {
-        return new ListIndex(this, index);
+        return listIndex(this, index);
+    }
+
+    /** Adds a list range operator (`[ .. ]`) */
+    public range(from: number, to: number): ListRange {
+        return listRange(this, from, to);
     }
 
     /** @internal */
