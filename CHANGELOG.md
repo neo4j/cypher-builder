@@ -1,5 +1,28 @@
 # @neo4j/cypher-builder
 
+## 2.10.0
+
+### Minor Changes
+
+- [#599](https://github.com/neo4j/cypher-builder/pull/599) [`a0e01d0`](https://github.com/neo4j/cypher-builder/commit/a0e01d045eca3f8e70b803b0ddfe4bb532be16a6) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for range operator (`[ .. ]`) in `Cypher.List`, `PropertyRef.range` and using `Cypher.listRange`:
+
+    ```js
+    new Cypher.Variable().property("prop").range(1, -1); // var0["prop"][1..-1]
+    new Cypher.List([1, 2, 3, 4]).range(1, -1); // [1, 2, 3, 4][1..-1]
+    Cypher.listRange(expr, 2, -1); // expr[2..-1]
+    ```
+
+- [#600](https://github.com/neo4j/cypher-builder/pull/600) [`074ea4a`](https://github.com/neo4j/cypher-builder/commit/074ea4a2799504e5de6f0222673e52dde8922f36) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `.set` and `.remove` in Cypher.With
+
+### Patch Changes
+
+- [#596](https://github.com/neo4j/cypher-builder/pull/596) [`e3a3447`](https://github.com/neo4j/cypher-builder/commit/e3a344739304fd1154d65b42f304054c4ba0726c) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for a single value in `Cypher.minus` operator:
+
+    ```js
+    Cypher.minus(var1, var2); // var1 - var2
+    Cypher.minus(var1); // -var1
+    ```
+
 ## 2.9.0
 
 ### Minor Changes
