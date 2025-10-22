@@ -9,3 +9,5 @@ _No longer supported_
 ```js
 Cypher.size(new Cypher.Pattern(node));
 ```
+
+Use `new Cypher.Count(pattern)` instead.
