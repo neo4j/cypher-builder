@@ -96,6 +96,16 @@ describe("Property", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.myProperty[5]"`);
     });
 
+    test("List range access on property", () => {
+        const variable = new Cypher.Variable();
+        const property = variable.property("myProperty").range(1, -1);
+
+        const testClause = new TestClause(property);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0.myProperty[1..-1]"`);
+    });
+
     describe("Expression", () => {
         test("Serialize expression with []", () => {
             const variable = new Cypher.Variable();

@@ -20,31 +20,31 @@
 import Cypher from "../..";
 import { TestClause } from "../../utils/TestClause";
 
-describe("List", () => {
-    test("list of Literals", () => {
-        const cypherList = new Cypher.List([new Cypher.Literal("1"), new Cypher.Literal("2"), new Cypher.Literal("3")]);
+describe("ListRange", () => {
+    test("get 0 .. 2 from list", () => {
+        const list = new Cypher.List([new Cypher.Literal("1"), new Cypher.Literal("2"), new Cypher.Literal("3")]);
+        const listIndex = Cypher.listRange(list, 0, 2);
+        const queryResult = new TestClause(listIndex).build();
 
-        const queryResult = new TestClause(cypherList).build();
-
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"]"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][0..2]"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    test("access list index", () => {
-        const cypherList = new Cypher.List([new Cypher.Literal("1"), new Cypher.Literal("2"), new Cypher.Literal("3")]);
-        const listIndex = cypherList.index(0);
+    test("get 2 .. -1 from list", () => {
+        const list = new Cypher.List([new Cypher.Literal("1"), new Cypher.Literal("2"), new Cypher.Literal("3")]);
+        const listIndex = Cypher.listRange(list, 2, -1);
         const queryResult = new TestClause(listIndex).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][0]"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][2..-1]"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
-    test("list range", () => {
-        const cypherList = new Cypher.List([new Cypher.Literal("1"), new Cypher.Literal("2"), new Cypher.Literal("3")]);
-        const listIndex = cypherList.range(1, -1);
+    test("get range from arbitrary expression", () => {
+        const collect = Cypher.collect(new Cypher.Variable());
+        const listIndex = Cypher.listRange(collect, 2, 3);
         const queryResult = new TestClause(listIndex).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][1..-1]"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"collect(var0)[2..3]"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });
