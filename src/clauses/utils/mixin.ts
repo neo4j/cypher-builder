@@ -46,8 +46,8 @@ export function mixin(...mixins: AbstractConstructorType<any>[]) {
  * Based on https://www.typescriptlang.org/docs/handbook/mixins.html
  */
 function applyMixins<T>(baseClass: ConstructorType<T>, mixins: AbstractConstructorType<unknown>[]): ConstructorType<T> {
-    mixins.forEach((baseCtor) => {
-        Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+    for (const baseCtor of mixins) {
+        for (const name of Object.getOwnPropertyNames(baseCtor.prototype)) {
             if (name !== "constructor") {
                 // Base class constructor takes precedence over mixins
                 Object.defineProperty(
@@ -57,8 +57,8 @@ function applyMixins<T>(baseClass: ConstructorType<T>, mixins: AbstractConstruct
                     Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ?? Object.create(null)
                 );
             }
-        });
-    });
+        }
+    }
 
     return baseClass;
 }

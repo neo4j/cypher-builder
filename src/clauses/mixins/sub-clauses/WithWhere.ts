@@ -31,6 +31,9 @@ import { Mixin } from "../Mixin";
 /** @inline */
 type VariableLike = Variable | Literal | PropertyRef;
 
+/** @inline */
+type WhereInputOrTarget = Predicate | Variable | PropertyRef | undefined;
+
 export abstract class WithWhere extends Mixin {
     protected whereSubClause: Where | undefined;
 
@@ -39,8 +42,8 @@ export abstract class WithWhere extends Mixin {
      */
     public where(input: Predicate | undefined): this;
     public where(target: Variable | PropertyRef, params: Record<string, VariableLike>): this;
-    public where(input: Predicate | Variable | PropertyRef | undefined, params?: Record<string, VariableLike>): this {
-        this.updateOrCreateWhereClause(input, params);
+    public where(inputOrTarget: WhereInputOrTarget, params?: Record<string, VariableLike>): this {
+        this.updateOrCreateWhereClause(inputOrTarget, params);
         return this;
     }
 
@@ -48,16 +51,13 @@ export abstract class WithWhere extends Mixin {
      */
     public and(input: Predicate | undefined): this;
     public and(target: Variable | PropertyRef, params: Record<string, VariableLike>): this;
-    public and(input: Predicate | Variable | PropertyRef | undefined, params?: Record<string, VariableLike>): this {
-        this.updateOrCreateWhereClause(input, params);
+    public and(inputOrTarget: WhereInputOrTarget, params?: Record<string, VariableLike>): this {
+        this.updateOrCreateWhereClause(inputOrTarget, params);
         return this;
     }
 
-    private updateOrCreateWhereClause(
-        input: Predicate | Variable | PropertyRef | undefined,
-        params?: Record<string, VariableLike>
-    ): void {
-        const whereInput = this.createWhereInput(input, params);
+    private updateOrCreateWhereClause(inputOrTarget: WhereInputOrTarget, params?: Record<string, VariableLike>): void {
+        const whereInput = this.createWhereInput(inputOrTarget, params);
         if (!whereInput) {
             return;
         }
@@ -71,17 +71,17 @@ export abstract class WithWhere extends Mixin {
     }
 
     private createWhereInput(
-        input: Predicate | Variable | PropertyRef | undefined,
+        inputOrTarget: WhereInputOrTarget,
         params: Record<string, VariableLike> | undefined
     ): Predicate | undefined {
-        if (!input) {
+        if (!inputOrTarget) {
             return undefined;
         }
-        if (input instanceof Variable || input instanceof PropertyRef) {
-            const generatedOp = this.variableAndObjectToOperation(input, params ?? {});
+        if (inputOrTarget instanceof Variable || inputOrTarget instanceof PropertyRef) {
+            const generatedOp = this.variableAndObjectToOperation(inputOrTarget, params ?? {});
             return generatedOp;
         }
-        return input;
+        return inputOrTarget;
     }
 
     /** Transforms a simple input into an operation sub tree */
