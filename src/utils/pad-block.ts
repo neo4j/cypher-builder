@@ -19,6 +19,6 @@
 
 export function padBlock(block: string, spaces = 4): string {
     const paddingStr = " ".repeat(spaces);
-    const paddedNewLines = block.replace(/\n/g, `\n${paddingStr}`);
+    const paddedNewLines = block.replaceAll(/\n/g, `\n${paddingStr}`);
     return `${paddingStr}${paddedNewLines}`;
 }
