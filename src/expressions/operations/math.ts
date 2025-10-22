@@ -58,7 +58,11 @@ class UnaryMathOp extends MathOp {
      * @internal
      */
     public getCypher(env: CypherEnvironment): string {
-        const exprStr = this.exprs[0].getCypher(env);
+        const expr = this.exprs[0];
+        if (!expr) {
+            throw new Error("Error in Cypher.minus, expr is not defined");
+        }
+        const exprStr = expr.getCypher(env);
 
         return `${this.operator}${exprStr}`;
     }
