@@ -38,7 +38,8 @@ export class Variable {
         return new PropertyRef(this, ...path);
     }
 
-    /* Access individual elements via the ListIndex class, using the square bracket notation */
+    // NOTE: duplicate in ListExpr
+    /* Adds a index access operator (`[ ]`) to the variable */
     public index(index: number): ListIndex {
         return listIndex(this, index);
     }
