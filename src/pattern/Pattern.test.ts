@@ -191,7 +191,9 @@ describe("Patterns", () => {
                     .to(b)
             );
             const queryResult = query.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:Person&Actor { name: $param0, surname: $param1 })-[this1:ACTED_IN { roles: $param2 }]->(this2)"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"(this0:Person&Actor { name: $param0, surname: $param1 })-[this1:ACTED_IN { roles: $param2 }]->(this2)"`
+            );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
                 {
@@ -223,7 +225,9 @@ describe("Patterns", () => {
                     .to(b)
             );
             const queryResult = query.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:Person&Actor)-[this1:ACTED_IN { roles: (\\"The \\" + \\"Matrix\\") }]->(this2)"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"(this0:Person&Actor)-[this1:ACTED_IN { roles: (\\"The \\" + \\"Matrix\\") }]->(this2)"`
+            );
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });

@@ -53,11 +53,11 @@ export class Label extends CypherASTNode {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const nodeId = this.node.getCypher(env);
-        const labelsStr = this.generateLabelExpressionStr(env);
+        const labelsStr = this.generateLabelExpressionStr();
         return `${nodeId}${labelsStr}`;
     }
 
-    private generateLabelExpressionStr(env: CypherEnvironment): string {
+    private generateLabelExpressionStr(): string {
         return addLabelToken(escapeLabel(this.label));
     }
 }
