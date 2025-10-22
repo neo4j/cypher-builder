@@ -31,11 +31,7 @@ export class Variable {
     /**
      * @internal
      */
-    public prefix: string;
-
-    constructor() {
-        this.prefix = "var";
-    }
+    public prefix: string = "var";
 
     /** Access individual property via the PropertyRef class */
     public property(...path: Array<string | Expr>): PropertyRef {

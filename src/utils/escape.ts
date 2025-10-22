@@ -66,7 +66,7 @@ function escapeString(str: string): string {
 }
 
 function normalizeString(str: string): string {
-    return str.replace(/\\u0060/g, "`");
+    return str.replaceAll(/\\u0060/g, "`");
 }
 
 function needsEscape(str: string): boolean {
