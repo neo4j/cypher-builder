@@ -211,7 +211,7 @@ MATCH(this0:Movie)
 RETURN this0[($param0 + $param1)]
 ----
 
-=== Index
+== Index
 
 Like properties, an index can also be accessed through the method `.index`:
 

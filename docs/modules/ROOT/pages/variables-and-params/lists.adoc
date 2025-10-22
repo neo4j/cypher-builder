@@ -34,8 +34,6 @@ RETURN [labels(node)]
 You can use instead `new Cypher.Literal(["element 1", "element 2"])` to avoid verbose code.
 ====
 
-
-
 == Index
 Use the `.index` method of a variable or `List` to create an index access:
 
@@ -62,6 +60,34 @@ Cypher.listIndex(Cypher.collect(new Cypher.Variable()), 2);
 [source, cypher]
 ----
 collect(var0)[2]
+----
+
+== Range
+Use the `.range` method of a `List` to create a list range operator:
+
+
+[source, javascript]
+----
+new Cypher.List([1,2,3]).range(2, -1)
+----
+
+[source, cypher]
+----
+[1, 2, 3][2..-1]
+----
+
+=== Range operator on arbitrary expressions
+
+To create an index on an arbitrary expression, like a function, use `Cypher.listRange`:
+
+[source, javascript]
+----
+Cypher.listRange(Cypher.collect(new Cypher.Variable()), 1, -1);
+----
+
+[source, cypher]
+----
+collect(var0)[1..-1]
 ----
 
 == List comprehension
