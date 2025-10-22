@@ -18,22 +18,19 @@
  */
 
 import type { CypherEnvironment } from "../../Environment";
-import type { PropertyRef } from "../../references/PropertyRef";
-import type { Variable } from "../../references/Variable";
-import type { CypherCompilable } from "../../types";
-import type { ListExpr } from "./ListExpr";
+import type { CypherCompilable, Expr } from "../../types";
 
 /**
  * @group Lists
  */
 export class ListIndex implements CypherCompilable {
-    private readonly value: Variable | ListExpr | PropertyRef;
+    private readonly value: Expr;
     private readonly index: number;
 
     /**
      * @internal
      */
-    constructor(variable: Variable | ListExpr | PropertyRef, index: number) {
+    constructor(variable: Expr, index: number) {
         this.value = variable;
         this.index = index;
     }
@@ -42,4 +39,14 @@ export class ListIndex implements CypherCompilable {
     public getCypher(env: CypherEnvironment): string {
         return `${this.value.getCypher(env)}[${this.index}]`;
     }
+}
+
+/** Adds a index access operator (`[ ]`) to an expression
+ * @example
+ * ```cypher
+ * collect(var)[0]
+ * ```
+ */
+export function listIndex(expr: Expr, index: number): ListIndex {
+    return new ListIndex(expr, index);
 }
