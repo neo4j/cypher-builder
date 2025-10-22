@@ -78,6 +78,6 @@ export abstract class WithSetRemove extends Mixin {
             return undefined;
         }
 
-        return this.subClauses[this.subClauses.length - 1];
+        return this.subClauses.at(-1);
     }
 }

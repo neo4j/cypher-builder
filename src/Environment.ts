@@ -81,9 +81,9 @@ export class CypherEnvironment {
     }
 
     public addExtraParams(params: Record<string, Param>): void {
-        Object.entries(params).forEach(([key, param]) => {
+        for (const [key, param] of Object.entries(params)) {
             this.addNamedParamReference(key, param);
-        });
+        }
     }
 
     public addNamedParamReference(name: string, param: Param): void {
