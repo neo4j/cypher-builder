@@ -317,4 +317,65 @@ RETURN this1"
             expect(params).toMatchInlineSnapshot(`{}`);
         });
     });
+
+    describe("With update", () => {
+        test("Match and update movie", () => {
+            const nameParam = new Cypher.Param("Keanu Reeves");
+            const evilKeanu = new Cypher.Param("Seveer unaeK");
+
+            const personNode = new Cypher.Node();
+
+            const withQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["Person"] }))
+                .with(personNode)
+                .where(personNode, { name: nameParam })
+                .set([personNode.property("name"), evilKeanu])
+                .return(personNode);
+
+            const queryResult = withQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Person)
+WITH this0
+WHERE this0.name = $param0
+SET
+    this0.name = $param1
+RETURN this0"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+{
+  "param0": "Keanu Reeves",
+  "param1": "Seveer unaeK",
+}
+`);
+        });
+
+        test("Match with remove", () => {
+            const idParam = new Cypher.Param("my-id");
+            const nameParam = new Cypher.Param("my-name");
+
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+                .with("*")
+                .where(movieNode, { id: idParam, name: nameParam })
+                .remove(movieNode.property("name"))
+                .return(movieNode.property("id"));
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0:Movie)
+WITH *
+WHERE (this0.id = $param0 AND this0.name = $param1)
+REMOVE this0.name
+RETURN this0.id"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+                    {
+                      "param0": "my-id",
+                      "param1": "my-name",
+                    }
+                `);
+        });
+    });
 });
