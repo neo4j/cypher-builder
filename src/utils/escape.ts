@@ -20,7 +20,7 @@
 const ESCAPE_SYMBOL_REGEX = /`/g;
 
 /** These names must be escaped for variables */
-const RESERVED_VAR_NAMES = ["contains", "in", "where", "is"];
+const RESERVED_VAR_NAMES = new Set(["contains", "in", "where", "is"]);
 
 /** Escapes a Node label string */
 export function escapeLabel(label: string): string {
@@ -40,7 +40,7 @@ export function escapeProperty(propName: string): string {
 
 /** Escapes a variable name if needed */
 export function escapeVariable(varName: string): string {
-    if (RESERVED_VAR_NAMES.includes(varName.toLowerCase())) {
+    if (RESERVED_VAR_NAMES.has(varName.toLowerCase())) {
         return escapeString(varName);
     }
     return escapeIfNeeded(varName);
@@ -61,12 +61,12 @@ function escapeIfNeeded(str: string): string {
 
 function escapeString(str: string): string {
     const normalizedStr = normalizeString(str);
-    const escapedStr = normalizedStr.replace(ESCAPE_SYMBOL_REGEX, "``");
+    const escapedStr = normalizedStr.replaceAll(ESCAPE_SYMBOL_REGEX, "``");
     return `\`${escapedStr}\``;
 }
 
 function normalizeString(str: string): string {
-    return str.replace(/\\u0060/g, "`");
+    return str.replaceAll(/\\u0060/g, "`");
 }
 
 function needsEscape(str: string): boolean {

@@ -101,9 +101,9 @@ export class MapProjection implements CypherCompilable {
     }
 
     private setExtraValues(values: Record<string, Expr>): void {
-        Object.entries(values).forEach(([key, value]) => {
+        for (const [key, value] of Object.entries(values)) {
             if (!value) throw new Error(`Missing value on map key ${key}`);
             this.extraValues.set(key, value);
-        });
+        }
     }
 }

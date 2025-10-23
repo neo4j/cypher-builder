@@ -188,6 +188,8 @@ describe("Clause chaining", () => {
             "delete",
             "detachDelete",
             "with",
+            "set",
+            "remove",
             "unwind",
             "match",
             "optionalMatch",

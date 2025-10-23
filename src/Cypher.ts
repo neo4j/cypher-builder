@@ -78,6 +78,7 @@ export * as vector from "./namespaces/vector/vector";
 export { ListComprehension } from "./expressions/list/ListComprehension";
 export { ListExpr as List } from "./expressions/list/ListExpr";
 export { listIndex, type ListIndex } from "./expressions/list/ListIndex";
+export { listRange, type ListRange } from "./expressions/list/ListRange";
 export { PatternComprehension } from "./expressions/list/PatternComprehension";
 
 // --Map

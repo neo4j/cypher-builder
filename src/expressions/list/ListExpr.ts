@@ -21,6 +21,8 @@ import type { CypherEnvironment } from "../../Environment";
 import type { CypherCompilable, Expr } from "../../types";
 import type { ListIndex } from "./ListIndex";
 import { listIndex } from "./ListIndex";
+import type { ListRange } from "./ListRange";
+import { listRange } from "./ListRange";
 
 /** Represents a List
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/lists/ | Cypher Documentation}
@@ -58,5 +60,10 @@ export class ListExpr implements CypherCompilable {
     /** Access individual elements in the list */
     public index(index: number): ListIndex {
         return listIndex(this, index);
+    }
+
+    /** Adds a list range operator (`[ .. ]`) */
+    public range(from: number, to: number): ListRange {
+        return listRange(this, from, to);
     }
 }

@@ -32,6 +32,7 @@ import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { WithWhere } from "./mixins/sub-clauses/WithWhere";
 import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
@@ -44,6 +45,7 @@ export interface With
     extends WithOrder,
         WithReturn,
         WithWhere,
+        WithSetRemove,
         WithDelete,
         WithMatch,
         WithUnwind,
@@ -60,6 +62,7 @@ export interface With
     WithOrder,
     WithReturn,
     WithWhere,
+    WithSetRemove,
     WithDelete,
     WithMatch,
     WithUnwind,
@@ -106,12 +109,13 @@ export class With extends Clause {
         const orderByStr = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const withStr = compileCypherIfExists(this.withStatement, env, { prefix: "\n" });
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
+        const setCypher = this.compileSetCypher(env);
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
         const distinctStr = this.isDistinct ? " DISTINCT" : "";
 
         const nextClause = this.compileNextClause(env);
 
-        return `WITH${distinctStr} ${projectionStr}${whereStr}${orderByStr}${deleteStr}${withStr}${nextClause}`;
+        return `WITH${distinctStr} ${projectionStr}${whereStr}${setCypher}${orderByStr}${deleteStr}${withStr}${nextClause}`;
     }
 
     private getWithClause(clauseOrColumn: With | "*" | WithProjection, columns: Array<"*" | WithProjection>): With {

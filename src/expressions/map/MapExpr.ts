@@ -42,9 +42,9 @@ export class MapExpr implements CypherCompilable {
         if (typeof keyOrValues === "string") {
             this.setField(keyOrValues, value);
         } else {
-            Object.entries(keyOrValues).forEach(([key, value]) => {
+            for (const [key, value] of Object.entries(keyOrValues)) {
                 this.setField(key, value);
-            });
+            }
         }
     }
 
