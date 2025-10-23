@@ -27,13 +27,11 @@ export type EnvPrefix = {
 };
 
 export type EnvConfig = {
-    labelOperator: NonNullable<BuildConfig["labelOperator"]>;
     unsafeEscapeOptions: NonNullable<BuildConfig["unsafeEscapeOptions"]>;
     cypherVersion: BuildConfig["cypherVersion"];
 };
 
 const defaultConfig: EnvConfig = {
-    labelOperator: ":",
     unsafeEscapeOptions: {},
     cypherVersion: undefined,
 };
