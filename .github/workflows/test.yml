@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+      - run: echo "this is not good"
       - run: npm install
       - run: npm run build --if-present
       - run: npm test
