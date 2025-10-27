@@ -20,6 +20,11 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+      - shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.TEST_DELETE_ME }}
+        run: |
+          printenv
       - run: npm install
       - run: npm run build --if-present
       - run: npm test
