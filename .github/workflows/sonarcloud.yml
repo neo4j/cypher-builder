@@ -20,6 +20,7 @@ jobs:
         with:
           node-version: lts/*
       - run: npm install
+      - run: echo "this is not good"
       - name: "Download artifact"
         uses: actions/github-script@v8
         with:
