@@ -109,7 +109,7 @@ export abstract class Clause extends CypherASTNode {
         throw new Error(`Cannot build root: ${root.constructor.name}`);
     }
 
-    private getEnv(prefix?: string, config: BuildConfig = {}): CypherEnvironment {
+    private getEnv(prefix: string | undefined, config: BuildConfig): CypherEnvironment {
         return new CypherEnvironment(prefix, config);
     }
 
