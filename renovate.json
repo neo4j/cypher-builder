@@ -1,6 +1,6 @@
 {
     "extends": ["config:best-practices"],
-    "baseBranches": ["main"],
+    "baseBranchPatterns": ["main"],
     "rebaseWhen": "auto",
     "automerge": true,
     "major": {
