@@ -29,21 +29,19 @@ Querying it on the Movies Dataset should prompt this result:
 | "The Replacements" | "Pain heals, Chicks dig scars... Glory lasts forever" | 2000 | ["Shane Falco"]
 |===
 
-Though the `Cypher.Match` statement accepts a `Cypher.Node` variable, this is a shorthand for very simple queries involving a single node. 
-For more complex `MATCH` statements, like the one in this tutorial, you should define a *Pattern* when establishing relationships.
-
 == Pattern creation
 
-These are the steps you should follow to define a more complex pattern:
+To define a more complex pattern:
 
-. Define the elements of the pattern. 
+. Define the variables of the pattern. 
 Relationships, just like nodes, are variables that can be created and reused across your query:
 +
 [source, javascript]
 ----
-const actedIn = new Cypher.Relationship();
-
+const movieNode = new Cypher.Node();
 const personNode = new Cypher.Node();
+
+const actedIn = new Cypher.Relationship();
 ----
 +
 So far, the relationship is not connected to the nodes. 
@@ -58,9 +56,9 @@ const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
     .to(personNode, { labels: ["Person"] });
 ----
 +
-Note that, in Cypher Builder, patterns work similarly to Cypher, with each element of the chain being either a relationship or a node.
+Note that, in Cypher Builder, patterns work similarly to Cypher, with each element of the chain being alternatively a relationship or a node.
 
-. Switch the `movieNode` variable for the `pattern` in the `MATCH` clause:
+. Use the `pattern` variable in the `MATCH` clause:
 +
 [source, javascript]
 ----
@@ -185,7 +183,7 @@ Make sure to double-check whether all variables refer to the correct param and n
 
 == Projection aliases
 
-Lastly, here is how you can add projection aliases:
+Lastly, you can add projection aliases:
 
 . To return `r.roles` aliased as `actingRoles`, add `roles` to the list of properties:
 +

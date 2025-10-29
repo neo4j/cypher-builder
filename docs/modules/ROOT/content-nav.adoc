@@ -2,9 +2,9 @@
 * Getting started
 ** xref:getting-started/installation.adoc[]
 ** xref:getting-started/querying.adoc[]
+** xref:getting-started/connecting-to-neo4j.adoc[]
 ** xref:getting-started/filters-and-projections.adoc[]
 ** xref:getting-started/relationships-and-advanced-filtering.adoc[]
-** xref:getting-started/connecting-to-neo4j.adoc[]
 * Building queries
 ** Clauses
 *** xref:clauses/match.adoc[]
