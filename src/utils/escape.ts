@@ -17,8 +17,6 @@
  * limitations under the License.
  */
 
-const ESCAPE_SYMBOL_REGEX = /`/g;
-
 /** These names must be escaped for variables */
 const RESERVED_VAR_NAMES = new Set(["contains", "in", "where", "is"]);
 
@@ -61,12 +59,12 @@ function escapeIfNeeded(str: string): string {
 
 function escapeString(str: string): string {
     const normalizedStr = normalizeString(str);
-    const escapedStr = normalizedStr.replaceAll(ESCAPE_SYMBOL_REGEX, "``");
+    const escapedStr = normalizedStr.replaceAll("`", "``");
     return `\`${escapedStr}\``;
 }
 
 function normalizeString(str: string): string {
-    return str.replaceAll(/\\u0060/g, "`");
+    return str.replaceAll("\\u0060", "`");
 }
 
 function needsEscape(str: string): boolean {
