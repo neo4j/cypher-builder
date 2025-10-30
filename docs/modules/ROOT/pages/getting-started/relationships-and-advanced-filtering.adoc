@@ -56,7 +56,7 @@ const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
     .to(personNode, { labels: ["Person"] });
 ----
 +
-Note that, in Cypher Builder, patterns work similarly to Cypher, with each element of the chain being alternatively a relationship or a node.
+Note that, in Cypher Builder, patterns work similarly to Cypher, with each element of the chain being either a relationship or a node.
 
 . Use the `pattern` variable in the `MATCH` clause:
 +
