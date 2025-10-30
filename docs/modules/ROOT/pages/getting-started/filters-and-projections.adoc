@@ -18,8 +18,7 @@ It should return only the movie "The Matrix", released in 1999.
 
 == Filtering
 
-Adding filters to a `MATCH` clause has a similar process to how you add the `RETURN` clause.
-Here is how you should proceed:
+Adding filters to a `MATCH` clause is similar to how you add the `RETURN` clause:
 
 . Use the method `.where`:
 +
@@ -31,38 +30,41 @@ const clause = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"
     .return(movieNode);
 ----
 
-. Then, add a condition to the filter:
+. Then, to add a condition to the filter, for example:
 +
 [source, cypher]
 ----
 m.title = "The Matrix"
 ----
 
-. Use the function `Cypher.eq()` to add the property `title` of the `movieNode` variable and compare them with an equality operator (`=`):
+.. Use the function `Cypher.eq()` to add an **eq**uality operator (`=`) in where:
++
+[source, javascript]
+----
+    .where(Cypher.eq())
+----
+
+.. `Cypher.eq()` takes two arguments to compare. For the first one, add the property `title` of `movieNode`: 
 +
 [source, javascript]
 ----
 movieNode.property("title") 
 ----
 
-. Use the `Cypher.Param` class to add the string `"The Matrix"` as a parameter.
-It will replace the value with a suitable placeholder:
+.. The second argument is the value to compare (`"The Matrix"`). Pass it as a link:https://neo4j.com/docs/cypher-manual/current/syntax/parameters/[Parameter] with `new Cypher.Param`
 +
 [source, javascript]
 ----
 new Cypher.Param("The Matrix")
 ----
 +
-[NOTE]
-====
-Though it is possible to inject the string value into the query, it is good practice to use link:https://neo4j.com/docs/cypher-manual/current/syntax/parameters/[Parameters]. 
-====
+`Cypher.Param` will replace the string with a suitable `$param`, to avoid injecting values directly into the generated Cypher.
 
-. Finally, your `MATCH` clause should now look like this:
+. Your `MATCH` clause should now look like this:
 +
 [source, javascript]
 ----
-const clause = new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
+const clause = new Cypher.Match(new (movieNode, { labels: ["Movie"] }))
     .where(Cypher.eq(movieNode.property("title"), new Cypher.Param("The Matrix")))
     .return(movieNode);
 ----

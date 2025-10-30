@@ -27,10 +27,7 @@ CREATE(:Movie {title: "The Terminal"})
 ----
 
 == Initialize the driver
-Add the following lines to the JavaScript file created in the xref:/getting-started/installation.adoc[Installation] step to initialize the driver:```
-
-I think the link to the JS manual makes it a bit confusing here because the instructions are also featured below, so if that makes sense, removing that notion can be a bit more clarifying.
-
+Add the following lines to the JavaScript file created in the xref:/getting-started/installation.adoc[Installation] step to initialize the driver:
 
 [source, javascript]
 ----
