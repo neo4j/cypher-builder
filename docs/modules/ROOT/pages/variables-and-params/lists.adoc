@@ -98,19 +98,12 @@ You also need an expression resulting in the original list to create a new list 
 
 [source, javascript]
 ----
-const listComprehension = new Cypher.ListComprehension(variable, new Cypher.Literal([1,2]))
+const listComprehension = new Cypher.ListComprehension(variable).in(new Cypher.Literal([1,2]))
 ----
 
 [source, cypher]
 ----
 [var0 IN [1,2]]
-----
-
-Alternatively, the original list expression can be passed with the method `.in`:
-
-[source, javascript]
-----
-const listComprehension = new Cypher.ListComprehension(variable).in(new Cypher.Literal([1,2]))
 ----
 
 By using the methods `where` and `map`, you can construct the filter and mapping parts of the comprehension:

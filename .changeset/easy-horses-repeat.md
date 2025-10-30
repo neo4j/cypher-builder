@@ -14,7 +14,7 @@ const { cypher, params } = matchQuery.build({
 
 _Before_
 
-```js
+```cypher
 MATCH (this1:Movie:Film)
 ```
 
