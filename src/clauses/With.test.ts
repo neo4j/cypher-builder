@@ -286,12 +286,15 @@ CALL db.labels() YIELD label"
         });
 
         test("With * and cypher void procedure", () => {
-            const withQuery = new Cypher.With("*").callProcedure(Cypher.apoc.util.validate(Cypher.true, "message"));
+            const targetNode = new Cypher.Node();
+            const customProcedure = new Cypher.VoidProcedure("customProcedure", [targetNode]);
+
+            const withQuery = new Cypher.With("*").callProcedure(customProcedure);
 
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH *
-CALL apoc.util.validate(true, \\"message\\", [0])"
+CALL customProcedure(this0)"
 `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });

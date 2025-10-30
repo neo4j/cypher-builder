@@ -192,7 +192,7 @@ describe("Patterns", () => {
             );
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:Person:Actor { name: $param0, surname: $param1 })-[this1:ACTED_IN { roles: $param2 }]->(this2)"`
+                `"(this0:Person&Actor { name: $param0, surname: $param1 })-[this1:ACTED_IN { roles: $param2 }]->(this2)"`
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
@@ -226,7 +226,7 @@ describe("Patterns", () => {
             );
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:Person:Actor)-[this1:ACTED_IN { roles: (\\"The \\" + \\"Matrix\\") }]->(this2)"`
+                `"(this0:Person&Actor)-[this1:ACTED_IN { roles: (\\"The \\" + \\"Matrix\\") }]->(this2)"`
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -283,9 +283,7 @@ describe("Patterns", () => {
             const a = new Cypher.Node();
             const rel = new Cypher.Variable();
 
-            const query = new TestClause(
-                new Cypher.Pattern(a as Cypher.Node | undefined).related(rel).to(a as Cypher.Node | undefined)
-            );
+            const query = new TestClause(new Cypher.Pattern(a).related(rel).to(a));
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[var1]->(this0)"`);
 
@@ -429,7 +427,7 @@ describe("Patterns", () => {
     });
 
     describe("Where predicate", () => {
-        it("Node pattern with where predicate", () => {
+        test("Node pattern with where predicate", () => {
             const node = new Cypher.Node();
 
             const pattern = new Cypher.Pattern(node, { labels: ["TestLabel"] }).where(
@@ -439,7 +437,7 @@ describe("Patterns", () => {
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel WHERE this0.name = \\"Keanu\\")"`);
         });
 
-        it("Node pattern with where predicate and properties", () => {
+        test("Node pattern with where predicate and properties", () => {
             const node = new Cypher.Node();
 
             const pattern = new Cypher.Pattern(node, {
@@ -457,7 +455,7 @@ describe("Patterns", () => {
             );
         });
 
-        it("Node pattern with where predicate in target node", () => {
+        test("Node pattern with where predicate in target node", () => {
             const node = new Cypher.Node();
 
             const pattern = new Cypher.Pattern(node, { labels: ["TestLabel"] })
@@ -470,7 +468,7 @@ describe("Patterns", () => {
             );
         });
 
-        it("Relationship pattern with where predicate", () => {
+        test("Relationship pattern with where predicate", () => {
             const node = new Cypher.Node();
             const relationship = new Cypher.Relationship();
 
@@ -484,7 +482,7 @@ describe("Patterns", () => {
             );
         });
 
-        it("Relationship pattern with where predicate and properties", () => {
+        test("Relationship pattern with where predicate and properties", () => {
             const node = new Cypher.Node();
             const relationship = new Cypher.Relationship();
 
