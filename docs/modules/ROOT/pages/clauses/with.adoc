@@ -2,7 +2,7 @@
 :description: This page describes how to create `WITH` clauses.
 = With
 
-This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/with/[`WITH`] clause using the `Cypher.With` class. Note that this is different to the xref:../subqueries/call.adoc#_importwith[ImportWith] statement inside `CALL`.
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/with/[`WITH`] clause using the `Cypher.With` class.
 
 A `With` clause will take multiple parameters. Variables can be passed directly without aliasing:
 
