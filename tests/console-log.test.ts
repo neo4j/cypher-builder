@@ -84,4 +84,85 @@ describe("Console.log", () => {
 \\"\\"\\""
 `);
     });
+
+    test("console.log on a pattern element", () => {
+        const a = new Cypher.Node();
+
+        const pattern = new Cypher.Pattern(a).related();
+
+        expect(`${pattern}`).toMatchInlineSnapshot(`
+"<PartialPattern> \\"\\"\\"
+    (this0)-[]->
+\\"\\"\\""
+`);
+        expect(pattern.toString()).toMatchInlineSnapshot(`
+"<PartialPattern> \\"\\"\\"
+    (this0)-[]->
+\\"\\"\\""
+`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((pattern as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
+"<PartialPattern> \\"\\"\\"
+    (this0)-[]->
+\\"\\"\\""
+`);
+    });
+
+    test("Console.log on a clause with errors", () => {
+        const query = new Cypher.Create(
+            new Cypher.Pattern(new Cypher.Node(), {
+                labels: ["Movie"],
+            })
+        ).return(
+            new Cypher.Raw(() => {
+                throw new Error("This clause fails to compile");
+            })
+        );
+
+        expect(`${query}`).toMatchInlineSnapshot(`
+"<Clause Return> \\"\\"\\"
+Error: This clause fails to compile
+\\"\\"\\""
+`);
+        expect(query.toString()).toMatchInlineSnapshot(`
+"<Clause Return> \\"\\"\\"
+Error: This clause fails to compile
+\\"\\"\\""
+`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((query as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
+"<Clause Return> \\"\\"\\"
+Error: This clause fails to compile
+\\"\\"\\""
+`);
+    });
+    test("Console.log on a clause that throws a string", () => {
+        const query = new Cypher.Create(
+            new Cypher.Pattern(new Cypher.Node(), {
+                labels: ["Movie"],
+            })
+        ).return(
+            new Cypher.Raw(() => {
+                // eslint-disable-next-line @typescript-eslint/only-throw-error
+                throw "this is not an error";
+            })
+        );
+
+        expect(`${query}`).toMatchInlineSnapshot(`
+"<Clause Return> \\"\\"\\"
+Error: this is not an error
+\\"\\"\\""
+`);
+        expect(query.toString()).toMatchInlineSnapshot(`
+"<Clause Return> \\"\\"\\"
+Error: this is not an error
+\\"\\"\\""
+`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((query as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
+"<Clause Return> \\"\\"\\"
+Error: this is not an error
+\\"\\"\\""
+`);
+    });
 });
