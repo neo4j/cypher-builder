@@ -1,0 +1,282 @@
+[[migration]]
+:description: This page describes how to migrate to version 3.x from version 2
+= Migration to Cypher Builder 3
+
+This guide details all the changes needed to migrate from Cypher Builder version 2 to version 3.
+
+[NOTE]
+====
+If you need to support Neo4j 4, stay with Cypher Builder 2.x, otherwise, migrate to version 3.
+====
+
+== Compatibility changes
+
+=== Minimum node engine changed to 20.0.0
+
+Node.js 16 is no longer supported. Update Node.js to version 20.0.0 or above.
+
+=== Cypher 4 no longer supported
+
+Cypher 4, and Neo4j 4 databases are no longer supported. Cypher Builder 3 targets Cypher 5 and 25.
+
+The following features are Cypher 4 only, and have been removed from Cypher Builder.
+
+==== Removed functions deprecated in Cypher 5
+
+- `distance` in favor of `point.distance`
+- `id` in favor of `elementId`
+
+==== Removed support for patterns in size
+
+_No longer supported_
+[source, javascript]
+----
+Cypher.size(new Cypher.Pattern(node));
+----
+
+[source, Cypher]
+----
+size((this0));
+----
+
+Instead, use `new Cypher.Count`:
+
+[source, javascript]
+----
+new Cypher.Count(new Cypher.Pattern(node));
+----
+
+[source, Cypher]
+----
+COUNT {
+    (this0)
+}
+----
+
+==== Removed `labelOperator`
+
+Removed option `labelOperator`. Now, the operator `&` is used by default when using multiple labels:  
+
+
+_No longer supported_
+[source, javascript]
+----
+const { cypher, params } = matchQuery.build({
+    labelOperator: "&",
+});
+----
+
+
+_Before_
+[source, Cypher]
+----
+MATCH (this1:Movie:Film)
+----
+
+_After_
+[source, Cypher]
+----
+MATCH (this1:Movie&Film)
+----
+
+
+==== Removed `.importWith` from `Call`
+
+Remove `.importWith` from `Call` clauses in favor of constructor options
+
+_No longer supported_
+
+[source, Javascript]
+----
+const clause = new Cypher.Call(nestedClause).importWith(movieNode, actorNode);
+----
+
+[source, Cypher]
+----
+CALL {
+    WITH var0, var1
+    // Nested clause
+}
+----
+
+_After_
+
+[source, Javascript]
+----
+const clause = new Cypher.Call(nestedClause, [movieNode, actorNode]);
+----
+
+[source, Cypher]
+----
+CALL (var0, var1){
+    // Nested clause
+}
+----
+
+== Removed support for apoc
+
+No apoc functions or procedures are supported in Cypher Builder 3. The following are no longer available:
+
+- `apoc.util.validate`
+- `apoc.util.validatePredicate`
+- `apoc.date.convertFormat`
+- `apoc.cypher.runFirstColumnMany`
+- `apoc.cypher.runFirstColumnSingle`
+
+To use apoc methods, create a xref:how-to/customize-cypher.adoc#_custom_functions_and_procedures[custom function or procedure]. For example:
+
+[source, Javascript]
+----
+function validate(
+    predicate: Predicate,
+    message: string,
+    params: List | Literal | Map
+): Cypher.VoidCypherProcedure {
+    return new Cypher.VoidCypherProcedure(
+        "apoc.util.validate", 
+        [predicate,  new Literal(message), params]
+    );
+}
+----
+
+[source, Javascript]
+----
+function validatePredicate(predicate: Predicate, message: string): CypherFunction {
+    return new CypherFunction("
+        apoc.util.validatePredicate", 
+        [predicate, new Literal(message), new Literal([0])]
+    );
+}
+----
+
+== API changes
+The following are changes to the API, made to improve consistency across the Cypher Builder API.
+
+=== ListComprehension
+
+==== Remove second parameter of constructor
+Remove second parameter of `ListComprehension` constructor in favor of `.in`
+
+Before:
+[source, javascript]
+----
+new Cypher.ListComprehension(variable, new Cypher.Literal([1, 2]));
+----
+
+After:
+[source, javascript]
+----
+new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2]));
+----
+
+In both cases, the same comprehension will be generated:
+
+```cypher
+[var0 IN [1, 2]]
+```
+
+==== ListComprehension `.in` method no longer throws if called twice.
+
+ListComprehension `.in` method no longer throws if called twice. It will instead override the expression
+
+Before, it will throw:
+[source, javascript]
+----
+new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2])).in(new Cypher.Literal([1]))
+----
+
+After, this is valid:
+[source, javascript]
+----
+new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2])).in(new Cypher.Literal([1]))
+----
+
+Will generate the following Cypher:
+
+[source, cypher]
+----
+[var0 IN [1]]
+----
+
+Note that the same Cypher is generated if we omit the first `.in`:
+
+[source, javascript]
+----
+new Cypher.ListComprehension(variable).in(new Cypher.Literal([1]))
+----
+
+
+=== Foreach
+
+==== Remove extra parameters in `Cypher.Foreach` constructor
+Remove extra parameters in `Cypher.Foreach` constructor in favor of methods `in` and `do`.
+
+For example, to create the following Cypher:
+
+[source, Cypher]
+----
+FOREACH (var0 IN [1, 2, 3] |
+        CREATE (this1:Movie)
+        SET
+            this1.id = var0
+    )
+----
+
+_Before_
+
+[source, javascript]
+----
+const list = new Cypher.Literal([1, 2, 3]);
+const variable = new Cypher.Variable();
+
+const movieNode = new Cypher.Node();
+const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] })).set([
+    movieNode.property("id"),
+    variable,
+]);
+
+const foreachClause = new Cypher.Foreach(variable, list, createMovie);
+----
+
+_After_
+
+[source, javascript]
+----
+const list = new Cypher.Literal([1, 2, 3]);
+const variable = new Cypher.Variable();
+
+const movieNode = new Cypher.Node();
+const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] })).set([
+    movieNode.property("id"),
+    variable,
+]);
+
+const foreachClause = new Cypher.Foreach(variable).in(list).do(createMovie);
+----
+
+== Other breaking changes
+
+=== Remove method `.children` from concat clauses
+
+[source, Javascript]
+----
+const query = Cypher.utils.concat(clause1, clause2);
+query.children; // No longer supported
+----
+
+=== Remove type `Operation`
+
+The type `Cypher.Operation` is no longer availabe, use `Cypher.Expr` instead:
+
+_Before_
+[source, javascript]
+----
+const myOperation: Cypher.Operation = Cypher.and()
+----
+
+_After_
+[source, javascript]
+----
+const myOperation: Cypher.Expr = Cypher.and()
+----
+
