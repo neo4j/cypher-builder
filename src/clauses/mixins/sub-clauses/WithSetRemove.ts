@@ -37,8 +37,9 @@ export abstract class WithSetRemove extends Mixin {
             this.subClauses = []; // Due to mixin wonkiness, we need to lazy initialize
         }
 
-        if (this.lastSubClause instanceof SetClause) {
-            this.lastSubClause.addParams(...params);
+        const lastSubClause = this.subClauses.at(-1);
+        if (lastSubClause instanceof SetClause) {
+            lastSubClause.addParams(...params);
         } else {
             this.subClauses.push(new SetClause(this, params));
         }
@@ -54,8 +55,9 @@ export abstract class WithSetRemove extends Mixin {
             this.subClauses = []; // Due to mixin wonkiness, we need to lazy initialize
         }
 
-        if (this.lastSubClause instanceof RemoveClause) {
-            this.lastSubClause.addParams(...properties);
+        const lastSubClause = this.subClauses.at(-1);
+        if (lastSubClause instanceof RemoveClause) {
+            lastSubClause.addParams(...properties);
         } else {
             this.subClauses.push(new RemoveClause(this, properties));
         }
@@ -71,13 +73,5 @@ export abstract class WithSetRemove extends Mixin {
             .join("");
 
         return subclausesCypher;
-    }
-
-    private get lastSubClause(): SetClause | RemoveClause | undefined {
-        if (!this.subClauses) {
-            return undefined;
-        }
-
-        return this.subClauses.at(-1);
     }
 }
