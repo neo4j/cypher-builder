@@ -22,22 +22,22 @@ import { TestClause } from "../utils/TestClause";
 
 describe("NodeRef", () => {
     test("Create node", () => {
-        const rel1 = new Cypher.Node();
-        const rel2 = new Cypher.Node();
+        const node1 = new Cypher.Node();
+        const node2 = new Cypher.Node();
 
-        const testClause = new TestClause(rel1, rel2);
+        const testClause = new TestClause(node1, node2);
 
         const queryResult = testClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"this0this1"`);
     });
 
     test("Create named node", () => {
-        const rel1 = new Cypher.NamedNode("myNode");
+        const node1 = new Cypher.NamedNode("myNode");
 
-        const testClause = new TestClause(rel1);
+        const testClause = new TestClause(node1);
 
         const queryResult = testClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`"myNode"`);
-        expect(rel1.name).toBe("myNode");
+        expect(node1.name).toBe("myNode");
     });
 });
