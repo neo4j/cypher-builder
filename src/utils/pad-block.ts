@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-export function padBlock(block: string, spaces = 4): string {
+export function padBlock(block: string, spaces = 2): string {
     const paddingStr = " ".repeat(spaces);
     const paddedNewLines = block.replaceAll("\n", `\n${paddingStr}`);
     return `${paddingStr}${paddedNewLines}`;
