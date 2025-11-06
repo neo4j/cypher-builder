@@ -46,7 +46,7 @@ export function escapeVariable(varName: string): string {
 
 /** Escapes a literal string */
 export function escapeLiteralString(str: string): string {
-    return str.replaceAll(`"`, `\\"`);
+    return str.replaceAll(`'`, `\\'`);
 }
 
 function escapeIfNeeded(str: string): string {

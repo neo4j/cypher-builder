@@ -37,7 +37,7 @@ describe("Cypher styleguide", () => {
 
             expect(cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
-WHERE this0.name CONTAINS \\"s\\"
+WHERE this0.name CONTAINS 's'
 RETURN this0.name"
 `);
         });
@@ -59,8 +59,8 @@ RETURN this0.name"
 "MERGE (this0)  
   ON CREATE SET this0.prop = 0  
 MERGE (this1:A)-[:T]->(this2:B)  
-  ON CREATE SET this2.name = \\"you\\"  
-  ON MATCH SET this1.name = \\"me\\"
+  ON CREATE SET this2.name = 'you'  
+  ON MATCH SET this1.name = 'me'
 RETURN this1.prop"
 `);
         });
@@ -79,9 +79,9 @@ RETURN this1.prop"
 
             expect(cypher).toMatchInlineSnapshot(`
 "MERGE (this0:A)-[:T]->(this1:B)  
-  ON CREATE SET this1.name = \\"you\\"  
+  ON CREATE SET this1.name = 'you'  
   ON MATCH SET
-    this0.name = \\"me\\",
+    this0.name = 'me',
     this0.age = 30
 RETURN this0.prop"
 `);
@@ -106,7 +106,7 @@ RETURN this0.prop"
 "MATCH (this0:A)
 WHERE EXISTS {
   MATCH (this0)-[]->(this1:B)
-  WHERE this1.prop = \\"yellow\\"
+  WHERE this1.prop = 'yellow'
 }
 RETURN this0.foo"
 `);
@@ -133,10 +133,10 @@ RETURN this0.foo"
             const { cypher } = query.build();
 
             expect(cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Person { name: \\"Alice\\" })
+"MATCH (this0:Person { name: 'Alice' })
 RETURN CASE
-  WHEN this0.age > 18 THEN \\"Adult\\"
-  ELSE \\"Minor\\"
+  WHEN this0.age > 18 THEN 'Adult'
+  ELSE 'Minor'
 END AS ageGroup"
 `);
         });
@@ -155,7 +155,7 @@ END AS ageGroup"
 
             const { cypher } = query.build();
             expect(cypher).toMatchInlineSnapshot(`
-"WITH {key1: \\"value\\", key2: 42} AS var0
+"WITH {key1: 'value', key2: 42} AS var0
 RETURN var0"
 `);
         });
@@ -169,7 +169,7 @@ RETURN var0"
 
             const { cypher } = query.build();
             expect(cypher).toMatchInlineSnapshot(`
-"WITH [\\"a\\", \\"b\\", 3.14] AS var0
+"WITH ['a', 'b', 3.14] AS var0
 RETURN var0, 2"
 `);
         });
@@ -184,9 +184,7 @@ RETURN var0, 2"
             );
 
             const { cypher } = query.build();
-            expect(cypher).toMatchInlineSnapshot(
-                `"RETURN \\"Cypher\\", \\"A 'Quote'\\", \\"Another \\\\\\"Quote\\\\\\"\\""`
-            );
+            expect(cypher).toMatchInlineSnapshot(`"RETURN 'Cypher', 'A \\\\'Quote\\\\'', 'Another \\"Quote\\"'"`);
         });
     });
 });
