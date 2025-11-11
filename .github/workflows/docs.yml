@@ -34,8 +34,9 @@ jobs:
           node-version: lts/*
       - name: Install Dependencies
         run: |
-          npm install
-          cd docs && npm install
+          npm ci
+          cd docs
+          npm ci
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - name: Build Docs
