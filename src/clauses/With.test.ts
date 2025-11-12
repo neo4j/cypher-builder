@@ -255,7 +255,7 @@ CREATE (this0:Movie)"
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH *
-MERGE (this0:Movie)"
+MERGE (this0:Movie)    "
 `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
@@ -267,7 +267,7 @@ MERGE (this0:Movie)"
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH *
-MERGE (this0:Movie)"
+MERGE (this0:Movie)    "
 `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
@@ -313,7 +313,7 @@ CALL customProcedure(this0)"
             expect(cypher).toMatchInlineSnapshot(`
 "WITH this0
 CALL (this0) {
-    CREATE (this0)-[]->(this1)
+  CREATE (this0)-[]->(this1)
 }
 RETURN this1"
 `);
@@ -339,8 +339,7 @@ RETURN this1"
 "MATCH (this0:Person)
 WITH this0
 WHERE this0.name = $param0
-SET
-    this0.name = $param1
+SET this0.name = $param1
 RETURN this0"
 `);
 

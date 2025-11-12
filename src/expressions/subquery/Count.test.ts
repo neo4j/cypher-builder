@@ -31,13 +31,13 @@ describe("Count Subquery", () => {
         const queryResult = match.build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0)
-            WHERE COUNT {
-                MATCH (this1:Movie)
-                RETURN *
-            } > 10
-            RETURN *"
-        `);
+"MATCH (this0)
+WHERE COUNT {
+  MATCH (this1:Movie)
+  RETURN *
+} > 10
+RETURN *"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });

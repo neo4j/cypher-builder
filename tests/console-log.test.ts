@@ -39,27 +39,24 @@ describe("Console.log", () => {
         );
 
         expect(`${query}`).toMatchInlineSnapshot(`
-            "<Clause Create> \\"\\"\\"
-                CREATE (this0:Movie)
-                SET
-                    this0.released = $param0
-            \\"\\"\\""
-        `);
+"<Clause Create> \\"\\"\\"
+  CREATE (this0:Movie)
+  SET this0.released = $param0
+\\"\\"\\""
+`);
         expect(query.toString()).toMatchInlineSnapshot(`
-            "<Clause Create> \\"\\"\\"
-                CREATE (this0:Movie)
-                SET
-                    this0.released = $param0
-            \\"\\"\\""
-        `);
+"<Clause Create> \\"\\"\\"
+  CREATE (this0:Movie)
+  SET this0.released = $param0
+\\"\\"\\""
+`);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((query as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
-            "<Clause Create> \\"\\"\\"
-                CREATE (this0:Movie)
-                SET
-                    this0.released = $param0
-            \\"\\"\\""
-        `);
+"<Clause Create> \\"\\"\\"
+  CREATE (this0:Movie)
+  SET this0.released = $param0
+\\"\\"\\""
+`);
     });
 
     test("console.log on a pattern", () => {
@@ -69,18 +66,18 @@ describe("Console.log", () => {
 
         expect(`${pattern}`).toMatchInlineSnapshot(`
 "<Pattern> \\"\\"\\"
-    (this0)-[]->()
+  (this0)-[]->()
 \\"\\"\\""
 `);
         expect(pattern.toString()).toMatchInlineSnapshot(`
 "<Pattern> \\"\\"\\"
-    (this0)-[]->()
+  (this0)-[]->()
 \\"\\"\\""
 `);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((pattern as any)[customInspectSymbol]()).toMatchInlineSnapshot(`
 "<Pattern> \\"\\"\\"
-    (this0)-[]->()
+  (this0)-[]->()
 \\"\\"\\""
 `);
     });

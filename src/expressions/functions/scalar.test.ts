@@ -77,7 +77,7 @@ describe("Scalar Functions", () => {
         const coalesceFunction = Cypher.coalesce(nullParam, testParam, literal);
         const queryResult = new TestClause(coalesceFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"coalesce(NULL, $param0, \\"arthur\\")"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"coalesce(NULL, $param0, 'arthur')"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -100,6 +100,6 @@ describe("Scalar Functions", () => {
         const cypherFunction = Cypher.size(new Cypher.Literal("Hello"));
         const queryResult = new TestClause(cypherFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"size(\\"Hello\\")"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"size('Hello')"`);
     });
 });

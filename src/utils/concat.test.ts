@@ -67,13 +67,11 @@ describe("CypherBuilder utils.concat", () => {
         const queryResult = Cypher.utils.concat(create1, create2).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE (this0:Movie)
-            SET
-                this0.title = $param0
-            CREATE (this1:Movie)
-            SET
-                this1.title = $param0"
-        `);
+"CREATE (this0:Movie)
+SET this0.title = $param0
+CREATE (this1:Movie)
+SET this1.title = $param0"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {

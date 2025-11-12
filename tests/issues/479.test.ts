@@ -95,7 +95,7 @@ RETURN count(this1)"
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH $param0 AS var0
-MATCH (this1:$((var0 || \\"Test\\")))
+MATCH (this1:$((var0 || 'Test')))
 RETURN count(this1)"
 `);
         });

@@ -60,9 +60,7 @@ describe("Procedures", () => {
 
         const { cypher, params } = customProcedure.build();
 
-        expect(cypher).toMatchInlineSnapshot(
-            `"CALL customProcedure(this0) YIELD result1, result2 AS \\"aliased\\", result3 AS string-alias"`
-        );
+        expect(cypher).toMatchInlineSnapshot(`"CALL customProcedure(this0) YIELD result1, result2 AS 'aliased', result3 AS string-alias"`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
 
@@ -195,8 +193,7 @@ REMOVE this0.test"
 
             expect(cypher).toMatchInlineSnapshot(`
 "CALL custom-procedure() YIELD test
-SET
-    var0.test = \\"hello\\""
+SET var0.test = 'hello'"
 `);
             expect(params).toMatchInlineSnapshot(`{}`);
         });
@@ -223,7 +220,7 @@ UNWIND var0 AS var1"
 
             expect(cypher).toMatchInlineSnapshot(`
 "CALL custom-procedure() YIELD test
-MERGE (this0)"
+MERGE (this0)    "
 `);
             expect(params).toMatchInlineSnapshot(`{}`);
         });

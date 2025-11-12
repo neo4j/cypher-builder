@@ -129,7 +129,7 @@ describe("Property", () => {
             const testClause = new TestClause(property);
 
             const queryResult = testClause.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()][\\"Hello\\"]"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()]['Hello']"`);
         });
 
         test("Serialize nested string after expression", () => {
