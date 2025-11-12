@@ -280,3 +280,36 @@ _After_
 const myOperation: Cypher.Expr = Cypher.and()
 ----
 
+== Other changes
+
+=== Change Cypher formatting
+
+The generated Cypher now follow the best practices recommended by the link:https://neo4j.com/docs/cypher-manual/current/styleguide/[Cypher Styleguide].
+
+For example:
+
+_Before_
+[source, Cypher]
+----
+CALL {
+    CREATE (this0:Movie)
+    SET
+        this0.id = "The Matrix"
+    RETURN this0
+}
+RETURN this0
+----
+
+_After_
+[source, Cypher]
+----
+CALL {
+  CREATE (this0:Movie)
+    SET this0.id = 'The Matrix'
+  RETURN this0
+}
+RETURN this0
+----
+
+This doesn't have any impact on the behaviour itself, and should not cause any breaking changes on normal usage, but may affect projects
+that modify or test the Cypher generated with Cypher Builder.
