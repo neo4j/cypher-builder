@@ -305,7 +305,7 @@ _After_
 ----
 CALL {
   CREATE (this0:Movie)
-    SET this0.id = 'The Matrix'
+  SET this0.id = 'The Matrix'
   RETURN this0
 }
 RETURN this0
