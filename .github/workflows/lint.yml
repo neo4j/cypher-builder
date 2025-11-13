@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6
         with:
           node-version: lts/*
-      - run: npm install
+      - run: npm ci
       - run: npm run lint
 
   license-header-check:
@@ -41,6 +41,6 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6
         with:
           node-version: lts/*
-      - run: npm install
+      - run: npm ci
       - name: "Run Prettier"
         run: npm run prettier

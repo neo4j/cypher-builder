@@ -117,7 +117,8 @@ export abstract class Clause extends CypherASTNode {
             const cypher = padBlock(this.build().cypher);
             return `<Clause ${this.constructor.name}> """\n${cypher}\n"""`;
         } catch (error) {
-            const errorName = error instanceof Error ? error.message : "";
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            const errorName = error instanceof Error ? error.message : `${error}`;
             return `<Clause ${this.constructor.name}> """\nError: ${errorName}\n"""`;
         }
     }
