@@ -21,6 +21,7 @@ import type { Pattern } from "..";
 import type { CypherEnvironment } from "../Environment";
 import type { PathAssign } from "../pattern/PathAssign";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFinish } from "./mixins/clauses/WithFinish";
@@ -89,6 +90,6 @@ export class Merge extends Clause {
         const orderCypher = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const nextClause = this.compileNextClause(env);
 
-        return `${mergeStr}${onMatchCypher}${onCreateCypher}${setCypher}${deleteCypher}${orderCypher}${nextClause}`;
+        return `${mergeStr}${padBlock(onCreateCypher)}${padBlock(onMatchCypher)}${setCypher}${deleteCypher}${orderCypher}${nextClause}`;
     }
 }

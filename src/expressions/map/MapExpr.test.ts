@@ -30,7 +30,7 @@ describe("Map Expression", () => {
 
         const queryResult = new TestClause(map).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"{ foo: \\"barr\\", var: var0, param: $param0 }"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"{foo: 'barr', var: var0, param: $param0}"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -52,9 +52,7 @@ describe("Map Expression", () => {
 
         const queryResult = new TestClause(map).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(
-            `"{ key: $param0, value2: \\"Override\\", value3: \\"another value\\" }"`
-        );
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"{key: $param0, value2: 'Override', value3: 'another value'}"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import type { Expr } from "../types";
 import type { CypherEnvironment } from "../Environment";
+import type { Expr } from "../types";
 import { escapeProperty } from "./escape";
 
 export function serializeMap(env: CypherEnvironment, map: Map<string, Expr>, omitCurlyBraces = false): string {
@@ -33,5 +33,5 @@ export function serializeMap(env: CypherEnvironment, map: Map<string, Expr>, omi
 
     const serializedContent = serializedFields.join(", ");
     if (omitCurlyBraces) return serializedContent;
-    return `{ ${serializedContent} }`;
+    return `{${serializedContent}}`;
 }

@@ -31,7 +31,7 @@ describe("serializeMap", () => {
 
     test("serialize a map of expressions", () => {
         const result = serializeMap(env, map);
-        expect(result).toBe("{ test: 10, `test$`: 10, expr: reverse([1]) }");
+        expect(result).toBe("{test: 10, `test$`: 10, expr: reverse([1])}");
     });
 
     test("serialize a map of expressions without curly braces", () => {

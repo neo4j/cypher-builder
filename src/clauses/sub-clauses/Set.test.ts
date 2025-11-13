@@ -27,8 +27,7 @@ describe("Set", () => {
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
-SET
-    this0:NewLabel"
+SET this0:NewLabel"
 `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -45,8 +44,8 @@ SET
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 SET
-    this0:NewLabel,
-    this0:\`Another Label\`"
+  this0:NewLabel,
+  this0:\`Another Label\`"
 `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -64,8 +63,8 @@ SET
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)-[]->(this1)
 SET
-    this0:NewLabel,
-    this1:\`Another Label\`"
+  this0:NewLabel,
+  this1:\`Another Label\`"
 `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -82,8 +81,8 @@ SET
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 SET
-    this0:$($param0),
-    this0:$(this0.genre)"
+  this0:$($param0),
+  this0:$(this0.genre)"
 `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
@@ -102,8 +101,7 @@ SET
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
-SET
-    this0[$param0] = $param1"
+SET this0[$param0] = $param1"
 `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
@@ -127,8 +125,7 @@ SET
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
-SET
-    this0 = { title: $param0, year: $param1 }"
+SET this0 = {title: $param0, year: $param1}"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`
 {
@@ -149,8 +146,7 @@ SET
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
-SET
-    this0 = this1"
+SET this0 = this1"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
@@ -169,8 +165,7 @@ SET
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
-SET
-    this0 += { title: $param0, year: $param1 }"
+SET this0 += {title: $param0, year: $param1}"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`
 {
@@ -191,8 +186,7 @@ SET
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
-SET
-    this0 += this1"
+SET this0 += this1"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
