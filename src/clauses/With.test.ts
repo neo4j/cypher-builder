@@ -255,7 +255,7 @@ CREATE (this0:Movie)"
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH *
-MERGE (this0:Movie)"
+MERGE (this0:Movie)    "
 `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
@@ -267,7 +267,7 @@ MERGE (this0:Movie)"
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH *
-MERGE (this0:Movie)"
+MERGE (this0:Movie)    "
 `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
@@ -286,12 +286,15 @@ CALL db.labels() YIELD label"
         });
 
         test("With * and cypher void procedure", () => {
-            const withQuery = new Cypher.With("*").callProcedure(Cypher.apoc.util.validate(Cypher.true, "message"));
+            const targetNode = new Cypher.Node();
+            const customProcedure = new Cypher.VoidProcedure("customProcedure", [targetNode]);
+
+            const withQuery = new Cypher.With("*").callProcedure(customProcedure);
 
             const queryResult = withQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH *
-CALL apoc.util.validate(true, \\"message\\", [0])"
+CALL customProcedure(this0)"
 `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
@@ -310,7 +313,7 @@ CALL apoc.util.validate(true, \\"message\\", [0])"
             expect(cypher).toMatchInlineSnapshot(`
 "WITH this0
 CALL (this0) {
-    CREATE (this0)-[]->(this1)
+  CREATE (this0)-[]->(this1)
 }
 RETURN this1"
 `);
@@ -336,8 +339,7 @@ RETURN this1"
 "MATCH (this0:Person)
 WITH this0
 WHERE this0.name = $param0
-SET
-    this0.name = $param1
+SET this0.name = $param1
 RETURN this0"
 `);
 

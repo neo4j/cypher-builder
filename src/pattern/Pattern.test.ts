@@ -75,9 +75,7 @@ describe("Patterns", () => {
                 },
             });
             const queryResult = new TestClause(pattern).build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:TestLabel { name: (\\"The \\" + \\"Matrix\\") })"`
-            );
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel { name: ('The ' + 'Matrix') })"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 
@@ -192,7 +190,7 @@ describe("Patterns", () => {
             );
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:Person:Actor { name: $param0, surname: $param1 })-[this1:ACTED_IN { roles: $param2 }]->(this2)"`
+                `"(this0:Person&Actor { name: $param0, surname: $param1 })-[this1:ACTED_IN { roles: $param2 }]->(this2)"`
             );
 
             expect(queryResult.params).toMatchInlineSnapshot(`
@@ -225,9 +223,7 @@ describe("Patterns", () => {
                     .to(b)
             );
             const queryResult = query.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:Person:Actor)-[this1:ACTED_IN { roles: (\\"The \\" + \\"Matrix\\") }]->(this2)"`
-            );
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:Person&Actor)-[this1:ACTED_IN { roles: ('The ' + 'Matrix') }]->(this2)"`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
@@ -283,9 +279,7 @@ describe("Patterns", () => {
             const a = new Cypher.Node();
             const rel = new Cypher.Variable();
 
-            const query = new TestClause(
-                new Cypher.Pattern(a as Cypher.Node | undefined).related(rel).to(a as Cypher.Node | undefined)
-            );
+            const query = new TestClause(new Cypher.Pattern(a).related(rel).to(a));
             const queryResult = query.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0)-[var1]->(this0)"`);
 
@@ -429,17 +423,17 @@ describe("Patterns", () => {
     });
 
     describe("Where predicate", () => {
-        it("Node pattern with where predicate", () => {
+        test("Node pattern with where predicate", () => {
             const node = new Cypher.Node();
 
             const pattern = new Cypher.Pattern(node, { labels: ["TestLabel"] }).where(
                 Cypher.eq(node.property("name"), new Cypher.Literal("Keanu"))
             );
             const queryResult = new TestClause(pattern).build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel WHERE this0.name = \\"Keanu\\")"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel WHERE this0.name = 'Keanu')"`);
         });
 
-        it("Node pattern with where predicate and properties", () => {
+        test("Node pattern with where predicate and properties", () => {
             const node = new Cypher.Node();
 
             const pattern = new Cypher.Pattern(node, {
@@ -452,12 +446,10 @@ describe("Patterns", () => {
                 .related({})
                 .to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:TestLabel { released: 1999 } WHERE this0.name = \\"Keanu\\")-[]->(this1)"`
-            );
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel { released: 1999 } WHERE this0.name = 'Keanu')-[]->(this1)"`);
         });
 
-        it("Node pattern with where predicate in target node", () => {
+        test("Node pattern with where predicate in target node", () => {
             const node = new Cypher.Node();
 
             const pattern = new Cypher.Pattern(node, { labels: ["TestLabel"] })
@@ -465,12 +457,10 @@ describe("Patterns", () => {
                 .to(new Cypher.Variable())
                 .where(Cypher.eq(node.property("name"), new Cypher.Literal("Keanu")));
             const queryResult = new TestClause(pattern).build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:TestLabel)-[]->(var1 WHERE this0.name = \\"Keanu\\")"`
-            );
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel)-[]->(var1 WHERE this0.name = 'Keanu')"`);
         });
 
-        it("Relationship pattern with where predicate", () => {
+        test("Relationship pattern with where predicate", () => {
             const node = new Cypher.Node();
             const relationship = new Cypher.Relationship();
 
@@ -479,12 +469,10 @@ describe("Patterns", () => {
                 .where(Cypher.eq(relationship.property("role"), new Cypher.Literal("Neo")))
                 .to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:TestLabel)-[this1:ACTED_IN WHERE this1.role = \\"Neo\\"]->(this2)"`
-            );
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel)-[this1:ACTED_IN WHERE this1.role = 'Neo']->(this2)"`);
         });
 
-        it("Relationship pattern with where predicate and properties", () => {
+        test("Relationship pattern with where predicate and properties", () => {
             const node = new Cypher.Node();
             const relationship = new Cypher.Relationship();
 
@@ -498,9 +486,7 @@ describe("Patterns", () => {
                 .where(Cypher.eq(relationship.property("role"), new Cypher.Literal("Neo")))
                 .to(new Cypher.Node());
             const queryResult = new TestClause(pattern).build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(
-                `"(this0:TestLabel)-[this1:ACTED_IN WHERE this1.role = \\"Neo\\" { test: \\"hello\\" }]->(this2)"`
-            );
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"(this0:TestLabel)-[this1:ACTED_IN WHERE this1.role = 'Neo' { test: 'hello' }]->(this2)"`);
         });
     });
 

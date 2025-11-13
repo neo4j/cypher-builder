@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Temporal Functions", () => {
     describe.each(["date", "datetime", "localtime", "time", "localdatetime"] as const)("%s()", (fn) => {
@@ -47,7 +47,7 @@ describe("Temporal Functions", () => {
             const cypherFn = temporalFn(new Cypher.Literal("9999-01-01"));
             const queryResult = new TestClause(cypherFn).build();
 
-            expect(queryResult.cypher).toBe(`${fn}("9999-01-01")`);
+            expect(queryResult.cypher).toBe(`${fn}('9999-01-01')`);
 
             expect(queryResult.params).toEqual({});
         });
@@ -56,7 +56,7 @@ describe("Temporal Functions", () => {
             const cypherFn = temporalFn(new Cypher.Map({ timezone: new Cypher.Literal("America/Los Angeles") }));
             const queryResult = new TestClause(cypherFn).build();
 
-            expect(queryResult.cypher).toBe(`${fn}({ timezone: "America/Los Angeles" })`);
+            expect(queryResult.cypher).toBe(`${fn}({timezone: 'America/Los Angeles'})`);
 
             expect(queryResult.params).toEqual({});
         });
@@ -87,7 +87,7 @@ describe("Temporal Functions", () => {
                 const cypherFn = temporalFn(new Cypher.Literal("9999-01-01"));
                 const queryResult = new TestClause(cypherFn).build();
 
-                expect(queryResult.cypher).toBe(`${fn}.${value}("9999-01-01")`);
+                expect(queryResult.cypher).toBe(`${fn}.${value}('9999-01-01')`);
 
                 expect(queryResult.params).toEqual({});
             });
@@ -96,7 +96,7 @@ describe("Temporal Functions", () => {
                 const cypherFn = temporalFn(new Cypher.Map({ timezone: new Cypher.Literal("America/Los Angeles") }));
                 const queryResult = new TestClause(cypherFn).build();
 
-                expect(queryResult.cypher).toBe(`${fn}.${value}({ timezone: "America/Los Angeles" })`);
+                expect(queryResult.cypher).toBe(`${fn}.${value}({timezone: 'America/Los Angeles'})`);
 
                 expect(queryResult.params).toEqual({});
             });
@@ -107,7 +107,7 @@ describe("Temporal Functions", () => {
 
             const queryResult = new TestClause(truncate).build();
 
-            expect(queryResult.cypher).toBe(`${fn}.truncate("millennium", var0)`);
+            expect(queryResult.cypher).toBe(`${fn}.truncate('millennium', var0)`);
 
             expect(queryResult.params).toEqual({});
         });
@@ -120,7 +120,7 @@ describe("Temporal Functions", () => {
 
             const queryResult = new TestClause(truncate).build();
 
-            expect(queryResult.cypher).toBe(`${fn}.truncate("century", var0, { day: 5 })`);
+            expect(queryResult.cypher).toBe(`${fn}.truncate('century', var0, {day: 5})`);
 
             expect(queryResult.params).toEqual({});
         });
@@ -159,7 +159,7 @@ describe("Temporal Functions", () => {
 
             const queryResult = new TestClause(durationFunc).build();
 
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"duration({ days: 2, hours: $param0 })"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"duration({days: 2, hours: $param0})"`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
                 {
