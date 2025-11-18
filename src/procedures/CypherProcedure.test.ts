@@ -60,7 +60,9 @@ describe("Procedures", () => {
 
         const { cypher, params } = customProcedure.build();
 
-        expect(cypher).toMatchInlineSnapshot(`"CALL customProcedure(this0) YIELD result1, result2 AS 'aliased', result3 AS string-alias"`);
+        expect(cypher).toMatchInlineSnapshot(
+            `"CALL customProcedure(this0) YIELD result1, result2 AS 'aliased', result3 AS string-alias"`
+        );
         expect(params).toMatchInlineSnapshot(`{}`);
     });
 

@@ -85,7 +85,9 @@ describe("Map Projection", () => {
         });
         const queryResult = new TestClause(mapProjection.toMap()).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"{title: var0.title, name: var0.name, namedValue: count(this1)}"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(
+            `"{title: var0.title, name: var0.name, namedValue: count(this1)}"`
+        );
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });

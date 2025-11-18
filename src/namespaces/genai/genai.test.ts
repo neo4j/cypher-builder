@@ -31,7 +31,9 @@ describe("genai functions", () => {
 
             const { cypher, params } = result.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"WITH genai.vector.encode('embeddings are cool', 'VertexAI', {token: 'my-token', projectId: 'my-project'}) AS var0"`);
+            expect(cypher).toMatchInlineSnapshot(
+                `"WITH genai.vector.encode('embeddings are cool', 'VertexAI', {token: 'my-token', projectId: 'my-project'}) AS var0"`
+            );
             expect(params).toMatchInlineSnapshot(`{}`);
         });
         test("Encode with query and return", () => {
@@ -89,7 +91,9 @@ describe("genai procedures", () => {
 
             const { cypher, params } = genAiEncodeFunction.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'OpenAI', {token: 'my-token', projectId: 'my-project'})"`);
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'OpenAI', {token: 'my-token', projectId: 'my-project'})"`
+            );
             expect(params).toMatchInlineSnapshot(`{}`);
         });
         test("Cypher.Literal provider value", () => {
@@ -100,7 +104,9 @@ describe("genai procedures", () => {
 
             const { cypher, params } = genAiEncodeFunction.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'OpenAI', {token: 'my-token', projectId: 'my-project'})"`);
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'OpenAI', {token: 'my-token', projectId: 'my-project'})"`
+            );
             expect(params).toMatchInlineSnapshot(`{}`);
         });
         test("Cypher.Param provider value", () => {
@@ -111,7 +117,9 @@ describe("genai procedures", () => {
 
             const { cypher, params } = genAiEncodeFunction.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], $param0, {token: 'my-token', projectId: 'my-project'})"`);
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], $param0, {token: 'my-token', projectId: 'my-project'})"`
+            );
             expect(params).toMatchInlineSnapshot(`
                 {
                   "param0": "OpenAI",
@@ -130,7 +138,9 @@ describe("genai procedures", () => {
 
             const { cypher, params } = genAiEncodeFunction.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'AzureOpenAI', {token: 'my-token', resource: 'my-resource-name', deployment: $param0, dimensions: 512})"`);
+            expect(cypher).toMatchInlineSnapshot(
+                `"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'AzureOpenAI', {token: 'my-token', resource: 'my-resource-name', deployment: $param0, dimensions: 512})"`
+            );
             expect(params).toMatchInlineSnapshot(`
                 {
                   "param0": "my-deployment",
