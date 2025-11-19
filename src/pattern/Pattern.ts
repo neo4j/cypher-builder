@@ -53,6 +53,7 @@ export type RelationshipPatternOptions = {
 
 export type LengthOption = RelationshipPatternOptions["length"];
 
+// This extends may be breaking a bit the types of Pattern, as it is not a CypherASTNode
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Pattern extends WithWhere {}
 

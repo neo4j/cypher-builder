@@ -71,7 +71,7 @@ export class ComparisonOp extends CypherASTNode {
     }
 }
 
-export class NormalizationOperator extends ComparisonOp {
+class NormalizationOperator extends ComparisonOp {
     private readonly normalizationType: NormalizationType | undefined;
 
     constructor(
