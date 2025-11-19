@@ -11,8 +11,8 @@ Note that count subqueries can also be used as predicates in `WHERE` clauses, fo
 ----
 const subquery = new Cypher.Match(new Cypher.Node({ labels: ["Movie"] })).return("*");
 
-const existsExpression = new Cypher.Exists(subquery);
-const match = new Cypher.Match(new Cypher.Node()).where(existsExpression).return("*");
+const existsExpr = new Cypher.Exists(subquery);
+const match = new Cypher.Match(new Cypher.Node()).where(existsExpr).return("*");
 ----
 
 [source, cypher]
@@ -21,6 +21,26 @@ MATCH (this0)
 WHERE EXISTS {
     MATCH (this1:Movie)
     RETURN *
+}
+RETURN *
+----
+
+== Simple `Exists` subqueries
+
+Instead of a `Clause`, a `Pattern` can be passed directly to a `Exists` subquery:
+
+[source, javascript]
+----
+const existsExpr = new Cypher.Exists(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] }))
+
+const match = new Cypher.Match(new Cypher.Node()).where(existsExpr).return("*");
+----
+
+[source, cypher]
+----
+MATCH (this0)
+WHERE EXISTS {
+    (this1:Movie)
 }
 RETURN *
 ----
