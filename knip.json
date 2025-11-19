@@ -1,0 +1,12 @@
+{
+    "$schema": "https://unpkg.com/knip@5/schema.json",
+    "ignoreExportsUsedInFile": {
+        "interface": false,
+        "type": false
+    },
+    "tags": ["-lintignore"],
+    "ignoreFiles": ["examples/**", "docs/**"],
+    "ignoreBinaries": ["tsx"],
+    "ignoreDependencies": ["@eslint/eslintrc", "eslint-config-prettier"],
+    "treatConfigHintsAsErrors": true
+}

@@ -19,11 +19,7 @@
 
 import { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
-import type { Param } from "../../references/Param";
-import type { PropertyRef } from "../../references/PropertyRef";
 import type { Variable } from "../../references/Variable";
-
-export type SetParam = [PropertyRef, Param<unknown>];
 
 /** Represents a WITH statement to import variables into a CALL subquery */
 export class ImportWith extends CypherASTNode {

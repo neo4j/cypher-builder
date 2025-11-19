@@ -18,10 +18,7 @@
  */
 
 import type { CypherEnvironment } from "../../Environment";
-import type { SetParam } from "./Set";
 import { SetClause } from "./Set";
-
-export type OnMatchParam = SetParam;
 
 export class OnMatch extends SetClause {
     /** @internal */

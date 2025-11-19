@@ -21,12 +21,7 @@ import type { BuildConfig } from "./Cypher";
 import { Param } from "./references/Param";
 import type { NamedReference, Variable } from "./references/Variable";
 
-export type EnvPrefix = {
-    params?: string;
-    variables?: string;
-};
-
-export type EnvConfig = {
+type EnvConfig = {
     labelOperator: NonNullable<BuildConfig["labelOperator"]>;
     unsafeEscapeOptions: NonNullable<BuildConfig["unsafeEscapeOptions"]>;
     cypherVersion: BuildConfig["cypherVersion"];
