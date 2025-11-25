@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import type { Clause } from "../..";
 import type { CypherEnvironment } from "../../Environment";
 import { padBlock } from "../../utils/pad-block";
 import { Subquery } from "./Subquery";
@@ -26,6 +27,11 @@ import { Subquery } from "./Subquery";
  * @group Subqueries
  */
 export class Collect extends Subquery {
+    // Collect doesn't support a Pattern. The constructor is overriden to only support a Clause
+    constructor(clause: Clause) {
+        super(clause);
+    }
+
     /**
      * @internal
      */
