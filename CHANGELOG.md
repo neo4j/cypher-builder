@@ -1,5 +1,27 @@
 # @neo4j/cypher-builder
 
+## 2.11.0
+
+### Minor Changes
+
+- [#634](https://github.com/neo4j/cypher-builder/pull/634) [`adbda8f`](https://github.com/neo4j/cypher-builder/commit/adbda8f008c3b5bf4b795f2a51f0c8b6dc099264) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for Simple subqueries, using only a Pattern in `Count` and `Exists`:
+
+    ```js
+    const countExpr = new Cypher.Count(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] }));
+
+    const match = new Cypher.Match(new Cypher.Pattern(new Cypher.Node()))
+        .where(Cypher.gt(countExpr, new Cypher.Literal(10)))
+        .return("*");
+    ```
+
+    ```cypher
+    MATCH (this0)
+    WHERE COUNT {
+        (this1:Movie)
+    } > 10
+    RETURN *
+    ```
+
 ## 2.10.0
 
 ### Minor Changes
