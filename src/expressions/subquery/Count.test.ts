@@ -41,4 +41,23 @@ RETURN *"
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
+
+    test("Simple Count subquery", () => {
+        const countExpr = new Cypher.Count(new Cypher.Pattern(new Cypher.Node(), { labels: ["Movie"] }));
+        const match = new Cypher.Match(new Cypher.Pattern(new Cypher.Node()))
+            .where(Cypher.gt(countExpr, new Cypher.Literal(10)))
+            .return("*");
+
+        const queryResult = match.build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH (this0)
+WHERE COUNT {
+  (this1:Movie)
+} > 10
+RETURN *"
+`);
+
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
 });

@@ -17,15 +17,22 @@
  * limitations under the License.
  */
 
+import type { Pattern } from "../..";
 import { CypherASTNode } from "../../CypherASTNode";
-import type { Clause } from "../../clauses/Clause";
+import { Clause } from "../../clauses/Clause";
+import type { CypherCompilable } from "../../types";
 
 export abstract class Subquery extends CypherASTNode {
-    protected subquery: CypherASTNode;
+    protected subquery: CypherCompilable;
 
-    constructor(subquery: Clause) {
+    constructor(subquery: Clause | Pattern) {
         super();
-        const rootQuery = subquery.getRoot();
+        let rootQuery: CypherCompilable;
+        if (subquery instanceof Clause) {
+            rootQuery = subquery.getRoot();
+        } else {
+            rootQuery = subquery;
+        }
         this.addChildren(rootQuery);
         this.subquery = rootQuery;
     }
