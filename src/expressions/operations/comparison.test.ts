@@ -59,7 +59,7 @@ describe("comparison operations", () => {
             const stringLiteral = new Cypher.Literal(String.raw`the \u212B char`);
             const query = new Cypher.Return([Cypher.isNormalized(stringLiteral), "normalized"]);
             const { cypher } = query.build();
-            expect(cypher).toMatchInlineSnapshot(`"RETURN \\"the \\\\u212B char\\" IS NORMALIZED AS normalized"`);
+            expect(cypher).toMatchInlineSnapshot(`"RETURN 'the \\\\u212B char' IS NORMALIZED AS normalized"`);
         });
 
         test.each(["NFC", "NFD", "NFKC", "NFKD"] as const)(
@@ -68,7 +68,7 @@ describe("comparison operations", () => {
                 const stringLiteral = new Cypher.Literal(String.raw`the \u212B char`);
                 const query = new Cypher.Return([Cypher.isNormalized(stringLiteral, type), "normalized"]);
                 const { cypher } = query.build();
-                expect(cypher).toBe(`RETURN "the \\u212B char" IS ${type} NORMALIZED AS normalized`);
+                expect(cypher).toBe(`RETURN 'the \\u212B char' IS ${type} NORMALIZED AS normalized`);
             }
         );
 
@@ -76,9 +76,7 @@ describe("comparison operations", () => {
             const stringLiteral = new Cypher.Literal(String.raw`the \u212B char`);
             const query = new Cypher.Return([Cypher.isNotNormalized(stringLiteral), "notNormalized"]);
             const { cypher } = query.build();
-            expect(cypher).toMatchInlineSnapshot(
-                `"RETURN \\"the \\\\u212B char\\" IS NOT NORMALIZED AS notNormalized"`
-            );
+            expect(cypher).toMatchInlineSnapshot(`"RETURN 'the \\\\u212B char' IS NOT NORMALIZED AS notNormalized"`);
         });
 
         test.each(["NFC", "NFD", "NFKC", "NFKD"] as const)(
@@ -87,7 +85,7 @@ describe("comparison operations", () => {
                 const stringLiteral = new Cypher.Literal(String.raw`the \u212B char`);
                 const query = new Cypher.Return([Cypher.isNotNormalized(stringLiteral, type), "notNormalized"]);
                 const { cypher } = query.build();
-                expect(cypher).toBe(`RETURN "the \\u212B char" IS NOT ${type} NORMALIZED AS notNormalized`);
+                expect(cypher).toBe(`RETURN 'the \\u212B char' IS NOT ${type} NORMALIZED AS notNormalized`);
             }
         );
     });

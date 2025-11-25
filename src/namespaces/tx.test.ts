@@ -33,6 +33,6 @@ describe("tx procedures", () => {
         });
         const { cypher } = query.build();
 
-        expect(cypher).toMatchInlineSnapshot(`"CALL tx.setMetaData({ test: \\"dsa\\", test2: $param0 })"`);
+        expect(cypher).toMatchInlineSnapshot(`"CALL tx.setMetaData({test: 'dsa', test2: $param0})"`);
     });
 });
