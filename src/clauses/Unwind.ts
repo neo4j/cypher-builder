@@ -34,14 +34,7 @@ import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
 export interface Unwind
-    extends WithWith,
-        WithDelete,
-        WithMatch,
-        WithReturn,
-        WithSetRemove,
-        WithCreate,
-        WithMerge,
-        WithOrder {}
+    extends WithWith, WithDelete, WithMatch, WithReturn, WithSetRemove, WithCreate, WithMerge, WithOrder {}
 
 /** @group Clauses */
 export type UnwindProjectionColumn = [Expr, string | Variable | Literal];
