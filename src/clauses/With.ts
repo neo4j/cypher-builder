@@ -42,7 +42,8 @@ import { mixin } from "./utils/mixin";
 export type WithProjection = Variable | [Expr, string | Variable | Literal];
 
 export interface With
-    extends WithOrder,
+    extends
+        WithOrder,
         WithReturn,
         WithWhere,
         WithSetRemove,
