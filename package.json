@@ -58,7 +58,7 @@
         "jest-extended": "7.0.0",
         "knip": "5.70.2",
         "prettier": "3.7.4",
-        "ts-jest": "29.4.5",
+        "ts-jest": "29.4.6",
         "typedoc": "0.28.15",
         "typescript": "5.9.3"
     }
