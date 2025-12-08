@@ -39,7 +39,8 @@ import { WithWhere } from "./mixins/sub-clauses/WithWhere";
 import { mixin } from "./utils/mixin";
 
 export interface Match
-    extends WithReturn,
+    extends
+        WithReturn,
         WithWhere,
         WithSetRemove,
         WithWith,

@@ -43,7 +43,8 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 export type YieldProjectionColumn<T extends string> = T | [T, Variable | Literal | string];
 
 export interface Yield
-    extends WithReturn,
+    extends
+        WithReturn,
         WithWhere,
         WithWith,
         WithMatch,
