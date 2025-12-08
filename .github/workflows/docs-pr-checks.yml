@@ -1,17 +1,15 @@
-
 name: "Verify docs PR"
 
 on:
   pull_request:
     branches:
-    - main
+      - main
 
 defaults:
   run:
     working-directory: ./docs
 
 jobs:
-
   #  Generate HTML
   docs-build-pr:
     uses: neo4j/docs-tools/.github/workflows/reusable-docs-build.yml@v2
@@ -43,7 +41,7 @@ jobs:
         id: get-file-changes
         uses: tj-actions/changed-files@2f7c5bfce28377bc069a65ba478de0a74aa0ca32 # v46.0.1
         with:
-          separator: ','
+          separator: ","
           files_yaml: |
             pages:
             - '**/modules/**/pages/**/*.adoc'

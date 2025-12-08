@@ -22,7 +22,6 @@ ui:
 urls:
   html_extension_style: indexify
 
-
 antora:
   extensions:
     - "@neo4j-antora/table-footnotes"
