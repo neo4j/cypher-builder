@@ -131,7 +131,7 @@ const listComprehension = new Cypher.ListComprehension(variable)
 
 == Pattern comprehension
 
-link:https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher-pattern-comprehension[Pattern comprehension] can be created with `new Cypher.PatternComprehension`, passing a xref:patterns.adoc#_patterns[pattern] and a map expression, if needed:
+link:https://neo4j.com/docs/cypher-manual/current/values-and-types/lists/#cypher-pattern-comprehension[Pattern comprehension] can be created with `new Cypher.PatternComprehension`, passing a xref:patterns.adoc[pattern] and a map expression, if needed:
 
 
 
