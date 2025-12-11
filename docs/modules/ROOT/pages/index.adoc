@@ -31,5 +31,5 @@ RETURN this0.title
 
 [TIP]
 ====
-If you are using Java, check link:https://neo4j.github.io/cypher-dsl[Neo4j Cypher-DSL].
+If you are using Java, you can use link:https://neo4j.github.io/cypher-dsl[Neo4j Cypher-DSL] instead.
 ====

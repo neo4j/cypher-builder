@@ -1,14 +1,16 @@
 [[installation]]
-:description: This guide shows how to start using Cypher Builder.
+:description: This page shows you how to install Cypher Builder.
 = Installation
 
-This guide shows how to start using Cypher Builder by setting up a Node.js project with `@neo4j/cypher-builder`.
+This page shows you how to set up a Node.js project with `@neo4j/cypher-builder`.
+
 
 == Requirements
 
 * link:https://nodejs.org/[Node.js] 16.0.0 or greater
 * link:https://docs.npmjs.com/downloading-and-installing-node-js-and-npm[npm]
-* **[Optional]** A link:https://neo4j.com/cloud/platform/aura-graph-database/?ref=nav-get-started-cta[Neo4j] database to try Cypher queries.
+* **[Optional]** A link:https://neo4j.com/cloud/platform/aura-graph-database/?ref=nav-get-started-cta[Neo4j database] where you can try Cypher queries
+
 
 == Instructions
 

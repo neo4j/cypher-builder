@@ -5,20 +5,20 @@
 This page describes how to customize Cypher queries using Cypher Builder.
 Such a scenario could occur if you:
 
-* Need to embed Cypher strings into existing Cypher queries.
-* Use Cypher Builder as part of a larger Cypher query that might not use Cypher Builder.
-* Need to use features that are not supported in the current version of the Cypher Builder.
-* Use custom functions or procedures.
+* must embed Cypher strings into existing Cypher queries.
+* use Cypher Builder as part of a larger Cypher query that might not use Cypher Builder.
+* must use features that are not supported in the current version of the Cypher Builder.
+* use custom functions or procedures.
 
 [WARNING]
 ====
-Embedding custom Cypher in a query may lead to Code Injection and other security issues.  
+Embedding custom Cypher in a query may lead to code injection and other security issues.  
 ====
 
 == Custom variable names
 
-In most cases, Cypher Builder makes sure variable names are unique and do not collide.
-However, in case you need to explicitly set variable names, you can use the `Named*` variables:
+In most cases, Cypher Builder makes sure that variable names are unique and do not collide.
+However, in case you must explicitly set variable names, you can use the `Named*` variables:
 
 [source, javascript]
 ----
@@ -27,10 +27,11 @@ new Cypher.NamedVariable("myVarName")
 
 For more information, see xref:variables-and-params/variables.adoc#_named_variables[Named variables].
 
+
 === Build Prefix
 
 Though not recommended, you may need to mix multiple queries built separately with Cypher Builder into a single string.
-For example, this query:
+For example:
 
 [source, javascript]
 ----
@@ -43,7 +44,7 @@ ${match2.build()}
 `
 ----
 
-Generates the following Cypher:
+Generated Cypher:
 
 [source, cypher]
 ----
@@ -54,7 +55,7 @@ MATCH(this0:Person)
 In this query, the variable `this0` is used for both `MATCH` statements, thus causing variable name collision. 
 This happens because both queries (`match1` and `match2`) are built separately.
 
-If merging these queries before executing `.build()` (e.g. using `Cypher.utils.concat`) is not a viable solution, a "prefix" string can be passed to `.build()` to avoid name collision:
+If merging these queries before executing `.build()` (e.g. using `Cypher.utils.concat`) is not a viable solution, a prefix string can be passed to `.build()` to avoid name collision:
 
 [source, javascript]
 ----
@@ -64,7 +65,7 @@ ${match2.build({prefix: "person"})}
 `
 ----
 
-In this case, the resulting Cypher looks like:
+The resulting Cypher:
 
 [source, cypher]
 ----
@@ -73,6 +74,7 @@ MATCH(person_this0:Person)
 ----
 
 The prefix parameter in `.build()` prepends the provided string to every variable, except named variables.
+
 
 == Custom parameters
 
@@ -87,7 +89,7 @@ clause.build("", {
 });
 ----
 
-This generates the Cypher:
+The generated Cypher:
 
 [source, cypher]
 ----
@@ -104,11 +106,11 @@ And the parameters:
 }
 ----
 
+
 === Custom parameter name
 
 Similarly to variables, when defining a parameter this can be explicitly named by using the class `NamedParam` instead of `Param`.
-
-For example, this query:
+For example:
 
 [source, javascript]
 ----
@@ -118,7 +120,7 @@ const matchQuery = new Cypher.Match(movie, { labels: ["Movie"]})
     .return(movie);
 ----
 
-Generates the following query:
+The generated Cypher:
 
 [source, cypher]
 ----
@@ -147,20 +149,24 @@ The resulting set of parameters returned by `.build()` are:
 }
 ----
 
+
 == Custom functions and procedures
 
 Cypher Builder provides some built-in xref:functions.adoc[functions] and procedures, but it also supports custom ones, for instance when using plugins or creating link:https://neo4j.com/docs/cypher-manual/current/functions/user-defined[User-defined functions].
 
+
 === Functions
 
-Arbitrary function calls can be built using the `Cypher.Function` class, for example:
+Arbitrary function calls can be built using the `Cypher.Function` class.
+For example:
 
 [source, javascript]
 ----
 new Cypher.Function("myFunc");
 ----
 
-To learn more about creating custom functions go to xref:functions.adoc#_custom_functions[here].
+See xref:functions.adoc#_custom_functions[Custom functions] to learn more about creating custom functions.
+
 
 === Procedures
 
@@ -190,6 +196,7 @@ const myProcedure = new Cypher.Procedure("my-procedure", [new Cypher.Literal("Ke
 CALL my-procedure("Keanu", var0)
 ----
 
+
 ==== Yield
 
 Custom procedures may be followed by a `YIELD` statement with the `.yield` method:
@@ -217,9 +224,10 @@ new Cypher.Procedure<"columnA" | "columnB">("my-procedure")
 Trying to use `.yield` with anything different to `"columnA"` or `"columnB"` returns as a TypeScript error.
 ====
 
+
 ==== Void procedures
 
-Some procedures cannot be used along with `YIELD` as they do not return any values. 
+Some procedures cannot be used alongside `YIELD` as they do not return any values. 
 These can be defined with `Cypher.VoidProcedure`:
 
 [source, javascript]
@@ -228,6 +236,7 @@ const myProcedure = new Cypher.VoidProcedure("my-proc");
 ----
 
 This can be used as any other procedure, except that the `.yield` method is not available.
+
 
 ==== Reusing custom procedures
 
@@ -256,8 +265,7 @@ CALL my-custom-procedure(var0) YIELD "column"
 
 The class `Cypher.Raw` allows embedding a Cypher string within a larger query built with Cypher Builder.
 It acts as a wildcard that can be used anywhere.
-
-For instance, this query:
+For example:
 
 [source, javascript]
 ----
@@ -268,14 +276,14 @@ const returnClause = new Cypher.Return(customReturn);
 const { cypher, params } = returnClause.build();
 ----
 
-Returns the following Cypher:
+This query returns the following Cypher:
 
 [source, cypher]
 ----
 RETURN 10 as myVal
 ----
 
-In this case, the `RETURN` clause is being generated by Cypher Builder, but the actual value `10 as myVal` has been injected with `Raw`. 
+In this case, the `RETURN` clause is generated by Cypher Builder, but the actual value `10 as myVal` has been injected with `Raw`. 
 This string can be anything, including other clauses or invalid Cypher, and can be generated dynamically:
 
 [source, javascript]
@@ -288,6 +296,7 @@ const returnClause = new Cypher.Return(customReturn);
 
 Additionally, `Raw` can also be used in `Cypher.utils.concat` to attach an arbitrary string to any Cypher Builder element. 
 
+
 === Using a callback
 
 In more complex scenarios, you may need to access variables created with the Cypher Builder in your custom Cypher string.
@@ -299,10 +308,10 @@ It returns the following values:
 
 * `string`: Cypher string to be used for this element.
 * `[string, object]`: a tuple with the first element being the Cypher string, and the second an object with the parameters to be injected in the query.
-* `undefined`: if undefined, `Raw` will be translated as an empty string.
+* `undefined`: if undefined, `Raw` is translated as an empty string.
 
-In this example, a `MATCH...RETURN` statement is being created with Cypher Builder in the usual way.
-However, a custom `Raw` is being injected as part of the `WHERE` subclause:
+In this example, Cypher Builder creates a `MATCH...RETURN` statement the usual way.
+However, a custom `Raw` is injected as part of the `WHERE` subclause:
 
 [source, javascript]
 ----
@@ -343,7 +352,7 @@ And the following parameters:
 }
 ----
 
-The callback passed into `Raw` is producing the string `this0.prop = $myParam`. 
+The callback passed into `Raw` produces the string `this0.prop = $myParam`. 
 To achieve this, it uses the utility method `utils.compileCypher` and passes the variable `movie` and the `context` parameter, which then returns the string `this0`. 
 Finally, the custom parameter `$myParam` is returned in the tuple `[cypher, params]`, ensuring that it is available when executing `match.build()`.
 
@@ -355,10 +364,11 @@ Finally, the custom parameter `$myParam` is returned in the tuple `[cypher, para
 Changing these options may lead to code injection and unsafe Cypher.
 ====
 
-Cypher Builder automatically escapes unsafe strings that could lead to code injection. This behavior can be configured using the `unsafeEscapeOptions` parameter in the `.build` method of clauses:
+Cypher Builder automatically escapes unsafe strings that could lead to code injection.
+This behavior can be configured using the `unsafeEscapeOptions` parameter in the `.build` method of clauses:
 
-- `disableNodeLabelEscaping` (defaults to `false`): If set to `true`, node labels will not be escaped, even if unsafe.
-- `disableRelationshipTypeEscaping` (defaults to `false`): If set to `true`, relationship types will not be escaped, even if unsafe.
+- `disableNodeLabelEscaping` (defaults to `false`): If set to `true`, node labels are not escaped, even if unsafe.
+- `disableRelationshipTypeEscaping` (defaults to `false`): If set to `true`, relationship types are not escaped, even if unsafe.
 
 For example:
 
@@ -386,7 +396,7 @@ const queryResult = matchQuery.build({
 });
 ----
 
-This query will generate the following (invalid) Cypher:
+This query generates the following (invalid) Cypher:
 
 
 [source]
@@ -405,7 +415,8 @@ RETURN this0
 
 === Manually escaping labels and types
 
-If automatic escaping is disabled, strings used for labels and relationship types must be escaped manually. This can be done using the following utility functions:
+If automatic escaping is disabled, strings used for labels and relationship types must be escaped manually.
+This can be done using the following utility functions:
 
 * `Cypher.utils.escapeLabel(str)`
 * `Cypher.utils.escapeType(str)`
