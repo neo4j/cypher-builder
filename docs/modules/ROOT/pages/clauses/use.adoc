@@ -4,7 +4,7 @@
 
 This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/use/[`USE`] clause with the `Cypher.Use` class.
 
-To create an `Use` clause, you can pass an existing query to `Cypher.use` to prepend an `USE` statement before the query:
+To create an `Use` clause, pass an existing query to `Cypher.use` to prepend a `USE` statement before the query:
 
 
 [source, javascript]
