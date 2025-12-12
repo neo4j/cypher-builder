@@ -4,7 +4,8 @@
 
 This page describes how to create link:https://neo4j.com/docs/cypher-manual/current/clauses/union/[`UNION`] clauses with the `Cypher.Union` class.
 
-A union between multiple queries can be created by passing multiple clauses into a `Cypher.Union` class to combine them. Note that all clauses must be different instances, as Cypher Builder clauses cannot be reused:
+Create a union between multiple queries by passing multiple clauses to the `Cypher.Union` class to combine them.
+Note that all clauses must be different instances, as Cypher Builder clauses cannot be reused:
 
 [source, javascript]
 ----
@@ -35,10 +36,11 @@ RETURN this3 AS var1
 
 Note that this example uses the extra variable `returnVar` to make sure that all the queries return the same variable name.
 
+
 == Union all
 
 Unions remove duplicates by default.
-To keep all the results, use the `.all()` method to create a `UNION ALL` clause instead:
+To keep all results, use the `.all()` method to create a `UNION ALL` clause instead:
 
 [source, javascript]
 ----

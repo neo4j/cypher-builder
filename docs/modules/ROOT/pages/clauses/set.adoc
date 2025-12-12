@@ -2,13 +2,13 @@
 :description: This page describes how to create `SET` clauses.
 = Set
 
-This page describes how to create link:https://neo4j.com/docs/cypher-manual/current/clauses/set/[`SET`] clauses. `SET` statements are appended to an a clause with the method `.set`.
+This page describes how to create link:https://neo4j.com/docs/cypher-manual/current/clauses/set/[`SET`] clauses.
+Append `SET` statements to a clause with the method `.set`.
 
 
 == Update properties with `SET`
 
-The `.set` method is used to update xref:../variables-and-params/variables.adoc#_properties[properties] of a node or relationship.
-
+You can update xref:../variables-and-params/variables.adoc#_properties[properties] of a node or relationship with the `.set` method.
 For example, to update the properties of a node:
 
 [source, javascript]
@@ -20,7 +20,7 @@ const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["P
 );
 ----
 
-This will generate the following Cypher:
+This generates the following Cypher:
 
 [source, cypher]
 ----
@@ -30,7 +30,7 @@ SET
 RETURN this0
 ----
 
-Multiple pairs of property-expression can be passed to update multiple properties:
+You can pass multiple pairs of property expressions to update multiple properties:
 
 [source, javascript]
 ----
@@ -42,7 +42,7 @@ const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["P
 );
 ----
 
-This will generate the following Cypher:
+This generates the following Cypher:
 
 [source, cypher]
 ----
@@ -56,7 +56,8 @@ RETURN this0
 
 === Use `SET` to replace all node properties
 
-To update all the properties of a node or relationship, instead of a property, pass the variable directly as the first element of the array. The second element must be a `Cypher.Map` or a variable:
+To update all the properties of a node or relationship, instead of a property, pass the variable directly as the first element of the array.
+The second element must be a `Cypher.Map` or a variable:
 
 [source, javascript]
 ----
@@ -70,7 +71,7 @@ const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["P
 ]);
 ----
 
-This generates the Cypher:
+This generates the following Cypher:
 
 
 [source, cypher]
@@ -97,7 +98,8 @@ SET
     this1 = this0
 ----
 
-==== Using operator `+=`
+
+==== The `+=` operator
 
 When passing a map to update a node properties with `SET`, it is possible to use the operator `+=` to add new properties, instead of replacing them:
 
@@ -113,7 +115,7 @@ const matchQuery = new Cypher.Match(new Cypher.Pattern(personNode, { labels: ["P
 ]);
 ----
 
-This generates the cypher:
+This generates the following Cypher:
 
 
 [source, cypher]
@@ -124,7 +126,7 @@ SET
 ----
 
 
+== `SET` with labels
 
-== Set with labels
-
-Set can be used to update the labels of a node or the type of a relationship. More information on xref:../../how-to/update-labels.adoc#_add_labels[How to update labels].
+You can use `SET` to update the labels of a node or the type of a relationship.
+For more information, see xref:../../how-to/update-labels.adoc#_add_labels[How to update labels].

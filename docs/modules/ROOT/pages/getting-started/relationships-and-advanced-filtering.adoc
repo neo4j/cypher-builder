@@ -1,9 +1,9 @@
 [[relationships-advanced-filtering]]
-:description: This tutorial shows how to add relationships and more advanced filters, as well as alias the results of the projection
+:description: This page shows you how to add relationships and more advanced filters, and how to alias the results of a projection.
 = Relationships and advanced filtering
 
-This tutorial shows how to add relationships and more advanced filters, as well as alias the results of the projection.
-It extends the Cypher query example from the xref:getting-started/filters-and-projections.adoc[Filters and projections] tutorial and the link:https://neo4j.com/docs/getting-started/appendix/example-data/#built-in-examples[Movies Dataset].
+This page shows you how to add relationships and more advanced filters, and how to alias the results of a projection
+It extends the Cypher query example from xref:getting-started/filters-and-projections.adoc[Filters and projections] based link:https://neo4j.com/docs/getting-started/appendix/example-data/#built-in-examples[movies data set].
 
 [source, cypher]
 ----
@@ -16,7 +16,7 @@ This query matches a `Movie` along with its actors.
 It should only return movies with the actor `Keanu Reeves`, excluding any movie with a title containing `Matrix` released after 1999.
 It also adds the property `roles` from the relationship to the projection, aliasing it to `actingRoles`.
 
-Querying it on the Movies Dataset should prompt this result:
+Executing it against the movies data set prompts this result:
 
 .Result
 [role="queryresult",options="header",cols="4*<m"]
@@ -28,6 +28,7 @@ Querying it on the Movies Dataset should prompt this result:
 | "The Devil's Advocate" | "Evil has its winning ways" | 1997 | ["Kevin Lomax"] 
 | "The Replacements" | "Pain heals, Chicks dig scars... Glory lasts forever" | 2000 | ["Shane Falco"]
 |===
+
 
 == Pattern creation
 
@@ -47,7 +48,7 @@ const actedIn = new Cypher.Relationship();
 So far, the relationship is not connected to the nodes. 
 This is because here you are creating a variable to hold the relationship matched by the pattern, not the relationship itself.
 
-. Now use `new Cypher.Pattern` to define an arbitrarily complex pattern with the variables already declared:
+. Use `new Cypher.Pattern` to define an arbitrarily complex pattern with the variables already declared:
 +
 [source, javascript]
 ----
@@ -66,7 +67,7 @@ const clause = new Cypher.Match(pattern)
 ----
 
 . Run the script.
-You should get the following Cypher:
+This results in the following Cypher:
 + 
 [source, cypher]
 ----
@@ -81,6 +82,7 @@ RETURN this0.title, this0.tagline, this0.released
 ----
 
 For more information about creating patterns, refer to xref:patterns.adoc[Patterns].
+
 
 === Cardinality, direction, and properties
 
@@ -97,7 +99,7 @@ const pattern = new Cypher.Pattern(movieNode, { labels: ["Movie"] })
 ----
 
 Any aspect of the pattern itself (cardinality, direction and properties) can be changed in the pattern declaration with the methods of each element in the "chain".
-With these changes, the script should yield the following result:
+With these changes, the script yields the following result:
 
 [source, cypher]
 ----
@@ -106,10 +108,11 @@ WHERE (this0.title = $param0 AND this0.released < $param1)
 RETURN this0.title, this0.tagline, this0.released
 ----
 
+
 == Boolean operations
 
 So far, all filters used in the examples were of the type `AND`.
-For cases like these, Cypher Builder provides the shorthand method `.and` in the `WHERE` subclause.
+For such cases, Cypher Builder provides the shorthand method `.and` in the `WHERE` subclause.
 However, filters can be used in a more advanced way, for instance with nested operations:
 
 [source, cypher]
@@ -130,8 +133,8 @@ This advanced filter is composed of 3 basic comparisons:
 
 These comparisons use the logic operations `AND`, `NOT`, and `OR`, respectively.
 
-Still, as advanced queries grow, they can start to hinder maintenance.
-To avoid this scenario, it is advisable to split the query into more basic comparisons and compose it afterward.
+As advanced queries grow, they can start to hinder maintenance.
+To avoid this, it is advisable to split the query into more basic comparisons and compose it afterward.
 
 The process is similar to how you would perform with nodes and patterns:
 
@@ -142,7 +145,7 @@ const titleContainsMatrix = Cypher.contains(titleProp, new Cypher.Param("The Mat
 const releasedBefore2000 = Cypher.lt(yearProp, new Cypher.Param(2000));
 ----
 
-Here you can use `titleProp` and `yearProp` to xref:getting-started/filters-and-projections.adoc#_reusing_variables[reuse variables].
+You can use `titleProp` and `yearProp` to xref:getting-started/filters-and-projections.adoc#_reusing_variables[reuse variables].
 Alternatively, you can also make a `personName` variable for the first operation instead of passing the property directly.
 
 To compose the comparisons with boolean operators, you need a different strategy than the `where().and()` shorthand used before.
@@ -162,7 +165,7 @@ Building queries in separate variables and composing them is a good opportunity 
 This helps reading advanced filtering, as the basic operations have clearer names.
 
 . Run the script. 
-The resulting Cypher should look like this:
+The resulting Cypher looks like this:
 +
 [source, cypher]
 ----
@@ -178,7 +181,7 @@ RETURN this0.title, this0.tagline, this0.released
 +
 [NOTE]
 ====
-Make sure to double-check whether all variables refer to the correct param and node/relationship. 
+Make sure to double-check whether all variables refer to the correct parameter and node or relationship. 
 ====
 
 == Projection aliases
@@ -200,16 +203,17 @@ const rolesProperty = actedIn.property("roles");
 ----
 
 . Run the query.
-The result should look like this:
+The result looks like this:
 +
 [source, cypher]
 ----
 RETURN this0.title, this0.tagline, this0.released, this1.roles AS actingRoles
 ----
 
+
 == Conclusion
 
-After going through all the steps previously described, your script should look like this:
+You script should look like this:
 
 [source, javascript]
 ----
@@ -242,7 +246,7 @@ console.log(cypher);
 console.log(params);
 ----
 
-The result of executing this script should be:
+Executing the script results in the following query:
 
 [source, cypher]
 ----
@@ -256,4 +260,4 @@ RETURN this0.title, this0.tagline, this0.released, this1.roles AS actingRoles
 { param0: 'Keanu Reeves', param1: 'The Matrix', param2: 2000 }
 ----
 
-With this, you have learned how to build advanced queries and use `AS` to alias projections.
+You have learned how to build advanced queries and use `AS` to alias projections.

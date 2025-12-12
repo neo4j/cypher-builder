@@ -2,7 +2,8 @@
 :description: This page describes how to create `LOAD CSV` clauses.
 = Load CSV
 
-This page describes how to create link:https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/[`LOAD CSV`] clauses in Cypher with Cypher Builder. To achieve this, use the `LoadCSV` class:
+This page describes how to create link:https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/[`LOAD CSV`] clauses in Cypher with Cypher Builder.
+To achieve this, use the `LoadCSV` class:
 
 [source, javascript]
 ----

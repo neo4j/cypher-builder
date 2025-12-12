@@ -9,5 +9,6 @@ This page outlines the compatibility requirements for `@neo4j/cypher-builder` ve
 
 [NOTE]
 ====
-`@neo4j/cypher-builder` version 1 is no longer supported. Version 2 is a full replacement and maintains the same compatibility with Cypher and Node.js.
+`@neo4j/cypher-builder` version 1 is no longer supported.
+Version 2 is a full replacement and maintains the same compatibility with Cypher and Node.js.
 ====

@@ -4,23 +4,26 @@
 
 This section outlines the process of creating link:https://neo4j.com/docs/cypher-manual/current/values-and-types/type-predicate/[type predicate expressions] within your queries using Cypher Builder.
 
-A type predicate expression serves to validate the type of a variable, literal, property, or another Cypher expression. It follows the syntax below in Cypher:
+A type predicate expression serves to validate the type of a variable, literal, property, or another Cypher expression.
+It follows the syntax below in Cypher:
 
 [source, cypher]
 ----
 <expr> IS :: <TYPE>
 ----
 
-For example
+For example:
 
 [source, cypher]
 ----
 movie.title IS :: STRING
 ----
 
+
 == `isType`
 
-Type predicate expressions can be constructed using `Cypher.isType` (distinct from the `.hasType` method in Relationship). The `isType` function takes a xref:variables-and-params/variables.adoc[Cypher variable] and a type specified in `Cypher.TYPE`:
+Type predicate expressions can be constructed using `Cypher.isType` (distinct from the `.hasType` method for relationships).
+The `isType` function takes a xref:variables-and-params/variables.adoc[Cypher variable] and a type specified in `Cypher.TYPE`:
 
 [source, javascript]
 ----
@@ -47,6 +50,7 @@ WHERE this0.title IS :: STRING
 RETURN this0
 ----
 
+
 === Using Union types
 
 Union types, for example, `INTEGER | STRING`, can be used by passing an array to `.isType`:
@@ -60,6 +64,7 @@ Cypher.isType(new Cypher.Variable(), [Cypher.TYPE.INTEGER, Cypher.TYPE.STRING]);
 ----
 var0 IS :: INTEGER | STRING
 ----
+
 
 === List Types
 
@@ -102,9 +107,11 @@ Cypher.isNotType(new Cypher.Variable(), Cypher.TYPE.INTEGER);
 var0 IS NOT :: INTEGER
 ----
 
+
 == Type predicate expressions for non-nullable types
 
-Type predicate expressions evaluate to `true` in Cypher for `NULL` values unless a `NOT NULL` is appended. In Cypher Builder, this can be achieved using the `.notNull` method:
+Type predicate expressions evaluate to `true` in Cypher for `NULL` values unless a `NOT NULL` is appended.
+In Cypher Builder, this can be achieved using the `.notNull` method:
 
 [source, javascript]
 ----
@@ -116,7 +123,7 @@ Cypher.isType(new Cypher.Variable(), Cypher.TYPE.INTEGER).notNull();
 var0 IS :: INTEGER NOT NULL
 ----
 
-Non-nullable types can also be used within a List type:
+Non-nullable types can also be used within a list type:
 
 [source, javascript]
 ----

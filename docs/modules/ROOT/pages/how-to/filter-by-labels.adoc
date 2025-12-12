@@ -2,12 +2,15 @@
 :description: This page describes how to filter by labels and types.
 = Filter by labels
 
-Most patterns are composed with labels such as `(m:Movie)` to make simple filtering by labels. xref:../patterns.adoc#_label_expressions[Label expressions] can also be used to perform complex filtering by labels.
+Most patterns are composed with labels such as `(m:Movie)` to make filtering by labels easy.
+You can also use xref:../patterns.adoc#_label_expressions[Label expressions] to perform complex filtering by labels.
 
 
 == `.hasLabel`
 
-It is possible to check for label existence in `WHERE` filters. To do so, the methods `.hasLabel` and `.hasLabels` from `Node` variables can be used in predicates. For example, to match nodes with either the `Movie` or `Film` labels:
+It is possible to check for label existence in `WHERE` filters.
+Use the methods `.hasLabel` and `.hasLabels` for `Node` variables.
+For example, to match nodes with either the `Movie` or `Film` labels:
 
 [source, javascript]
 ----
@@ -25,7 +28,7 @@ WHERE (this0:Movie OR this0:Film)
 RETURN this0
 ----
 
-The method `.hasLabels` allow to provide multiple labels that the node must have
+The method `.hasLabels` allows you to provide multiple labels that the node must have:
 
 [source, javascript]
 ----
@@ -47,7 +50,7 @@ RETURN this0
 
 == `.hasType`
 
-Like labels, relationship types can be filtered in `WHERE` statements with the method `.hasType`
+Like labels, relationship types can be filtered in `WHERE` statements with the method `.hasType`:
 
 [source, javascript]
 ----
