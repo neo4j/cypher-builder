@@ -10,21 +10,24 @@ link:https://neo4j.com/docs/cdc/current/[Change Data Capture] (CDC) queries can 
 
 [WARNING]
 ====
-Previous to Neo4j version 5.17, the namespace for cdc procedures is `cdc.x` instead of `db.cdc.x`, this namespace is available in Cypher Builder through the deprecated functions `Cypher.cdc.x`
+Previous to Neo4j 5.17, the namespace for cdc procedures is `cdc.x` instead of `db.cdc.x`, this namespace is available in Cypher Builder through the deprecated functions `Cypher.cdc.x`.
 ====
+
 
 == Examples
 
+
 === Acquiring the current change identifier
 
-In order to query changes, you need to acquire a change identifier. This can be done with `cdc.current()` or `cdc.earliest()`. To acquire the latest change identifier, follow these instructions:
+In order to query changes, you must acquire a change identifier.
+This can be done with `cdc.current()` or `cdc.earliest()`.
+To acquire the latest change identifier, follow these instructions:
 
 [source, javascript]
 ----
 const query = Cypher.db.cdc.current().yield("id");
 const { cypher } = query.build();
 ----
-
 
 [source, cypher]
 ----
@@ -50,7 +53,7 @@ CALL db.cdc.query("cdc-id", [])
 
 === Using query selectors
 
-To use link:https://neo4j.com/docs/cdc/current/selectors/[CDC selectors] you'll need to define a `Map` with the properties of the selector schema for each selector:
+To use link:https://neo4j.com/docs/cdc/current/selectors/[CDC selectors] you must define a `Map` with the properties of the selector schema for each selector:
 
 [source, javascript]
 ----

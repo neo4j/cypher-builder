@@ -1,10 +1,11 @@
 [[migration]]
-:description: This page describes how to migrate to version 2.x
+:description: This page describes how to migrate to version 2.x of the Cypher Builder.
 = Migration to Cypher Builder 2
 
-This guide describes the changes required to migrate from Cypher Builder 1.x to 2.0, as well as some breaking changes that may affect projects using Cypher Builder.
+This page describes necessary steps and things to consider when migrating from Cypher Builder 1.x to 2.0, as well as breaking changes that may affect projects using Cypher Builder.
 
-The full, up to date changelog can be found link:https://github.com/neo4j/cypher-builder/blob/main/CHANGELOG.md[here].
+The full, up to date changelog can be found in the link:https://github.com/neo4j/cypher-builder/blob/main/CHANGELOG.md[Cypher Builder changelog].
+
 
 == Patterns
 
@@ -13,7 +14,8 @@ xref:patterns.adoc[Patterns] have been reworked in version 1.x, and the old beha
 
 === Node shorthand removed from clauses
 
-Clauses using Patterns no longer accept a `Cypher.Node` as a shorthand. An explicit pattern must be provided:
+Clauses using patterns no longer accept a `Cypher.Node` as a shorthand.
+An explicit pattern must be provided:
 
 
 Before:
@@ -46,21 +48,21 @@ This also affects pattern comprehensions `Cypher.PatternComprehension`.
 
 === Patterns no longer create a variable by default
 
-Creating a Pattern without options will no longer add variables to the generated Cypher:
+Creating a pattern without options no longer adds variables to the generated Cypher:
 
 [source, javascript]
 ----
 const pattern = new Cypher.Pattern()
 ----
 
-Before 
+Before:
 
 [source, cypher]
 ----
 (this0)
 ----
 
-Now
+Now:
 
 [source, cypher]
 ----
@@ -78,7 +80,9 @@ const pattern = new Cypher.Pattern(movieNode)
 
 ==== `.getVariables`
 
-The method `.getVariables` has been removed from Patterns, as Patterns no longer create variables, `getVariables` is no longer useful.
+The method `.getVariables` has been removed from patterns.
+Since patterns no longer create variables, `getVariables` is no longer useful.
+
 
 === Patterns configuration
 
@@ -94,7 +98,8 @@ The following methods to configure the resulting pattern have been removed from 
 
 Instead, Patterns are now configured through objects in the constructor, as well as the `related` and `to` methods: 
 
-Before
+Before:
+
 [source, javascript]
 ----
 const a = new Cypher.Node({
@@ -117,7 +122,7 @@ new Cypher.Pattern(a)
     .to(b)  
 ----
 
-Now
+Now:
 
 [source, javascript]
 ----
@@ -142,7 +147,8 @@ The generated Cypher:
 (:Person:Actor { name: $param0, surname: $param1 })-[this1:ACTED_IN]->(this2)
 ----
 
-Note that labels and types are now defined in the Pattern, not in the `Node` and `Relationship` classes.
+Note that labels and types are now defined in the pattern, not in the `Node` and `Relationship` classes.
+
 
 === Assign to path variable
 
@@ -168,7 +174,7 @@ const pathVariable = new Cypher.Cypher.PathVariable()
 new Cypher.Match(pattern.assignTo(pathVariable)).return(pathVariable);
 ```
 
-Generates the Cypher:
+The generated Cypher:
 
 ```cypher
 MATCH p = ()-[]-()
@@ -176,11 +182,13 @@ RETURN p
 ```
 
 
-== Node and Relationship variables
+== Node and relationship variables
 
-`Cypher.Node` and `Cypher.Relationship` no longer hold any data about labels, or types. Making them more similar to `Cypher.Variable`. To add labels or types, these need to be passed to the `Cypher.Pattern` instead of relying on `Cypher.Node` and `Cypher.Relationship`.
+`Cypher.Node` and `Cypher.Relationship` no longer hold any data about labels, or types, making them more similar to `Cypher.Variable`.
+To add labels or types, they must be passed to the `Cypher.Pattern` instead of relying on `Cypher.Node` and `Cypher.Relationship`.
 
-Before
+Before:
+
 [source, javascript]
 ----
 const a = new Cypher.Node({
@@ -196,7 +204,7 @@ new Cypher.Pattern(a)
     .to(b)
 ----
 
-Now
+Now:
 
 [source, javascript]
 ----
@@ -210,13 +218,16 @@ new Cypher.Pattern(a, { labels: ["Person", "Actor"] })
     .to(b)
 ----
 
+
 === Path variables
 
-The variables used for paths `Cypher.Path` and `Cypher.NamedPath` have been removed in favor of the more accurate names: `Cypher.PathVariable` and `Cypher.NamedPathVariable`  
+The variables used for paths `Cypher.Path` and `Cypher.NamedPath` have been removed in favor of the more accurate names: `Cypher.PathVariable` and `Cypher.NamedPathVariable`:
+
 
 == Renamed features
 
-The following features where deprecated in favor of a different name with the same functionality. The deprecated features have been removed in version 2.0:
+The following features where deprecated in favor of a different name with the same functionality.
+The deprecated features have been removed in version 2.0:
 
 * `Cypher.concat` in favor of `Cypher.utils.concat`
 * `pointDistance` in favor of `point.distance`
@@ -228,11 +239,13 @@ The following features where deprecated in favor of a different name with the sa
 **   `db.cdc.query` 
 *   `rTrim` and `lTrim` in favor of `rtrim` and `ltrim` respectively
 
+
 == `.build()`
 
 The options for `.build()` are now passed as a single object rather than parameters:
 
 Before:
+
 [source, javascript]
 ----
 myClause.build(
@@ -243,7 +256,6 @@ myClause.build(
     }
 );
 ----
-
 
 Now:
 [source, javascript]
@@ -259,11 +271,14 @@ myClause.build({
 
 All parameters are optional, and `build` can still be called without parameters.
 
+
 === Remove support for fine-grained prefix
 
-The first parameter "prefix" for the `.build` method in 1.x supports passing an object with the parameters `params` and `variables` for fine grained control of what prefix to use in different kind of variables. This has been removed in 2.x, supporting only a `string` as global prefix:
+The first parameter "prefix" for the `.build` method in 1.x supports passing an object with the parameters `params` and `variables` for fine-grained control of what prefix to use in different kinds of variables.
+This has been removed in 2.x, supporting only a `string` as global prefix:
 
 No longer supported:
+
 [source, javascript]
 ----
 myClause.build({
@@ -272,9 +287,10 @@ myClause.build({
 });
 ----
 
-Instead, a single string can be used as prefix for both, variables and params:
+Instead, a single string can be used as prefix for both variables and parameters:
 
 Now:
+
 [source, javascript]
 ----
 myClause.build({
@@ -282,11 +298,15 @@ myClause.build({
 });
 ----
 
+
 == `With`
 
-The method `.with` no longer adds new columns into the existing clause. It will always create a new `WITH` statement instead. The method `.addColumns` should be used instead to add extra columns. 
+The method `.with` no longer adds new columns to the existing clause.
+It always creates a new `WITH` statement instead.
+Use the method `.addColumns` to add extra columns. 
 
-Before
+Before:
+
 [source, javascript]
 ----
 const withQuery = new Cypher.With(node);
@@ -294,14 +314,14 @@ withQuery.with(node);
 withQuery.with("*");
 ----
 
-Now
+Now:
+
 [source, javascript]
 ----
 const withQuery = new Cypher.With(node);
 withQuery.with(node)
 withQuery.addColumns("*");
 ----
-
 
 The generated Cypher:
 
@@ -311,16 +331,20 @@ WITH this0
 WITH *, this0
 ----
 
+
 == `RawCypher`
 
 `Cypher.RawCypher` has been removed in favor of `Cypher.Raw`.
 
+
 === Update callback parameter
 
-`Cypher.Raw` no longer exposes a `Cypher.Environment` variable. Instead, it provides an instance of `CypherRawContext` with a `compile` method to compile nested elements in custom cypher.
+`Cypher.Raw` no longer exposes a `Cypher.Environment` variable.
+Instead, it provides an instance of `CypherRawContext` with a `compile` method to compile nested elements in custom cypher.
 
 
 Before:
+
 [source, typescript]
 ----
 const releasedParam = new Cypher.Param(1999);
@@ -334,6 +358,7 @@ const rawCypher = new Cypher.Raw((env: Cypher.Environment) => {
 ----
 
 Now:
+
 [source, typescript]
 ----
 const releasedParam = new Cypher.Param(1999);
@@ -348,41 +373,50 @@ const rawCypher = new Cypher.Raw((ctx: Cypher.RawCypherContext) => {
 
 Note that the code itself has not changed, and just the type passed to `Cypher.Raw` callback has been changed from `Cypher.Environment` to `Cypher.RawCypherContext`.
 
-=== Remove `utils.compileCypher`
+
+=== Removed the `utils.compileCypher`
 
 The utility function `compileCypher` has been removed, in favor of using `CypherRawContext.compile`, which offers the same functionality.
 
+
 == `PatternComprehension`
 
-`PatternComprehension` no longer accept a node as an argument in the constructor, a Pattern must be passed instead:
+`PatternComprehension` no longer accept a node as an argument in the constructor.
+Instead, use a pattern:
 
-Before
+Before:
+
 [source, javascript]
 ----
 const node = new Cypher.Node();
 const comprehension = new Cypher.PatternComprehension(node);
 ----
 
-Now
+Now:
+
 [source, javascript]
 ----
 const node = new Cypher.Node();
 const comprehension = new Cypher.PatternComprehension(new Cypher.Pattern(node));
 ----
 
+
 === `.map`
 
-`PatternComprehension` no longer accepts a second argument for the Map expression. The method `.map` must be used instead:
+`PatternComprehension` no longer accepts a second argument for the map expression.
+Instead, use the `.map` method:
 
-Before
+Before:
+
 [source, javascript]
 ----
 const andExpr = Cypher.eq(node.property("released"), new Cypher.Param(1999));
-
+https://github.com/neo4j/cypher-builder/blob/main/CHANGELOG.md
 const comprehension = new Cypher.PatternComprehension(new Cypher.Pattern(node), andExpr)
 ----
 
-Now
+Now:
+
 [source, javascript]
 ----
 const andExpr = Cypher.eq(node.property("released"), new Cypher.Param(1999));
@@ -391,9 +425,9 @@ const comprehension = new Cypher.PatternComprehension(new Cypher.Pattern(node)).
 ----
 
 
-== Other Breaking changes
+== Other breaking changes
 
-These are breaking changes that do not require changes, but may affect the behaviour of projects updating to Cypher Builder 2.0.
+These are breaking changes that may affect the behavior of projects when updating to Cypher Builder 2.0.
 
 
 === Fix TypeScript typings for boolean operators
@@ -404,7 +438,7 @@ The typings for the following boolean operators have been fixed to better reflec
 *   `Cypher.or`
 *   `Cypher.xor`
 
-The following:
+The following now returns the correct type `Cypher.Predicate | undefined`.:
 
 [source, typescript]
 ----
@@ -412,7 +446,7 @@ const predicates: Cypher.Predicate[] = [];
 const andPredicate = Cypher.and(...predicates);
 ----
 
-Will now return the correct type `Cypher.Predicate | undefined`. This change means that additional checks may be needed when using boolean operators:
+This change means that additional checks may be needed when using boolean operators:
 
 [source, typescript]
 ----
@@ -420,28 +454,28 @@ const predicates = [Cypher.true, Cypher.false];
 const andPredicate = Cypher.and(...predicates); // type Cypher.Predicate | undefined
 ----
 
-Passing parameters without spread will still return a defined type.
+Passing parameters without spread still returns a defined type.
 
 
 === Literals escaping
 
-`Cypher.Literal` will now escape strings if these contain invalid characters. This is to avoid code injection.
-
+`Cypher.Literal` now escapes strings if they contain invalid characters.
+This avoids code injection.
 
 [source, javascript]
 ----
 new Cypher.Literal(`Hello "World"`);
 ----
 
-Would generate the following Cypher:
-
 Before:
+
 [source, cypher]
 ----
 "Hello "World""
 ----
 
 Now:
+
 [source, cypher]
 ----
 "Hello \"World\""

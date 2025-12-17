@@ -4,7 +4,7 @@
 
 This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/match/[`MATCH`] clause with the `Cypher.Match` class.
 
-To create a `MATCH` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class and pass it to `Match` constructor:
+To add the `MATCH` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class and pass it to the `Match` constructor:
 
 
 [source, javascript]
@@ -23,7 +23,8 @@ This generates the following `MATCH` clause:
 MATCH (this:Movie)
 ----
 
-Afterwards, other clauses can be added. For example:
+Afterwards, other clauses can be added.
+For example:
 
 [source, javascript]
 ----
@@ -32,16 +33,17 @@ const matchQuery = new Cypher.Match(pattern)
     .return(movie);
 ----
 
-Extra match clauses can also be chained:
+You can also chain extra match clauses:
 
 [source, javascript]
 ----
 const matchQuery = new Cypher.Match(pattern).match(pattern2).return(movie)
 ----
 
+
 == Relationships
 
-Relationships can be used in a match clause by creating the relevant xref:/patterns.adoc[Pattern]:
+You can use relationships in a match clause by creating the relevant xref:/patterns.adoc[Pattern]:
 
 
 [source, javascript]
@@ -57,6 +59,7 @@ const matchQuery = new Cypher.Match(actedInPattern)
 ----
 MATCH (this0:Person)-[:ACTED_IN]->(this1:Movie)
 ----
+
 
 == Filtering with `WHERE`
 
@@ -74,7 +77,7 @@ MATCH (this0:Movie)
 WHERE title = $param0
 ----
 
-Multiple predicates can be chained by using the `.and` or `.where` method after `.where`:
+You can chain multiple predicates by using the `.and` or `.where` method after `.where`:
 
 [source, javascript]
 ----
@@ -90,9 +93,10 @@ WHERE this0.title = $param0
 AND this0.year <> $param1
 ----
 
+
 === Logical filters
 
-For more complex logical filters, the predicates `Cypher.and`, `Cypher.or`, `Cypher.not` and `Cypher.xor` can be used inside `where`:
+For more complex logical filters, use the `Cypher.and`, `Cypher.or`, `Cypher.not` and `Cypher.xor` predicates inside `where`:
 
 [source, javascript]
 ----
@@ -110,6 +114,7 @@ new Cypher.Match(new Cypher.Pattern(movieNode, { labels: ["Movie"] }))
 MATCH (this0:Movie)
 WHERE ((this0.title = $param0 OR this0.year > $param1) AND this0.year <> $param2)
 ----
+
 
 === Filtering properties shorthand
 
@@ -130,7 +135,7 @@ WHERE (this0.id = $param0 AND this0.name = $param1)
 
 == Optional match
 
-The clause link:https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/[`OPTIONAL MATCH`] can be created in the same manner as `MATCH` by using the class `Cypher.OptionalMatch`:
+You can create the clause link:https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/[`OPTIONAL MATCH`] similarly to `MATCH` by using the class `Cypher.OptionalMatch`:
 
 [source, javascript]
 ----
@@ -140,7 +145,7 @@ const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] });
 const matchQuery = new Cypher.OptionalMatch(pattern);
 ----
 
-Alternatively, an existing `Match` instance can be transformed into an `OptionalMatch` with the method `.optional()`:
+Alternatively, you can transform an existing `Match` instance into an `OptionalMatch` with the method `.optional()`:
 
 [source, javascript]
 ----
@@ -150,9 +155,10 @@ const pattern = new Cypher.Pattern(movie, { labels: ["Movie"] });
 const matchQuery = new Cypher.Match(pattern).optional();
 ----
 
+
 == Shortest paths
 
-link:https://neo4j.com/docs/cypher-manual/current/patterns/shortest-paths/#shortest[Shortest paths] and its variations can be added in a Match clause with the following methods in `Cypher.Match`:
+You can add link:https://neo4j.com/docs/cypher-manual/current/patterns/shortest-paths/#shortest[Shortest paths] and its variations in a Match clause with the following methods in `Cypher.Match`:
 
 * `.shortest(k)`
 * `.shortestGroups(k)`

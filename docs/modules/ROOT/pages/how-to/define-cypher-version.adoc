@@ -4,14 +4,12 @@
 
 It is possible to define the version of Cypher to use in a query by prepending that query with `CYPHER [version]`. For example:
 
-
 [source, cypher]
 ----
 CYPHER 5
 MATCH (this0)
 RETURN this0
 ----
-
 
 To add the Cypher version at the beggining of the query, pass the parameter `cypherVersion` to `.build`:
 
@@ -39,4 +37,5 @@ WHERE this0.title = $param0
 RETURN this0.title
 ----
 
-Note that this setting only prepends the `CYPHER` statement to the query. The query itself is unchanged.
+Note that this setting only prepends the `CYPHER` statement to the query.
+The query itself is unchanged.
