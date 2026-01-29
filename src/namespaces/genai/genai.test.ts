@@ -32,7 +32,7 @@ describe("genai functions", () => {
             const { cypher, params } = result.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"WITH genai.vector.encode(\\"embeddings are cool\\", \\"VertexAI\\", { token: \\"my-token\\", projectId: \\"my-project\\" }) AS var0"`
+                `"WITH genai.vector.encode('embeddings are cool', 'VertexAI', {token: 'my-token', projectId: 'my-project'}) AS var0"`
             );
             expect(params).toMatchInlineSnapshot(`{}`);
         });
@@ -62,11 +62,11 @@ describe("genai functions", () => {
             const { cypher, params } = result.build();
 
             expect(cypher).toMatchInlineSnapshot(`
-                "WITH \\"embeddings are cool\\" AS var0
-                WITH genai.vector.encode(var0, \\"OpenAI\\", { token: $param0, model: \\"my-model\\", dimensions: 512 }) AS var1
-                CALL db.index.vector.queryNodes(\\"my_index\\", 10, var1) YIELD node AS var2, score AS var3
-                RETURN var2, var3"
-            `);
+"WITH 'embeddings are cool' AS var0
+WITH genai.vector.encode(var0, 'OpenAI', {token: $param0, model: 'my-model', dimensions: 512}) AS var1
+CALL db.index.vector.queryNodes('my_index', 10, var1) YIELD node AS var2, score AS var3
+RETURN var2, var3"
+`);
             expect(params).toMatchInlineSnapshot(`
                 {
                   "param0": "my-token",
@@ -92,7 +92,7 @@ describe("genai procedures", () => {
             const { cypher, params } = genAiEncodeFunction.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL genai.vector.encodeBatch([\\"embeddings are cool\\", \\"I love embeddings\\"], \\"OpenAI\\", { token: \\"my-token\\", projectId: \\"my-project\\" })"`
+                `"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'OpenAI', {token: 'my-token', projectId: 'my-project'})"`
             );
             expect(params).toMatchInlineSnapshot(`{}`);
         });
@@ -105,7 +105,7 @@ describe("genai procedures", () => {
             const { cypher, params } = genAiEncodeFunction.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL genai.vector.encodeBatch([\\"embeddings are cool\\", \\"I love embeddings\\"], \\"OpenAI\\", { token: \\"my-token\\", projectId: \\"my-project\\" })"`
+                `"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'OpenAI', {token: 'my-token', projectId: 'my-project'})"`
             );
             expect(params).toMatchInlineSnapshot(`{}`);
         });
@@ -118,7 +118,7 @@ describe("genai procedures", () => {
             const { cypher, params } = genAiEncodeFunction.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL genai.vector.encodeBatch([\\"embeddings are cool\\", \\"I love embeddings\\"], $param0, { token: \\"my-token\\", projectId: \\"my-project\\" })"`
+                `"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], $param0, {token: 'my-token', projectId: 'my-project'})"`
             );
             expect(params).toMatchInlineSnapshot(`
                 {
@@ -139,7 +139,7 @@ describe("genai procedures", () => {
             const { cypher, params } = genAiEncodeFunction.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL genai.vector.encodeBatch([\\"embeddings are cool\\", \\"I love embeddings\\"], \\"AzureOpenAI\\", { token: \\"my-token\\", resource: \\"my-resource-name\\", deployment: $param0, dimensions: 512 })"`
+                `"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'AzureOpenAI', {token: 'my-token', resource: 'my-resource-name', deployment: $param0, dimensions: 512})"`
             );
             expect(params).toMatchInlineSnapshot(`
                 {
@@ -164,9 +164,9 @@ describe("genai procedures", () => {
             const { cypher, params } = encodeBatchProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(`
-                "CALL genai.vector.encodeBatch([\\"embeddings are cool\\", \\"I love embeddings\\"], \\"OpenAI\\", { token: $param0, model: \\"my-model\\", dimensions: 512 }) YIELD index AS var0, vector AS var1, resource AS var2
-                RETURN var0, var1, var2"
-            `);
+"CALL genai.vector.encodeBatch(['embeddings are cool', 'I love embeddings'], 'OpenAI', {token: $param0, model: 'my-model', dimensions: 512}) YIELD index AS var0, vector AS var1, resource AS var2
+RETURN var0, var1, var2"
+`);
             expect(params).toMatchInlineSnapshot(`
                 {
                   "param0": "my-token",
