@@ -4,8 +4,7 @@
 
 This page describes how to add a link:https://neo4j.com/docs/cypher-manual/current/clauses/create/[`CREATE`] clause with the `Cypher.Create` class.
 
-To make a `CREATE` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class:
-
+To add the `CREATE` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class:
 
 [source, javascript]
 ----
@@ -39,8 +38,8 @@ This generates the following `CREATE` clause:
 CREATE (this:Movie {title: "The Matrix"})
 ----
 
-== Relationships
 
+== Relationships
 
 Relationships can be used in a match clause by creating the relevant xref:/patterns.adoc[Pattern]:
 
@@ -62,9 +61,9 @@ CREATE (this1:`Person`)-[this0:ACTED_IN]->(this2:`Movie`)
 
 == Update properties
 
-The clauses `SET` and `REMOVE` can be added with the methods `.set` and `.remove` respectively.
+Add the `SET` and `REMOVE` clauses with the methods `.set` and `.remove` respectively.
 
-`.set` take tuples of 2 elements, the first being the property to update and the second the value:
+`.set` takes one or more tuples, each consisting of a property to update and a new value:
 
 [source, javascript]
 ----
@@ -81,7 +80,6 @@ SET this0.title = $param0
 ----
 
 Multiple properties can be updated by passing multiple tuples.
-
 
 `.remove` takes the properties to remove:
 

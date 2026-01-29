@@ -36,15 +36,7 @@ import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { mixin } from "./utils/mixin";
 
 export interface Call
-    extends WithReturn,
-        WithWith,
-        WithUnwind,
-        WithSetRemove,
-        WithDelete,
-        WithMatch,
-        WithCreate,
-        WithMerge,
-        WithOrder {}
+    extends WithReturn, WithWith, WithUnwind, WithSetRemove, WithDelete, WithMatch, WithCreate, WithMerge, WithOrder {}
 
 /** @group Subqueries */
 export type CallInTransactionOptions = {

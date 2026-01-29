@@ -4,7 +4,6 @@
 
 It is possible to explicitly define the version of Cypher to use in a query by prepending that query with `CYPHER [version]`. For example:
 
-
 [source, cypher]
 ----
 CYPHER 5
@@ -39,4 +38,5 @@ WHERE this0.title = $param0
 RETURN this0.title
 ----
 
-Note that this setting only prepends the `CYPHER` statement to the query. The query itself is unchanged.
+Note that this setting only prepends the `CYPHER` statement to the query.
+The query itself is unchanged.

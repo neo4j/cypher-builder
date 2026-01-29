@@ -4,7 +4,7 @@
 
 This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/merge/[`MERGE`] clause with the `Cypher.Merge` class.
 
-To create a `Merge` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class and pass it to `Merge` constructor:
+To add a `MERGE` clause, first create a valid pattern using the xref:/patterns.adoc[Pattern] class and pass it to `Merge` constructor:
 
 
 [source, javascript]
@@ -24,7 +24,8 @@ This generates the following `MERGE` clause:
 MERGE (this:Movie)-[:ACTED_IN]->(this1)
 ----
 
-Afterwards, other clauses can be added. For example:
+Afterwards, you can add other clauses.
+For example:
 
 [source, javascript]
 ----
@@ -40,9 +41,9 @@ WHERE this.name = $param1
 return this
 ----
 
-== On Create / On Match
+== `ON CREATE` and `ON MATCH`
 
-A `MERGE` statement can be followed by `ON CREATE SET` and `ON MATCH SET`, this can be achieved with the methods `onCreateSet` and `onMatchSet` respectively:
+Use the methods `onCreateSet` or `onMatchSet` to add `ON CREATE SET` or `ON MATCH SET` after a `MERGE` statement:
 
 [source, javascript]
 ----
