@@ -1,23 +1,25 @@
 [[migration]]
-:description: This page describes how to migrate to version 3.x from version 2
+:description: This page describes how to migrate to version 3.x from version 2.
 = Migration to Cypher Builder 3
 
 This guide details all the changes needed to migrate from Cypher Builder version 2 to version 3.
 
 [NOTE]
 ====
-If you need to support Neo4j 4, stay with Cypher Builder 2.x, otherwise, migrate to version 3.
+If you must support Neo4j 4, stay with Cypher Builder 2.x, otherwise, migrate to version 3.
 ====
 
 == Compatibility changes
 
 === Minimum node engine changed to 20.0.0
 
-Node.js 16 is no longer supported. Update Node.js to version 20.0.0 or above.
+Node.js 16 is no longer supported.
+Update Node.js to version 20.0.0 or above.
 
 === Cypher 4 no longer supported
 
-Cypher 4, and Neo4j 4 databases are no longer supported. Cypher Builder 3 targets Cypher 5 and 25.
+Cypher 4, and Neo4j 4 databases are no longer supported.
+Cypher Builder 3 targets Cypher 5 and 25.
 
 The following features are Cypher 4 only, and have been removed from Cypher Builder.
 
@@ -28,7 +30,7 @@ The following features are Cypher 4 only, and have been removed from Cypher Buil
 
 ==== Removed support for patterns in size
 
-_No longer supported_
+No longer supported:
 [source, javascript]
 ----
 Cypher.size(new Cypher.Pattern(node));
@@ -55,10 +57,11 @@ COUNT {
 
 ==== Removed `labelOperator`
 
-Removed option `labelOperator`. Now, the operator `&` is used by default when using multiple labels:  
+Removed the option `labelOperator`.
+Instead, the operator `&`  is the default when using multiple labels:.
 
 
-_No longer supported_
+No longer supported:
 [source, javascript]
 ----
 const { cypher, params } = matchQuery.build({
@@ -67,13 +70,13 @@ const { cypher, params } = matchQuery.build({
 ----
 
 
-_Before_
+Before:
 [source, Cypher]
 ----
 MATCH (this1:Movie:Film)
 ----
 
-_After_
+After:
 [source, Cypher]
 ----
 MATCH (this1:Movie&Film)
@@ -82,9 +85,9 @@ MATCH (this1:Movie&Film)
 
 ==== Removed `.importWith` from `Call`
 
-Remove `.importWith` from `Call` clauses in favor of constructor options
+Remove `.importWith` from `Call` clauses in favor of constructor options.
 
-_No longer supported_
+No longer supported:
 
 [source, Javascript]
 ----
@@ -99,7 +102,7 @@ CALL {
 }
 ----
 
-_After_
+After:
 
 [source, Javascript]
 ----
@@ -113,9 +116,10 @@ CALL (var0, var1){
 }
 ----
 
-== Removed support for apoc
+== Removed support for APOC
 
-No apoc functions or procedures are supported in Cypher Builder 3. The following are no longer available:
+No APOC functions or procedures are supported in Cypher Builder 3.
+The following are no longer available:
 
 - `apoc.util.validate`
 - `apoc.util.validatePredicate`
@@ -123,7 +127,8 @@ No apoc functions or procedures are supported in Cypher Builder 3. The following
 - `apoc.cypher.runFirstColumnMany`
 - `apoc.cypher.runFirstColumnSingle`
 
-To use apoc methods, create a xref:how-to/customize-cypher.adoc#_custom_functions_and_procedures[custom function or procedure]. For example:
+To use APOC methods, create a xref:how-to/customize-cypher.adoc#_custom_functions_and_procedures[custom function or procedure].
+For example:
 
 [source, Javascript]
 ----
@@ -154,8 +159,8 @@ The following are changes to the API, made to improve consistency across the Cyp
 
 === ListComprehension
 
-==== Remove second parameter of constructor
-Remove second parameter of `ListComprehension` constructor in favor of `.in`
+==== Removed the second parameter of the constructor
+The second parameter of the `ListComprehension` constructor has been removed in favor of `.in`.
 
 Before:
 [source, javascript]
@@ -169,36 +174,37 @@ After:
 new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2]));
 ----
 
-In both cases, the same comprehension will be generated:
+In both cases, the same comprehension is generated:
 
 ```cypher
 [var0 IN [1, 2]]
 ```
 
-==== ListComprehension `.in` method no longer throws if called twice.
+==== The `ListComprehension` method  `.in` no longer throws if called twice
 
-ListComprehension `.in` method no longer throws if called twice. It will instead override the expression
+The `ListComprehension` method `.in` no longer throws if called twice.
+Instead, it overrides the expression.
 
-Before, it will throw:
+Before:
 [source, javascript]
 ----
 new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2])).in(new Cypher.Literal([1]))
 ----
 
-After, this is valid:
+After:
 [source, javascript]
 ----
 new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2])).in(new Cypher.Literal([1]))
 ----
 
-Will generate the following Cypher:
+Generated Cypher:
 
 [source, cypher]
 ----
 [var0 IN [1]]
 ----
 
-Note that the same Cypher is generated if we omit the first `.in`:
+Note that the same Cypher is generated if you omit the first `.in`:
 
 [source, javascript]
 ----
@@ -208,8 +214,9 @@ new Cypher.ListComprehension(variable).in(new Cypher.Literal([1]))
 
 === Foreach
 
-==== Remove extra parameters in `Cypher.Foreach` constructor
-Remove extra parameters in `Cypher.Foreach` constructor in favor of methods `in` and `do`.
+==== Removed extra parameters in the `Cypher.Foreach` constructor
+
+The extra parameters in the `Cypher.Foreach` constructor have been removed in favor of the methods `in` and `do`.
 
 For example, to create the following Cypher:
 
@@ -222,7 +229,7 @@ FOREACH (var0 IN [1, 2, 3] |
     )
 ----
 
-_Before_
+Before:
 
 [source, javascript]
 ----
@@ -238,7 +245,7 @@ const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["
 const foreachClause = new Cypher.Foreach(variable, list, createMovie);
 ----
 
-_After_
+After:
 
 [source, javascript]
 ----
@@ -256,7 +263,7 @@ const foreachClause = new Cypher.Foreach(variable).in(list).do(createMovie);
 
 == Other breaking changes
 
-=== Remove method `.children` from concat clauses
+=== Removed method `.children` from concat clauses
 
 [source, Javascript]
 ----
@@ -264,17 +271,17 @@ const query = Cypher.utils.concat(clause1, clause2);
 query.children; // No longer supported
 ----
 
-=== Remove type `Operation`
+=== Removed type `Operation`
 
-The type `Cypher.Operation` is no longer availabe, use `Cypher.Expr` instead:
+The type `Cypher.Operation` is no longer available, use `Cypher.Expr` instead:
 
-_Before_
+Before:
 [source, javascript]
 ----
 const myOperation: Cypher.Operation = Cypher.and()
 ----
 
-_After_
+After:
 [source, javascript]
 ----
 const myOperation: Cypher.Expr = Cypher.and()
@@ -282,13 +289,13 @@ const myOperation: Cypher.Expr = Cypher.and()
 
 == Other changes
 
-=== Change Cypher formatting
+=== Changed Cypher formatting
 
-The generated Cypher now follow the best practices recommended by the link:https://neo4j.com/docs/cypher-manual/current/styleguide/[Cypher Styleguide].
+Generated Cypher now follows the best practices recommended by the link:https://neo4j.com/docs/cypher-manual/current/styleguide/[Cypher Styleguide].
 
 For example:
 
-_Before_
+Before:
 [source, Cypher]
 ----
 CALL {
@@ -300,7 +307,7 @@ CALL {
 RETURN this0
 ----
 
-_After_
+After:
 [source, Cypher]
 ----
 CALL {
@@ -311,5 +318,5 @@ CALL {
 RETURN this0
 ----
 
-This doesn't have any impact on the behaviour itself, and should not cause any breaking changes on normal usage, but may affect projects
-that modify or test the Cypher generated with Cypher Builder.
+This doesn't have any impact on the behavior itself, and should not cause any breaking changes.
+It may however affect projects that modify or test the exact syntax of the Cypher generated with Cypher Builder.

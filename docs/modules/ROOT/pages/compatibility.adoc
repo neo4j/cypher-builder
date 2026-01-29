@@ -9,5 +9,5 @@ This page outlines the compatibility requirements for `@neo4j/cypher-builder` ve
 
 [NOTE]
 ====
-If you need to support Neo4j 4, stay with Cypher Builder 2.x, otherwise, xref:migration-guide-3.adoc#migration[migrate to version 3].
+If you must support Neo4j 4, keep Cypher Builder 2.x, otherwise, xref:migration-guide-3.adoc#migration[migrate to version 3].
 ====
