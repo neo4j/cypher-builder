@@ -50,7 +50,7 @@ RETURN var0"
         const queryResult = loadClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "LOAD CSV WITH HEADERS FROM \\"https://data.neo4j.com/bands/artists.csv\\" AS var0
-MERGE (this1 { name: var0.Name })
+MERGE (this1 { name: var0.Name })    
 RETURN var0"
 `);
 

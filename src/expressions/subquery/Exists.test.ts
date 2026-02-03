@@ -29,13 +29,13 @@ describe("Exists subquery", () => {
         const queryResult = match.build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0)
-            WHERE EXISTS {
-                MATCH (this1:Movie)
-                RETURN *
-            }
-            RETURN *"
-        `);
+"MATCH (this0)
+WHERE EXISTS {
+  MATCH (this1:Movie)
+  RETURN *
+}
+RETURN *"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
@@ -51,7 +51,7 @@ describe("Exists subquery", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 WHERE EXISTS {
-    (this1:Movie)
+  (this1:Movie)
 }
 RETURN *"
 `);

@@ -55,7 +55,11 @@ export class SetClause extends CypherASTNode {
             })
             .join(",\n");
 
-        return `SET\n${padBlock(paramsStr)}`;
+        if (this.params.length == 1) {
+            return `SET ${paramsStr}`;
+        } else {
+            return `SET\n${padBlock(paramsStr)}`;
+        }
     }
 
     private composeParam(env: CypherEnvironment, setParam: SetParam): string {

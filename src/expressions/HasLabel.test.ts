@@ -55,9 +55,9 @@ describe("HasLabel", () => {
             const queryResult = new TestClause(query).build();
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0:Movie)
-            WHERE this0:Movie:Film"
-        `);
+"MATCH (this0:Movie)
+WHERE this0:Movie&Film"
+`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });

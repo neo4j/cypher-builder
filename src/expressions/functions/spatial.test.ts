@@ -17,23 +17,10 @@
  * limitations under the License.
  */
 
-import { TestClause } from "../../utils/TestClause";
 import Cypher from "../..";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Spatial Functions", () => {
-    describe("4.x deprecated functions", () => {
-        test.each(["distance"] as const)("%s", (value) => {
-            const leftExpr = new Cypher.Variable();
-            const rightExpr = new Cypher.Variable();
-            const spatialFn = Cypher[value](leftExpr, rightExpr);
-
-            const queryResult = new TestClause(spatialFn).build();
-
-            expect(queryResult.cypher).toBe(`${value}(var0, var1)`);
-            expect(queryResult.params).toEqual({});
-        });
-    });
-
     test("point function", () => {
         const pointFn = Cypher.point(new Cypher.Variable());
 

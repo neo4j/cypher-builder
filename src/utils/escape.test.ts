@@ -46,8 +46,10 @@ describe("escaping", () => {
         });
 
         test.each([
-            [`my "var"`, `my \\"var\\"`],
-            [`my \\"var`, `my \\\\"var`],
+            [`my "var"`, `my "var"`],
+            [`my \\"var`, `my \\"var`],
+            [`my 'var'`, `my \\'var\\'`],
+            [`my \\'var`, `my \\\\'var`],
         ])("Escape '%s'", (original, expected) => {
             expect(escapeLiteralString(original)).toBe(expected);
         });

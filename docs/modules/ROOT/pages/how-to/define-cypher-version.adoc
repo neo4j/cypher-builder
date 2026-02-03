@@ -2,7 +2,7 @@
 :description: This page describes how to define the Cypher version to be used in the query.
 = Define Cypher version
 
-It is possible to define the version of Cypher to use in a query by prepending that query with `CYPHER [version]`. For example:
+It is possible to explicitly define the version of Cypher to use in a query by prepending that query with `CYPHER [version]`. For example:
 
 [source, cypher]
 ----
@@ -11,7 +11,9 @@ MATCH (this0)
 RETURN this0
 ----
 
-To add the Cypher version at the beggining of the query, pass the parameter `cypherVersion` to `.build`:
+
+To add the Cypher version at the beggining of the query, pass the parameter `cypherVersion` to `.build`.
+The possible values are `"5"` and `"25"`:
 
 [source, javascript]
 ----

@@ -43,7 +43,7 @@ export class Literal<T extends LiteralValue = LiteralValue> implements CypherCom
 
     private formatLiteralValue(value: LiteralValue): string {
         if (typeof value === "string") {
-            return `"${escapeLiteralString(value)}"`;
+            return `'${escapeLiteralString(value)}'`;
         }
         if (value === null) {
             return "NULL";
