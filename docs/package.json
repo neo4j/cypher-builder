@@ -27,7 +27,7 @@
         "@neo4j-antora/antora-add-notes": "^0.3.2",
         "@neo4j-antora/antora-modify-sitemaps": "^0.7.2",
         "@neo4j-antora/antora-page-roles": "^0.3.2",
-        "@neo4j-antora/mark-terms": "1.1.0",
+        "@neo4j-antora/mark-terms": "1.1.1",
         "@neo4j-antora/roles-labels": "^0.1.2",
         "@neo4j-antora/table-footnotes": "^1.0.0",
         "@neo4j-antora/xref-hash-validator": "^0.1.3",
