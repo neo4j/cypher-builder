@@ -82,13 +82,16 @@ export type MatchClausePattern = Pattern | QuantifiedPath | PathAssign<Pattern |
     WithForeach
 )
 export class Match extends Clause {
-    private readonly pattern: MatchClausePattern;
+    private readonly patterns: MatchClausePattern[];
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
 
-    constructor(pattern: MatchClausePattern) {
+    constructor(...patterns: MatchClausePattern[]) {
         super();
-        this.pattern = pattern;
+        if (patterns.length === 0) {
+            throw new Error("At least one pattern must be provided to Match");
+        }
+        this.patterns = patterns;
     }
 
     /** Makes the clause an OPTIONAL MATCH
@@ -180,7 +183,7 @@ export class Match extends Clause {
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const patternCypher = this.pattern.getCypher(env);
+        const patternCyphers = this.patterns.map((pattern) => pattern.getCypher(env));
 
         const whereCypher = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
 
@@ -191,7 +194,16 @@ export class Match extends Clause {
         const optionalMatch = this._optional ? "OPTIONAL " : "";
         const shortestStatement = this.getShortestStatement();
 
-        return `${optionalMatch}MATCH ${shortestStatement}${patternCypher}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        if (patternCyphers.length > 1 && shortestStatement) {
+            throw new Error("Shortest match cannot be used with multiple patterns");
+        }
+
+        if (patternCyphers.length > 1) {
+            const match = "MATCH\n" + patternCyphers.map((p) => `  ${p}`).join(",\n");
+            return `${optionalMatch}${match}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        }
+
+        return `${optionalMatch}MATCH ${shortestStatement}${patternCyphers[0]}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {
@@ -216,8 +228,8 @@ export class Match extends Clause {
  * @group Clauses
  */
 export class OptionalMatch extends Match {
-    constructor(pattern: MatchClausePattern) {
-        super(pattern);
+    constructor(...patterns: MatchClausePattern[]) {
+        super(...patterns);
         this.optional();
     }
 }
