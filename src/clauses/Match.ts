@@ -195,7 +195,7 @@ export class Match extends Clause {
         const shortestStatement = this.getShortestStatement();
 
         if (patternCyphers.length > 1 && shortestStatement) {
-            throw new Error("Shortest match cannot be used with multiple patterns");
+            throw new Error("Shortest cannot be used with multiple path patterns");
         }
 
         if (patternCyphers.length > 1) {
