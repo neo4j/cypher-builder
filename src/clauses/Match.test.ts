@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import type { Predicate } from "..";
 import Cypher from "..";
+import type { Predicate } from "..";
 
 describe("CypherBuilder Match", () => {
     test("Match node", () => {
@@ -1166,7 +1166,7 @@ RETURN this0, this2, this1"
 
             expect(() => {
                 matchQuery.build();
-            }).toThrow("Shortest match cannot be used with multiple patterns");
+            }).toThrow("Shortest cannot be used with multiple path patterns");
         });
 
         test("OPTIONAL MATCH with multiple patterns", () => {
