@@ -198,12 +198,14 @@ export class Match extends Clause {
             throw new Error("Shortest cannot be used with multiple path patterns");
         }
 
+        let patternStr: string;
         if (patternCyphers.length > 1) {
-            const match = "MATCH\n" + patternCyphers.map((p) => `  ${p}`).join(",\n");
-            return `${optionalMatch}${match}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+            patternStr = `\n${patternCyphers.map((p) => `  ${p}`).join(",\n")}`;
+        } else {
+            patternStr = ` ${shortestStatement}${patternCyphers[0]}`;
         }
 
-        return `${optionalMatch}MATCH ${shortestStatement}${patternCyphers[0]}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        return `${optionalMatch}MATCH${patternStr}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {
