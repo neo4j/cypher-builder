@@ -61,6 +61,36 @@ MATCH (this0:Person)-[:ACTED_IN]->(this1:Movie)
 ----
 
 
+== Multiple patterns
+
+You can match multiple patterns in a single `MATCH` clause by passing multiple patterns to the `Match` constructor:
+
+[source, javascript]
+----
+const actor = new Cypher.Node();
+const moreActors = new Cypher.Node();
+const movie = new Cypher.Node();
+
+const pattern1 = new Cypher.Pattern(actor, { labels: ["Person"] })
+    .related({ type: "ACTED_IN", direction: "undirected" })
+    .to(movie, { labels: ["Movie"] });
+
+const pattern2 = new Cypher.Pattern(moreActors, { labels: ["Person"] })
+    .related({ type: "ACTED_IN", direction: "undirected" })
+    .to(movie);
+
+const matchQuery = new Cypher.Match(pattern1, pattern2).return(actor, moreActors, movie);
+----
+
+[source, cypher]
+----
+MATCH
+  (this0:Person)-[:ACTED_IN]-(this1:Movie),
+  (this2:Person)-[:ACTED_IN]-(this1)
+RETURN this0, this2, this1
+----
+
+
 == Filtering with `WHERE`
 
 A `WHERE` clause can be appended with the `.where` method, this accepts any predicate:
