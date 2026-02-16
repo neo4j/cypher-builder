@@ -13,8 +13,7 @@ const pattern2 = new Cypher.Pattern(moreActors, { labels: ["Person"] })
     .related({ type: "ACTED_IN", direction: "undirected" })
     .to(movie);
 
-const match = new Cypher.Match(pattern1, pattern2)
-    .return(new Cypher.Return(actor, moreActors, movie));
+const match = new Cypher.Match(pattern1, pattern2).return(new Cypher.Return(actor, moreActors, movie));
 ```
 
 ```cypher
