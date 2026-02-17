@@ -18,7 +18,7 @@
         "test": "jest",
         "build": "tsc --build tsconfig.production.json",
         "docs": "npm run antora-docs && npm run docs-ref",
-        "antora-docs": "npm run build --prefix ./docs",
+        "antora-docs": "npm run build:publish --prefix ./docs",
         "docs-ref": "typedoc src/Cypher.ts",
         "lint": "eslint .",
         "changeset": "changeset",
