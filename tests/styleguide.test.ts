@@ -184,7 +184,7 @@ RETURN var0, 2"
             );
 
             const { cypher } = query.build();
-            expect(cypher).toMatchInlineSnapshot(`"RETURN 'Cypher', 'A \\\\'Quote\\\\'', 'Another \\"Quote\\"'"`);
+            expect(cypher).toMatchInlineSnapshot(`"RETURN 'Cypher', 'A \\'Quote\\'', 'Another "Quote"'"`);
         });
     });
 });

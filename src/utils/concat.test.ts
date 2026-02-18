@@ -68,7 +68,7 @@ SET this1.title = $param0"
 
     test("Empty composite clause", () => {
         const compositeClause = Cypher.utils.concat(undefined);
-        expect(compositeClause.empty).toBeTrue();
+        expect(compositeClause.empty).toBe(true);
 
         const queryResult = compositeClause.build();
 
@@ -77,7 +77,7 @@ SET this1.title = $param0"
 
     test("Empty nested composite clause", () => {
         const compositeClause = Cypher.utils.concat(Cypher.utils.concat());
-        expect(compositeClause.empty).toBeTrue();
+        expect(compositeClause.empty).toBe(true);
 
         const queryResult = compositeClause.build();
 
@@ -91,7 +91,7 @@ SET this1.title = $param0"
                 new Cypher.Match(new Cypher.Pattern(new Cypher.Node()))
             )
         );
-        expect(compositeClause.empty).toBeFalse();
+        expect(compositeClause.empty).toBe(false);
 
         const queryResult = compositeClause.build();
 
@@ -108,7 +108,7 @@ SET this1.title = $param0"
             Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb"))
         );
         const compositeClause = Cypher.utils.concat(clause);
-        expect(compositeClause.empty).toBeFalse();
+        expect(compositeClause.empty).toBe(false);
     });
 
     test("Nested concatenation flattens the tree if composite clause has 1 element", () => {
