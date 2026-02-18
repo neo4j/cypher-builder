@@ -1,6 +1,6 @@
 site:
   title: Cypher Builder docs
-  url: https://neo4j.github.io/cypher-builder/
+  url: https://neo4j.com/docs
   start_page: cypher-builder:ROOT:index.adoc
 
 content:
