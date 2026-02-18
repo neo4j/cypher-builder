@@ -3,16 +3,16 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Variable } from "..";
-import type { CypherEnvironment } from "../Environment";
-import { Clause } from "./Clause";
-import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
-import { WithCreate } from "./mixins/clauses/WithCreate";
-import { WithMerge } from "./mixins/clauses/WithMerge";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { WithWith } from "./mixins/clauses/WithWith";
-import { WithWhere } from "./mixins/sub-clauses/WithWhere";
-import { mixin } from "./utils/mixin";
+import type { Variable } from "../index.js";
+import type { CypherEnvironment } from "../Environment.js";
+import { Clause } from "./Clause.js";
+import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure.js";
+import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithMerge } from "./mixins/clauses/WithMerge.js";
+import { WithReturn } from "./mixins/clauses/WithReturn.js";
+import { WithWith } from "./mixins/clauses/WithWith.js";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere.js";
+import { mixin } from "./utils/mixin.js";
 
 export interface LoadCSV extends WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure {}
 

@@ -3,19 +3,19 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import { PathAssign } from "../pattern/PathAssign";
-import { Pattern } from "../pattern/Pattern";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { Clause } from "./Clause";
-import { WithFinish } from "./mixins/clauses/WithFinish";
-import { WithMerge } from "./mixins/clauses/WithMerge";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { WithWith } from "./mixins/clauses/WithWith";
-import { WithDelete } from "./mixins/sub-clauses/WithDelete";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
-import { mixin } from "./utils/mixin";
+import type { CypherEnvironment } from "../Environment.js";
+import { PathAssign } from "../pattern/PathAssign.js";
+import { Pattern } from "../pattern/Pattern.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import { Clause } from "./Clause.js";
+import { WithFinish } from "./mixins/clauses/WithFinish.js";
+import { WithMerge } from "./mixins/clauses/WithMerge.js";
+import { WithReturn } from "./mixins/clauses/WithReturn.js";
+import { WithWith } from "./mixins/clauses/WithWith.js";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
+import { mixin } from "./utils/mixin.js";
 
 export interface Create extends WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder {}
 

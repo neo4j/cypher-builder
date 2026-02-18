@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import type { Predicate } from "../../types";
-import { filterTruthy } from "../../utils/filter-truthy";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Predicate } from "../../types.js";
+import { filterTruthy } from "../../utils/filter-truthy.js";
 
 type BooleanOperator = "AND" | "NOT" | "OR" | "XOR";
 

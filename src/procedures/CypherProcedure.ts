@@ -3,16 +3,16 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Clause } from "../clauses/Clause";
-import { CypherASTNode } from "../CypherASTNode";
-import type { CypherEnvironment } from "../Environment";
-import type { Literal } from "../references/Literal";
-import type { Param } from "../references/Param";
-import type { Variable } from "../references/Variable";
-import type { Expr } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import type { YieldProjectionColumn } from "./Yield";
-import { Yield } from "./Yield";
+import { Clause } from "../clauses/Clause.js";
+import { CypherASTNode } from "../CypherASTNode.js";
+import type { CypherEnvironment } from "../Environment.js";
+import type { Literal } from "../references/Literal.js";
+import type { Param } from "../references/Param.js";
+import type { Variable } from "../references/Variable.js";
+import type { Expr } from "../types.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import type { YieldProjectionColumn } from "./Yield.js";
+import { Yield } from "./Yield.js";
 
 /** @group Procedures */
 export type InputArgument<T extends string | number> = T | Variable | Literal<T> | Param<T>;

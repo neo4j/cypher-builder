@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import { WithWhere } from "../../clauses/mixins/sub-clauses/WithWhere";
-import { mixin } from "../../clauses/utils/mixin";
-import type { Variable } from "../../references/Variable";
-import type { Expr } from "../../types";
-import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import { WithWhere } from "../../clauses/mixins/sub-clauses/WithWhere.js";
+import { mixin } from "../../clauses/utils/mixin.js";
+import type { Variable } from "../../references/Variable.js";
+import type { Expr } from "../../types.js";
+import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists.js";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ListComprehension extends WithWhere {}

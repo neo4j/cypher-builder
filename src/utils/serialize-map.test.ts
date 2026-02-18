@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "..";
-import { CypherEnvironment } from "../Environment";
-import { serializeMap } from "./serialize-map";
+import Cypher from "../index.js";
+import { CypherEnvironment } from "../Environment.js";
+import { serializeMap } from "./serialize-map.js";
 
 describe("serializeMap", () => {
     const env = new CypherEnvironment();

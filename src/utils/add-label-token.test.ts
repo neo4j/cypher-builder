@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { addLabelToken } from "./add-label-token";
+import { addLabelToken } from "./add-label-token.js";
 
 describe("addLabelToken", () => {
     test("addLabelToken without labels", () => {

@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import type { Expr } from "../../types";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Expr } from "../../types.js";
 
 /** Represents a Cypher Function, all Cypher functions provided by the library extend from this class, and it can be used to use custom functions
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/ | Cypher Documentation}

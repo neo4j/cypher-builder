@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import type { Expr, NormalizationType } from "../../types";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Expr, NormalizationType } from "../../types.js";
 
 type ComparisonOperator =
     | "="

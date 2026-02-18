@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { InputArgument } from "../../../procedures/CypherProcedure";
-import { CypherProcedure, VoidCypherProcedure } from "../../../procedures/CypherProcedure";
-import type { Literal } from "../../../references/Literal";
-import type { Param } from "../../../references/Param";
-import type { Variable } from "../../../references/Variable";
-import type { Expr } from "../../../types";
-import { normalizeMap, normalizeVariable } from "../../../utils/normalize-variable";
+import type { InputArgument } from "../../../procedures/CypherProcedure.js";
+import { CypherProcedure, VoidCypherProcedure } from "../../../procedures/CypherProcedure.js";
+import type { Literal } from "../../../references/Literal.js";
+import type { Param } from "../../../references/Param.js";
+import type { Variable } from "../../../references/Variable.js";
+import type { Expr } from "../../../types.js";
+import { normalizeMap, normalizeVariable } from "../../../utils/normalize-variable.js";
 
 type FulltextPhrase = string | Literal<string> | Param | Variable;
 

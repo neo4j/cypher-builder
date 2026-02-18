@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import { SetClause } from "./Set";
+import type { CypherEnvironment } from "../../Environment.js";
+import { SetClause } from "./Set.js";
 
 export class OnMatch extends SetClause {
     /** @internal */
