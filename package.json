@@ -1,6 +1,6 @@
 {
     "name": "@neo4j/cypher-builder",
-    "version": "2.11.0",
+    "version": "2.12.0",
     "description": "A programmatic API for building Cypher queries for Neo4j",
     "exports": "./dist/index.js",
     "main": "./dist/index.js",
@@ -18,7 +18,7 @@
         "test": "jest",
         "build": "tsc --build tsconfig.production.json",
         "docs": "npm run antora-docs && npm run docs-ref",
-        "antora-docs": "npm run build --prefix ./docs",
+        "antora-docs": "npm run build:publish --prefix ./docs",
         "docs-ref": "typedoc src/Cypher.ts",
         "lint": "eslint .",
         "changeset": "changeset",
@@ -59,7 +59,7 @@
         "knip": "5.83.0",
         "prettier": "3.8.1",
         "ts-jest": "29.4.6",
-        "typedoc": "0.28.16",
+        "typedoc": "0.28.17",
         "typescript": "5.9.3"
     }
 }

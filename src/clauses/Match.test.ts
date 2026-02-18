@@ -1,20 +1,6 @@
 /*
  * Copyright (c) "Neo4j"
  * Neo4j Sweden AB [http://neo4j.com]
- *
- * This file is part of Neo4j.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 import type { Predicate } from "..";
@@ -1088,6 +1074,122 @@ WHERE this0.title = $param0"
   "param0": "movie2",
 }
 `);
+        });
+    });
+
+    describe("Multiple match patterns", () => {
+        test("Two patterns", () => {
+            const actor = new Cypher.Node();
+            const movie = new Cypher.Node();
+            const moreActors = new Cypher.Node();
+
+            const pattern1 = new Cypher.Pattern(actor, { labels: ["Person"] })
+                .related({ type: "ACTED_IN", direction: "undirected" })
+                .to(movie, { labels: ["Movie"] });
+
+            const pattern2 = new Cypher.Pattern(moreActors, { labels: ["Person"] })
+                .related({ type: "ACTED_IN", direction: "undirected" })
+                .to(movie);
+
+            const matchQuery = new Cypher.Match(pattern1, pattern2).return(new Cypher.Return(actor, moreActors, movie));
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH
+  (this0:Person)-[:ACTED_IN]-(this1:Movie),
+  (this2:Person)-[:ACTED_IN]-(this1)
+RETURN this0, this2, this1"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Spread of patterns", () => {
+            const actor = new Cypher.Node();
+            const movie = new Cypher.Node();
+            const moreActors = new Cypher.Node();
+
+            const pattern1 = new Cypher.Pattern(actor, { labels: ["Person"] })
+                .related({ type: "ACTED_IN", direction: "undirected" })
+                .to(movie, { labels: ["Movie"] });
+
+            const pattern2 = new Cypher.Pattern(moreActors, { labels: ["Person"] })
+                .related({ type: "ACTED_IN", direction: "undirected" })
+                .to(movie);
+
+            const patterns = [pattern1, pattern2];
+
+            const matchQuery = new Cypher.Match(...patterns).return(new Cypher.Return(actor, moreActors, movie));
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"MATCH
+  (this0:Person)-[:ACTED_IN]-(this1:Movie),
+  (this2:Person)-[:ACTED_IN]-(this1)
+RETURN this0, this2, this1"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("SHORTEST with multiple patterns should throw", () => {
+            const actor = new Cypher.Node();
+            const movie = new Cypher.Node();
+            const moreActors = new Cypher.Node();
+
+            const pattern1 = new Cypher.Pattern(actor, { labels: ["Person"] })
+                .related({ type: "ACTED_IN", direction: "undirected" })
+                .to(movie, { labels: ["Movie"] });
+
+            const pattern2 = new Cypher.Pattern(moreActors, { labels: ["Person"] })
+                .related({ type: "ACTED_IN", direction: "undirected" })
+                .to(movie);
+
+            const matchQuery = new Cypher.Match(pattern1, pattern2)
+                .shortest(2)
+                .return(new Cypher.Return(actor, moreActors, movie));
+
+            expect(() => {
+                matchQuery.build();
+            }).toThrow("Shortest cannot be used with multiple path patterns");
+        });
+
+        test("OPTIONAL MATCH with multiple patterns", () => {
+            const actor = new Cypher.Node();
+            const movie = new Cypher.Node();
+            const moreActors = new Cypher.Node();
+
+            const pattern1 = new Cypher.Pattern(actor, { labels: ["Person"] })
+                .related({ type: "ACTED_IN", direction: "undirected" })
+                .to(movie, { labels: ["Movie"] });
+
+            const pattern2 = new Cypher.Pattern(moreActors, { labels: ["Person"] })
+                .related({ type: "ACTED_IN", direction: "undirected" })
+                .to(movie);
+
+            const matchQuery = new Cypher.OptionalMatch(pattern1, pattern2).return(
+                new Cypher.Return(actor, moreActors, movie)
+            );
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`
+"OPTIONAL MATCH
+  (this0:Person)-[:ACTED_IN]-(this1:Movie),
+  (this2:Person)-[:ACTED_IN]-(this1)
+RETURN this0, this2, this1"
+`);
+
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Undefined pattern should throw", () => {
+            const actor = new Cypher.Node();
+            const movie = new Cypher.Node();
+            const moreActors = new Cypher.Node();
+
+            expect(() => {
+                new Cypher.Match().return(new Cypher.Return(actor, moreActors, movie));
+            }).toThrow(`At least one pattern must be provided to Match`);
         });
     });
 });

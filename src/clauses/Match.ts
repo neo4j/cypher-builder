@@ -1,20 +1,6 @@
 /*
  * Copyright (c) "Neo4j"
  * Neo4j Sweden AB [http://neo4j.com]
- *
- * This file is part of Neo4j.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 import type { CypherEnvironment } from "../Environment";
@@ -82,13 +68,16 @@ export type MatchClausePattern = Pattern | QuantifiedPath | PathAssign<Pattern |
     WithForeach
 )
 export class Match extends Clause {
-    private readonly pattern: MatchClausePattern;
+    private readonly patterns: MatchClausePattern[];
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
 
-    constructor(pattern: MatchClausePattern) {
+    constructor(...patterns: MatchClausePattern[]) {
         super();
-        this.pattern = pattern;
+        if (patterns.length === 0) {
+            throw new Error("At least one pattern must be provided to Match");
+        }
+        this.patterns = patterns;
     }
 
     /** Makes the clause an OPTIONAL MATCH
@@ -180,7 +169,7 @@ export class Match extends Clause {
 
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
-        const patternCypher = this.pattern.getCypher(env);
+        const patternCyphers = this.patterns.map((pattern) => pattern.getCypher(env));
 
         const whereCypher = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
 
@@ -191,7 +180,18 @@ export class Match extends Clause {
         const optionalMatch = this._optional ? "OPTIONAL " : "";
         const shortestStatement = this.getShortestStatement();
 
-        return `${optionalMatch}MATCH ${shortestStatement}${patternCypher}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        if (patternCyphers.length > 1 && shortestStatement) {
+            throw new Error("Shortest cannot be used with multiple path patterns");
+        }
+
+        let patternStr: string;
+        if (patternCyphers.length > 1) {
+            patternStr = `\n${patternCyphers.map((p) => `  ${p}`).join(",\n")}`;
+        } else {
+            patternStr = ` ${shortestStatement}${patternCyphers[0]}`;
+        }
+
+        return `${optionalMatch}MATCH${patternStr}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {
@@ -216,8 +216,8 @@ export class Match extends Clause {
  * @group Clauses
  */
 export class OptionalMatch extends Match {
-    constructor(pattern: MatchClausePattern) {
-        super(pattern);
+    constructor(...patterns: MatchClausePattern[]) {
+        super(...patterns);
         this.optional();
     }
 }
