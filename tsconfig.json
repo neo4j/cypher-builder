@@ -7,7 +7,6 @@
         "resolveJsonModule": true,
         "noImplicitAny": true,
         "rootDir": ".",
-        "baseUrl": ".",
         "outDir": "dist",
         "stripInternal": false, // TODO: Change this after validating output .d.ts
         "noUncheckedIndexedAccess": true,
