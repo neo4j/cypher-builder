@@ -16,19 +16,21 @@ If you must support Neo4j 4, stay with Cypher Builder 2.x, otherwise, migrate to
 Node.js 16 is no longer supported.
 Update Node.js to version 20.0.0 or above.
 
-=== Cypher 4 no longer supported
+== Cypher 4 no longer supported
 
 Cypher 4, and Neo4j 4 databases are no longer supported.
 Cypher Builder 3 targets Cypher 5 and 25.
 
 The following features are Cypher 4 only, and have been removed from Cypher Builder.
 
-==== Removed functions deprecated in Cypher 5
+=== Removed functions deprecated in Cypher 5
+
+The following functions are still supported in Cypher 5, but have been deprecated. These been removed from Cypher Builder: 
 
 - `distance` in favor of `point.distance`
 - `id` in favor of `elementId`
 
-==== Removed support for patterns in size
+=== Removed support for patterns in size
 
 No longer supported:
 [source, javascript]
@@ -41,7 +43,7 @@ Cypher.size(new Cypher.Pattern(node));
 size((this0));
 ----
 
-Instead, use `new Cypher.Count`:
+Instead, use `Cypher.Count`:
 
 [source, javascript]
 ----
@@ -55,10 +57,9 @@ COUNT {
 }
 ----
 
-==== Removed `labelOperator`
+=== Removed `labelOperator`
 
-Removed the option `labelOperator`.
-Instead, the operator `&`  is the default when using multiple labels:.
+Removed the option `labelOperator` from the `.build` method. The operator `&` is now the default operator when using multiple labels:
 
 
 No longer supported:
@@ -82,10 +83,12 @@ After:
 MATCH (this1:Movie&Film)
 ----
 
+The label operator `:` is no longer supported.
 
-==== Removed `.importWith` from `Call`
 
-Remove `.importWith` from `Call` clauses in favor of constructor options.
+=== Removed `.importWith` from `Call`
+
+Remove `.importWith` from `Call` clauses in favor of constructor parameters.
 
 No longer supported:
 
@@ -155,7 +158,7 @@ function validatePredicate(predicate: Predicate, message: string): CypherFunctio
 ----
 
 == API changes
-The following are changes to the API, made to improve consistency across the Cypher Builder API.
+The following are changes made to improve consistency across the Cypher Builder API.
 
 === ListComprehension
 
@@ -185,19 +188,13 @@ In both cases, the same comprehension is generated:
 The `ListComprehension` method `.in` no longer throws if called twice.
 Instead, it overrides the expression.
 
-Before:
+Before, the following code will throw an error:
 [source, javascript]
 ----
 new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2])).in(new Cypher.Literal([1]))
 ----
 
-After:
-[source, javascript]
-----
-new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2])).in(new Cypher.Literal([1]))
-----
-
-Generated Cypher:
+After, it will generate the following Cypher:
 
 [source, cypher]
 ----
@@ -291,7 +288,7 @@ const myOperation: Cypher.Expr = Cypher.and()
 
 === Changed Cypher formatting
 
-Generated Cypher now follows the best practices recommended by the link:https://neo4j.com/docs/cypher-manual/current/styleguide/[Cypher Styleguide].
+Generated Cypher has been changed to better follow the best practices recommended by the link:https://neo4j.com/docs/cypher-manual/current/styleguide/[Cypher Styleguide].
 
 For example:
 
@@ -319,4 +316,4 @@ RETURN this0
 ----
 
 This doesn't have any impact on the behavior itself, and should not cause any breaking changes.
-It may however affect projects that modify or test the exact syntax of the Cypher generated with Cypher Builder.
+It may however affect projects that modify or test the exact output of the Cypher generated with Cypher Builder.
