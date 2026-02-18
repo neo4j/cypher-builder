@@ -5,6 +5,7 @@ on:
     branches: ["main", "*.x", "*-dev"]
   pull_request:
     branches: ["main", "*.x", "*-dev"]
+
 jobs:
   sonarqube:
     name: SonarQube
@@ -15,9 +16,10 @@ jobs:
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           node-version: lts/*
-      - run: npm ci
-      - name: "Run test with coverage"
-      - run: npm test -- --coverage
+      - name: "Run tests with coverage"
+        run: |
+          npm ci
+          npm test -- --coverage
       - name: SonarQubeScan Scan
         uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9 # v7
         env:
