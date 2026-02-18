@@ -4,6 +4,7 @@
     "description": "A programmatic API for building Cypher queries for Neo4j",
     "exports": "./dist/index.js",
     "main": "./dist/index.js",
+    "type": "module",
     "types": "./dist/index.d.ts",
     "files": [
         "dist/**/*.ts",
