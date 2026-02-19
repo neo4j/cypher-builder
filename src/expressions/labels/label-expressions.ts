@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { CypherCompilable, Expr } from "../../types";
-import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
-import { escapeLabel } from "../../utils/escape";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { CypherCompilable, Expr } from "../../types.js";
+import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists.js";
+import { escapeLabel } from "../../utils/escape.js";
 
 /** @inline */
 type LabelSource = string | LabelExpr | Expr;

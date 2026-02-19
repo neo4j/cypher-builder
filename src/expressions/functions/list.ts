@@ -3,12 +3,12 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { Variable } from "../../references/Variable";
-import type { Expr } from "../../types";
-import { filterTruthy } from "../../utils/filter-truthy";
-import { normalizeExpr } from "../../utils/normalize-variable";
-import { CypherFunction } from "./CypherFunctions";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Variable } from "../../references/Variable.js";
+import type { Expr } from "../../types.js";
+import { filterTruthy } from "../../utils/filter-truthy.js";
+import { normalizeExpr } from "../../utils/normalize-variable.js";
+import { CypherFunction } from "./CypherFunctions.js";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/list/#functions-keys | Cypher Documentation}

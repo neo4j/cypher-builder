@@ -3,27 +3,27 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import { Clause } from "../clauses/Clause";
-import { WithCreate } from "../clauses/mixins/clauses/WithCreate";
-import { WithMatch } from "../clauses/mixins/clauses/WithMatch";
-import { WithMerge } from "../clauses/mixins/clauses/WithMerge";
-import { WithReturn } from "../clauses/mixins/clauses/WithReturn";
-import { WithUnwind } from "../clauses/mixins/clauses/WithUnwind";
-import { WithWith } from "../clauses/mixins/clauses/WithWith";
-import { WithDelete } from "../clauses/mixins/sub-clauses/WithDelete";
-import { WithOrder } from "../clauses/mixins/sub-clauses/WithOrder";
-import { WithSetRemove } from "../clauses/mixins/sub-clauses/WithSetRemove";
-import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
-import type { ProjectionColumn } from "../clauses/sub-clauses/Projection";
-import { Projection } from "../clauses/sub-clauses/Projection";
-import { mixin } from "../clauses/utils/mixin";
-import type { Literal } from "../references/Literal";
-import type { Variable } from "../references/Variable";
-import { NamedVariable } from "../references/Variable";
-import type { Expr } from "../types";
-import { asArray } from "../utils/as-array";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import type { CypherEnvironment } from "../Environment.js";
+import { Clause } from "../clauses/Clause.js";
+import { WithCreate } from "../clauses/mixins/clauses/WithCreate.js";
+import { WithMatch } from "../clauses/mixins/clauses/WithMatch.js";
+import { WithMerge } from "../clauses/mixins/clauses/WithMerge.js";
+import { WithReturn } from "../clauses/mixins/clauses/WithReturn.js";
+import { WithUnwind } from "../clauses/mixins/clauses/WithUnwind.js";
+import { WithWith } from "../clauses/mixins/clauses/WithWith.js";
+import { WithDelete } from "../clauses/mixins/sub-clauses/WithDelete.js";
+import { WithOrder } from "../clauses/mixins/sub-clauses/WithOrder.js";
+import { WithSetRemove } from "../clauses/mixins/sub-clauses/WithSetRemove.js";
+import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere.js";
+import type { ProjectionColumn } from "../clauses/sub-clauses/Projection.js";
+import { Projection } from "../clauses/sub-clauses/Projection.js";
+import { mixin } from "../clauses/utils/mixin.js";
+import type { Literal } from "../references/Literal.js";
+import type { Variable } from "../references/Variable.js";
+import { NamedVariable } from "../references/Variable.js";
+import type { Expr } from "../types.js";
+import { asArray } from "../utils/as-array.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
 
 /** @group Clauses */
 export type YieldProjectionColumn<T extends string> = T | [T, Variable | Literal | string];

@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { BuildConfig } from "./Cypher";
-import { Param } from "./references/Param";
-import type { NamedReference, Variable } from "./references/Variable";
+import type { BuildConfig } from "./Cypher.js";
+import { Param } from "./references/Param.js";
+import type { NamedReference, Variable } from "./references/Variable.js";
 
 type EnvConfig = {
     unsafeEscapeOptions: NonNullable<BuildConfig["unsafeEscapeOptions"]>;

@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import type { Expr } from "../types";
-import { escapeProperty } from "./escape";
+import type { CypherEnvironment } from "../Environment.js";
+import type { Expr } from "../types.js";
+import { escapeProperty } from "./escape.js";
 
 export function serializeMap(env: CypherEnvironment, map: Map<string, Expr>, omitCurlyBraces = false): string {
     const serializedFields: string[] = [];

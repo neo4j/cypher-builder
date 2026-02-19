@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { DeleteInput } from "../../sub-clauses/Delete";
-import { DeleteClause } from "../../sub-clauses/Delete";
-import { Mixin } from "../Mixin";
+import type { DeleteInput } from "../../sub-clauses/Delete.js";
+import { DeleteClause } from "../../sub-clauses/Delete.js";
+import { Mixin } from "../Mixin.js";
 
 export abstract class WithDelete extends Mixin {
     protected deleteClause: DeleteClause | undefined;

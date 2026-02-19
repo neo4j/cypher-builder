@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { HasLabel } from "../expressions/HasLabel";
-import type { LabelExpr } from "../expressions/labels/label-expressions";
-import type { NamedReference } from "./Variable";
-import { Variable } from "./Variable";
+import { HasLabel } from "../expressions/HasLabel.js";
+import type { LabelExpr } from "../expressions/labels/label-expressions.js";
+import type { NamedReference } from "./Variable.js";
+import { Variable } from "./Variable.js";
 
 /** Reference to a relationship property
  * @group Variables

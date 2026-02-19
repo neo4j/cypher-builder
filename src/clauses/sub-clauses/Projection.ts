@@ -3,11 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import type { Literal } from "../../references/Literal";
-import type { Variable } from "../../references/Variable";
-import type { Expr } from "../../types";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Literal } from "../../references/Literal.js";
+import type { Variable } from "../../references/Variable.js";
+import type { Expr } from "../../types.js";
 
 /** @group Clauses */
 export type ProjectionColumn = Expr | [Expr, string | Variable | Literal];

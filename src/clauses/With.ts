@@ -3,25 +3,25 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import type { Literal } from "../references/Literal";
-import type { Variable } from "../references/Variable";
-import type { Expr } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { Clause } from "./Clause";
-import { WithCall } from "./mixins/clauses/WithCall";
-import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
-import { WithCreate } from "./mixins/clauses/WithCreate";
-import { WithMatch } from "./mixins/clauses/WithMatch";
-import { WithMerge } from "./mixins/clauses/WithMerge";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { WithUnwind } from "./mixins/clauses/WithUnwind";
-import { WithDelete } from "./mixins/sub-clauses/WithDelete";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
-import { WithWhere } from "./mixins/sub-clauses/WithWhere";
-import { Projection } from "./sub-clauses/Projection";
-import { mixin } from "./utils/mixin";
+import type { CypherEnvironment } from "../Environment.js";
+import type { Literal } from "../references/Literal.js";
+import type { Variable } from "../references/Variable.js";
+import type { Expr } from "../types.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import { Clause } from "./Clause.js";
+import { WithCall } from "./mixins/clauses/WithCall.js";
+import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure.js";
+import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithMatch } from "./mixins/clauses/WithMatch.js";
+import { WithMerge } from "./mixins/clauses/WithMerge.js";
+import { WithReturn } from "./mixins/clauses/WithReturn.js";
+import { WithUnwind } from "./mixins/clauses/WithUnwind.js";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere.js";
+import { Projection } from "./sub-clauses/Projection.js";
+import { mixin } from "./utils/mixin.js";
 
 // With requires an alias for expressions that are not variables
 /** @inline */

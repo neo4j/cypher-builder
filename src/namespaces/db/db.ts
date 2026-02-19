@@ -3,17 +3,17 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherFunction } from "../../expressions/functions/CypherFunctions";
-import { CypherProcedure, VoidCypherProcedure } from "../../procedures/CypherProcedure";
-import type { Expr } from "../../types";
-import { normalizeExpr } from "../../utils/normalize-variable";
+import { CypherFunction } from "../../expressions/functions/CypherFunctions.js";
+import { CypherProcedure, VoidCypherProcedure } from "../../procedures/CypherProcedure.js";
+import type { Expr } from "../../types.js";
+import { normalizeExpr } from "../../utils/normalize-variable.js";
 
-export * as cdc from "./cdc";
+export * as cdc from "./cdc.js";
 /**
  * @hideGroups
  */
-export * as index from "./index/dbIndex";
-export * as schema from "./schema";
+export * as index from "./index/dbIndex.js";
+export * as schema from "./schema.js";
 
 const DB_NAMESPACE = "db";
 

@@ -3,20 +3,20 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { PathVariable } from "..";
-import { CypherEnvironment } from "../Environment";
-import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
-import { mixin } from "../clauses/utils/mixin";
-import type { LabelExpr } from "../expressions/labels/label-expressions";
-import { Variable } from "../references/Variable";
-import type { Expr } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { padBlock } from "../utils/pad-block";
-import { PartialPattern } from "./PartialPattern";
-import { PathAssign } from "./PathAssign";
-import { PatternElement } from "./PatternElement";
-import { labelsToString } from "./labels-to-string";
-import { QuantifiedPattern, type Quantifier } from "./quantified-patterns/QuantifiedPattern";
+import type { PathVariable } from "../index.js";
+import { CypherEnvironment } from "../Environment.js";
+import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere.js";
+import { mixin } from "../clauses/utils/mixin.js";
+import type { LabelExpr } from "../expressions/labels/label-expressions.js";
+import { Variable } from "../references/Variable.js";
+import type { Expr } from "../types.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import { padBlock } from "../utils/pad-block.js";
+import { PartialPattern } from "./PartialPattern.js";
+import { PathAssign } from "./PathAssign.js";
+import { PatternElement } from "./PatternElement.js";
+import { labelsToString } from "./labels-to-string.js";
+import { QuantifiedPattern, type Quantifier } from "./quantified-patterns/QuantifiedPattern.js";
 
 /** @group Patterns */
 export type NodePatternOptions = {

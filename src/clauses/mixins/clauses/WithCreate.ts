@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Pattern } from "../../..";
-import { Create } from "../../..";
-import { MixinClause } from "../Mixin";
+import type { Pattern } from "../../../index.js";
+import { Create } from "../../../index.js";
+import { MixinClause } from "../Mixin.js";
 
 export abstract class WithCreate extends MixinClause {
     /** Add a {@link Create} clause

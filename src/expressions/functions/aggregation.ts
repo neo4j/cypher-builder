@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { Expr } from "../../types";
-import { normalizeExpr } from "../../utils/normalize-variable";
-import { CypherFunction } from "./CypherFunctions";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Expr } from "../../types.js";
+import { normalizeExpr } from "../../utils/normalize-variable.js";
+import { CypherFunction } from "./CypherFunctions.js";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/aggregating/#functions-count | Cypher Documentation}

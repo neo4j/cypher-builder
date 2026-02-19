@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { UnwindProjectionColumn } from "../../Unwind";
-import { Unwind } from "../../Unwind";
-import { MixinClause } from "../Mixin";
+import type { UnwindProjectionColumn } from "../../Unwind.js";
+import { Unwind } from "../../Unwind.js";
+import { MixinClause } from "../Mixin.js";
 
 export abstract class WithUnwind extends MixinClause {
     /** Append an {@link Unwind} clause.

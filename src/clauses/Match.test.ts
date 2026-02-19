@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Predicate } from "..";
-import Cypher from "..";
+import type { Predicate } from "../index.js";
+import Cypher from "../index.js";
 
 describe("CypherBuilder Match", () => {
     test("Match node", () => {

@@ -3,21 +3,21 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import type { Variable } from "../references/Variable";
-import type { Expr } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { padBlock } from "../utils/pad-block";
-import { Clause } from "./Clause";
-import type { Create } from "./Create";
-import type { Merge } from "./Merge";
-import { WithCreate } from "./mixins/clauses/WithCreate";
-import { WithMerge } from "./mixins/clauses/WithMerge";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { WithWith } from "./mixins/clauses/WithWith";
-import { WithDelete } from "./mixins/sub-clauses/WithDelete";
-import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
-import { mixin } from "./utils/mixin";
+import type { CypherEnvironment } from "../Environment.js";
+import type { Variable } from "../references/Variable.js";
+import type { Expr } from "../types.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import { padBlock } from "../utils/pad-block.js";
+import { Clause } from "./Clause.js";
+import type { Create } from "./Create.js";
+import type { Merge } from "./Merge.js";
+import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithMerge } from "./mixins/clauses/WithMerge.js";
+import { WithReturn } from "./mixins/clauses/WithReturn.js";
+import { WithWith } from "./mixins/clauses/WithWith.js";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
+import { mixin } from "./utils/mixin.js";
 
 export interface Foreach extends WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge {}
 

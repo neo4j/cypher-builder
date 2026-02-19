@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import type { Label } from "../../references/Label";
-import type { PropertyRef } from "../../references/PropertyRef";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Label } from "../../references/Label.js";
+import type { PropertyRef } from "../../references/PropertyRef.js";
 
 export class RemoveClause extends CypherASTNode {
     private readonly removeInput: Array<PropertyRef | Label>;

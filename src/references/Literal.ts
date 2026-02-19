@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherCompilable } from "../types";
-import { escapeLiteralString } from "../utils/escape";
+import type { CypherCompilable } from "../types.js";
+import { escapeLiteralString } from "../utils/escape.js";
 
 /**
  * Possible types of a {@link Literal} expression

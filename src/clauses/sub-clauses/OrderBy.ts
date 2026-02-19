@@ -3,11 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import type { Expr } from "../../types";
-import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
-import { normalizeExpr } from "../../utils/normalize-variable";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Expr } from "../../types.js";
+import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists.js";
+import { normalizeExpr } from "../../utils/normalize-variable.js";
 
 /** @group Clauses */
 export type Order = "ASC" | "DESC";

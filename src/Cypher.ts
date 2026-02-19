@@ -4,26 +4,26 @@
  */
 
 // Clauses
-export { Call, OptionalCall, type CallInTransactionOptions } from "./clauses/Call";
-export { Create } from "./clauses/Create";
-export { Finish } from "./clauses/Finish";
-export { Foreach, type ForeachClauses } from "./clauses/Foreach";
-export { LoadCSV } from "./clauses/LoadCSV";
-export { Match, OptionalMatch } from "./clauses/Match";
-export { Merge } from "./clauses/Merge";
-export { Raw, type RawCypherContext } from "./clauses/Raw";
-export { Return } from "./clauses/Return";
-export { Union } from "./clauses/Union";
-export { Unwind, type UnwindProjectionColumn } from "./clauses/Unwind";
-export { Use } from "./clauses/Use";
-export { With } from "./clauses/With";
+export { Call, OptionalCall, type CallInTransactionOptions } from "./clauses/Call.js";
+export { Create } from "./clauses/Create.js";
+export { Finish } from "./clauses/Finish.js";
+export { Foreach, type ForeachClauses } from "./clauses/Foreach.js";
+export { LoadCSV } from "./clauses/LoadCSV.js";
+export { Match, OptionalMatch } from "./clauses/Match.js";
+export { Merge } from "./clauses/Merge.js";
+export { Raw, type RawCypherContext } from "./clauses/Raw.js";
+export { Return } from "./clauses/Return.js";
+export { Union } from "./clauses/Union.js";
+export { Unwind, type UnwindProjectionColumn } from "./clauses/Unwind.js";
+export { Use } from "./clauses/Use.js";
+export { With } from "./clauses/With.js";
 
 // Patterns
-export { labelExpr } from "./expressions/labels/label-expressions";
-export type { PartialPattern } from "./pattern/PartialPattern";
-export { Pattern, type NodePatternOptions, type RelationshipPatternOptions } from "./pattern/Pattern";
-export { QuantifiedPath } from "./pattern/quantified-patterns/QuantifiedPath";
-export type { QuantifiedPattern, Quantifier } from "./pattern/quantified-patterns/QuantifiedPattern";
+export { labelExpr } from "./expressions/labels/label-expressions.js";
+export type { PartialPattern } from "./pattern/PartialPattern.js";
+export { Pattern, type NodePatternOptions, type RelationshipPatternOptions } from "./pattern/Pattern.js";
+export { QuantifiedPath } from "./pattern/quantified-patterns/QuantifiedPath.js";
+export type { QuantifiedPattern, Quantifier } from "./pattern/quantified-patterns/QuantifiedPattern.js";
 
 // Variables and references
 export {
@@ -32,47 +32,47 @@ export {
     CypherFalse as false,
     CypherTrue as true,
     type LiteralValue,
-} from "./references/Literal";
-export { NamedNode, NodeRef as Node } from "./references/NodeRef";
-export { NamedParam, Param } from "./references/Param";
-export { NamedPathVariable, PathVariable } from "./references/Path";
-export { PropertyRef as Property } from "./references/PropertyRef";
-export { NamedRelationship, RelationshipRef as Relationship } from "./references/RelationshipRef";
-export { NamedVariable, Variable } from "./references/Variable";
+} from "./references/Literal.js";
+export { NamedNode, NodeRef as Node } from "./references/NodeRef.js";
+export { NamedParam, Param } from "./references/Param.js";
+export { NamedPathVariable, PathVariable } from "./references/Path.js";
+export { PropertyRef as Property } from "./references/PropertyRef.js";
+export { NamedRelationship, RelationshipRef as Relationship } from "./references/RelationshipRef.js";
+export { NamedVariable, Variable } from "./references/Variable.js";
 
 // Expressions
-export { Case, type When } from "./expressions/Case";
-export { CypherTypes as TYPE, isNotType, isType, type IsType, type ListType } from "./expressions/IsType";
+export { Case, type When } from "./expressions/Case.js";
+export { CypherTypes as TYPE, isNotType, isType, type IsType, type ListType } from "./expressions/IsType.js";
 
 // Subquery Expressions
-export { Collect } from "./expressions/subquery/Collect";
-export { Count } from "./expressions/subquery/Count";
-export { Exists } from "./expressions/subquery/Exists";
+export { Collect } from "./expressions/subquery/Collect.js";
+export { Count } from "./expressions/subquery/Count.js";
+export { Exists } from "./expressions/subquery/Exists.js";
 
-export * as db from "./namespaces/db/db";
+export * as db from "./namespaces/db/db.js";
 /**
  * @hideGroups
  */
-export * as genai from "./namespaces/genai/genai";
-export * as tx from "./namespaces/tx";
+export * as genai from "./namespaces/genai/genai.js";
+export * as tx from "./namespaces/tx.js";
 /**
  * @hideGroups
  */
-export * as vector from "./namespaces/vector/vector";
+export * as vector from "./namespaces/vector/vector.js";
 
 // --Lists
-export { ListComprehension } from "./expressions/list/ListComprehension";
-export { ListExpr as List } from "./expressions/list/ListExpr";
-export { listIndex, type ListIndex } from "./expressions/list/ListIndex";
-export { listRange, type ListRange } from "./expressions/list/ListRange";
-export { PatternComprehension } from "./expressions/list/PatternComprehension";
+export { ListComprehension } from "./expressions/list/ListComprehension.js";
+export { ListExpr as List } from "./expressions/list/ListExpr.js";
+export { listIndex, type ListIndex } from "./expressions/list/ListIndex.js";
+export { listRange, type ListRange } from "./expressions/list/ListRange.js";
+export { PatternComprehension } from "./expressions/list/PatternComprehension.js";
 
 // --Map
-export { MapExpr as Map } from "./expressions/map/MapExpr";
-export { MapProjection } from "./expressions/map/MapProjection";
+export { MapExpr as Map } from "./expressions/map/MapExpr.js";
+export { MapProjection } from "./expressions/map/MapProjection.js";
 
 // --Operations
-export { and, not, or, xor, type BooleanOp } from "./expressions/operations/boolean";
+export { and, not, or, xor, type BooleanOp } from "./expressions/operations/boolean.js";
 export {
     contains,
     endsWith,
@@ -90,12 +90,12 @@ export {
     neq,
     startsWith,
     type ComparisonOp,
-} from "./expressions/operations/comparison";
-export { ConcatOp, concat } from "./expressions/operations/concat";
-export { divide, minus, mod, multiply, plus, pow, type MathOp } from "./expressions/operations/math";
+} from "./expressions/operations/comparison.js";
+export { ConcatOp, concat } from "./expressions/operations/concat.js";
+export { divide, minus, mod, multiply, plus, pow, type MathOp } from "./expressions/operations/math.js";
 
 // --Functions
-export { CypherFunction as Function } from "./expressions/functions/CypherFunctions";
+export { CypherFunction as Function } from "./expressions/functions/CypherFunctions.js";
 
 export {
     avg,
@@ -108,10 +108,10 @@ export {
     stDev,
     stDevP,
     sum,
-} from "./expressions/functions/aggregation";
-export * as graph from "./expressions/functions/graph";
-export * from "./expressions/functions/list";
-export { file, linenumber } from "./expressions/functions/load-csv";
+} from "./expressions/functions/aggregation.js";
+export * as graph from "./expressions/functions/graph.js";
+export * from "./expressions/functions/list.js";
+export { file, linenumber } from "./expressions/functions/load-csv.js";
 export {
     abs,
     acos,
@@ -137,12 +137,12 @@ export {
     sin,
     sqrt,
     tan,
-} from "./expressions/functions/math";
-export * from "./expressions/functions/path";
-export { all, any, exists, isEmpty, none, single } from "./expressions/functions/predicate";
-export * from "./expressions/functions/scalar";
-export * from "./expressions/functions/spatial";
-export * from "./expressions/functions/string";
+} from "./expressions/functions/math.js";
+export * from "./expressions/functions/path.js";
+export { all, any, exists, isEmpty, none, single } from "./expressions/functions/predicate.js";
+export * from "./expressions/functions/scalar.js";
+export * from "./expressions/functions/spatial.js";
+export * from "./expressions/functions/string.js";
 export {
     cypherDate as date,
     cypherDatetime as datetime,
@@ -150,33 +150,33 @@ export {
     cypherLocalDatetime as localdatetime,
     cypherLocalTime as localtime,
     cypherTime as time,
-} from "./expressions/functions/temporal";
+} from "./expressions/functions/temporal.js";
 
 // Procedures
-export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure";
+export { CypherProcedure as Procedure, VoidCypherProcedure as VoidProcedure } from "./procedures/CypherProcedure.js";
 
 // Types
-export type { BuildConfig, Clause } from "./clauses/Clause";
-export type { DeleteInput } from "./clauses/sub-clauses/Delete";
-export type { Order } from "./clauses/sub-clauses/OrderBy";
-export type { ProjectionColumn } from "./clauses/sub-clauses/Projection";
-export type { SetParam } from "./clauses/sub-clauses/Set";
-export type { CompositeClause } from "./clauses/utils/concat";
-export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation";
-export type { ROUND_PRECISION_MODE } from "./expressions/functions/math";
-export type { PredicateFunction } from "./expressions/functions/predicate";
-export type { TemporalUnit } from "./expressions/functions/temporal";
-export type { HasLabel } from "./expressions/HasLabel";
-export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions";
-export type { PathAssign } from "./pattern/PathAssign";
-export type { InputArgument } from "./procedures/CypherProcedure";
-export type { Yield, YieldProjectionColumn } from "./procedures/Yield";
-export type { Label } from "./references/Label";
-export type { CypherResult, Expr, NormalizationType, Predicate } from "./types";
+export type { BuildConfig, Clause } from "./clauses/Clause.js";
+export type { DeleteInput } from "./clauses/sub-clauses/Delete.js";
+export type { Order } from "./clauses/sub-clauses/OrderBy.js";
+export type { ProjectionColumn } from "./clauses/sub-clauses/Projection.js";
+export type { SetParam } from "./clauses/sub-clauses/Set.js";
+export type { CompositeClause } from "./clauses/utils/concat.js";
+export type { CypherAggregationFunction as AggregationFunction } from "./expressions/functions/aggregation.js";
+export type { ROUND_PRECISION_MODE } from "./expressions/functions/math.js";
+export type { PredicateFunction } from "./expressions/functions/predicate.js";
+export type { TemporalUnit } from "./expressions/functions/temporal.js";
+export type { HasLabel } from "./expressions/HasLabel.js";
+export type { LabelExpr, LabelOperator } from "./expressions/labels/label-expressions.js";
+export type { PathAssign } from "./pattern/PathAssign.js";
+export type { InputArgument } from "./procedures/CypherProcedure.js";
+export type { Yield, YieldProjectionColumn } from "./procedures/Yield.js";
+export type { Label } from "./references/Label.js";
+export type { CypherResult, Expr, NormalizationType, Predicate } from "./types.js";
 
 /**
  * Utility functions
  * @group Utils
  * @hideGroups
  */
-export * as utils from "./utils/utils";
+export * as utils from "./utils/utils.js";

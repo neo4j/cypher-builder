@@ -3,14 +3,14 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Label } from "../../..";
-import type { CypherEnvironment } from "../../../Environment";
-import type { PropertyRef } from "../../../references/PropertyRef";
-import { compileCypherIfExists } from "../../../utils/compile-cypher-if-exists";
-import { RemoveClause } from "../../sub-clauses/Remove";
-import type { SetParam } from "../../sub-clauses/Set";
-import { SetClause } from "../../sub-clauses/Set";
-import { Mixin } from "../Mixin";
+import type { Label } from "../../../index.js";
+import type { CypherEnvironment } from "../../../Environment.js";
+import type { PropertyRef } from "../../../references/PropertyRef.js";
+import { compileCypherIfExists } from "../../../utils/compile-cypher-if-exists.js";
+import { RemoveClause } from "../../sub-clauses/Remove.js";
+import type { SetParam } from "../../sub-clauses/Set.js";
+import { SetClause } from "../../sub-clauses/Set.js";
+import { Mixin } from "../Mixin.js";
 
 export abstract class WithSetRemove extends Mixin {
     private subClauses: Array<SetClause | RemoveClause> | undefined;

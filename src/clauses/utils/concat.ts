@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import { filterTruthy } from "../../utils/filter-truthy";
-import { Clause } from "../Clause";
+import type { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import { filterTruthy } from "../../utils/filter-truthy.js";
+import { Clause } from "../Clause.js";
 
 /** The result of multiple clauses concatenated with `Cypher.utils.concat`
  * @group Utils

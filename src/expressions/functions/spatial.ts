@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Expr } from "../../types";
-import { CypherFunction } from "./CypherFunctions";
+import type { Expr } from "../../types.js";
+import { CypherFunction } from "./CypherFunctions.js";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/spatial/ | Cypher Documentation}

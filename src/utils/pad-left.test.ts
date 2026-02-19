@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { padLeft } from "./pad-left";
+import { padLeft } from "./pad-left.js";
 
 describe("padLeft", () => {
     test("pads string", () => {

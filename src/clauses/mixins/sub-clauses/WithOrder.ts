@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Expr } from "../../../types";
-import type { Order } from "../../sub-clauses/OrderBy";
-import { OrderBy } from "../../sub-clauses/OrderBy";
-import { Mixin } from "../Mixin";
+import type { Expr } from "../../../types.js";
+import type { Order } from "../../sub-clauses/OrderBy.js";
+import { OrderBy } from "../../sub-clauses/OrderBy.js";
+import { Mixin } from "../Mixin.js";
 
 const DEFAULT_ORDER = "ASC";
 

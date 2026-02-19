@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Where } from "../../clauses/sub-clauses/Where";
-import type { CypherEnvironment } from "../../Environment";
-import type { Pattern } from "../../pattern/Pattern";
-import type { Variable } from "../../references/Variable";
-import type { Expr, Predicate } from "../../types";
-import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
-import { CypherFunction } from "./CypherFunctions";
+import { Where } from "../../clauses/sub-clauses/Where.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Pattern } from "../../pattern/Pattern.js";
+import type { Variable } from "../../references/Variable.js";
+import type { Expr, Predicate } from "../../types.js";
+import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists.js";
+import { CypherFunction } from "./CypherFunctions.js";
 
 /** Represents a predicate function that can be used in a WHERE statement
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/predicate/ | Cypher Documentation}

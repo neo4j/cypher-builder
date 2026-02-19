@@ -3,11 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../CypherASTNode";
-import type { CypherEnvironment } from "../Environment";
-import type { Expr, Predicate } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { padBlock } from "../utils/pad-block";
+import { CypherASTNode } from "../CypherASTNode.js";
+import type { CypherEnvironment } from "../Environment.js";
+import type { Expr, Predicate } from "../types.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import { padBlock } from "../utils/pad-block.js";
 
 /** Case statement
  * @group Expressions

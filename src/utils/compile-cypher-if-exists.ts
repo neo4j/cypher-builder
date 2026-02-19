@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import type { CypherCompilable } from "../types";
+import type { CypherEnvironment } from "../Environment.js";
+import type { CypherCompilable } from "../types.js";
 
 /** Compiles the cypher of an element, if the resulting cypher is not empty adds a prefix */
 export function compileCypherIfExists(

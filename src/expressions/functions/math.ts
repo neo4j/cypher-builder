@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Expr } from "../../Cypher";
-import { Literal } from "../../Cypher";
-import { filterTruthy } from "../../utils/filter-truthy";
-import { CypherFunction } from "./CypherFunctions";
+import type { Expr } from "../../Cypher.js";
+import { Literal } from "../../Cypher.js";
+import { filterTruthy } from "../../utils/filter-truthy.js";
+import { CypherFunction } from "./CypherFunctions.js";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-abs | Cypher Documentation}

@@ -5,7 +5,7 @@
 This page outlines the compatibility requirements for `@neo4j/cypher-builder` version 3 with Cypher and Node.js.
 
 * Targets link:https://neo4j.com/docs/cypher-manual/25/introduction/[Cypher 25], with support for link:https://neo4j.com/docs/cypher-manual/5/introduction/[Cypher 5].
-* Compatible with Node.js version 20.0.0 and later.
+* Compatible with Node.js version 20.19.0 and later.
 
 [NOTE]
 ====

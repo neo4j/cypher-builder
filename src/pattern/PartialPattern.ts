@@ -3,22 +3,22 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere";
-import { mixin } from "../clauses/utils/mixin";
-import type { LabelExpr } from "../expressions/labels/label-expressions";
-import type { Variable } from "../references/Variable";
-import type { Expr } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import type { CypherEnvironment } from "../Environment.js";
+import { WithWhere } from "../clauses/mixins/sub-clauses/WithWhere.js";
+import { mixin } from "../clauses/utils/mixin.js";
+import type { LabelExpr } from "../expressions/labels/label-expressions.js";
+import type { Variable } from "../references/Variable.js";
+import type { Expr } from "../types.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
 import {
     NestedPattern,
     type LengthOption,
     type NodePatternOptions,
     type Pattern,
     type RelationshipPatternOptions,
-} from "./Pattern";
-import { PatternElement } from "./PatternElement";
-import { typeToString } from "./labels-to-string";
+} from "./Pattern.js";
+import { PatternElement } from "./PatternElement.js";
+import { typeToString } from "./labels-to-string.js";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PartialPattern extends WithWhere {}

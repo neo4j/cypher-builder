@@ -3,29 +3,29 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { ConcatOp } from ".";
-import type { CypherEnvironment } from "./Environment";
-import type { Raw } from "./clauses/Raw";
-import type { Case } from "./expressions/Case";
-import type { HasLabel } from "./expressions/HasLabel";
-import type { IsType } from "./expressions/IsType";
-import type { CypherFunction } from "./expressions/functions/CypherFunctions";
-import type { PredicateFunction } from "./expressions/functions/predicate";
-import type { ListComprehension } from "./expressions/list/ListComprehension";
-import type { ListExpr } from "./expressions/list/ListExpr";
-import type { ListIndex } from "./expressions/list/ListIndex";
-import type { PatternComprehension } from "./expressions/list/PatternComprehension";
-import type { MapExpr } from "./expressions/map/MapExpr";
-import type { MapProjection } from "./expressions/map/MapProjection";
-import type { BooleanOp } from "./expressions/operations/boolean";
-import type { ComparisonOp } from "./expressions/operations/comparison";
-import type { MathOp } from "./expressions/operations/math";
-import type { Collect } from "./expressions/subquery/Collect";
-import type { Count } from "./expressions/subquery/Count";
-import type { Exists } from "./expressions/subquery/Exists";
-import type { Literal } from "./references/Literal";
-import type { PropertyRef } from "./references/PropertyRef";
-import type { Variable } from "./references/Variable";
+import type { ConcatOp } from "./index.js";
+import type { CypherEnvironment } from "./Environment.js";
+import type { Raw } from "./clauses/Raw.js";
+import type { Case } from "./expressions/Case.js";
+import type { HasLabel } from "./expressions/HasLabel.js";
+import type { IsType } from "./expressions/IsType.js";
+import type { CypherFunction } from "./expressions/functions/CypherFunctions.js";
+import type { PredicateFunction } from "./expressions/functions/predicate.js";
+import type { ListComprehension } from "./expressions/list/ListComprehension.js";
+import type { ListExpr } from "./expressions/list/ListExpr.js";
+import type { ListIndex } from "./expressions/list/ListIndex.js";
+import type { PatternComprehension } from "./expressions/list/PatternComprehension.js";
+import type { MapExpr } from "./expressions/map/MapExpr.js";
+import type { MapProjection } from "./expressions/map/MapProjection.js";
+import type { BooleanOp } from "./expressions/operations/boolean.js";
+import type { ComparisonOp } from "./expressions/operations/comparison.js";
+import type { MathOp } from "./expressions/operations/math.js";
+import type { Collect } from "./expressions/subquery/Collect.js";
+import type { Count } from "./expressions/subquery/Count.js";
+import type { Exists } from "./expressions/subquery/Exists.js";
+import type { Literal } from "./references/Literal.js";
+import type { PropertyRef } from "./references/PropertyRef.js";
+import type { Variable } from "./references/Variable.js";
 
 /** Represents a Cypher Expression
  * @group Expressions

@@ -3,23 +3,23 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Pattern } from "..";
-import type { CypherEnvironment } from "../Environment";
-import type { PathAssign } from "../pattern/PathAssign";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { padBlock } from "../utils/pad-block";
-import { Clause } from "./Clause";
-import { WithCreate } from "./mixins/clauses/WithCreate";
-import { WithFinish } from "./mixins/clauses/WithFinish";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { WithWith } from "./mixins/clauses/WithWith";
-import { WithDelete } from "./mixins/sub-clauses/WithDelete";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
-import type { OnCreateParam } from "./sub-clauses/OnCreate";
-import { OnCreate } from "./sub-clauses/OnCreate";
-import { OnMatch } from "./sub-clauses/OnMatch";
-import { mixin } from "./utils/mixin";
+import type { Pattern } from "../index.js";
+import type { CypherEnvironment } from "../Environment.js";
+import type { PathAssign } from "../pattern/PathAssign.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import { padBlock } from "../utils/pad-block.js";
+import { Clause } from "./Clause.js";
+import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithFinish } from "./mixins/clauses/WithFinish.js";
+import { WithReturn } from "./mixins/clauses/WithReturn.js";
+import { WithWith } from "./mixins/clauses/WithWith.js";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
+import type { OnCreateParam } from "./sub-clauses/OnCreate.js";
+import { OnCreate } from "./sub-clauses/OnCreate.js";
+import { OnMatch } from "./sub-clauses/OnMatch.js";
+import { mixin } from "./utils/mixin.js";
 
 export interface Merge extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder {}
 

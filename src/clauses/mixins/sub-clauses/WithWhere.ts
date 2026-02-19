@@ -3,16 +3,16 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { BooleanOp } from "../../../expressions/operations/boolean";
-import { and } from "../../../expressions/operations/boolean";
-import type { ComparisonOp } from "../../../expressions/operations/comparison";
-import { eq } from "../../../expressions/operations/comparison";
-import type { Literal } from "../../../references/Literal";
-import { PropertyRef } from "../../../references/PropertyRef";
-import { Variable } from "../../../references/Variable";
-import type { Predicate } from "../../../types";
-import { Where } from "../../sub-clauses/Where";
-import { Mixin } from "../Mixin";
+import type { BooleanOp } from "../../../expressions/operations/boolean.js";
+import { and } from "../../../expressions/operations/boolean.js";
+import type { ComparisonOp } from "../../../expressions/operations/comparison.js";
+import { eq } from "../../../expressions/operations/comparison.js";
+import type { Literal } from "../../../references/Literal.js";
+import { PropertyRef } from "../../../references/PropertyRef.js";
+import { Variable } from "../../../references/Variable.js";
+import type { Predicate } from "../../../types.js";
+import { Where } from "../../sub-clauses/Where.js";
+import { Mixin } from "../Mixin.js";
 
 /** @inline */
 type VariableLike = Variable | Literal | PropertyRef;

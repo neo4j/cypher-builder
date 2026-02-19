@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
+import Cypher from "../../index.js";
 
 describe("Exists subquery", () => {
     test("Exists predicate with subclause", () => {

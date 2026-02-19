@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Literal } from "../../../Cypher";
-import { CypherProcedure } from "../../../procedures/CypherProcedure";
-import type { Expr } from "../../../types";
-import { normalizeVariable } from "../../../utils/normalize-variable";
+import type { Literal } from "../../../Cypher.js";
+import { CypherProcedure } from "../../../procedures/CypherProcedure.js";
+import type { Expr } from "../../../types.js";
+import { normalizeVariable } from "../../../utils/normalize-variable.js";
 
 const VECTOR_NAMESPACE = "db.index.vector";
 

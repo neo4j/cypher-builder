@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { Variable } from "../../references/Variable";
-import type { CypherCompilable, Expr } from "../../types";
-import { escapeProperty } from "../../utils/escape";
-import { isString } from "../../utils/is-string";
-import { serializeMap } from "../../utils/serialize-map";
-import { MapExpr } from "./MapExpr";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { Variable } from "../../references/Variable.js";
+import type { CypherCompilable, Expr } from "../../types.js";
+import { escapeProperty } from "../../utils/escape.js";
+import { isString } from "../../utils/is-string.js";
+import { serializeMap } from "../../utils/serialize-map.js";
+import { MapExpr } from "./MapExpr.js";
 
 /** Represents a Map projection
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/maps/#cypher-map-projection | Cypher Documentation}

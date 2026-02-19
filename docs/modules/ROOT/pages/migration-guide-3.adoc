@@ -11,10 +11,14 @@ If you must support Neo4j 4, stay with Cypher Builder 2.x, otherwise, migrate to
 
 == Compatibility changes
 
-=== Minimum node engine changed to 20.0.0
+=== Moved to ES modules
+
+Cypher Builder has been migrated to ES modules, and is no longer available as a CommonJS module.
+
+=== Minimum node engine changed to 20.19.0
 
 Node.js 16 is no longer supported.
-Update Node.js to version 20.0.0 or above.
+Update Node.js to version 20.19.0 or above.
 
 == Cypher 4 no longer supported
 
