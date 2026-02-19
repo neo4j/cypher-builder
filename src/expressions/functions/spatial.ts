@@ -16,16 +16,6 @@ export function point(variable: Expr): CypherFunction {
 }
 
 /**
- * @see {@link https://neo4j.com/docs/cypher-manual/4.3/functions/spatial/#functions-distance | Cypher Documentation}
- * @group Functions
- * @category Spatial
- * @deprecated No longer supported in Neo4j 5. Use {@link point.distance} instead.
- */
-export function distance(lexpr: Expr, rexpr: Expr): CypherFunction {
-    return new CypherFunction("distance", [lexpr, rexpr]);
-}
-
-/**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/spatial/#functions-distance | Cypher Documentation}
  * @group Functions
  * @category Spatial

@@ -16,9 +16,7 @@ const matchQuery = new Cypher.Match(
     })
 ).return(movieNode);
 
-const { cypher, params } = matchQuery.build({
-    labelOperator: "&",
-});
+const { cypher, params } = matchQuery.build();
 
 console.log("Cypher");
 console.log(cypher);

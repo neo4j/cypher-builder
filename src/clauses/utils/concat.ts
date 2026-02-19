@@ -7,7 +7,6 @@ import type { CypherASTNode } from "../../CypherASTNode";
 import type { CypherEnvironment } from "../../Environment";
 import { filterTruthy } from "../../utils/filter-truthy";
 import { Clause } from "../Clause";
-import { Union } from "../Union";
 
 /** The result of multiple clauses concatenated with `Cypher.utils.concat`
  * @group Utils
@@ -38,18 +37,10 @@ export class CompositeClause extends Clause {
         return this._children.length === 0;
     }
 
-    /** @deprecated Children from a composite clause should not be accessed as this will lead to unexpected behaviour */
-    public get children(): Array<CypherASTNode> {
-        return this._children;
-    }
-
     /** @internal */
-    public getCypher(env: CypherEnvironment, importWithCypher?: string): string {
+    public getCypher(env: CypherEnvironment): string {
         // NOTE: importWithCypher used to pass down import WITH to UNION clauses
         const childrenStrs = this._children.map((c) => {
-            if (importWithCypher && c instanceof Union) {
-                return c.getCypher(env, importWithCypher);
-            }
             return c.getCypher(env);
         });
         return childrenStrs.join(this.separator);

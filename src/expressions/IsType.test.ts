@@ -16,7 +16,7 @@ describe("IsType", () => {
         const { cypher, params } = unwindClause.build();
 
         expect(cypher).toMatchInlineSnapshot(`
-"UNWIND [42, true, \\"abc\\", NULL] AS var0
+"UNWIND [42, true, 'abc', NULL] AS var0
 RETURN var0, var0 IS :: INTEGER"
 `);
         expect(params).toMatchInlineSnapshot(`{}`);

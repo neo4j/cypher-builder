@@ -84,7 +84,7 @@ describe("Pattern comprehension", () => {
         const queryResult = new TestClause(comprehension).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(
-            `"[(this0:Movie)-[this2:ACTED_IN]->(this1:Actor) WHERE this0.title CONTAINS \\"Matrix\\" | this1.name]"`
+            `"[(this0:Movie)-[this2:ACTED_IN]->(this1:Actor) WHERE this0.title CONTAINS 'Matrix' | this1.name]"`
         );
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);

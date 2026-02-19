@@ -12,7 +12,7 @@ describe("ListRange", () => {
         const listIndex = Cypher.listRange(list, 0, 2);
         const queryResult = new TestClause(listIndex).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][0..2]"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"['1', '2', '3'][0..2]"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
@@ -21,7 +21,7 @@ describe("ListRange", () => {
         const listIndex = Cypher.listRange(list, 2, -1);
         const queryResult = new TestClause(listIndex).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][2..-1]"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"['1', '2', '3'][2..-1]"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 

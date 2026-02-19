@@ -24,17 +24,13 @@ export class ListComprehension extends CypherASTNode {
     private listExpr: Expr | undefined;
     private mapExpr: Expr | undefined; //  Expression for list mapping
 
-    constructor(variable: Variable);
-    /** @deprecated Use `new ListComprehension(var1).in(expr)` instead */
-    constructor(variable: Variable, listExpr: Expr);
-    constructor(variable: Variable, listExpr?: Expr) {
+    constructor(variable: Variable) {
         super();
         this.variable = variable;
-        this.listExpr = listExpr;
     }
 
+    /** Sets the list expression to be used for the comprehension. If called twice, the expression will be overriden */
     public in(listExpr: Expr): this {
-        if (this.listExpr) throw new Error("Cannot set 2 lists in list comprehension IN");
         this.listExpr = listExpr;
         return this;
     }

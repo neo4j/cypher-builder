@@ -36,7 +36,7 @@ describe("String Functions", () => {
         const testFunction = Cypher[value](new Cypher.Param("Hello"), new Cypher.Literal("Hello"));
         const { cypher, params } = new TestClause(testFunction).build();
 
-        expect(cypher).toBe(`${value}($param0, "Hello")`);
+        expect(cypher).toBe(`${value}($param0, 'Hello')`);
 
         expect(params).toEqual({
             param0: "Hello",
@@ -47,7 +47,7 @@ describe("String Functions", () => {
         const testFunction = Cypher[value]("Hello");
         const { cypher, params } = new TestClause(testFunction).build();
 
-        expect(cypher).toBe(`${value}("Hello")`);
+        expect(cypher).toBe(`${value}('Hello')`);
 
         expect(params).toEqual({});
     });
@@ -60,7 +60,7 @@ describe("String Functions", () => {
         );
         const { cypher, params } = new TestClause(replaceFunction).build();
 
-        expect(cypher).toMatchInlineSnapshot(`"replace($param0, \\"lo\\", \\"llo\\")"`);
+        expect(cypher).toMatchInlineSnapshot(`"replace($param0, 'lo', 'llo')"`);
 
         expect(params).toMatchInlineSnapshot(`
             {
@@ -73,7 +73,7 @@ describe("String Functions", () => {
         const substringFunction = Cypher.substring(new Cypher.Param("Hello"), new Cypher.Literal("lo"));
         const { cypher, params } = new TestClause(substringFunction).build();
 
-        expect(cypher).toMatchInlineSnapshot(`"substring($param0, \\"lo\\")"`);
+        expect(cypher).toMatchInlineSnapshot(`"substring($param0, 'lo')"`);
 
         expect(params).toMatchInlineSnapshot(`
             {
@@ -86,7 +86,7 @@ describe("String Functions", () => {
         const substring = Cypher.substring(new Cypher.Param("Hello"), new Cypher.Literal("lo"), new Cypher.Literal(2));
         const { cypher, params } = new TestClause(substring).build();
 
-        expect(cypher).toMatchInlineSnapshot(`"substring($param0, \\"lo\\", 2)"`);
+        expect(cypher).toMatchInlineSnapshot(`"substring($param0, 'lo', 2)"`);
 
         expect(params).toMatchInlineSnapshot(`
             {
@@ -99,7 +99,7 @@ describe("String Functions", () => {
         const normalizeFunction = Cypher.normalize(new Cypher.Param("Hello"), normalForm);
         const { cypher, params } = new TestClause(normalizeFunction).build();
 
-        expect(cypher).toBe(`normalize($param0, "${normalForm}")`);
+        expect(cypher).toBe(`normalize($param0, '${normalForm}')`);
 
         expect(params).toEqual({
             param0: "Hello",
@@ -123,6 +123,6 @@ describe("String Functions", () => {
             Cypher.trim("BOTH", new Cypher.Literal("x"), new Cypher.Literal("xxxhelloxxx"))
         ).build();
 
-        expect(cypher).toMatchInlineSnapshot(`"trim(BOTH \\"x\\" FROM \\"xxxhelloxxx\\")"`);
+        expect(cypher).toMatchInlineSnapshot(`"trim(BOTH 'x' FROM 'xxxhelloxxx')"`);
     });
 });

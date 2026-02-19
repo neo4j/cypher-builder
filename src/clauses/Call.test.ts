@@ -15,13 +15,12 @@ describe("CypherBuilder Call", () => {
             .return(movieNode);
         const queryResult = new Cypher.Call(createQuery).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                CREATE (this0:Movie)
-                SET
-                    this0.id = $param0
-                RETURN this0
-            }"
-        `);
+"CALL {
+  CREATE (this0:Movie)
+  SET this0.id = $param0
+  RETURN this0
+}"
+`);
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
               "param0": "my-id",
@@ -41,152 +40,19 @@ describe("CypherBuilder Call", () => {
         const queryResult = call.build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                CALL {
-                    CREATE (this0:Movie)
-                    SET
-                        this0.id = $param0
-                    RETURN this0
-                }
-            }"
-        `);
+"CALL {
+  CALL {
+    CREATE (this0:Movie)
+    SET this0.id = $param0
+    RETURN this0
+  }
+}"
+`);
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
               "param0": "my-id",
             }
         `);
-    });
-
-    test("CALL with import with", () => {
-        const node = new Cypher.Node();
-
-        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
-            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
-            .return([node.property("title"), "movie"]);
-
-        const clause = new Cypher.Call(matchClause).importWith(node);
-        const queryResult = clause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                WITH this0
-                MATCH (this0:Movie)
-                WHERE $param0 = $param1
-                RETURN this0.title AS movie
-            }"
-        `);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
-    });
-
-    test("CALL with import with *", () => {
-        const node = new Cypher.Node();
-
-        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return([
-            node.property("title"),
-            "movie",
-        ]);
-
-        const clause = new Cypher.Call(matchClause).importWith("*");
-        const queryResult = clause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                WITH *
-                MATCH (this0:Movie)
-                RETURN this0.title AS movie
-            }"
-        `);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
-    });
-
-    test("CALL with import with * and extra fields", () => {
-        const node = new Cypher.Node();
-
-        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] })).return([
-            node.property("title"),
-            "movie",
-        ]);
-
-        const clause = new Cypher.Call(matchClause).importWith(node, "*");
-        const queryResult = clause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                WITH *, this0
-                MATCH (this0:Movie)
-                RETURN this0.title AS movie
-            }"
-        `);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
-    });
-
-    test("CALL with import with without parameters", () => {
-        const node = new Cypher.Node();
-
-        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
-            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
-            .return([node.property("title"), "movie"]);
-
-        const clause = new Cypher.Call(matchClause).importWith();
-        const queryResult = clause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                MATCH (this0:Movie)
-                WHERE $param0 = $param1
-                RETURN this0.title AS movie
-            }"
-        `);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
-    });
-
-    test("CALL with import with multiple parameters", () => {
-        const node = new Cypher.Node();
-
-        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
-            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
-            .return([node.property("title"), "movie"]);
-
-        const clause = new Cypher.Call(matchClause).importWith(node, new Cypher.Variable());
-        const queryResult = clause.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                WITH this0, var1
-                MATCH (this0:Movie)
-                WHERE $param0 = $param1
-                RETURN this0.title AS movie
-            }"
-        `);
-
-        expect(queryResult.params).toMatchInlineSnapshot(`
-            {
-              "param0": "aa",
-              "param1": "bb",
-            }
-        `);
-    });
-
-    test("CALL with import with fails if import with is already set", () => {
-        const node = new Cypher.Node();
-
-        const matchClause = new Cypher.Match(new Cypher.Pattern(node, { labels: ["Movie"] }))
-            .where(Cypher.eq(new Cypher.Param("aa"), new Cypher.Param("bb")))
-            .return([node.property("title"), "movie"]);
-
-        const clause = new Cypher.Call(matchClause).importWith(node);
-        expect(() => {
-            clause.importWith(node);
-        }).toThrow(`Call import "WITH" already set`);
     });
 
     test("CALL with external with", () => {
@@ -199,13 +65,13 @@ describe("CypherBuilder Call", () => {
         const clause = new Cypher.Call(matchClause).with("*");
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                MATCH (this0:Movie)
-                WHERE $param0 = $param1
-                RETURN this0.title AS movie
-            }
-            WITH *"
-        `);
+"CALL {
+  MATCH (this0:Movie)
+  WHERE $param0 = $param1
+  RETURN this0.title AS movie
+}
+WITH *"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -229,12 +95,11 @@ describe("CypherBuilder Call", () => {
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL {
-    MATCH (this0:Movie)
-    WHERE $param0 = $param1
-    RETURN this0
+  MATCH (this0:Movie)
+  WHERE $param0 = $param1
+  RETURN this0
 }
-SET
-    this0.title = $param2
+SET this0.title = $param2
 REMOVE this0.title
 WITH *"
 `);
@@ -258,13 +123,13 @@ WITH *"
         const clause = new Cypher.Call(matchClause).with(new Cypher.With("*"));
         const queryResult = clause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                MATCH (this0:Movie)
-                WHERE $param0 = $param1
-                RETURN this0.title AS movie
-            }
-            WITH *"
-        `);
+"CALL {
+  MATCH (this0:Movie)
+  WHERE $param0 = $param1
+  RETURN this0.title AS movie
+}
+WITH *"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -286,13 +151,13 @@ WITH *"
         const queryResult = clause.build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                MATCH (this0:Movie)
-                WHERE $param0 = $param1
-                RETURN this0.title AS var1
-            }
-            UNWIND var1 AS m"
-        `);
+"CALL {
+  MATCH (this0:Movie)
+  WHERE $param0 = $param1
+  RETURN this0.title AS var1
+}
+UNWIND var1 AS m"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -316,13 +181,13 @@ WITH *"
         const queryResult = clause.build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                MATCH (this0:Movie)
-                WHERE $param0 = $param1
-                RETURN this0.title AS var1
-            }
-            UNWIND var1 AS m"
-        `);
+"CALL {
+  MATCH (this0:Movie)
+  WHERE $param0 = $param1
+  RETURN this0.title AS var1
+}
+UNWIND var1 AS m"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -344,9 +209,9 @@ WITH *"
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL {
-    MATCH (this0:Movie)
-    WHERE this0.title = $param0
-    RETURN this0
+  MATCH (this0:Movie)
+  WHERE this0.title = $param0
+  RETURN this0
 }
 DELETE this0"
 `);
@@ -369,10 +234,9 @@ DELETE this0"
         const queryResult = new Cypher.Call(createQuery).return(variable).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL {
-    CREATE (this0:Movie)
-    SET
-        this0.id = $param0
-    RETURN var1
+  CREATE (this0:Movie)
+  SET this0.id = $param0
+  RETURN var1
 }
 RETURN var1"
 `);
@@ -402,8 +266,8 @@ RETURN var1"
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS"
 `);
         });
@@ -420,8 +284,8 @@ CALL {
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS OF 10 ROWS"
 `);
         });
@@ -438,8 +302,8 @@ CALL {
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS ON ERROR FAIL"
 `);
         });
@@ -457,8 +321,8 @@ CALL {
                 expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS ON ERROR RETRY"
 `);
             });
@@ -475,8 +339,8 @@ CALL {
                 expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS ON ERROR RETRY FOR 10 SECONDS"
 `);
             });
@@ -493,8 +357,8 @@ CALL {
                 expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS ON ERROR RETRY THEN CONTINUE"
 `);
             });
@@ -512,8 +376,8 @@ CALL {
                 expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS ON ERROR RETRY FOR 10 SECONDS THEN BREAK"
 `);
             });
@@ -530,8 +394,8 @@ CALL {
                 expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS"
 `);
             });
@@ -548,8 +412,8 @@ CALL {
                 expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS ON ERROR RETRY FOR 0 SECONDS"
 `);
             });
@@ -567,8 +431,8 @@ CALL {
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS ON ERROR CONTINUE"
 `);
         });
@@ -589,8 +453,8 @@ CALL {
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN TRANSACTIONS OF 10 ROWS ON ERROR FAIL"
 `);
         });
@@ -610,8 +474,8 @@ CALL {
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN 3 CONCURRENT TRANSACTIONS"
 `);
         });
@@ -633,8 +497,8 @@ CALL {
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN 5 CONCURRENT TRANSACTIONS OF 10 ROWS ON ERROR FAIL"
 `);
         });
@@ -654,8 +518,8 @@ CALL {
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 CALL {
-    WITH this0
-    DETACH DELETE this0
+  WITH this0
+  DETACH DELETE this0
 } IN 2 CONCURRENT TRANSACTIONS OF 10 ROWS ON ERROR RETRY FOR 5 SECONDS THEN BREAK"
 `);
         });
@@ -679,24 +543,11 @@ CALL {
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 CALL (this0, this1) {
-    CREATE (this0)-[]->(this1)
+  CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
-        });
-
-        test("ImportWith fails when variable scope is set", () => {
-            const movieNode = new Cypher.Node();
-
-            const call = new Cypher.Call(
-                new Cypher.Create(new Cypher.Pattern(movieNode).related().to(new Cypher.Node())),
-                [movieNode]
-            );
-
-            expect(() => {
-                call.importWith("*");
-            }).toThrow(`Call import cannot be used along with scope clauses "Call (<variable>)"`);
         });
 
         test("Call with empty variable scope", () => {
@@ -711,7 +562,7 @@ RETURN this0"
             const queryResult = clause.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL () {
-    CREATE (this0)-[]->(this1)
+  CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);
@@ -735,7 +586,7 @@ RETURN this0"
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 CALL (*) {
-    CREATE (this0)-[]->(this1)
+  CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);
@@ -753,10 +604,9 @@ RETURN this0"
                 const queryResult = new Cypher.Call(createQuery).optional().build();
                 expect(queryResult.cypher).toMatchInlineSnapshot(`
 "OPTIONAL CALL {
-    CREATE (this0:Movie)
-    SET
-        this0.id = $param0
-    RETURN this0
+  CREATE (this0:Movie)
+  SET this0.id = $param0
+  RETURN this0
 }"
 `);
                 expect(queryResult.params).toMatchInlineSnapshot(`
@@ -776,10 +626,9 @@ RETURN this0"
                 const queryResult = new Cypher.OptionalCall(createQuery).build();
                 expect(queryResult.cypher).toMatchInlineSnapshot(`
 "OPTIONAL CALL {
-    CREATE (this0:Movie)
-    SET
-        this0.id = $param0
-    RETURN this0
+  CREATE (this0:Movie)
+  SET this0.id = $param0
+  RETURN this0
 }"
 `);
                 expect(queryResult.params).toMatchInlineSnapshot(`
@@ -801,10 +650,9 @@ RETURN this0"
         const queryResult = new Cypher.Call(createQuery).orderBy(movieNode).skip(10).build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CALL {
-    CREATE (this0:Movie)
-    SET
-        this0.id = $param0
-    RETURN this0
+  CREATE (this0:Movie)
+  SET this0.id = $param0
+  RETURN this0
 }
 ORDER BY this0 ASC
 SKIP 10"

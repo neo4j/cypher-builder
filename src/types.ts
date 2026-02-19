@@ -27,12 +27,6 @@ import type { Literal } from "./references/Literal";
 import type { PropertyRef } from "./references/PropertyRef";
 import type { Variable } from "./references/Variable";
 
-/**
- * @group Expressions
- * @deprecated This type will no longer be exported, use {@link Expr} instead
- */
-export type Operation = BooleanOp | ComparisonOp | MathOp | ConcatOp;
-
 /** Represents a Cypher Expression
  * @group Expressions
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/expressions/ | Cypher Documentation}

@@ -16,7 +16,7 @@ describe("db.index.vector.queryNodes", () => {
         const { cypher, params } = vectorProcedure.build();
 
         expect(cypher).toMatchInlineSnapshot(
-            `"CALL db.index.vector.queryNodes(\\"my-vector-index\\", 10, $param0) YIELD node AS this0"`
+            `"CALL db.index.vector.queryNodes('my-vector-index', 10, $param0) YIELD node AS this0"`
         );
         expect(params).toMatchInlineSnapshot(`
             {
@@ -34,7 +34,7 @@ describe("db.index.vector.queryNodes", () => {
         const { cypher, params } = vectorProcedure.build();
 
         expect(cypher).toMatchInlineSnapshot(
-            `"CALL db.index.vector.queryNodes(\\"my-vector-index\\", 5, \\"This is a lovely phrase literal\\") YIELD node AS this0"`
+            `"CALL db.index.vector.queryNodes('my-vector-index', 5, 'This is a lovely phrase literal') YIELD node AS this0"`
         );
         expect(params).toMatchInlineSnapshot(`{}`);
     });
@@ -50,10 +50,10 @@ describe("db.index.vector.queryNodes", () => {
         const { cypher, params } = vectorProcedure.build();
 
         expect(cypher).toMatchInlineSnapshot(`
-            "CALL db.index.vector.queryNodes(\\"my-vector-index\\", 15, $param0) YIELD node AS this0
-            WHERE this0.title = $param1
-            RETURN this0"
-        `);
+"CALL db.index.vector.queryNodes('my-vector-index', 15, $param0) YIELD node AS this0
+WHERE this0.title = $param1
+RETURN this0"
+`);
         expect(params).toMatchInlineSnapshot(`
             {
               "param0": "This is a lovely phrase",
@@ -73,7 +73,7 @@ describe("db.index.vector.queryRelationships", () => {
         const { cypher, params } = vectorProcedure.build();
 
         expect(cypher).toMatchInlineSnapshot(
-            `"CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 10, $param0) YIELD relationship AS this0"`
+            `"CALL db.index.vector.queryRelationships('my-vector-index', 10, $param0) YIELD relationship AS this0"`
         );
         expect(params).toMatchInlineSnapshot(`
             {
@@ -95,7 +95,7 @@ describe("db.index.vector.queryRelationships", () => {
         const { cypher, params } = vectorProcedure.build();
 
         expect(cypher).toMatchInlineSnapshot(
-            `"CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 10, \\"This is a lovely phrase literal\\") YIELD relationship AS this0"`
+            `"CALL db.index.vector.queryRelationships('my-vector-index', 10, 'This is a lovely phrase literal') YIELD relationship AS this0"`
         );
         expect(params).toMatchInlineSnapshot(`{}`);
     });
@@ -111,10 +111,10 @@ describe("db.index.vector.queryRelationships", () => {
         const { cypher, params } = vectorProcedure.build();
 
         expect(cypher).toMatchInlineSnapshot(`
-            "CALL db.index.vector.queryRelationships(\\"my-vector-index\\", 5, $param0) YIELD relationship AS this0
-            WHERE this0.title = $param1
-            RETURN this0"
-        `);
+"CALL db.index.vector.queryRelationships('my-vector-index', 5, $param0) YIELD relationship AS this0
+WHERE this0.title = $param1
+RETURN this0"
+`);
         expect(params).toMatchInlineSnapshot(`
             {
               "param0": "This is a lovely phrase",

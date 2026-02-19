@@ -27,12 +27,12 @@ describe("CypherBuilder Create", () => {
 
         const queryResult = createQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE (this0:Movie { test: $param0, id: $param1 })
-            SET
-                this0.title = $param2,
-                this0.runtime = $param3
-            RETURN this0"
-        `);
+"CREATE (this0:Movie { test: $param0, id: $param1 })
+SET
+  this0.title = $param2,
+  this0.runtime = $param3
+RETURN this0"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -66,12 +66,12 @@ describe("CypherBuilder Create", () => {
 
         const queryResult = createQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CREATE (this0:Movie { id: NULL })
-            SET
-                this0.test = NULL,
-                this0.nullStr = $param0
-            RETURN this0"
-        `);
+"CREATE (this0:Movie { id: NULL })
+SET
+  this0.test = NULL,
+  this0.nullStr = $param0
+RETURN this0"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -108,8 +108,8 @@ describe("CypherBuilder Create", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE p1 = (this0:Movie { id: NULL })
 SET
-    this0.test = NULL,
-    this0.nullStr = $param0
+  this0.test = NULL,
+  this0.nullStr = $param0
 RETURN this0"
 `);
 
@@ -173,8 +173,8 @@ RETURN this0"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE (this0:Movie { test: $param0, id: $param1 })
 SET
-    this0.title = $param2,
-    this0.runtime = $param3
+  this0.title = $param2,
+  this0.runtime = $param3
 DELETE this0"
 `);
 
@@ -211,8 +211,8 @@ DELETE this0"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE (this0:Movie { test: $param0, id: $param1 })
 SET
-    this0.title = $param2,
-    this0.runtime = $param3
+  this0.title = $param2,
+  this0.runtime = $param3
 DETACH DELETE this0"
 `);
 
@@ -249,8 +249,8 @@ DETACH DELETE this0"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE (this0:Movie { test: $param0, id: $param1 })
 SET
-    this0.title = $param2,
-    this0.runtime = $param3
+  this0.title = $param2,
+  this0.runtime = $param3
 NODETACH DELETE this0"
 `);
 
@@ -287,8 +287,8 @@ NODETACH DELETE this0"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE (this0:Movie { test: $param0, id: $param1 })
 SET
-    this0.title = $param2,
-    this0.runtime = $param3
+  this0.title = $param2,
+  this0.runtime = $param3
 REMOVE this0.title"
 `);
 
@@ -326,8 +326,8 @@ REMOVE this0.title"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE (this0:Movie { test: $param0, id: $param1 })
 SET
-    this0.title = $param2,
-    this0.runtime = $param3
+  this0.title = $param2,
+  this0.runtime = $param3
 CREATE (this1:Actor)
 RETURN this0"
 `);
@@ -369,8 +369,8 @@ RETURN this0"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE (this0:Movie { test: $param0, id: $param1 })
 SET
-    this0.title = $param2,
-    this0.runtime = $param3
+  this0.title = $param2,
+  this0.runtime = $param3
 CREATE (this1:Actor)
 RETURN this0"
 `);
@@ -411,8 +411,8 @@ RETURN this0"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE (this0:Movie { test: $param0, id: $param1 })
 SET
-    this0.title = $param2,
-    this0.runtime = $param3
+  this0.title = $param2,
+  this0.runtime = $param3
 ORDER BY this0.title DESC
 SKIP 10
 LIMIT 1

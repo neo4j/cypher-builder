@@ -121,7 +121,7 @@ RETURN this0.id"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH p2 = (this0)-[*]->(this1)
 FOREACH (var3 IN nodes(p2) |
-    MERGE (var3)-[]->(this1)
+  MERGE (var3)-[]->(this1)    
 )"
 `);
 
@@ -310,10 +310,10 @@ RETURN p3"
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:Movie { test: $param0 })
-                WHERE (((this0.id = $param1 AND this0.name = $param2) AND this0.age = $param3) AND this0.value = \\"Another value\\")
-                RETURN this0"
-            `);
+"MATCH (this0:Movie { test: $param0 })
+WHERE (((this0.id = $param1 AND this0.name = $param2) AND this0.age = $param3) AND this0.value = 'Another value')
+RETURN this0"
+`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
                 {
@@ -562,12 +562,11 @@ RETURN this0"
 
             const queryResult = matchQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`
-                "MATCH (this0:Person)
-                WHERE this0.name = $param0
-                SET
-                    this0.name = $param1
-                RETURN this0"
-            `);
+"MATCH (this0:Person)
+WHERE this0.name = $param0
+SET this0.name = $param1
+RETURN this0"
+`);
 
             expect(queryResult.params).toMatchInlineSnapshot(`
                 {
@@ -798,7 +797,7 @@ RETURN var1"
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 CALL (this0, this1) {
-    CREATE (this0)-[]->(this1)
+  CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);
@@ -822,7 +821,7 @@ RETURN this0"
 "MATCH (this0:Movie)
 MATCH (this1:Actor)
 OPTIONAL CALL (this0, this1) {
-    CREATE (this0)-[]->(this1)
+  CREATE (this0)-[]->(this1)
 }
 RETURN this0"
 `);

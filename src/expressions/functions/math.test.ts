@@ -71,7 +71,7 @@ describe("Math Functions", () => {
             const roundFunc = Cypher.round(roundNumber, 3, "HALF_DOWN");
             const { cypher } = new TestClause(roundFunc).build();
 
-            expect(cypher).toBe(`round(10.23, 3, "HALF_DOWN")`);
+            expect(cypher).toBe(`round(10.23, 3, 'HALF_DOWN')`);
         });
     });
 });

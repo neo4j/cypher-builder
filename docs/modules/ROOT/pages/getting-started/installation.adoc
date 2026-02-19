@@ -7,7 +7,7 @@ This page shows you how to set up a Node.js project with `@neo4j/cypher-builder`
 
 == Requirements
 
-* link:https://nodejs.org/[Node.js] 16.0.0 or greater
+* link:https://nodejs.org/[Node.js] 20.0.0 or greater
 * link:https://docs.npmjs.com/downloading-and-installing-node-js-and-npm[npm]
 * **[Optional]** A link:https://neo4j.com/cloud/platform/aura-graph-database/?ref=nav-get-started-cta[Neo4j database] where you can try Cypher queries
 

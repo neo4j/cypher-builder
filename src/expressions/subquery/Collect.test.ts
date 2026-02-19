@@ -24,9 +24,9 @@ describe("Collect Subquery", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Person)
-WHERE \\"Ozzy\\" IN COLLECT {
-    MATCH (this0:Person)-[this1:HAS_DOG]->(this2:Dog)
-    RETURN this2.name
+WHERE 'Ozzy' IN COLLECT {
+  MATCH (this0:Person)-[this1:HAS_DOG]->(this2:Dog)
+  RETURN this2.name
 }
 RETURN this0"
 `);
@@ -62,11 +62,11 @@ RETURN this0"
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Person)
 RETURN this0, COLLECT {
-    MATCH (this0:Person)-[this1:HAS_DOG]->(this2:Dog)
-    RETURN this2.name AS petName
-    UNION
-    MATCH (this0:Person)-[this3:HAS_CAT]->(this4:Cat)
-    RETURN this4.name AS petName
+  MATCH (this0:Person)-[this1:HAS_DOG]->(this2:Dog)
+  RETURN this2.name AS petName
+  UNION
+  MATCH (this0:Person)-[this3:HAS_CAT]->(this4:Cat)
+  RETURN this4.name AS petName
 } AS petNames"
 `);
 

@@ -10,7 +10,7 @@ describe("concat operators", () => {
     test("concatenating strings", () => {
         const concat = Cypher.concat(new Cypher.Literal("Hello"), new Cypher.Literal("World!"));
         const { cypher } = new TestClause(concat).build();
-        expect(cypher).toMatchInlineSnapshot(`"(\\"Hello\\" || \\"World!\\")"`);
+        expect(cypher).toMatchInlineSnapshot(`"('Hello' || 'World!')"`);
     });
     test("concatenating multiple strings with params", () => {
         const concat = Cypher.concat(
@@ -19,7 +19,7 @@ describe("concat operators", () => {
             new Cypher.Param("Thanks for all the fish")
         );
         const { cypher, params } = new TestClause(concat).build();
-        expect(cypher).toMatchInlineSnapshot(`"(\\"Hello\\" || \\"World!\\" || $param0)"`);
+        expect(cypher).toMatchInlineSnapshot(`"('Hello' || 'World!' || $param0)"`);
         expect(params).toMatchInlineSnapshot(`
 {
   "param0": "Thanks for all the fish",
@@ -36,8 +36,7 @@ describe("concat operators", () => {
         const { cypher } = new TestClause(matchSet).build();
         expect(cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
-SET
-    this0.greeting = (\\"Hello \\" || this0.name)"
+SET this0.greeting = ('Hello ' || this0.name)"
 `);
     });
 });

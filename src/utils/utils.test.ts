@@ -69,7 +69,7 @@ describe("CypherBuilder Utils", () => {
         });
     });
 
-    it("toCypherParams", () => {
+    test("toCypherParams", () => {
         const cypherParams = Cypher.utils.toCypherParams({
             param1: "my param",
             param2: 5,

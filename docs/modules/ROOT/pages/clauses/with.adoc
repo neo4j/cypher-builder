@@ -3,7 +3,6 @@
 = With
 
 This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/with/[`WITH`] clause using the `Cypher.With` class.
-Note that this is different from the xref:../subqueries/call.adoc#_importwith[ImportWith] statement inside `CALL`.
 
 A `With` clause takes multiple parameters.
 Pass variables directly without aliasing:

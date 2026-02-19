@@ -44,14 +44,14 @@ describe("db.cdc procedures", () => {
             const query = Cypher.db.cdc.query("my-cursor");
             const { cypher } = query.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.query(\\"my-cursor\\", [])"`);
+            expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.query('my-cursor', [])"`);
         });
 
         test("with literal", () => {
             const query = Cypher.db.cdc.query(new Cypher.Literal("my-cursor"));
             const { cypher } = query.build();
 
-            expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.query(\\"my-cursor\\", [])"`);
+            expect(cypher).toMatchInlineSnapshot(`"CALL db.cdc.query('my-cursor', [])"`);
         });
 
         test("with selectors in array", () => {
@@ -60,7 +60,7 @@ describe("db.cdc procedures", () => {
             const { cypher } = query.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.cdc.query(\\"my-cursor\\", [{ select: \\"e\\", operation: \\"c\\", changesTo: [\\"name\\", \\"title\\"] }])"`
+                `"CALL db.cdc.query('my-cursor', [{select: 'e', operation: 'c', changesTo: ['name', 'title']}])"`
             );
         });
     });

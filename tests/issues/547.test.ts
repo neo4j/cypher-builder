@@ -17,7 +17,7 @@ describe("https://github.com/neo4j/cypher-builder/pull/547", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CASE $param0
-    WHEN \`in\`[1] THEN true
+  WHEN \`in\`[1] THEN true
 END"
 `);
 
@@ -38,7 +38,7 @@ END"
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CASE $param0
-    WHEN \`in\`.a THEN true
+  WHEN \`in\`.a THEN true
 END"
 `);
 

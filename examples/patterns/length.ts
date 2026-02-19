@@ -15,9 +15,7 @@ const pattern = new Cypher.Pattern(movie).related(actedIn, { type: "ACTED_IN", l
 
 const matchQuery = new Cypher.Match(pattern).return(movie);
 
-const { cypher, params } = matchQuery.build({
-    labelOperator: "&",
-});
+const { cypher, params } = matchQuery.build();
 
 console.log("Cypher");
 console.log(cypher);

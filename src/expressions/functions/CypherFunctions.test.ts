@@ -11,7 +11,7 @@ describe("Cypher Functions", () => {
         const myFunction = new Cypher.Function("myFunction", [new Cypher.Literal("test"), new Cypher.Param("test2")]);
         const queryResult = new TestClause(myFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"myFunction(\\"test\\", $param0)"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"myFunction('test', $param0)"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {

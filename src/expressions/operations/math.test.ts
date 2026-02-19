@@ -41,7 +41,7 @@ describe("math operators", () => {
     test("plus for concatenating strings", () => {
         const concatPlus = Cypher.plus(new Cypher.Literal("Hello"), new Cypher.Literal("World!"));
         const { cypher } = new TestClause(concatPlus).build();
-        expect(cypher).toMatchInlineSnapshot(`"(\\"Hello\\" + \\"World!\\")"`);
+        expect(cypher).toMatchInlineSnapshot(`"('Hello' + 'World!')"`);
     });
 
     test("minus", () => {

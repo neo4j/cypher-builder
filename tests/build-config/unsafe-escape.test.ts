@@ -30,11 +30,10 @@ describe("escapeUnsafeLabels", () => {
             },
         });
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Person { \`person name\`: \\"Uneak \\\\\\"Seveer\\" })-[:\`ACTED IN\`]->(this1:\`A Movie\`)
-SET
-    this0.\`person name\` = $param0
-RETURN this0 AS \`My Result\`"
-`);
+          "MATCH (this0:Person { \`person name\`: 'Uneak "Seveer' })-[:\`ACTED IN\`]->(this1:\`A Movie\`)
+          SET this0.\`person name\` = $param0
+          RETURN this0 AS \`My Result\`"
+        `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
 {
@@ -67,11 +66,10 @@ RETURN this0 AS \`My Result\`"
             },
         });
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Person { \`person name\`: \\"Uneak \\\\\\"Seveer\\" })-[:ACTED IN]->(this1:A Movie)
-SET
-    this0.\`person name\` = $param0
-RETURN this0 AS \`My Result\`"
-`);
+          "MATCH (this0:Person { \`person name\`: 'Uneak "Seveer' })-[:ACTED IN]->(this1:A Movie)
+          SET this0.\`person name\` = $param0
+          RETURN this0 AS \`My Result\`"
+        `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
 {
@@ -103,11 +101,10 @@ RETURN this0 AS \`My Result\`"
             },
         });
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Person { \`person name\`: \\"Uneak \\\\\\"Seveer\\" })-[:\`ACTED IN\`]->(this1:A Movie)
-SET
-    this0.\`person name\` = $param0
-RETURN this0 AS \`My Result\`"
-`);
+          "MATCH (this0:Person { \`person name\`: 'Uneak "Seveer' })-[:\`ACTED IN\`]->(this1:A Movie)
+          SET this0.\`person name\` = $param0
+          RETURN this0 AS \`My Result\`"
+        `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
 {
@@ -138,11 +135,10 @@ RETURN this0 AS \`My Result\`"
             },
         });
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Person { \`person name\`: \\"Uneak \\\\\\"Seveer\\" })-[:ACTED IN]->(this1:\`A Movie\`)
-SET
-    this0.\`person name\` = $param0
-RETURN this0 AS \`My Result\`"
-`);
+          "MATCH (this0:Person { \`person name\`: 'Uneak "Seveer' })-[:ACTED IN]->(this1:\`A Movie\`)
+          SET this0.\`person name\` = $param0
+          RETURN this0 AS \`My Result\`"
+        `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
 {
@@ -174,9 +170,9 @@ RETURN this0 AS \`My Result\`"
         });
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Person { \`person name\`: \\"Uneak \\\\\\"Seveer\\" })-[:ACTED IN]->(this1:A Movie)
-RETURN this0"
-`);
+          "MATCH (this0:Person { \`person name\`: 'Uneak "Seveer' })-[:ACTED IN]->(this1:A Movie)
+          RETURN this0"
+        `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
@@ -203,9 +199,9 @@ RETURN this0"
         });
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"MATCH (this0:Person { \`person name\`: \\"Uneak \\\\\\"Seveer\\" })-[:\`ACTED IN\`]->(this1:\`A Movie\`)
-RETURN this0"
-`);
+          "MATCH (this0:Person { \`person name\`: 'Uneak "Seveer' })-[:\`ACTED IN\`]->(this1:\`A Movie\`)
+          RETURN this0"
+        `);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 });

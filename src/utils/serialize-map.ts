@@ -19,5 +19,5 @@ export function serializeMap(env: CypherEnvironment, map: Map<string, Expr>, omi
 
     const serializedContent = serializedFields.join(", ");
     if (omitCurlyBraces) return serializedContent;
-    return `{ ${serializedContent} }`;
+    return `{${serializedContent}}`;
 }

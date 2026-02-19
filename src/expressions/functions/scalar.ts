@@ -3,8 +3,6 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Raw } from "../../clauses/Raw";
-import type { Pattern } from "../../pattern/Pattern";
 import type { Expr } from "../../types";
 import { CypherFunction } from "./CypherFunctions";
 
@@ -42,16 +40,6 @@ export function endNode(relationship: Expr): CypherFunction {
  */
 export function head(expr: Expr): CypherFunction {
     return new CypherFunction("head", [expr]);
-}
-
-/**
- * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-id | Cypher Documentation}
- * @group Functions
- * @category Scalar
- * @deprecated Use {@link elementId} instead
- */
-export function id(variable: Expr): CypherFunction {
-    return new CypherFunction("id", [variable]);
 }
 
 /**
@@ -95,17 +83,8 @@ export function randomUUID(): CypherFunction {
  * @group Functions
  * @category Scalar
  */
-export function size(expr: Expr): CypherFunction;
-/** @deprecated size() with pattern is deprecated in Neo4j 5 */
-export function size(expr: Pattern): CypherFunction;
-export function size(expr: Expr | Pattern): CypherFunction {
-    // Support for patterns in size() in Neo4j 4
-    // Using Raw to avoid adding Patterns to CypherFunction
-    const sizeParam = new Raw((env) => {
-        return env.compile(expr);
-    });
-
-    return new CypherFunction("size", [sizeParam]);
+export function size(expr: Expr): CypherFunction {
+    return new CypherFunction("size", [expr]);
 }
 
 /**

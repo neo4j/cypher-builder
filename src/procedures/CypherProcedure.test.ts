@@ -47,7 +47,7 @@ describe("Procedures", () => {
         const { cypher, params } = customProcedure.build();
 
         expect(cypher).toMatchInlineSnapshot(
-            `"CALL customProcedure(this0) YIELD result1, result2 AS \\"aliased\\", result3 AS string-alias"`
+            `"CALL customProcedure(this0) YIELD result1, result2 AS 'aliased', result3 AS string-alias"`
         );
         expect(params).toMatchInlineSnapshot(`{}`);
     });
@@ -120,7 +120,7 @@ describe("Procedures", () => {
     });
 
     describe("Procedure with Yield and nested clauses", () => {
-        it("Procedure with Where", () => {
+        test("Procedure with Where", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
             procedure.where(Cypher.true).and(Cypher.false).return("*");
@@ -134,7 +134,7 @@ RETURN *"
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("Procedure with Delete", () => {
+        test("Procedure with Delete", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
             procedure.delete(new Cypher.Node());
@@ -147,7 +147,7 @@ DELETE this0"
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("Procedure with Detach Delete", () => {
+        test("Procedure with Detach Delete", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
             procedure.detachDelete(new Cypher.Node());
@@ -160,7 +160,7 @@ DETACH DELETE this0"
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("Procedure with Remove", () => {
+        test("Procedure with Remove", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
             procedure.remove(new Cypher.Node().property("test"));
@@ -173,7 +173,7 @@ REMOVE this0.test"
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("Procedure with Set", () => {
+        test("Procedure with Set", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
             procedure.set([new Cypher.Variable().property("test"), new Cypher.Literal("hello")]);
@@ -181,13 +181,12 @@ REMOVE this0.test"
 
             expect(cypher).toMatchInlineSnapshot(`
 "CALL custom-procedure() YIELD test
-SET
-    var0.test = \\"hello\\""
+SET var0.test = 'hello'"
 `);
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("Procedure with Unwind", () => {
+        test("Procedure with Unwind", () => {
             const yieldVar = new Cypher.Variable();
             const procedure = new Cypher.Procedure("custom-procedure").yield(["test", yieldVar]);
 
@@ -201,7 +200,7 @@ UNWIND var0 AS var1"
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("Procedure with Merge", () => {
+        test("Procedure with Merge", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
             procedure.merge(new Cypher.Pattern(new Cypher.Node()));
@@ -209,12 +208,12 @@ UNWIND var0 AS var1"
 
             expect(cypher).toMatchInlineSnapshot(`
 "CALL custom-procedure() YIELD test
-MERGE (this0)"
+MERGE (this0)    "
 `);
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("Procedure with Create", () => {
+        test("Procedure with Create", () => {
             const procedure = new Cypher.Procedure("custom-procedure").yield("test");
 
             procedure.create(new Cypher.Pattern(new Cypher.Node()));
@@ -227,7 +226,7 @@ CREATE (this0)"
             expect(params).toMatchInlineSnapshot(`{}`);
         });
 
-        it("Procedure with Order by", () => {
+        test("Procedure with Order by", () => {
             const testVar = new Cypher.NamedVariable("test");
             const procedure = new Cypher.Procedure("custom-procedure").yield("test").orderBy(testVar).skip(1).limit(10);
 

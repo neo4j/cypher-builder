@@ -72,7 +72,7 @@ describe("Map Projection", () => {
         const queryResult = new TestClause(mapProjection.toMap()).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(
-            `"{ title: var0.title, name: var0.name, namedValue: count(this1) }"`
+            `"{title: var0.title, name: var0.name, namedValue: count(this1)}"`
         );
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
@@ -118,7 +118,7 @@ describe("Map Projection", () => {
 
         const queryResult = new TestClause(mapProjection).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .*, title: \\"Test\\" }"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"var0 { .*, title: 'Test' }"`);
     });
 
     test("Passing * as a field escapes it", () => {

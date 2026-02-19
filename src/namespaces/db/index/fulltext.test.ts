@@ -16,7 +16,7 @@ describe("db.index.fulltext", () => {
             const { cypher, params } = fulltextProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0) YIELD node AS this0"`
+                `"CALL db.index.fulltext.queryNodes('my-text-index', $param0) YIELD node AS this0"`
             );
             expect(params).toMatchInlineSnapshot(`
             {
@@ -36,10 +36,10 @@ describe("db.index.fulltext", () => {
             const { cypher, params } = fulltextProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(`
-            "CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0) YIELD node AS this0
-            WHERE this0.title = $param1
-            RETURN this0"
-        `);
+"CALL db.index.fulltext.queryNodes('my-text-index', $param0) YIELD node AS this0
+WHERE this0.title = $param1
+RETURN this0"
+`);
             expect(params).toMatchInlineSnapshot(`
             {
               "param0": "This is a lovely phrase",
@@ -61,7 +61,7 @@ describe("db.index.fulltext", () => {
             const { cypher, params } = fulltextProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.fulltext.queryNodes(\\"my-text-index\\", $param0, { skip: 5, analyser: $param1 })"`
+                `"CALL db.index.fulltext.queryNodes('my-text-index', $param0, {skip: 5, analyser: $param1})"`
             );
             expect(params).toMatchInlineSnapshot(`
             {
@@ -82,7 +82,7 @@ describe("db.index.fulltext", () => {
             const { cypher, params } = fulltextProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.fulltext.queryRelationships(\\"my-text-index\\", $param0) YIELD relationship AS this0"`
+                `"CALL db.index.fulltext.queryRelationships('my-text-index', $param0) YIELD relationship AS this0"`
             );
             expect(params).toMatchInlineSnapshot(`
             {
@@ -104,7 +104,7 @@ describe("db.index.fulltext", () => {
             const { cypher, params } = fulltextProcedure.build();
 
             expect(cypher).toMatchInlineSnapshot(
-                `"CALL db.index.fulltext.queryRelationships(\\"my-text-index\\", $param0, { skip: 5, analyser: $param1 })"`
+                `"CALL db.index.fulltext.queryRelationships('my-text-index', $param0, {skip: 5, analyser: $param1})"`
             );
             expect(params).toMatchInlineSnapshot(`
             {

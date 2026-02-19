@@ -13,16 +13,25 @@ describe("Literal", () => {
         const testClause = new TestClause(stringLiteral);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toBe(`"hello"`);
+        expect(queryResult.cypher).toBe(`'hello'`);
     });
 
-    test("Serialize string value escaping it", () => {
+    test("Serialize string value with quotes", () => {
         const stringLiteral = new Cypher.Literal(`he"llo`);
 
         const testClause = new TestClause(stringLiteral);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toBe(`"he\\"llo"`);
+        expect(queryResult.cypher).toBe(`'he"llo'`);
+    });
+
+    test("Serialize string value escaping it", () => {
+        const stringLiteral = new Cypher.Literal(`he'llo`);
+
+        const testClause = new TestClause(stringLiteral);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toBe(`'he\\'llo'`);
     });
 
     test("Serialize boolean value", () => {
@@ -49,16 +58,25 @@ describe("Literal", () => {
         const testClause = new TestClause(literal);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toBe(`["hello", 5, "hello"]`);
+        expect(queryResult.cypher).toBe(`['hello', 5, 'hello']`);
     });
 
-    test("Serialize array escaping values", () => {
+    test("Serialize array with quotes", () => {
         const literal = new Cypher.Literal(["hello", 5, 'hel""lo']);
 
         const testClause = new TestClause(literal);
 
         const queryResult = testClause.build();
-        expect(queryResult.cypher).toBe(`["hello", 5, "hel\\"\\"lo"]`);
+        expect(queryResult.cypher).toBe(`['hello', 5, 'hel""lo']`);
+    });
+
+    test("Serialize array escaping values", () => {
+        const literal = new Cypher.Literal(["hello", 5, "hel''lo"]);
+
+        const testClause = new TestClause(literal);
+
+        const queryResult = testClause.build();
+        expect(queryResult.cypher).toBe(`['hello', 5, 'hel\\'\\'lo']`);
     });
 
     test("Serialize null", () => {

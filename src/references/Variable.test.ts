@@ -37,7 +37,7 @@ describe("Variable", () => {
             Cypher.plus(new Cypher.Param("foo"), new Cypher.Literal("bar"))
         );
 
-        expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"var0[($param0 + \\"bar\\")]"`);
+        expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"var0[($param0 + 'bar')]"`);
     });
 
     test("does not escape named variable with valid name", () => {

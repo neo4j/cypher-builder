@@ -22,9 +22,9 @@ describe("Case", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CASE $param0
-    WHEN \\"Hello\\" THEN true
-    WHEN \\"Bye\\" THEN false
-    ELSE false
+  WHEN 'Hello' THEN true
+  WHEN 'Bye' THEN false
+  ELSE false
 END"
 `);
 
@@ -47,11 +47,11 @@ END"
         const queryResult = new TestClause(caseClause).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CASE
-                WHEN \\"Hello\\" = $param0 THEN true
-                ELSE false
-            END"
-        `);
+"CASE
+  WHEN 'Hello' = $param0 THEN true
+  ELSE false
+END"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -92,9 +92,9 @@ END"
         expect(cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Person)
 RETURN CASE this0.eyes
-    WHEN \\"blue\\" THEN 1
-    WHEN \\"brown\\", \\"hazel\\" THEN 2
-    ELSE 3
+  WHEN 'blue' THEN 1
+  WHEN 'brown', 'hazel' THEN 2
+  ELSE 3
 END AS result, this0.eyes AS eyes"
 `);
     });
@@ -121,9 +121,9 @@ END AS result, this0.eyes AS eyes"
         expect(cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Person)
 RETURN CASE
-    WHEN this0.eyes = \\"blue\\" THEN 1
-    WHEN this0.age < 40 THEN 2
-    ELSE 3
+  WHEN this0.eyes = 'blue' THEN 1
+  WHEN this0.age < 40 THEN 2
+  ELSE 3
 END AS result, this0.eyes AS eyes"
 `);
     });

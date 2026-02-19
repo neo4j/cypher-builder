@@ -83,54 +83,6 @@ CALL (*) {
 }
 ----
 
-[role=label--deprecated]
-== `.importWith`
-
-[WARNING]
-====
-This method is deprecated in favor of <<_variable_scope>>.
-====
-
-[WARNING]
-====
-`importWith` cannot be used if scope variables are defined and will throw an error.
-====
-
-
-To add variables to a `CALL` subquery context, you need to add a `WITH` statement. This can be achieved by using the `.importWith` method.
-
-[source, javascript]
-----
-const dog = new Cypher.Node();
-const person = new Cypher.Node();
-
-const dogName = new Cypher.NamedVariable("dogName");
-
-const subquery = new Cypher.Match(
-    new Cypher.Pattern(person, { labels: ["Person"] })
-        .related(new Cypher.Relationship({ type: "HAS_DOG" }))
-        .to(dog, { labels: ["Dog"] })
-).return([dog.property("name"), dogName]);
-
-const clause = new Cypher.Match(new Cypher.Pattern(person, { labels: ["Person"] }))
-    .call(subquery)
-    .importWith(person)
-    .return(dogName);
-----
-
-[source, cypher]
-----
-MATCH (this0:Person)
-CALL {
-    WITH this0
-    MATCH (this0:Person)-[this1:HAS_DOG]->(this2:Dog)
-    RETURN this2.name AS dogName
-}
-RETURN dogName
-----
-
-Note how this example uses `.concat` to combine the initial `MATCH` and `CALL` clauses.
-
 == `.inTransactions`
 
 The `.inTransactions` method appends the `IN TRANSACTIONS` modifier to a `CALL` subquery, causing it to link:https://neo4j.com/docs/cypher-manual/current/subqueries/subqueries-in-transactions/[execute in separate transactions]:

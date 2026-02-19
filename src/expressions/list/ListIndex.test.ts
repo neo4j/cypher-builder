@@ -12,7 +12,7 @@ describe("ListIndex", () => {
         const listIndex = Cypher.listIndex(list, 0);
         const queryResult = new TestClause(listIndex).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][0]"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"['1', '2', '3'][0]"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
