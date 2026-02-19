@@ -12,9 +12,9 @@ describe("LoadCSV", () => {
 
         const queryResult = loadClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"LOAD CSV FROM \\"https://data.neo4j.com/bands/artists.csv\\" AS var0
-RETURN var0"
-`);
+          "LOAD CSV FROM "https://data.neo4j.com/bands/artists.csv" AS var0
+          RETURN var0"
+        `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
@@ -35,10 +35,10 @@ RETURN var0"
 
         const queryResult = loadClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"LOAD CSV WITH HEADERS FROM \\"https://data.neo4j.com/bands/artists.csv\\" AS var0
-MERGE (this1 { name: var0.Name })    
-RETURN var0"
-`);
+          "LOAD CSV WITH HEADERS FROM "https://data.neo4j.com/bands/artists.csv" AS var0
+          MERGE (this1 { name: var0.Name })    
+          RETURN var0"
+        `);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
