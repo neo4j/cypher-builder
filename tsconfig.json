@@ -11,8 +11,7 @@
         "outDir": "dist",
         "stripInternal": false, // TODO: Change this after validating output .d.ts
         "noUncheckedIndexedAccess": true,
-        "isolatedModules": true,
-        "types": ["vitest/globals"]
+        "isolatedModules": true
     },
-    "include": ["src/**/*", "tests/**/*", "vitest.config.ts"]
+    "include": ["src/**/*", "tests/**/*", "global.d.ts", "vitest.config.ts"]
 }
