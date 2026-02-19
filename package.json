@@ -15,7 +15,7 @@
         "node": ">=20.0.0"
     },
     "scripts": {
-        "test": "vitest",
+        "test": "vitest run",
         "build": "tsc --build tsconfig.production.json",
         "docs": "npm run antora-docs && npm run docs-ref",
         "antora-docs": "npm run build:publish --prefix ./docs",
