@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import { and } from "../../expressions/operations/boolean";
-import type { Predicate } from "../../types";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import { and } from "../../expressions/operations/boolean.js";
+import type { Predicate } from "../../types.js";
 
 export class Where extends CypherASTNode {
     private wherePredicate: Predicate;

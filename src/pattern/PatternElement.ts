@@ -3,12 +3,12 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherEnvironment } from "../Environment";
-import type { Variable } from "../references/Variable";
-import type { CypherCompilable, Expr } from "../types";
-import { padBlock } from "../utils/pad-block";
-import { padLeft } from "../utils/pad-left";
-import { stringifyObject } from "../utils/stringify-object";
+import { CypherEnvironment } from "../Environment.js";
+import type { Variable } from "../references/Variable.js";
+import type { CypherCompilable, Expr } from "../types.js";
+import { padBlock } from "../utils/pad-block.js";
+import { padLeft } from "../utils/pad-left.js";
+import { stringifyObject } from "../utils/stringify-object.js";
 
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 

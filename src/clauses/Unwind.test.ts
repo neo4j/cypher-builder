@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../Cypher";
+import * as Cypher from "../Cypher.js";
 
 describe("CypherBuilder Unwind", () => {
     test("Unwind movies", () => {

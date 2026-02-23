@@ -3,12 +3,12 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { CypherCompilable, Expr } from "../../types";
-import type { ListIndex } from "./ListIndex";
-import { listIndex } from "./ListIndex";
-import type { ListRange } from "./ListRange";
-import { listRange } from "./ListRange";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { CypherCompilable, Expr } from "../../types.js";
+import type { ListIndex } from "./ListIndex.js";
+import { listIndex } from "./ListIndex.js";
+import type { ListRange } from "./ListRange.js";
+import { listRange } from "./ListRange.js";
 
 /** Represents a List
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/lists/ | Cypher Documentation}

@@ -3,26 +3,26 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import type { PathAssign } from "../pattern/PathAssign";
-import type { Pattern } from "../pattern/Pattern";
-import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { Clause } from "./Clause";
-import { WithCall } from "./mixins/clauses/WithCall";
-import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
-import { WithCreate } from "./mixins/clauses/WithCreate";
-import { WithFinish } from "./mixins/clauses/WithFinish";
-import { WithForeach } from "./mixins/clauses/WithForeach";
-import { WithMerge } from "./mixins/clauses/WithMerge";
-import { WithReturn } from "./mixins/clauses/WithReturn";
-import { WithUnwind } from "./mixins/clauses/WithUnwind";
-import { WithWith } from "./mixins/clauses/WithWith";
-import { WithDelete } from "./mixins/sub-clauses/WithDelete";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder";
-import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
-import { WithWhere } from "./mixins/sub-clauses/WithWhere";
-import { mixin } from "./utils/mixin";
+import type { CypherEnvironment } from "../Environment.js";
+import type { PathAssign } from "../pattern/PathAssign.js";
+import type { Pattern } from "../pattern/Pattern.js";
+import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import { Clause } from "./Clause.js";
+import { WithCall } from "./mixins/clauses/WithCall.js";
+import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure.js";
+import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithFinish } from "./mixins/clauses/WithFinish.js";
+import { WithForeach } from "./mixins/clauses/WithForeach.js";
+import { WithMerge } from "./mixins/clauses/WithMerge.js";
+import { WithReturn } from "./mixins/clauses/WithReturn.js";
+import { WithUnwind } from "./mixins/clauses/WithUnwind.js";
+import { WithWith } from "./mixins/clauses/WithWith.js";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere.js";
+import { mixin } from "./utils/mixin.js";
 
 export interface Match
     extends

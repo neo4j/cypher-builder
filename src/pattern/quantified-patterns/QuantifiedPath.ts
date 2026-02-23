@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { PathVariable } from "../../references/Path";
-import type { CypherCompilable } from "../../types";
-import { padBlock } from "../../utils/pad-block";
-import { PathAssign } from "../PathAssign";
-import type { Pattern } from "../Pattern";
-import type { QuantifiedPattern } from "./QuantifiedPattern";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { PathVariable } from "../../references/Path.js";
+import type { CypherCompilable } from "../../types.js";
+import { padBlock } from "../../utils/pad-block.js";
+import { PathAssign } from "../PathAssign.js";
+import type { Pattern } from "../Pattern.js";
+import type { QuantifiedPattern } from "./QuantifiedPattern.js";
 
 /**
  * @group Patterns

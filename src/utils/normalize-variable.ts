@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { ListExpr } from "../expressions/list/ListExpr";
-import { MapExpr } from "../expressions/map/MapExpr";
-import { Literal } from "../references/Literal";
-import type { Param } from "../references/Param";
-import type { Variable } from "../references/Variable";
-import type { Expr } from "../types";
-import { isCypherCompilable } from "./is-cypher-compilable";
+import { ListExpr } from "../expressions/list/ListExpr.js";
+import { MapExpr } from "../expressions/map/MapExpr.js";
+import { Literal } from "../references/Literal.js";
+import type { Param } from "../references/Param.js";
+import type { Variable } from "../references/Variable.js";
+import type { Expr } from "../types.js";
+import { isCypherCompilable } from "./is-cypher-compilable.js";
 
 type VariableInput = string | number | Variable | Literal | Param;
 

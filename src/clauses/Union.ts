@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherASTNode } from "../CypherASTNode";
-import type { CypherEnvironment } from "../Environment";
-import { Clause } from "./Clause";
+import type { CypherASTNode } from "../CypherASTNode.js";
+import type { CypherEnvironment } from "../Environment.js";
+import { Clause } from "./Clause.js";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/union/ | Cypher Documentation}

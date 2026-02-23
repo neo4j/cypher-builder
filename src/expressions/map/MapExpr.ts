@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { CypherCompilable, Expr } from "../../types";
-import { serializeMap } from "../../utils/serialize-map";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { CypherCompilable, Expr } from "../../types.js";
+import { serializeMap } from "../../utils/serialize-map.js";
 
 /** Represents a Map
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/maps/ | Cypher Documentation}

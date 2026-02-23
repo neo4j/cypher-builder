@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "./Environment";
-import type { CypherCompilable } from "./types";
+import type { CypherEnvironment } from "./Environment.js";
+import type { CypherCompilable } from "./types.js";
 
 /** Abstract class representing a Cypher Statement in the AST
  * @internal

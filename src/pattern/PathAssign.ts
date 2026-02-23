@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { PathVariable, Pattern, QuantifiedPath } from "..";
-import { CypherASTNode } from "../CypherASTNode";
-import type { CypherEnvironment } from "../Environment";
+import type { PathVariable, Pattern, QuantifiedPath } from "../index.js";
+import { CypherASTNode } from "../CypherASTNode.js";
+import type { CypherEnvironment } from "../Environment.js";
 
 /**
  * @group Patterns

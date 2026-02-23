@@ -3,12 +3,12 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../CypherASTNode";
-import { CypherEnvironment } from "../Environment";
-import type { CypherResult } from "../types";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
-import { padBlock } from "../utils/pad-block";
-import { toCypherParams } from "../utils/to-cypher-params";
+import { CypherASTNode } from "../CypherASTNode.js";
+import { CypherEnvironment } from "../Environment.js";
+import type { CypherResult } from "../types.js";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
+import { padBlock } from "../utils/pad-block.js";
+import { toCypherParams } from "../utils/to-cypher-params.js";
 
 const customInspectSymbol = Symbol.for("nodejs.util.inspect.custom");
 

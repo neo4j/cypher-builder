@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../../Environment";
-import type { CypherCompilable } from "../../types";
-import type { Pattern } from "../Pattern";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { CypherCompilable } from "../../types.js";
+import type { Pattern } from "../Pattern.js";
 
 /** @group Patterns */
 export type Quantifier =

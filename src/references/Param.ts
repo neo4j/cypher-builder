@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import { Variable } from "./Variable";
+import type { CypherEnvironment } from "../Environment.js";
+import { Variable } from "./Variable.js";
 
 /** Represents a parameter that will be passed as a separate object
  * @group Variables

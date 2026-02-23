@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherEnvironment } from "./Environment";
-import { Param } from "./references/Param";
-import { Variable } from "./references/Variable";
+import { CypherEnvironment } from "./Environment.js";
+import { Param } from "./references/Param.js";
+import { Variable } from "./references/Variable.js";
 
 describe("Environment", () => {
     test("creates new environment", () => {

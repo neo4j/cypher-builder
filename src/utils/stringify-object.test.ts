@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { stringifyObject } from "./stringify-object";
+import { stringifyObject } from "./stringify-object.js";
 
 describe("stringifyObject", () => {
     test("creates a valid cypher object from a js object", () => {

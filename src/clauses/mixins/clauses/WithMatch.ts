@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Match, OptionalMatch } from "../../..";
-import type { MatchClausePattern } from "../../Match";
-import { MixinClause } from "../Mixin";
+import { Match, OptionalMatch } from "../../../index.js";
+import type { MatchClausePattern } from "../../Match.js";
+import { MixinClause } from "../Mixin.js";
 
 export abstract class WithMatch extends MixinClause {
     /** Add a {@link Match} clause

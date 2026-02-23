@@ -3,15 +3,15 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import type { MapExpr } from "../../expressions/map/MapExpr";
-import type { MapProjection } from "../../expressions/map/MapProjection";
-import { Label } from "../../references/Label";
-import type { PropertyRef } from "../../references/PropertyRef";
-import type { Variable } from "../../references/Variable";
-import type { Expr } from "../../types";
-import { padBlock } from "../../utils/pad-block";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { MapExpr } from "../../expressions/map/MapExpr.js";
+import type { MapProjection } from "../../expressions/map/MapProjection.js";
+import { Label } from "../../references/Label.js";
+import type { PropertyRef } from "../../references/PropertyRef.js";
+import type { Variable } from "../../references/Variable.js";
+import type { Expr } from "../../types.js";
+import { padBlock } from "../../utils/pad-block.js";
 
 /** @group Clauses */
 export type SetParam =

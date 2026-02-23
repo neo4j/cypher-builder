@@ -3,11 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../CypherASTNode";
-import type { CypherEnvironment } from "../Environment";
-import type { Expr } from "../types";
-import { asArray } from "../utils/as-array";
-import type { ValueOf } from "../utils/type-helpers";
+import { CypherASTNode } from "../CypherASTNode.js";
+import type { CypherEnvironment } from "../Environment.js";
+import type { Expr } from "../types.js";
+import { asArray } from "../utils/as-array.js";
+import type { ValueOf } from "../utils/type-helpers.js";
 
 const BaseTypes = {
     ANY: "ANY",
