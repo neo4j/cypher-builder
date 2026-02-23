@@ -13,7 +13,7 @@
         "dist/**/*.js.map"
     ],
     "engines": {
-        "node": ">=20.19.0"
+        "node": ">=20.0.0"
     },
     "scripts": {
         "test": "vitest run",
