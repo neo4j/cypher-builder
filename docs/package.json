@@ -37,7 +37,7 @@
     },
     "devDependencies": {
         "express": "5.2.1",
-        "nodemon": "3.1.13"
+        "nodemon": "3.1.14"
     },
     "overrides": {
         "@antora/site-generator-default": {
