@@ -6,7 +6,7 @@
 
 Cypher Builder is a JavaScript programmatic API to create [Cypher](https://neo4j.com/docs/cypher-manual/current/) queries for [Neo4j](https://neo4j.com/).
 
-- [Documentation](https://neo4j.github.io/cypher-builder/cypher-builder/current/)
+- [Documentation](https://neo4j.com/docs/cypher-builder/current/)
 
 ```typescript
 import Cypher from "@neo4j/cypher-builder";
