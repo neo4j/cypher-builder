@@ -7,6 +7,6 @@
     "tags": ["-lintignore"],
     "ignoreFiles": ["examples/**", "docs/**"],
     "ignoreBinaries": ["tsx"],
-    "ignoreDependencies": ["@eslint/eslintrc", "eslint-config-prettier"],
+    "ignoreDependencies": ["eslint-config-prettier"],
     "treatConfigHintsAsErrors": true
 }
