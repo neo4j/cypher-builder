@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../src";
+import Cypher from "../src/index.js";
 
 /**
  * These test check if cypher builder matches the examples in

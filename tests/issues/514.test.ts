@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../../src";
+import * as Cypher from "../../src/index.js";
 
 describe("https://github.com/neo4j/cypher-builder/pull/514", () => {
     test("SET should allow PropertyRef values", () => {
