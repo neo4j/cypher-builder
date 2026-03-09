@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../Cypher";
+import * as Cypher from "../Cypher.js";
 
 describe("CypherBuilder Unwind", () => {
     test("Unwind movies", () => {
@@ -12,9 +12,7 @@ describe("CypherBuilder Unwind", () => {
         const moviesList = new Cypher.List([matrix, matrix2]);
         const unwindQuery = new Cypher.Unwind([moviesList, "batch"]);
         const queryResult = unwindQuery.build();
-        expect(queryResult.cypher).toMatchInlineSnapshot(
-            `"UNWIND [{ title: \\"Matrix\\" }, { title: \\"Matrix 2\\" }] AS batch"`
-        );
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"UNWIND [{title: 'Matrix'}, {title: 'Matrix 2'}] AS batch"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
@@ -38,8 +36,7 @@ describe("CypherBuilder Unwind", () => {
         const queryResult = unwindQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "UNWIND var0 AS var1
-SET
-    var1.title = $param0
+SET var1.title = $param0
 REMOVE var1.title
 DELETE var1"
 `);
@@ -97,7 +94,7 @@ UNWIND var1 AS var2"
         const unwindQuery = new Cypher.Unwind([moviesList, batch]).orderBy([batch.property("title", "DESC")]).limit(10);
         const queryResult = unwindQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-"UNWIND [{ title: \\"Matrix\\" }, { title: \\"Matrix 2\\" }] AS var0
+"UNWIND [{title: 'Matrix'}, {title: 'Matrix 2'}] AS var0
 ORDER BY var0.title.DESC ASC
 LIMIT 10"
 `);

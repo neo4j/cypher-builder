@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../index.js";
+import { TestClause } from "../../utils/TestClause.js";
 
 describe("ListIndex", () => {
     test("get 0 from list", () => {
@@ -12,7 +12,7 @@ describe("ListIndex", () => {
         const listIndex = Cypher.listIndex(list, 0);
         const queryResult = new TestClause(listIndex).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"[\\"1\\", \\"2\\", \\"3\\"][0]"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"['1', '2', '3'][0]"`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 

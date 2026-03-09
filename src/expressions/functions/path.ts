@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { PathVariable } from "../../references/Path";
-import { CypherFunction } from "./CypherFunctions";
+import type { PathVariable } from "../../references/Path.js";
+import { CypherFunction } from "./CypherFunctions.js";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-cheat-sheet/current/#_path_functions | Cypher Documentation}

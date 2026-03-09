@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { With } from "../../..";
-import type { WithProjection } from "../../With";
-import { MixinClause } from "../Mixin";
+import { With } from "../../../index.js";
+import type { WithProjection } from "../../With.js";
+import { MixinClause } from "../Mixin.js";
 
 export abstract class WithWith extends MixinClause {
     /** Add a {@link With} clause

@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Pattern } from "../..";
-import { CypherASTNode } from "../../CypherASTNode";
-import { Clause } from "../../clauses/Clause";
-import type { CypherCompilable } from "../../types";
+import type { Pattern } from "../../index.js";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import { Clause } from "../../clauses/Clause.js";
+import type { CypherCompilable } from "../../types.js";
 
 export abstract class Subquery extends CypherASTNode {
     protected subquery: CypherCompilable;

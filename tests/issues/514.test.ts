@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../../src";
+import * as Cypher from "../../src/index.js";
 
 describe("https://github.com/neo4j/cypher-builder/pull/514", () => {
     test("SET should allow PropertyRef values", () => {
@@ -26,8 +26,7 @@ describe("https://github.com/neo4j/cypher-builder/pull/514", () => {
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Movie { title: $param0.title })
-SET
-    this0 = $param0.year"
+SET this0 = $param0.year"
 `);
     });
 
@@ -51,8 +50,7 @@ SET
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Movie { title: $param0.title })
-SET
-    this0 += $param0.year"
+SET this0 += $param0.year"
 `);
     });
 });

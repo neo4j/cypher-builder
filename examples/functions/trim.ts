@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
+import Cypher from "../../dist";
 
 // RETURN trim(" Simple Trim "), trim(BOTH "x" FROM "xxxhelloxxx")
 

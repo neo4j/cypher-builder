@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "..";
-import { TestClause } from "../utils/TestClause";
+import Cypher from "../index.js";
+import { TestClause } from "../utils/TestClause.js";
 
 describe("Variable", () => {
     test("Creates multiple variables", () => {
@@ -37,7 +37,7 @@ describe("Variable", () => {
             Cypher.plus(new Cypher.Param("foo"), new Cypher.Literal("bar"))
         );
 
-        expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"var0[($param0 + \\"bar\\")]"`);
+        expect(new TestClause(variableProp).build().cypher).toMatchInlineSnapshot(`"var0[($param0 + 'bar')]"`);
     });
 
     test("does not escape named variable with valid name", () => {

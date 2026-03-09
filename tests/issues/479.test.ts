@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../../src";
+import * as Cypher from "../../src/index.js";
 
 describe("https://github.com/neo4j/cypher-builder/issues/479", () => {
     describe("labels", () => {
@@ -81,7 +81,7 @@ RETURN count(this1)"
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH $param0 AS var0
-MATCH (this1:$((var0 || \\"Test\\")))
+MATCH (this1:$((var0 || 'Test')))
 RETURN count(this1)"
 `);
         });
@@ -102,7 +102,7 @@ RETURN count(this1)"
 
             expect(queryResult.cypher).toMatchInlineSnapshot(`
 "WITH $param0 AS var0
-MATCH (this1:$(var0):\`normal$Label\`:$($param1))
+MATCH (this1:$(var0)&\`normal$Label\`&$($param1))
 RETURN count(this1)"
 `);
 

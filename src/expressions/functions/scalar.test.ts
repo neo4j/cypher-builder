@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../index.js";
+import { TestClause } from "../../utils/TestClause.js";
 
 describe("Scalar Functions", () => {
     // no parameter functions
@@ -17,7 +17,6 @@ describe("Scalar Functions", () => {
 
     // 1 parameter functions
     test.each([
-        "id",
         "elementId",
         "endNode",
         "size",
@@ -64,7 +63,7 @@ describe("Scalar Functions", () => {
         const coalesceFunction = Cypher.coalesce(nullParam, testParam, literal);
         const queryResult = new TestClause(coalesceFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"coalesce(NULL, $param0, \\"arthur\\")"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"coalesce(NULL, $param0, 'arthur')"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -87,14 +86,6 @@ describe("Scalar Functions", () => {
         const cypherFunction = Cypher.size(new Cypher.Literal("Hello"));
         const queryResult = new TestClause(cypherFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"size(\\"Hello\\")"`);
-    });
-
-    test("size() applied to a pattern", () => {
-        const pattern = new Cypher.Pattern(new Cypher.Node()).related().to();
-        const cypherFunction = Cypher.size(pattern);
-        const queryResult = new TestClause(cypherFunction).build();
-
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"size((this0)-[]->())"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"size('Hello')"`);
     });
 });

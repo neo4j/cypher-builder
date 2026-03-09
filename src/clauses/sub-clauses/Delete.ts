@@ -3,11 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import type { NodeRef } from "../../references/NodeRef";
-import type { RelationshipRef } from "../../references/RelationshipRef";
-import type { Variable } from "../../references/Variable";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import type { NodeRef } from "../../references/NodeRef.js";
+import type { RelationshipRef } from "../../references/RelationshipRef.js";
+import type { Variable } from "../../references/Variable.js";
 
 /** @group Clauses */
 export type DeleteInput = Array<NodeRef | RelationshipRef | Variable>;

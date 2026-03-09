@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Param } from "../references/Param";
+import { Param } from "../references/Param.js";
 
 /** Converts an object into an object of Param so it can easily be passed to a pattern. */
 export function toCypherParams<T>(original: Record<string, T>): Record<string, Param<T>> {

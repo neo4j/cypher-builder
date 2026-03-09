@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../Cypher";
+import * as Cypher from "../Cypher.js";
 
 describe("CypherBuilder USE", () => {
     test("USE before clause", () => {
@@ -27,12 +27,12 @@ describe("CypherBuilder USE", () => {
         const callQuery = new Cypher.Call(new Cypher.Use("mydb", query1));
         const queryResult = callQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "CALL {
-                USE mydb
-                MATCH (this0:Movie)
-                RETURN this0
-            }"
-        `);
+"CALL {
+  USE mydb
+  MATCH (this0:Movie)
+  RETURN this0
+}"
+`);
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 

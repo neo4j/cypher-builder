@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "..";
+import Cypher from "../index.js";
 
 describe("IsType", () => {
     test("UNWIND return isType", () => {
@@ -16,7 +16,7 @@ describe("IsType", () => {
         const { cypher, params } = unwindClause.build();
 
         expect(cypher).toMatchInlineSnapshot(`
-"UNWIND [42, true, \\"abc\\", NULL] AS var0
+"UNWIND [42, true, 'abc', NULL] AS var0
 RETURN var0, var0 IS :: INTEGER"
 `);
         expect(params).toMatchInlineSnapshot(`{}`);

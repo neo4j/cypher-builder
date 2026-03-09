@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "..";
+import Cypher from "../index.js";
 
 describe("Foreach", () => {
     test("Foreach create", () => {
@@ -20,13 +20,12 @@ describe("Foreach", () => {
 
         const queryResult = foreachClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "FOREACH (var0 IN [1, 2, 3] |
-                CREATE (this1:Movie)
-                SET
-                    this1.id = var0
-            )
-            WITH *"
-        `);
+"FOREACH (var0 IN [1, 2, 3] |
+  CREATE (this1:Movie)
+  SET this1.id = var0
+)
+WITH *"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
@@ -49,11 +48,10 @@ describe("Foreach", () => {
         const queryResult = foreachClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "FOREACH (var0 IN [1, 2, 3] |
-    CREATE (this1:Movie)
+  CREATE (this1:Movie)
 )
 REMOVE this1.title
-SET
-    this1.id = var0
+SET this1.id = var0
 DELETE this1
 WITH *"
 `);
@@ -73,7 +71,7 @@ WITH *"
         const queryResult = foreachClause.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "FOREACH (var0 IN [1, 2, 3] |
-    CREATE (this1:Movie)
+  CREATE (this1:Movie)
 )
 DETACH DELETE this1
 WITH *"

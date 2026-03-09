@@ -3,11 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import type { CypherCompilable } from "../types";
-import { isCypherCompilable } from "../utils/is-cypher-compilable";
-import { toCypherParams } from "../utils/to-cypher-params";
-import { Clause } from "./Clause";
+import type { CypherEnvironment } from "../Environment.js";
+import type { CypherCompilable } from "../types.js";
+import { isCypherCompilable } from "../utils/is-cypher-compilable.js";
+import { toCypherParams } from "../utils/to-cypher-params.js";
+import { Clause } from "./Clause.js";
 
 type RawCypherCallback = (context: RawCypherContext) => [string, Record<string, unknown>] | string | undefined;
 

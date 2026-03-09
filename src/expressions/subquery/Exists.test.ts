@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
+import Cypher from "../../index.js";
 
 describe("Exists subquery", () => {
     test("Exists predicate with subclause", () => {
@@ -15,13 +15,13 @@ describe("Exists subquery", () => {
         const queryResult = match.build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(`
-            "MATCH (this0)
-            WHERE EXISTS {
-                MATCH (this1:Movie)
-                RETURN *
-            }
-            RETURN *"
-        `);
+"MATCH (this0)
+WHERE EXISTS {
+  MATCH (this1:Movie)
+  RETURN *
+}
+RETURN *"
+`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
@@ -37,7 +37,7 @@ describe("Exists subquery", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0)
 WHERE EXISTS {
-    (this1:Movie)
+  (this1:Movie)
 }
 RETURN *"
 `);

@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherProcedure, VoidCypherProcedure } from "../../../procedures/CypherProcedure";
-import { MixinClause } from "../Mixin";
+import type { CypherProcedure, VoidCypherProcedure } from "../../../procedures/CypherProcedure.js";
+import { MixinClause } from "../Mixin.js";
 
 export abstract class WithCallProcedure extends MixinClause {
     /** Add a call {@link Procedure} clause

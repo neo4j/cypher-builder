@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../../index";
+import Cypher from "../../index.js";
 
 describe("db.schema procedures", () => {
     test("db.schema.nodeTypeProperties", () => {

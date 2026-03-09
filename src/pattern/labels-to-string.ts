@@ -3,12 +3,12 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Expr } from "..";
-import type { CypherEnvironment } from "../Environment";
-import { LabelExpr } from "../expressions/labels/label-expressions";
-import { addLabelToken } from "../utils/add-label-token";
-import { asArray } from "../utils/as-array";
-import { escapeLabel, escapeType } from "../utils/escape";
+import type { Expr } from "../index.js";
+import type { CypherEnvironment } from "../Environment.js";
+import { LabelExpr } from "../expressions/labels/label-expressions.js";
+import { addLabelToken } from "../utils/add-label-token.js";
+import { asArray } from "../utils/as-array.js";
+import { escapeLabel, escapeType } from "../utils/escape.js";
 
 export function labelsToString(
     labels: string | Array<string | Expr> | LabelExpr | Expr,
@@ -30,7 +30,7 @@ function labelOrTypeToString(
     escapeFunc: (s: string) => string
 ): string {
     if (elements instanceof LabelExpr) {
-        return addLabelToken(env.config.labelOperator, elements.getCypher(env));
+        return addLabelToken(elements.getCypher(env));
     } else {
         const escapedLabels = asArray(elements).map((label: string | Expr) => {
             if (typeof label === "string") {
@@ -40,6 +40,6 @@ function labelOrTypeToString(
             }
         });
 
-        return addLabelToken(env.config.labelOperator, ...escapedLabels);
+        return addLabelToken(...escapedLabels);
     }
 }

@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Literal } from "../../references/Literal";
-import type { Expr } from "../../types";
-import { normalizeExpr } from "../../utils/normalize-variable";
-import { CypherFunction } from "./CypherFunctions";
+import { Literal } from "../../references/Literal.js";
+import type { Expr } from "../../types.js";
+import { normalizeExpr } from "../../utils/normalize-variable.js";
+import { CypherFunction } from "./CypherFunctions.js";
 
 /** Temporal unit to be used in `.truncate()` functions
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-date-truncate | Cypher Documentation}

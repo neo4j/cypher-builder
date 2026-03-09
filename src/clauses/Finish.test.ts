@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "..";
+import Cypher from "../index.js";
 
 describe("CypherBuilder Finish", () => {
     test("Finish Clause", () => {
@@ -24,8 +24,7 @@ describe("CypherBuilder Finish", () => {
         const queryResult = createQuery.build();
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "CREATE (this0)
-SET
-    this1.test = $param0
+SET this1.test = $param0
 FINISH"
 `);
         expect(queryResult.params).toMatchInlineSnapshot(`

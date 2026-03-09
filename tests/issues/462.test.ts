@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../../src";
+import * as Cypher from "../../src/index.js";
 
 describe("https://github.com/neo4j/cypher-builder/issues/462", () => {
     test("SET and REMOVE statatements order should be preserved", () => {
@@ -24,12 +24,11 @@ describe("https://github.com/neo4j/cypher-builder/issues/462", () => {
         expect(queryResult.cypher).toMatchInlineSnapshot(`
 "MATCH (this0:Person)
 WHERE this0.name = $param0
-SET
-    this0.name = $param1
+SET this0.name = $param1
 REMOVE this0.anotherName
 SET
-    this0.anotherName = $param2,
-    this0.oldName = $param3
+  this0.anotherName = $param2,
+  this0.oldName = $param3
 RETURN this0"
 `);
 

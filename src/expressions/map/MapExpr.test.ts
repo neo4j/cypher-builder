@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../index.js";
+import { TestClause } from "../../utils/TestClause.js";
 
 describe("Map Expression", () => {
     test("Create from object", () => {
@@ -16,7 +16,7 @@ describe("Map Expression", () => {
 
         const queryResult = new TestClause(map).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"{ foo: \\"barr\\", var: var0, param: $param0 }"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"{foo: 'barr', var: var0, param: $param0}"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {
@@ -39,7 +39,7 @@ describe("Map Expression", () => {
         const queryResult = new TestClause(map).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(
-            `"{ key: $param0, value2: \\"Override\\", value3: \\"another value\\" }"`
+            `"{key: $param0, value2: 'Override', value3: 'another value'}"`
         );
 
         expect(queryResult.params).toMatchInlineSnapshot(`

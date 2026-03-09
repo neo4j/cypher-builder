@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../src";
+import Cypher from "../src/index.js";
 
 describe("Variable escaping", () => {
     test("Should escape NamedNode", () => {

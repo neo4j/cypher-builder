@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../../src";
+import Cypher from "../../src/index.js";
 
 describe("Extra Params", () => {
     test("Adding extra params to build options", () => {

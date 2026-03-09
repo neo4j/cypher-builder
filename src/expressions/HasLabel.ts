@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { LabelExpr } from "..";
-import { CypherASTNode } from "../CypherASTNode";
-import type { CypherEnvironment } from "../Environment";
-import type { NodeRef } from "../references/NodeRef";
-import type { RelationshipRef } from "../references/RelationshipRef";
-import { addLabelToken } from "../utils/add-label-token";
-import { escapeLabel } from "../utils/escape";
+import type { LabelExpr } from "../index.js";
+import { CypherASTNode } from "../CypherASTNode.js";
+import type { CypherEnvironment } from "../Environment.js";
+import type { NodeRef } from "../references/NodeRef.js";
+import type { RelationshipRef } from "../references/RelationshipRef.js";
+import { addLabelToken } from "../utils/add-label-token.js";
+import { escapeLabel } from "../utils/escape.js";
 
 /** Generates a predicate to check if a node has a label or a relationship has a type
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/where/#filter-on-node-label | Cypher Documentation}
@@ -44,9 +44,9 @@ export class HasLabel extends CypherASTNode {
     private generateLabelExpressionStr(env: CypherEnvironment): string {
         if (Array.isArray(this.expectedLabels)) {
             const escapedLabels = this.expectedLabels.map((label) => escapeLabel(label));
-            return addLabelToken(env.config.labelOperator, ...escapedLabels);
+            return addLabelToken(...escapedLabels);
         } else {
-            return addLabelToken(env.config.labelOperator, this.expectedLabels.getCypher(env));
+            return addLabelToken(this.expectedLabels.getCypher(env));
         }
     }
 

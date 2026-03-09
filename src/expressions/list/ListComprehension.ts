@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherASTNode } from "../../CypherASTNode";
-import type { CypherEnvironment } from "../../Environment";
-import { WithWhere } from "../../clauses/mixins/sub-clauses/WithWhere";
-import { mixin } from "../../clauses/utils/mixin";
-import type { Variable } from "../../references/Variable";
-import type { Expr } from "../../types";
-import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists";
+import { CypherASTNode } from "../../CypherASTNode.js";
+import type { CypherEnvironment } from "../../Environment.js";
+import { WithWhere } from "../../clauses/mixins/sub-clauses/WithWhere.js";
+import { mixin } from "../../clauses/utils/mixin.js";
+import type { Variable } from "../../references/Variable.js";
+import type { Expr } from "../../types.js";
+import { compileCypherIfExists } from "../../utils/compile-cypher-if-exists.js";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ListComprehension extends WithWhere {}
@@ -24,17 +24,13 @@ export class ListComprehension extends CypherASTNode {
     private listExpr: Expr | undefined;
     private mapExpr: Expr | undefined; //  Expression for list mapping
 
-    constructor(variable: Variable);
-    /** @deprecated Use `new ListComprehension(var1).in(expr)` instead */
-    constructor(variable: Variable, listExpr: Expr);
-    constructor(variable: Variable, listExpr?: Expr) {
+    constructor(variable: Variable) {
         super();
         this.variable = variable;
-        this.listExpr = listExpr;
     }
 
+    /** Sets the list expression to be used for the comprehension. If called twice, the expression will be overriden */
     public in(listExpr: Expr): this {
-        if (this.listExpr) throw new Error("Cannot set 2 lists in list comprehension IN");
         this.listExpr = listExpr;
         return this;
     }

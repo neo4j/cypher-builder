@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../index";
+import Cypher from "../index.js";
 
 describe("tx procedures", () => {
     test("tx.getMetaData", () => {
@@ -19,6 +19,6 @@ describe("tx procedures", () => {
         });
         const { cypher } = query.build();
 
-        expect(cypher).toMatchInlineSnapshot(`"CALL tx.setMetaData({ test: \\"dsa\\", test2: $param0 })"`);
+        expect(cypher).toMatchInlineSnapshot(`"CALL tx.setMetaData({test: 'dsa', test2: $param0})"`);
     });
 });

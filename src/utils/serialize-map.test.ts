@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "..";
-import { CypherEnvironment } from "../Environment";
-import { serializeMap } from "./serialize-map";
+import Cypher from "../index.js";
+import { CypherEnvironment } from "../Environment.js";
+import { serializeMap } from "./serialize-map.js";
 
 describe("serializeMap", () => {
     const env = new CypherEnvironment();
@@ -17,7 +17,7 @@ describe("serializeMap", () => {
 
     test("serialize a map of expressions", () => {
         const result = serializeMap(env, map);
-        expect(result).toBe("{ test: 10, `test$`: 10, expr: reverse([1]) }");
+        expect(result).toBe("{test: 10, `test$`: 10, expr: reverse([1])}");
     });
 
     test("serialize a map of expressions without curly braces", () => {

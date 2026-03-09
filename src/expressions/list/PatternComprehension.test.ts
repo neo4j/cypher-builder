@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../index.js";
+import { TestClause } from "../../utils/TestClause.js";
 
 describe("Pattern comprehension", () => {
     test("comprehension with map", () => {
@@ -84,7 +84,7 @@ describe("Pattern comprehension", () => {
         const queryResult = new TestClause(comprehension).build();
 
         expect(queryResult.cypher).toMatchInlineSnapshot(
-            `"[(this0:Movie)-[this2:ACTED_IN]->(this1:Actor) WHERE this0.title CONTAINS \\"Matrix\\" | this1.name]"`
+            `"[(this0:Movie)-[this2:ACTED_IN]->(this1:Actor) WHERE this0.title CONTAINS 'Matrix' | this1.name]"`
         );
 
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);

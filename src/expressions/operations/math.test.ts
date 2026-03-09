@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../index.js";
+import { TestClause } from "../../utils/TestClause.js";
 
 describe("math operators", () => {
     test("Match node with mathematical operator", () => {
@@ -41,7 +41,7 @@ describe("math operators", () => {
     test("plus for concatenating strings", () => {
         const concatPlus = Cypher.plus(new Cypher.Literal("Hello"), new Cypher.Literal("World!"));
         const { cypher } = new TestClause(concatPlus).build();
-        expect(cypher).toMatchInlineSnapshot(`"(\\"Hello\\" + \\"World!\\")"`);
+        expect(cypher).toMatchInlineSnapshot(`"('Hello' + 'World!')"`);
     });
 
     test("minus", () => {

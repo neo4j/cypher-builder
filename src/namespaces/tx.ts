@@ -3,11 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { VoidCypherProcedure } from "../procedures/CypherProcedure";
-import { CypherProcedure } from "../procedures/CypherProcedure";
-import type { Literal } from "../references/Literal";
-import type { Param } from "../references/Param";
-import { normalizeMap } from "../utils/normalize-variable";
+import type { VoidCypherProcedure } from "../procedures/CypherProcedure.js";
+import { CypherProcedure } from "../procedures/CypherProcedure.js";
+import type { Literal } from "../references/Literal.js";
+import type { Param } from "../references/Param.js";
+import { normalizeMap } from "../utils/normalize-variable.js";
 
 const TX_NAMESPACE = "tx";
 

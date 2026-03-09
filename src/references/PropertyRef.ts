@@ -3,13 +3,13 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment";
-import { listIndex, type ListIndex } from "../expressions/list/ListIndex";
-import type { ListRange } from "../expressions/list/ListRange";
-import { listRange } from "../expressions/list/ListRange";
-import type { CypherCompilable, Expr } from "../types";
-import { escapeProperty } from "../utils/escape";
-import type { Variable } from "./Variable";
+import type { CypherEnvironment } from "../Environment.js";
+import { listIndex, type ListIndex } from "../expressions/list/ListIndex.js";
+import type { ListRange } from "../expressions/list/ListRange.js";
+import { listRange } from "../expressions/list/ListRange.js";
+import type { CypherCompilable, Expr } from "../types.js";
+import { escapeProperty } from "../utils/escape.js";
+import type { Variable } from "./Variable.js";
 
 /** Reference to a variable property
  * @group Variables

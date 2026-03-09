@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { escapeProperty } from "./escape";
+import { escapeProperty } from "./escape.js";
 
 /** Serializes object into a string for Cypher objects */
 export function stringifyObject(fields: Record<string, string | undefined | null>): string {

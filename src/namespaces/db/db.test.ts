@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../../index";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../index.js";
+import { TestClause } from "../../utils/TestClause.js";
 
 describe("db procedures", () => {
     test("db.awaitIndex", () => {
@@ -12,7 +12,7 @@ describe("db procedures", () => {
 
         const { cypher } = procedure.build();
 
-        expect(cypher).toMatchInlineSnapshot(`"CALL db.awaitIndex(\\"name\\", 123)"`);
+        expect(cypher).toMatchInlineSnapshot(`"CALL db.awaitIndex('name', 123)"`);
     });
     test("db.awaitIndexes", () => {
         const procedure = Cypher.db.awaitIndexes(123);
@@ -29,7 +29,7 @@ describe("db procedures", () => {
 
             const { cypher } = procedure.build();
 
-            expect(cypher).toEqual(`CALL db.${procedureName}("param")`);
+            expect(cypher).toEqual(`CALL db.${procedureName}('param')`);
         }
     );
 
@@ -40,7 +40,7 @@ describe("db procedures", () => {
 
             const { cypher } = procedure.build();
 
-            expect(cypher).toEqual(`CALL db.${procedureName}("param")`);
+            expect(cypher).toEqual(`CALL db.${procedureName}('param')`);
         }
     );
 
@@ -133,7 +133,7 @@ describe("db functions", () => {
         const dbNameFromElementId = Cypher.db.nameFromElementId("1234");
         const { cypher, params } = new TestClause(dbNameFromElementId).build();
 
-        expect(cypher).toMatchInlineSnapshot(`"db.nameFromElementId(\\"1234\\")"`);
+        expect(cypher).toMatchInlineSnapshot(`"db.nameFromElementId('1234')"`);
         expect(params).toMatchInlineSnapshot(`{}`);
     });
 

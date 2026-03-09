@@ -27,9 +27,7 @@ const quantifiedPath = new Cypher.QuantifiedPath(
 
 const query = new Cypher.Match(quantifiedPath).return(m2);
 
-const { cypher, params } = query.build({
-    labelOperator: "&",
-});
+const { cypher, params } = query.build();
 
 console.log("Cypher");
 console.log(cypher);

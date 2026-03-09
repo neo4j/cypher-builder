@@ -1,14 +1,13 @@
 [[compatibility]]
-:description: This page outlines the compatibility requirements for `@neo4j/cypher-builder` version 2 with Cypher and Node.js.
+:description: This page outlines the compatibility requirements for `@neo4j/cypher-builder` version 3 with Cypher and Node.js.
 = Compatibility
 
-This page outlines the compatibility requirements for `@neo4j/cypher-builder` version 2 with Cypher and Node.js.
+This page outlines the compatibility requirements for `@neo4j/cypher-builder` version 3 with Cypher and Node.js.
 
-* Targets link:https://neo4j.com/docs/cypher-manual/5/introduction/[Cypher 5], with support for link:https://neo4j.com/docs/cypher-manual/4.4/introduction/[Cypher 4.4].
-* Compatible with Node.js version 16.0.0 and later.
+* Targets link:https://neo4j.com/docs/cypher-manual/25/introduction/[Cypher 25], with support for link:https://neo4j.com/docs/cypher-manual/5/introduction/[Cypher 5].
+* Compatible with Node.js version 20.0.0 and later.
 
 [NOTE]
 ====
-`@neo4j/cypher-builder` version 1 is no longer supported.
-Version 2 is a full replacement and maintains the same compatibility with Cypher and Node.js.
+If you must support Neo4j 4, keep Cypher Builder 2.x, otherwise, xref:migration-guide-3.adoc[migrate to version 3].
 ====

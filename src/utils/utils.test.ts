@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "..";
+import Cypher from "../index.js";
 
 describe("CypherBuilder Utils", () => {
     describe("escapeLabel", () => {
@@ -69,7 +69,7 @@ describe("CypherBuilder Utils", () => {
         });
     });
 
-    it("toCypherParams", () => {
+    test("toCypherParams", () => {
         const cypherParams = Cypher.utils.toCypherParams({
             param1: "my param",
             param2: 5,

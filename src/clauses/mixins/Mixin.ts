@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Clause } from "../../clauses/Clause";
-import { CypherASTNode } from "../../CypherASTNode";
+import { Clause } from "../../clauses/Clause.js";
+import { CypherASTNode } from "../../CypherASTNode.js";
 
 /**
  * Superclass of all mixins in CypherBuilder

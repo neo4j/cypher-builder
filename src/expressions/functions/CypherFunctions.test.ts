@@ -3,15 +3,15 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../index.js";
+import { TestClause } from "../../utils/TestClause.js";
 
 describe("Cypher Functions", () => {
     test("custom function", () => {
         const myFunction = new Cypher.Function("myFunction", [new Cypher.Literal("test"), new Cypher.Param("test2")]);
         const queryResult = new TestClause(myFunction).build();
 
-        expect(queryResult.cypher).toMatchInlineSnapshot(`"myFunction(\\"test\\", $param0)"`);
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"myFunction('test', $param0)"`);
 
         expect(queryResult.params).toMatchInlineSnapshot(`
             {

@@ -3,12 +3,12 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Expr } from "..";
-import { CypherASTNode } from "../CypherASTNode";
-import type { CypherEnvironment } from "../Environment";
-import type { NodeRef } from "../references/NodeRef";
-import { addLabelToken } from "../utils/add-label-token";
-import { escapeLabel } from "../utils/escape";
+import type { Expr } from "../index.js";
+import { CypherASTNode } from "../CypherASTNode.js";
+import type { CypherEnvironment } from "../Environment.js";
+import type { NodeRef } from "../references/NodeRef.js";
+import { addLabelToken } from "../utils/add-label-token.js";
+import { escapeLabel } from "../utils/escape.js";
 
 /** Represents a label attached to a {@link NodeRef | Node}
  * @group Variables
@@ -39,12 +39,12 @@ export class Label extends CypherASTNode {
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const nodeId = this.node.getCypher(env);
-        const labelsStr = this.generateLabelExpressionStr(env);
+        const labelsStr = this.generateLabelExpressionStr();
         return `${nodeId}${labelsStr}`;
     }
 
-    private generateLabelExpressionStr(env: CypherEnvironment): string {
-        return addLabelToken(env.config.labelOperator, escapeLabel(this.label));
+    private generateLabelExpressionStr(): string {
+        return addLabelToken(escapeLabel(this.label));
     }
 }
 
@@ -63,7 +63,7 @@ export class DynamicLabel extends Label {
     public getCypher(env: CypherEnvironment): string {
         const nodeId = this.node.getCypher(env);
         const exprStr = `$(${this.expr.getCypher(env)})`;
-        const labelStr = addLabelToken(env.config.labelOperator, exprStr);
+        const labelStr = addLabelToken(exprStr);
         return `${nodeId}${labelStr}`;
     }
 }

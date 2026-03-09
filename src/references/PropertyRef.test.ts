@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "..";
-import { TestClause } from "../utils/TestClause";
+import Cypher from "../index.js";
+import { TestClause } from "../utils/TestClause.js";
 
 describe("Property", () => {
     test("Serialize string property", () => {
@@ -115,7 +115,7 @@ describe("Property", () => {
             const testClause = new TestClause(property);
 
             const queryResult = testClause.build();
-            expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()][\\"Hello\\"]"`);
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"var0[date()]['Hello']"`);
         });
 
         test("Serialize nested string after expression", () => {

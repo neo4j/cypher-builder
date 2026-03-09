@@ -3,11 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Literal, Param } from "../../Cypher";
-import { CypherFunction } from "../../expressions/functions/CypherFunctions";
-import { CypherProcedure } from "../../procedures/CypherProcedure";
-import type { Expr } from "../../types";
-import { normalizeMap, normalizeVariable } from "../../utils/normalize-variable";
+import type { Literal, Param } from "../../Cypher.js";
+import { CypherFunction } from "../../expressions/functions/CypherFunctions.js";
+import { CypherProcedure } from "../../procedures/CypherProcedure.js";
+import type { Expr } from "../../types.js";
+import { normalizeMap, normalizeVariable } from "../../utils/normalize-variable.js";
 
 const GENAI_VECTOR_NAMESPACE = "genai.vector";
 

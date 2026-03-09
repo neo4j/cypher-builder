@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../..";
-import { TestClause } from "../../utils/TestClause";
+import Cypher from "../../index.js";
+import { TestClause } from "../../utils/TestClause.js";
 
 describe("Math Functions", () => {
     // Functions with no argument
@@ -71,7 +71,7 @@ describe("Math Functions", () => {
             const roundFunc = Cypher.round(roundNumber, 3, "HALF_DOWN");
             const { cypher } = new TestClause(roundFunc).build();
 
-            expect(cypher).toBe(`round(10.23, 3, "HALF_DOWN")`);
+            expect(cypher).toBe(`round(10.23, 3, 'HALF_DOWN')`);
         });
     });
 });

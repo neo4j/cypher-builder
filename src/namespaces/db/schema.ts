@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherProcedure } from "../../procedures/CypherProcedure";
+import { CypherProcedure } from "../../procedures/CypherProcedure.js";
 
 const SCHEMA_NAMESPACE = "db.schema";
 

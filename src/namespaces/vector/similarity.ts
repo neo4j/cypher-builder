@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherFunction } from "../../expressions/functions/CypherFunctions";
-import type { Expr } from "../../types";
+import { CypherFunction } from "../../expressions/functions/CypherFunctions.js";
+import type { Expr } from "../../types.js";
 
 const VECTOR_SIMILARITY_NAMESPACE = "vector.similarity";
 

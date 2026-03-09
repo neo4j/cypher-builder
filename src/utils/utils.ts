@@ -5,6 +5,6 @@
 
 // Note: This file exists for exported utils to the user
 
-export { concat } from "./concat";
-export { escapeLabel, escapeProperty, escapeType, escapeVariable } from "./escape";
-export { toCypherParams } from "./to-cypher-params";
+export { concat } from "./concat.js";
+export { escapeLabel, escapeProperty, escapeType, escapeVariable } from "./escape.js";
+export { toCypherParams } from "./to-cypher-params.js";

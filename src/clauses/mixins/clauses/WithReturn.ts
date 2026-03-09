@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Return } from "../../Return";
-import type { ProjectionColumn } from "../../sub-clauses/Projection";
-import { MixinClause } from "../Mixin";
+import { Return } from "../../Return.js";
+import type { ProjectionColumn } from "../../sub-clauses/Projection.js";
+import { MixinClause } from "../Mixin.js";
 
 export abstract class WithReturn extends MixinClause {
     /** Append a {@link Return} clause
