@@ -1,5 +1,189 @@
 # @neo4j/cypher-builder
 
+## 3.0.0
+
+### Major Changes
+
+- [#569](https://github.com/neo4j/cypher-builder/pull/569) [`9f56213`](https://github.com/neo4j/cypher-builder/commit/9f5621350eddc92adfdd2513a13d2eb088c570ad) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove type `Cypher.Operation` in favor of `Cypher.Expr`
+
+- [#741](https://github.com/neo4j/cypher-builder/pull/741) [`200784d`](https://github.com/neo4j/cypher-builder/commit/200784d3fc8b8f79f5e904dea607e6b7f874ba7a) Thanks [@mjfwebb](https://github.com/mjfwebb)! - Move to ES modules.
+
+    Cypher Builder has been migrated to ES modules, and is no longer available as a CommonJS module.
+
+- [#585](https://github.com/neo4j/cypher-builder/pull/585) [`117a320`](https://github.com/neo4j/cypher-builder/commit/117a320b921bac142da7d6d548676c89e77418f6) Thanks [@angrykoala](https://github.com/angrykoala)! - ListComprehension `.in` method no longer throws if called twice. It will instead override the expression
+
+- [#585](https://github.com/neo4j/cypher-builder/pull/585) [`fa74345`](https://github.com/neo4j/cypher-builder/commit/fa74345b86056e356cf0abd8b999cd27adf2b0fb) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove second parameter of `ListComprehension` in favor of `.in`
+
+    _Before_
+
+    ```js
+    new Cypher.ListComprehension(variable, new Cypher.Literal([1, 2]));
+    ```
+
+    _After_
+
+    ```js
+    new Cypher.ListComprehension(variable).in(new Cypher.Literal([1, 2]));
+    ```
+
+    In both cases, the same comprehension will be generated:
+
+    ```cypher
+    [var0 IN [1, 2]]
+    ```
+
+- [#573](https://github.com/neo4j/cypher-builder/pull/573) [`4e74c1b`](https://github.com/neo4j/cypher-builder/commit/4e74c1b7471d55b5a103772ddb0f5888a740a56a) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove support for patterns in size.
+
+    _No longer supported_
+
+    ```js
+    Cypher.size(new Cypher.Pattern(node));
+    ```
+
+    Use `new Cypher.Count(pattern)` instead.
+
+- [#565](https://github.com/neo4j/cypher-builder/pull/565) [`480fc96`](https://github.com/neo4j/cypher-builder/commit/480fc96376411d5bb350a314c47759e8ae50cf74) Thanks [@angrykoala](https://github.com/angrykoala)! - Updates minimum node engine to 20.0.0
+
+- [#588](https://github.com/neo4j/cypher-builder/pull/588) [`7c47adb`](https://github.com/neo4j/cypher-builder/commit/7c47adba6eaebae4749be1bfb858910516fc7a8c) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove labelOperator, all labels will now use operator `&`
+
+    No longer supported:
+
+    ```js
+    const { cypher, params } = matchQuery.build({
+        labelOperator: "&",
+    });
+    ```
+
+    _Before_
+
+    ```cypher
+    MATCH (this1:Movie:Film)
+    ```
+
+    _After_
+
+    ```cypher
+    MATCH (this1:Movie&Film)
+    ```
+
+- [#589](https://github.com/neo4j/cypher-builder/pull/589) [`2fe15f6`](https://github.com/neo4j/cypher-builder/commit/2fe15f634b91d9940426df02c1e6d90f2a82a3c8) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove all apoc functions and procedures:
+    - `apoc.util.validate`
+    - `apoc.util.validatePredicate`
+    - `apoc.date.convertFormat`
+    - `apoc.cypher.runFirstColumnMany`
+    - `apoc.cypher.runFirstColumnSingle`
+
+    In order to use apoc methods, create a custom function or procedure. For example:
+
+    ```js
+    function validate(
+        predicate: Predicate,
+        message: string,
+        params: List | Literal | Map
+    ): VoidCypherProcedure {
+        return new VoidCypherProcedure("apoc.util.validate", [predicate,  new Literal(message), params]);
+    }
+    ```
+
+    ```js
+    function validatePredicate(predicate: Predicate, message: string): CypherFunction {
+        return new CypherFunction("apoc.util.validatePredicate", [predicate, new Literal(message), new Literal([0])]);
+    }
+
+    ```
+
+- [#571](https://github.com/neo4j/cypher-builder/pull/571) [`b399bb0`](https://github.com/neo4j/cypher-builder/commit/b399bb09be3734129d05166b0df159ef03ba5ff4) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove method `.children` from concat clauses:
+
+    ```js
+    const query = Cypher.utils.concat(clause1, clause2);
+    query.children; // No longer supported
+    ```
+
+- [#575](https://github.com/neo4j/cypher-builder/pull/575) [`c3fc3f4`](https://github.com/neo4j/cypher-builder/commit/c3fc3f4e01fc4afdc0df267c3cf0b978759f00b9) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove `.importWith` from `Call` clauses in favor of constructor options
+
+    _Before_
+
+    ```js
+    const clause = new Cypher.Call(nestedClause).importWith(movieNode, actorNode);
+    ```
+
+    ```cypher
+    CALL {
+        WITH var0, var1
+        // Nested clause
+    }
+    ```
+
+    _After_
+
+    ```js
+    const clause = new Cypher.Call(nestedClause, [movieNode, actorNode]);
+    ```
+
+    ```cypher
+    CALL (var0, var1){
+        // Nested clause
+    }
+    ```
+
+- [#572](https://github.com/neo4j/cypher-builder/pull/572) [`9153289`](https://github.com/neo4j/cypher-builder/commit/9153289e733d35944971309fe8e5c98c8a76d58d) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove functions deprecated in Cypher 5:
+    - `distance` in favor of `point.distance`
+    - `id` in favor of `elementId`
+
+- [#570](https://github.com/neo4j/cypher-builder/pull/570) [`507934c`](https://github.com/neo4j/cypher-builder/commit/507934c240d3c8c78eac4f6488e94d159086af3b) Thanks [@angrykoala](https://github.com/angrykoala)! - Remove extra parameters in `Cypher.Foreach` in favor of methods `in` and `do`.
+
+    For example, to create the following Cypher:
+
+    ```cypher
+    FOREACH (var0 IN [1, 2, 3] |
+            CREATE (this1:Movie)
+            SET
+                this1.id = var0
+        )
+    ```
+
+    _before_
+
+    ```js
+    const list = new Cypher.Literal([1, 2, 3]);
+    const variable = new Cypher.Variable();
+
+    const movieNode = new Cypher.Node();
+    const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] })).set([
+        movieNode.property("id"),
+        variable,
+    ]);
+
+    const foreachClause = new Cypher.Foreach(variable, list, createMovie);
+    ```
+
+    _after_
+
+    ```js
+    const list = new Cypher.Literal([1, 2, 3]);
+    const variable = new Cypher.Variable();
+
+    const movieNode = new Cypher.Node();
+    const createMovie = new Cypher.Create(new Cypher.Pattern(movieNode, { labels: ["Movie"] })).set([
+        movieNode.property("id"),
+        variable,
+    ]);
+
+    const foreachClause = new Cypher.Foreach(variable).in(list).do(createMovie);
+    ```
+
+### Patch Changes
+
+- [#574](https://github.com/neo4j/cypher-builder/pull/574) [`5d7ef2b`](https://github.com/neo4j/cypher-builder/commit/5d7ef2b3e8ec700b4ab4464633888c9e23407a96) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `Cypher 25` version prefix:
+
+    ```js
+    const { cypher } = matchQuery.build({
+        cypherVersion: "25",
+    });
+    ```
+
+- [#623](https://github.com/neo4j/cypher-builder/pull/623) [`4e0a4dc`](https://github.com/neo4j/cypher-builder/commit/4e0a4dcfe19018d4ba7c50dae5860e53a71f573e) Thanks [@angrykoala](https://github.com/angrykoala)! - Output Cypher now follows the official styleguide
+
 ## 2.12.0
 
 ### Minor Changes
