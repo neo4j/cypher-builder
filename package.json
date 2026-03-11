@@ -48,7 +48,7 @@
         "@changesets/cli": "2.30.0",
         "@eslint/eslintrc": "3.3.5",
         "@eslint/js": "10.0.1",
-        "@tsconfig/node24": "24.0.0",
+        "@tsconfig/node24": "24.0.4",
         "@types/node": "25.3.5",
         "@typescript-eslint/eslint-plugin": "8.56.1",
         "@typescript-eslint/parser": "8.56.1",
