@@ -145,23 +145,23 @@ For example:
 [source, Javascript]
 ----
 function validate(
-    predicate: Predicate,
+    predicate: Cypher.Predicate,
     message: string,
-    params: List | Literal | Map
-): Cypher.VoidCypherProcedure {
-    return new Cypher.VoidCypherProcedure(
+    params: Cypher.List | Cypher.Literal | Cypher.Map
+): Cypher.VoidProcedure {
+    return new Cypher.VoidProcedure(
         "apoc.util.validate", 
-        [predicate,  new Literal(message), params]
+        [predicate,  new Cypher.Literal(message), params]
     );
 }
 ----
 
 [source, Javascript]
 ----
-function validatePredicate(predicate: Predicate, message: string): CypherFunction {
-    return new CypherFunction("
+function validatePredicate(predicate: Cypher.Predicate, message: string): Cypher.Function {
+    return new Cypher.Function("
         apoc.util.validatePredicate", 
-        [predicate, new Literal(message), new Literal([0])]
+        [predicate, new Cypher.Literal(message), new Cypher.Literal([0])]
     );
 }
 ----
