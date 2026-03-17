@@ -1,7 +1,7 @@
 name: cypher-builder
 title: Cypher Builder
 version: "current"
-# display_version: '1.0-preview'
+display_version: "3.x"
 start_page: ROOT:index.adoc
 nav:
   - modules/ROOT/content-nav.adoc
