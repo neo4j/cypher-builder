@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 3.0.1
+
+### Patch Changes
+
+- [#785](https://github.com/neo4j/cypher-builder/pull/785) [`612f924`](https://github.com/neo4j/cypher-builder/commit/612f9240b8f95e5d39e4c131ae1b06328136a1ec) Thanks [@mjfwebb](https://github.com/mjfwebb)! - Revert Cypher Builder to emit as commonjs instead of es modules
+
 ## 3.0.0
 
 ### Major Changes
