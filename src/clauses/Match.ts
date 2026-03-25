@@ -40,6 +40,11 @@ export interface Match
         WithOrder,
         WithForeach {}
 
+enum MatchMode {
+    REPEATABLE_ELEMENTS,
+    DIFFERENT_RELATIONSHIPS,
+}
+
 type ShortestStatement = {
     type: "ALL SHORTEST" | "SHORTEST" | "ANY" | "SHORTEST_GROUPS";
     k?: number;
@@ -71,6 +76,7 @@ export class Match extends Clause {
     private readonly patterns: MatchClausePattern[];
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
+    private mode: MatchMode | undefined;
 
     constructor(...patterns: MatchClausePattern[]) {
         super();
@@ -167,6 +173,24 @@ export class Match extends Clause {
         return this;
     }
 
+    /** Add `REPEATABLE ELEMENTS` mode to `MATCH` clause
+     * @see {@link https://neo4j.com/docs/cypher-manual/25/patterns/match-modes/#repeatable-elements | Cypher Documentation}
+     * @since Neo4j 2025.06
+     */
+    public repeatableElements(): this {
+        this.mode = MatchMode.REPEATABLE_ELEMENTS;
+        return this;
+    }
+
+    /** Add `DIFFERENT RELATIONSHIPS` mode to `MATCH` clause
+     * @see {@link https://neo4j.com/docs/cypher-manual/25/patterns/match-modes/#different-relationships | Cypher Documentation}
+     * @since Neo4j 2025.06
+     */
+    public differentRelationships(): this {
+        this.mode = MatchMode.DIFFERENT_RELATIONSHIPS;
+        return this;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const patternCyphers = this.patterns.map((pattern) => pattern.getCypher(env));
@@ -191,7 +215,9 @@ export class Match extends Clause {
             patternStr = ` ${shortestStatement}${patternCyphers[0]}`;
         }
 
-        return `${optionalMatch}MATCH${patternStr}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        const modeStr = this.getModeStr();
+
+        return `${optionalMatch}MATCH${modeStr}${patternStr}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {
@@ -207,6 +233,17 @@ export class Match extends Clause {
                 return `SHORTEST ${this.shortestStatement.k} GROUPS `;
             case "ANY":
                 return "ANY ";
+        }
+    }
+
+    private getModeStr(): string {
+        switch (this.mode) {
+            case MatchMode.DIFFERENT_RELATIONSHIPS:
+                return " DIFFERENT RELATIONSHIPS";
+            case MatchMode.REPEATABLE_ELEMENTS:
+                return " REPEATABLE ELEMENTS";
+            default:
+                return "";
         }
     }
 }

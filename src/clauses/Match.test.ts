@@ -1192,4 +1192,80 @@ RETURN this0, this2, this1"
             }).toThrow(`At least one pattern must be provided to Match`);
         });
     });
+
+    describe("Match mode", () => {
+        test("Match mode set to REPEATABLE ELEMENTS", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: new Cypher.Param("test-value"),
+                    },
+                })
+            ).repeatableElements();
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"MATCH REPEATABLE ELEMENTS (this0:Movie { test: $param0 })"`
+            );
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "test-value",
+            }
+        `);
+        });
+
+        test("Match mode set to DIFFERENT RELATIONSHIPS", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: new Cypher.Param("test-value"),
+                    },
+                })
+            ).differentRelationships();
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"MATCH DIFFERENT RELATIONSHIPS (this0:Movie { test: $param0 })"`
+            );
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "test-value",
+            }
+        `);
+        });
+
+        test("Match mode overridden to DIFFERENT RELATIONSHIPS", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: new Cypher.Param("test-value"),
+                    },
+                })
+            )
+                .repeatableElements()
+                .differentRelationships();
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"MATCH DIFFERENT RELATIONSHIPS (this0:Movie { test: $param0 })"`
+            );
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "test-value",
+            }
+        `);
+        });
+    });
 });
