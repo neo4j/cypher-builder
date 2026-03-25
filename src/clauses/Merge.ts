@@ -22,7 +22,8 @@ import { OnCreate } from "./sub-clauses/OnCreate.js";
 import { OnMatch } from "./sub-clauses/OnMatch.js";
 import { mixin } from "./utils/mixin.js";
 
-export interface Merge extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet {}
+export interface Merge
+    extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}

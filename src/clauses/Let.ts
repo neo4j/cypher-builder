@@ -17,7 +17,7 @@ import { WithReturn } from "./mixins/clauses/WithReturn.js";
 import { WithWith } from "./mixins/clauses/WithWith.js";
 import { mixin } from "./utils/mixin.js";
 
-/** A binding of a variable to an expression in a LET clause */
+/** @inline */
 export type LetBinding = [Variable, Expr];
 
 export interface Let

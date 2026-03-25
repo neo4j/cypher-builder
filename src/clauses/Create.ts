@@ -18,7 +18,8 @@ import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
 import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
 import { mixin } from "./utils/mixin.js";
 
-export interface Create extends WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder, WithLet {}
+export interface Create
+    extends WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder, WithLet {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/create/ | Cypher Documentation}

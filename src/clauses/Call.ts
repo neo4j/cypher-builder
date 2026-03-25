@@ -23,7 +23,17 @@ import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
 import { mixin } from "./utils/mixin.js";
 
 export interface Call
-    extends WithReturn, WithWith, WithUnwind, WithSetRemove, WithDelete, WithMatch, WithCreate, WithMerge, WithOrder, WithLet {}
+    extends
+        WithReturn,
+        WithWith,
+        WithUnwind,
+        WithSetRemove,
+        WithDelete,
+        WithMatch,
+        WithCreate,
+        WithMerge,
+        WithOrder,
+        WithLet {}
 
 /** @group Subqueries */
 export type CallInTransactionOptions = {
@@ -42,7 +52,18 @@ export type CallInTransactionOptions = {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/ | Cypher Documentation}
  * @group Subqueries
  */
-@mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSetRemove, WithMatch, WithCreate, WithMerge, WithOrder, WithLet)
+@mixin(
+    WithReturn,
+    WithWith,
+    WithUnwind,
+    WithDelete,
+    WithSetRemove,
+    WithMatch,
+    WithCreate,
+    WithMerge,
+    WithOrder,
+    WithLet
+)
 export class Call extends Clause {
     private readonly subquery: CypherASTNode;
     private inTransactionsConfig?: CallInTransactionOptions;
