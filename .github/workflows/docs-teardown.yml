@@ -10,6 +10,9 @@ on:
     paths:
       - "docs/**"
 
+permissions:
+  contents: read
+
 jobs:
   teardown-docs:
     runs-on: ubuntu-latest
