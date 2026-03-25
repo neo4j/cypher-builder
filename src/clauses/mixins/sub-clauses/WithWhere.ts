@@ -48,11 +48,11 @@ export abstract class WithWhere extends Mixin {
             return;
         }
 
-        if (!this.whereSubClause) {
+        if (this.whereSubClause) {
+            this.whereSubClause.and(whereInput);
+        } else {
             const whereClause = new Where(this, whereInput);
             this.whereSubClause = whereClause;
-        } else {
-            this.whereSubClause.and(whereInput);
         }
     }
 
@@ -79,9 +79,10 @@ export abstract class WithWhere extends Mixin {
         for (const [key, value] of Object.entries(params)) {
             const property = target.property(key);
             const eqOp = eq(property, value);
-            if (!operation) operation = eqOp;
-            else {
+            if (operation) {
                 operation = and(operation, eqOp);
+            } else {
+                operation = eqOp;
             }
         }
         return operation;
