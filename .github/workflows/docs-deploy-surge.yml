@@ -16,6 +16,10 @@ on:
     types:
       - completed
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   deploy-docs:
     # Uncomment this if statement to deploy only when the PR builds cleanly
@@ -93,8 +97,7 @@ jobs:
           SURGE_TOKEN: "${{ secrets.DOCS_SURGE_TOKEN }}"
           SITE_DIR: ${{ steps.get-top-dir.outputs.top-dir }}
         run: |
-          npm install -g surge
-          surge . $DEPLOY_URL --token "$SURGE_TOKEN"
+          npx surge@0.27.3 . $DEPLOY_URL --token "$SURGE_TOKEN"
 
       # If the PR artifacts include a changelog file, add it to the PR as a comment
       # The changelog contains links to new and changed files in the deployed docs
