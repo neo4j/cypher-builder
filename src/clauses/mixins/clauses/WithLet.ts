@@ -1,0 +1,29 @@
+/*
+ * Copyright (c) "Neo4j"
+ * Neo4j Sweden AB [http://neo4j.com]
+ */
+
+import { Let, type LetBinding } from "../../Let.js";
+import { MixinClause } from "../Mixin.js";
+
+export abstract class WithLet extends MixinClause {
+    /** Append a {@link Let} clause.
+     * @see {@link https://neo4j.com/docs/cypher-manual/25/clauses/let/ | Cypher Documentation}
+     * @since Neo4j 2025.06
+     */
+    public let(clause: Let): Let;
+    public let(...bindings: LetBinding[]): Let;
+    public let(clauseOrBinding: Let | LetBinding, ...bindings: LetBinding[]): Let {
+        const letClause = this.getLetClause(clauseOrBinding, bindings);
+        this.addNextClause(letClause);
+        return letClause;
+    }
+
+    private getLetClause(clauseOrBinding: Let | LetBinding, bindings: LetBinding[]): Let {
+        if (clauseOrBinding instanceof Let) {
+            return clauseOrBinding;
+        } else {
+            return new Let(clauseOrBinding, ...bindings);
+        }
+    }
+}
