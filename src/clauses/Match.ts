@@ -186,7 +186,7 @@ export class Match extends Clause {
 
         let patternStr: string;
         if (patternCyphers.length > 1) {
-            patternStr = `\n${patternCyphers.map((p) => `  ${p}`).join(",\n")}`;
+            patternStr = `${patternCyphers.map((p) => `\n  ${p}`).join(",")}`;
         } else {
             patternStr = ` ${shortestStatement}${patternCyphers[0]}`;
         }
