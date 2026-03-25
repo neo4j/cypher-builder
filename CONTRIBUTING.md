@@ -31,7 +31,7 @@ To unlink, in the project using cypher-builder:
 Each public element of the library should have a TSDoc comment compatible with [TypeDoc](https://typedoc.org/guides/overview).
 The comments should follow these conventions:
 
-- Brief description if needed
+- Brief description if needed, in markdown format, without complex tags so it remains readable in code and no trailing dot (`.`)
 - @group - This should be the Cypher concept related to this interface: Functions, Clauses, Operators, Procedures, Subqueries, Patterns, Namespaces, Maps, Lists, Utils.
 - @category - Sub grouping, if needed. For example, `Aggregations` inside the group `functions`,
 - @see {@link https://neo4j.com/docs/cypher-manual | Cypher Documentation} - A link to the element in the Cypher documentation,
@@ -43,7 +43,7 @@ The comments should follow these conventions:
 For example:
 
 ```ts
-/** Absolute value of an Integer or Float
+/** Absolute value of an `Integer` or `Float`
  * @group Functions
  * @category Math
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/mathematical-numeric/#functions-abs | Cypher Documentation}

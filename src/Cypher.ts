@@ -27,9 +27,9 @@ export type { QuantifiedPattern, Quantifier } from "./pattern/quantified-pattern
 
 // Variables and references
 export {
+    CypherFalse as false,
     Literal,
     CypherNull as Null,
-    CypherFalse as false,
     CypherTrue as true,
     type LiteralValue,
 } from "./references/Literal.js";
@@ -42,7 +42,7 @@ export { NamedVariable, Variable } from "./references/Variable.js";
 
 // Expressions
 export { Case, type When } from "./expressions/Case.js";
-export { CypherTypes as TYPE, isNotType, isType, type IsType, type ListType } from "./expressions/IsType.js";
+export { isNotType, isType, CypherTypes as TYPE, type IsType, type ListType } from "./expressions/IsType.js";
 
 // Subquery Expressions
 export { Collect } from "./expressions/subquery/Collect.js";
@@ -91,7 +91,7 @@ export {
     startsWith,
     type ComparisonOp,
 } from "./expressions/operations/comparison.js";
-export { ConcatOp, concat } from "./expressions/operations/concat.js";
+export { concat, ConcatOp } from "./expressions/operations/concat.js";
 export { divide, minus, mod, multiply, plus, pow, type MathOp } from "./expressions/operations/math.js";
 
 // --Functions
@@ -120,7 +120,9 @@ export {
     atan2,
     ceil,
     cos,
+    cosh,
     cot,
+    coth,
     degrees,
     e,
     exp,
@@ -135,8 +137,10 @@ export {
     round,
     sign,
     sin,
+    sinh,
     sqrt,
     tan,
+    tanh,
 } from "./expressions/functions/math.js";
 export * from "./expressions/functions/path.js";
 export { all, any, exists, isEmpty, none, single } from "./expressions/functions/predicate.js";

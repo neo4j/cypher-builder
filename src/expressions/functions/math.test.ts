@@ -36,6 +36,10 @@ describe("Math Functions", () => {
         "radians",
         "sin",
         "tan",
+        "cosh",
+        "coth",
+        "sinh",
+        "tanh",
     ] as const)("%s()", (value) => {
         const mathFunc = Cypher[value](new Cypher.Literal(10));
         const { cypher } = new TestClause(mathFunc).build();
