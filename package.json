@@ -52,7 +52,7 @@
         "@types/node": "25.5.0",
         "@typescript-eslint/eslint-plugin": "8.57.2",
         "@typescript-eslint/parser": "8.57.2",
-        "@vitest/coverage-v8": "4.1.0",
+        "@vitest/coverage-v8": "4.1.1",
         "eslint": "10.1.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-tsdoc": "0.5.2",
@@ -60,6 +60,6 @@
         "prettier": "3.8.1",
         "typedoc": "0.28.18",
         "typescript": "5.9.3",
-        "vitest": "4.1.0"
+        "vitest": "4.1.1"
     }
 }
