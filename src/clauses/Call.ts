@@ -11,6 +11,7 @@ import { isNumber } from "../utils/is-number.js";
 import { padBlock } from "../utils/pad-block.js";
 import { Clause } from "./Clause.js";
 import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithLet } from "./mixins/clauses/WithLet.js";
 import { WithMatch } from "./mixins/clauses/WithMatch.js";
 import { WithMerge } from "./mixins/clauses/WithMerge.js";
 import { WithReturn } from "./mixins/clauses/WithReturn.js";
@@ -22,7 +23,17 @@ import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
 import { mixin } from "./utils/mixin.js";
 
 export interface Call
-    extends WithReturn, WithWith, WithUnwind, WithSetRemove, WithDelete, WithMatch, WithCreate, WithMerge, WithOrder {}
+    extends
+        WithReturn,
+        WithWith,
+        WithUnwind,
+        WithSetRemove,
+        WithDelete,
+        WithMatch,
+        WithCreate,
+        WithMerge,
+        WithOrder,
+        WithLet {}
 
 /** @group Subqueries */
 export type CallInTransactionOptions = {
@@ -41,7 +52,18 @@ export type CallInTransactionOptions = {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/ | Cypher Documentation}
  * @group Subqueries
  */
-@mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSetRemove, WithMatch, WithCreate, WithMerge, WithOrder)
+@mixin(
+    WithReturn,
+    WithWith,
+    WithUnwind,
+    WithDelete,
+    WithSetRemove,
+    WithMatch,
+    WithCreate,
+    WithMerge,
+    WithOrder,
+    WithLet
+)
 export class Call extends Clause {
     private readonly subquery: CypherASTNode;
     private inTransactionsConfig?: CallInTransactionOptions;
