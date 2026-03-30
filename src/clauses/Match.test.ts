@@ -1267,5 +1267,31 @@ RETURN this0, this2, this1"
             }
         `);
         });
+
+        test("Match mode overridden to REPEATABLE ELEMENTS", () => {
+            const movieNode = new Cypher.Node();
+
+            const matchQuery = new Cypher.Match(
+                new Cypher.Pattern(movieNode, {
+                    labels: ["Movie"],
+                    properties: {
+                        test: new Cypher.Param("test-value"),
+                    },
+                })
+            )
+                .differentRelationships()
+                .repeatableElements();
+
+            const queryResult = matchQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(
+                `"MATCH REPEATABLE ELEMENTS (this0:Movie { test: $param0 })"`
+            );
+
+            expect(queryResult.params).toMatchInlineSnapshot(`
+            {
+              "param0": "test-value",
+            }
+        `);
+        });
     });
 });
