@@ -2,6 +2,10 @@ name: Test
 
 on:
   workflow_call:
+  push:
+    branches:
+      - main
+      - "*.x"
 
 permissions:
   contents: read
