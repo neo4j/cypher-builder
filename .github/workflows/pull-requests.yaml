@@ -10,6 +10,9 @@ on:
     paths-ignore:
       - "docs/**"
 
+permissions:
+  contents: read
+
 jobs:
   lint:
     uses: ./.github/workflows/reusable-lint.yml
