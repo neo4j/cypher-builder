@@ -1,8 +1,10 @@
 name: "CLA Check"
 
 on:
-  pull_request_target:
-    branches: ["main"]
+  pull_request:
+    branches:
+      - main
+      - "*.x"
 
 permissions:
   contents: read
