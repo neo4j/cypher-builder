@@ -1,10 +1,7 @@
 name: Sonarcloud
 
 on:
-  push:
-    branches: ["main", "*.x", "*-dev"]
-  pull_request:
-    branches: ["main", "*.x", "*-dev"]
+  workflow_call:
 
 permissions:
   contents: read

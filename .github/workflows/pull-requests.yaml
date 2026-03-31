@@ -1,0 +1,42 @@
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches:
+      - main
+      - "*.x"
+    paths-ignore:
+      - "docs/**"
+
+jobs:
+  lint:
+    uses: ./.github/workflows/reusable-lint.yml
+  
+  test:
+    uses: ./.github/workflows/reusable-test.yml
+  
+  sonarcloud:
+    uses: ./.github/workflows/reusable-sonarcloud.yml
+
+  quality-gate:
+    if: ${{ always() }}
+    needs:
+      - lint
+      - test
+      - sonarcloud
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Job Status
+        run: |
+          if [ ${{ needs.lint.result }} != 'success' ] || 
+            [ ${{ needs.test.result }} != 'success' ] ||
+            [ ${{ needs.sonarcloud.result }} != 'success' ]; then
+            echo "One or more jobs failed"
+            exit 1
+          else
+            echo "Passed!"
+          fi
