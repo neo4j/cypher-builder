@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - "*.x"
     paths:
       - "docs/**"
 
@@ -61,3 +62,24 @@ jobs:
     with:
       pages-modified: ${{ needs.docs-changes-pr.outputs.pages-modified }}
       pages-added: ${{ needs.docs-changes-pr.outputs.pages-added }}
+  
+  quality-gate:
+    if: ${{ always() }}
+    needs:
+      - docs-build-pr
+      - docs-changes-pr
+      - docs-updates-comment-pr
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Job Status
+        run: |
+          if [ ${{ needs.docs-build-pr.result }} != 'success' ] || 
+            [ ${{ needs.docs-changes-pr.result }} != 'success' ] ||
+            [ ${{ needs.docs-updates-comment-pr.result }} != 'success' ]; then
+            echo "One or more jobs failed"
+            exit 1
+          else
+            echo "Passed!"
+          fi
