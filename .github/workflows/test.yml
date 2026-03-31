@@ -2,9 +2,13 @@ name: Test
 
 on:
   push:
-    branches: ["main", "*.x", "*-dev"]
+    branches:
+      - main
+      - "*.x"
   pull_request:
-    branches: ["main", "*.x", "*-dev"]
+    branches:
+      - main
+      - "*.x"
 
 permissions:
   contents: read
