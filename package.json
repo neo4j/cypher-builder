@@ -56,7 +56,7 @@
         "eslint": "10.1.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-tsdoc": "0.5.2",
-        "knip": "6.1.0",
+        "knip": "6.1.1",
         "prettier": "3.8.1",
         "typedoc": "0.28.18",
         "typescript": "6.0.2",
