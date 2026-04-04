@@ -1,5 +1,19 @@
 # @neo4j/cypher-builder
 
+## 3.1.0
+
+### Minor Changes
+
+- [#790](https://github.com/neo4j/cypher-builder/pull/790) [`ada5d19`](https://github.com/neo4j/cypher-builder/commit/ada5d19df222420860b0bbf3cc218f06e4af82de) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for the following hyperbolic trigonometric functions:
+    - `Cypher.cosh(x)`
+    - `Cypher.coth(x)`
+    - `Cypher.sinh(x)`
+    - `Cypher.tanh(x)`
+
+- [#793](https://github.com/neo4j/cypher-builder/pull/793) [`78c52dc`](https://github.com/neo4j/cypher-builder/commit/78c52dc1de05d7988f6f6496034394ad8e5bd52f) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `MATCH` modes `DIFFERENT RELATIONSHIPS` and `REPEATABLE ELEMENTS`:
+    - `match.repeatableElements()`
+    - `match.differentRelationships()`
+
 ## 3.0.1
 
 ### Patch Changes
