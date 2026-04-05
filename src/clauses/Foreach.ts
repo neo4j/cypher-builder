@@ -12,6 +12,7 @@ import { Clause } from "./Clause.js";
 import type { Create } from "./Create.js";
 import type { Merge } from "./Merge.js";
 import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithLet } from "./mixins/clauses/WithLet.js";
 import { WithMerge } from "./mixins/clauses/WithMerge.js";
 import { WithReturn } from "./mixins/clauses/WithReturn.js";
 import { WithWith } from "./mixins/clauses/WithWith.js";
@@ -19,7 +20,7 @@ import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
 import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
 import { mixin } from "./utils/mixin.js";
 
-export interface Foreach extends WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge {}
+export interface Foreach extends WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge, WithLet {}
 
 /**
  * Valid Clauses to be used inside {@link Foreach}
@@ -30,7 +31,7 @@ export type ForeachClauses = Foreach | Create | Merge;
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/foreach/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge)
+@mixin(WithWith, WithReturn, WithSetRemove, WithDelete, WithCreate, WithMerge, WithLet)
 export class Foreach extends Clause {
     private readonly variable: Variable;
     private listExpr: Expr | undefined;

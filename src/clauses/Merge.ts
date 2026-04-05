@@ -11,6 +11,7 @@ import { padBlock } from "../utils/pad-block.js";
 import { Clause } from "./Clause.js";
 import { WithCreate } from "./mixins/clauses/WithCreate.js";
 import { WithFinish } from "./mixins/clauses/WithFinish.js";
+import { WithLet } from "./mixins/clauses/WithLet.js";
 import { WithReturn } from "./mixins/clauses/WithReturn.js";
 import { WithWith } from "./mixins/clauses/WithWith.js";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
@@ -21,13 +22,14 @@ import { OnCreate } from "./sub-clauses/OnCreate.js";
 import { OnMatch } from "./sub-clauses/OnMatch.js";
 import { mixin } from "./utils/mixin.js";
 
-export interface Merge extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder {}
+export interface Merge
+    extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder)
+@mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet)
 export class Merge extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
     private readonly onCreateClause: OnCreate;
