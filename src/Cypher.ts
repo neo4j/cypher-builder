@@ -8,6 +8,7 @@ export { Call, OptionalCall, type CallInTransactionOptions } from "./clauses/Cal
 export { Create } from "./clauses/Create.js";
 export { Finish } from "./clauses/Finish.js";
 export { Foreach, type ForeachClauses } from "./clauses/Foreach.js";
+export { Let } from "./clauses/Let.js";
 export { LoadCSV } from "./clauses/LoadCSV.js";
 export { Match, OptionalMatch } from "./clauses/Match.js";
 export { Merge } from "./clauses/Merge.js";

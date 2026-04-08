@@ -8,19 +8,20 @@ import type { CypherEnvironment } from "../Environment.js";
 import { Clause } from "./Clause.js";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure.js";
 import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithLet } from "./mixins/clauses/WithLet.js";
 import { WithMerge } from "./mixins/clauses/WithMerge.js";
 import { WithReturn } from "./mixins/clauses/WithReturn.js";
 import { WithWith } from "./mixins/clauses/WithWith.js";
 import { WithWhere } from "./mixins/sub-clauses/WithWhere.js";
 import { mixin } from "./utils/mixin.js";
 
-export interface LoadCSV extends WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure {}
+export interface LoadCSV extends WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure, WithLet {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure)
+@mixin(WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure, WithLet)
 export class LoadCSV extends Clause {
     private readonly url: string;
     private readonly alias: Variable;

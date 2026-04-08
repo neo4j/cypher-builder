@@ -9,6 +9,7 @@ import type { CypherEnvironment } from "../Environment.js";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
 import { Clause } from "./Clause.js";
 import { WithCreate } from "./mixins/clauses/WithCreate.js";
+import { WithLet } from "./mixins/clauses/WithLet.js";
 import { WithMatch } from "./mixins/clauses/WithMatch.js";
 import { WithMerge } from "./mixins/clauses/WithMerge.js";
 import { WithReturn } from "./mixins/clauses/WithReturn.js";
@@ -20,7 +21,7 @@ import { Projection } from "./sub-clauses/Projection.js";
 import { mixin } from "./utils/mixin.js";
 
 export interface Unwind
-    extends WithWith, WithDelete, WithMatch, WithReturn, WithSetRemove, WithCreate, WithMerge, WithOrder {}
+    extends WithWith, WithDelete, WithMatch, WithReturn, WithSetRemove, WithCreate, WithMerge, WithOrder, WithLet {}
 
 /** @group Clauses */
 export type UnwindProjectionColumn = [Expr, string | Variable | Literal];
@@ -29,7 +30,7 @@ export type UnwindProjectionColumn = [Expr, string | Variable | Literal];
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/unwind/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithWith, WithDelete, WithMatch, WithReturn, WithSetRemove, WithCreate, WithMerge, WithOrder)
+@mixin(WithWith, WithDelete, WithMatch, WithReturn, WithSetRemove, WithCreate, WithMerge, WithOrder, WithLet)
 export class Unwind extends Clause {
     private readonly projection: Projection;
 
