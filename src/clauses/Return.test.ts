@@ -198,13 +198,22 @@ describe("CypherBuilder Return", () => {
         });
     });
 
-    describe("Return distinct", () => {
+    describe("Return distinct/all", () => {
         test("Return distinct", () => {
             const node = new Cypher.Node();
             const returnQuery = new Cypher.Return(node, new Cypher.Literal(10)).distinct();
 
             const queryResult = returnQuery.build();
             expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN DISTINCT this0, 10"`);
+            expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+        });
+
+        test("Return all", () => {
+            const node = new Cypher.Node();
+            const returnQuery = new Cypher.Return(node, new Cypher.Literal(10)).all();
+
+            const queryResult = returnQuery.build();
+            expect(queryResult.cypher).toMatchInlineSnapshot(`"RETURN ALL this0, 10"`);
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
 

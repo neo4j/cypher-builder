@@ -20,6 +20,7 @@ import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
 import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
 import { WithWhere } from "./mixins/sub-clauses/WithWhere.js";
+import { WithDistinctAll } from "./mixins/WithDistinctAll.js";
 import { Projection } from "./sub-clauses/Projection.js";
 import { mixin } from "./utils/mixin.js";
 
@@ -39,7 +40,8 @@ export interface With
         WithCreate,
         WithMerge,
         WithCallProcedure,
-        WithCall {}
+        WithCall,
+        WithDistinctAll {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/with/ | Cypher Documentation}
@@ -56,7 +58,8 @@ export interface With
     WithCreate,
     WithMerge,
     WithCallProcedure,
-    WithCall
+    WithCall,
+    WithDistinctAll
 )
 export class With extends Clause {
     private readonly projection: Projection;
@@ -98,11 +101,11 @@ export class With extends Clause {
         const whereStr = compileCypherIfExists(this.whereSubClause, env, { prefix: "\n" });
         const setCypher = this.compileSetCypher(env);
         const deleteStr = compileCypherIfExists(this.deleteClause, env, { prefix: "\n" });
-        const distinctStr = this.isDistinct ? " DISTINCT" : "";
+        const projectionModeStr = this.projectionModeStr();
 
         const nextClause = this.compileNextClause(env);
 
-        return `WITH${distinctStr} ${projectionStr}${whereStr}${setCypher}${orderByStr}${deleteStr}${withStr}${nextClause}`;
+        return `WITH${projectionModeStr} ${projectionStr}${whereStr}${setCypher}${orderByStr}${deleteStr}${withStr}${nextClause}`;
     }
 
     private getWithClause(clauseOrColumn: With | "*" | WithProjection, columns: Array<"*" | WithProjection>): With {
