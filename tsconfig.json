@@ -1,6 +1,7 @@
 {
     "extends": "@tsconfig/node24/tsconfig.json",
     "compilerOptions": {
+        "experimentalDecorators": true,
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
