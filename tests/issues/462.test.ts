@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../../src/index.js";
+import * as Cypher from "../../src/index";
 
 describe("https://github.com/neo4j/cypher-builder/issues/462", () => {
     test("SET and REMOVE statatements order should be preserved", () => {

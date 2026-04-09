@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "./Cypher.js";
+import * as Cypher from "./Cypher";
 
-export * from "./Cypher.js";
+export * from "./Cypher";
 
 export default Cypher;

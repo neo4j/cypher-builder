@@ -3,4 +3,5 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import "vitest/globals";
+/// <reference types="jest" />
+import "jest-extended";

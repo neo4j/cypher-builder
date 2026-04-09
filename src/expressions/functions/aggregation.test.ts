@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../../index.js";
-import { TestClause } from "../../utils/TestClause.js";
+import Cypher from "../../index";
+import { TestClause } from "../../utils/TestClause";
 
 describe("Aggregation Functions", () => {
     describe.each(["count", "min", "max", "avg", "sum", "collect", "stDev", "stDevP"] as const)("%s", (value) => {

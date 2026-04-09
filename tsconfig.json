@@ -12,5 +12,5 @@
         "noUncheckedIndexedAccess": true,
         "isolatedModules": true
     },
-    "include": ["src/**/*", "tests/**/*", "global.d.ts", "vitest.config.ts"]
+    "include": ["src/**/*", "tests/**/*", "global.d.ts"]
 }

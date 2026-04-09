@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Foreach } from "../../../index.js";
-import Cypher from "../../../index.js";
-import { MixinClause } from "../Mixin.js";
+import type { Foreach } from "../../../index";
+import Cypher from "../../../index";
+import { MixinClause } from "../Mixin";
 
 export abstract class WithForeach extends MixinClause {
     /** Add a {@link Foreach} clause
