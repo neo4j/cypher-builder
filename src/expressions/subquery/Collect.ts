@@ -3,10 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Clause } from "../../index.js";
-import type { CypherEnvironment } from "../../Environment.js";
-import { padBlock } from "../../utils/pad-block.js";
-import { Subquery } from "./Subquery.js";
+import type { Clause } from "../../index";
+import type { CypherEnvironment } from "../../Environment";
+import { padBlock } from "../../utils/pad-block";
+import { Subquery } from "./Subquery";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/subqueries/collect/ | Cypher Documentation}

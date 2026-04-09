@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Expr } from "../../types.js";
-import { CypherFunction } from "./CypherFunctions.js";
+import type { Expr } from "../../types";
+import { CypherFunction } from "./CypherFunctions";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-coalesce | Cypher Documentation}

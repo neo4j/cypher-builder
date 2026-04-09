@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { asArray } from "./as-array.js";
+import { asArray } from "./as-array";
 
 describe("asArray", () => {
     test("get array from array", () => {

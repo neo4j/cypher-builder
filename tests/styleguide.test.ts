@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import Cypher from "../src/index.js";
+import Cypher from "../src/index";
 
 /**
  * These test check if cypher builder matches the examples in
@@ -184,7 +184,7 @@ RETURN var0, 2"
             );
 
             const { cypher } = query.build();
-            expect(cypher).toMatchInlineSnapshot(`"RETURN 'Cypher', 'A \\'Quote\\'', 'Another "Quote"'"`);
+            expect(cypher).toMatchInlineSnapshot(`"RETURN 'Cypher', 'A \\\\'Quote\\\\'', 'Another \\"Quote\\"'"`);
         });
     });
 });

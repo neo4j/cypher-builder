@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../../index.js";
-import { TestClause } from "../../utils/TestClause.js";
-import { OrderBy } from "./OrderBy.js";
+import Cypher from "../../index";
+import { TestClause } from "../../utils/TestClause";
+import { OrderBy } from "./OrderBy";
 
 describe("CypherBuilder OrderBy", () => {
     test("OrderBy with skip and limit", () => {
