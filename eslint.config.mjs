@@ -1,49 +1,28 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import js from "@eslint/js";
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import eslint from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
 import tsdoc from "eslint-plugin-tsdoc";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { defineConfig } from "eslint/config";
+import tseslint from "typescript-eslint";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all,
-});
-
-export default [
+export default defineConfig(
     {
         ignores: ["**/dist", "**/docs", "**/coverage", "**/examples", "**/jest.config.js", "eslint.config.mjs"],
     },
-    ...compat.extends(
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended-type-checked",
-        "plugin:@typescript-eslint/recommended",
-        "prettier"
-    ),
+    eslint.configs.recommended,
+    tseslint.configs.recommendedTypeChecked,
+    eslintConfigPrettier,
     {
-        plugins: {
-            "@typescript-eslint": typescriptEslint,
-            tsdoc,
-        },
-
         languageOptions: {
-            parser: tsParser,
-            ecmaVersion: 5,
-            sourceType: "commonjs",
-
             parserOptions: {
                 projectService: true,
             },
         },
-
+        plugins: {
+            tsdoc,
+        },
         rules: {
             "@typescript-eslint/no-unsafe-declaration-merging": "off",
             "@typescript-eslint/prefer-readonly": "error",
-
             "@typescript-eslint/consistent-type-imports": [
                 "error",
                 {
@@ -53,5 +32,5 @@ export default [
 
             "tsdoc/syntax": "warn",
         },
-    },
-];
+    }
+);

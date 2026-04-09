@@ -46,13 +46,10 @@
     "devDependencies": {
         "@changesets/changelog-github": "0.6.0",
         "@changesets/cli": "2.30.0",
-        "@eslint/eslintrc": "3.3.5",
         "@eslint/js": "10.0.1",
         "@tsconfig/node24": "24.0.4",
         "@types/jest": "^30.0.0",
         "@types/node": "25.5.2",
-        "@typescript-eslint/eslint-plugin": "8.58.1",
-        "@typescript-eslint/parser": "8.58.1",
         "eslint": "10.2.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-tsdoc": "0.5.2",
@@ -62,6 +59,7 @@
         "prettier": "3.8.1",
         "ts-jest": "^29.4.9",
         "typedoc": "0.28.18",
-        "typescript": "6.0.2"
+        "typescript": "6.0.2",
+        "typescript-eslint": "8.58.1"
     }
 }
