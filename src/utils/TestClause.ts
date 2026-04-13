@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Clause } from "../clauses/Clause.js";
-import type { CypherEnvironment } from "../Environment.js";
-import type { CypherCompilable } from "../types.js";
+import { Clause } from "../clauses/Clause";
+import type { CypherEnvironment } from "../Environment";
+import type { CypherCompilable } from "../types";
 
 /** For testing purposes only */
 export class TestClause extends Clause {

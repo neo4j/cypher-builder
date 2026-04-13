@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Finish } from "../../../index.js";
-import { MixinClause } from "../Mixin.js";
+import { Finish } from "../../../index";
+import { MixinClause } from "../Mixin";
 
 export abstract class WithFinish extends MixinClause {
     /** Append a {@link Finish} clause

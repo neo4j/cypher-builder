@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import * as Cypher from "../Cypher.js";
+import * as Cypher from "../Cypher";
 
 describe("CypherBuilder Let", () => {
     test("Standalone Let clause", () => {

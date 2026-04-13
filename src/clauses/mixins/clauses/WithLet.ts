@@ -3,8 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Let, type LetBinding } from "../../Let.js";
-import { MixinClause } from "../Mixin.js";
+import type { LetBinding } from "../../Let";
+import { Let } from "../../Let";
+import { MixinClause } from "../Mixin";
 
 export abstract class WithLet extends MixinClause {
     /** Append a {@link Let} clause.

@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../index.js";
-import { normalizeVariable } from "./normalize-variable.js";
+import Cypher from "../index";
+import { normalizeVariable } from "./normalize-variable";
 
 describe("normalizeVariable", () => {
     test("returns the same variable if it is a CypherCompilable", () => {

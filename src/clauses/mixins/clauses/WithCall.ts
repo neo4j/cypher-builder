@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Clause, Variable } from "../../../index.js";
-import { Call, OptionalCall } from "../../../index.js";
-import { MixinClause } from "../Mixin.js";
+import type { Clause, Variable } from "../../../index";
+import { Call, OptionalCall } from "../../../index";
+import { MixinClause } from "../Mixin";
 
 export abstract class WithCall extends MixinClause {
     /** Add a {@link Call} clause

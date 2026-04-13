@@ -3,19 +3,19 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment.js";
-import type { Variable } from "../references/Variable.js";
-import type { Expr } from "../types.js";
-import { Clause } from "./Clause.js";
-import { WithCall } from "./mixins/clauses/WithCall.js";
-import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure.js";
-import { WithCreate } from "./mixins/clauses/WithCreate.js";
-import { WithFinish } from "./mixins/clauses/WithFinish.js";
-import { WithMatch } from "./mixins/clauses/WithMatch.js";
-import { WithMerge } from "./mixins/clauses/WithMerge.js";
-import { WithReturn } from "./mixins/clauses/WithReturn.js";
-import { WithWith } from "./mixins/clauses/WithWith.js";
-import { mixin } from "./utils/mixin.js";
+import { Clause } from "../clauses/Clause";
+import type { CypherEnvironment } from "../Environment";
+import type { Variable } from "../references/Variable";
+import type { Expr } from "../types";
+import { WithCall } from "./mixins/clauses/WithCall";
+import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
+import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithFinish } from "./mixins/clauses/WithFinish";
+import { WithMatch } from "./mixins/clauses/WithMatch";
+import { WithMerge } from "./mixins/clauses/WithMerge";
+import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithWith } from "./mixins/clauses/WithWith";
+import { mixin } from "./utils/mixin";
 
 /** @inline */
 export type LetBinding = [Variable, Expr];

@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { CypherProcedure } from "../../procedures/CypherProcedure.js";
-import type { Expr } from "../../types.js";
-import { normalizeExpr, normalizeList } from "../../utils/normalize-variable.js";
+import { CypherProcedure } from "../../procedures/CypherProcedure";
+import type { Expr } from "../../types";
+import { normalizeExpr, normalizeList } from "../../utils/normalize-variable";
 
 const CDC_NAMESPACE = "db.cdc";
 
