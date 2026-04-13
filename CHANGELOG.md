@@ -1,5 +1,35 @@
 # @neo4j/cypher-builder
 
+## 3.1.0
+
+### Minor Changes
+
+- [#790](https://github.com/neo4j/cypher-builder/pull/790) [`ada5d19`](https://github.com/neo4j/cypher-builder/commit/ada5d19df222420860b0bbf3cc218f06e4af82de) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for the following hyperbolic trigonometric functions:
+    - `Cypher.cosh(x)`
+    - `Cypher.coth(x)`
+    - `Cypher.sinh(x)`
+    - `Cypher.tanh(x)`
+
+- [#796](https://github.com/neo4j/cypher-builder/pull/796) [`9ac4d12`](https://github.com/neo4j/cypher-builder/commit/9ac4d12cbcc203d2dbd333f57653f6b51c80d758) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `LET` binding clauses:
+
+    ```js
+    new Cypher.Let([new Cypher.Variable(), Cypher.gte(nnew Cypher.Literal(200), new Cypher.Literal(500))])
+    ```
+
+    ```cypher
+    LET var1 = 200 + 500
+    ```
+
+- [#808](https://github.com/neo4j/cypher-builder/pull/808) [`bef4653`](https://github.com/neo4j/cypher-builder/commit/bef4653f0352cacead09b2382046fcd9647bd8d5) Thanks [@angrykoala](https://github.com/angrykoala)! - Support for `WITH ALL` and `RETURN ALL`
+
+- [#793](https://github.com/neo4j/cypher-builder/pull/793) [`78c52dc`](https://github.com/neo4j/cypher-builder/commit/78c52dc1de05d7988f6f6496034394ad8e5bd52f) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `MATCH` modes `DIFFERENT RELATIONSHIPS` and `REPEATABLE ELEMENTS`:
+    - `match.repeatableElements()`
+    - `match.differentRelationships()`
+
+### Patch Changes
+
+- [#828](https://github.com/neo4j/cypher-builder/pull/828) [`e89c2d0`](https://github.com/neo4j/cypher-builder/commit/e89c2d08dbdebe83f0ebaea62c30c8bbf1d2cca5) Thanks [@angrykoala](https://github.com/angrykoala)! - Disable emit for methods and classes marked as internal
+
 ## 3.0.1
 
 ### Patch Changes
