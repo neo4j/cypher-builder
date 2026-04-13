@@ -32,6 +32,15 @@ describe("CypherBuilder With", () => {
         expect(queryResult.params).toMatchInlineSnapshot(`{}`);
     });
 
+    test("With all", () => {
+        const node = new Cypher.Node();
+        const withQuery = new Cypher.With(node).all();
+
+        const queryResult = withQuery.build();
+        expect(queryResult.cypher).toMatchInlineSnapshot(`"WITH ALL this0"`);
+        expect(queryResult.params).toMatchInlineSnapshot(`{}`);
+    });
+
     test("With clause after with", () => {
         const node = new Cypher.Node();
         const withQuery = new Cypher.With(node);
