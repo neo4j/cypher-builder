@@ -8,6 +8,7 @@ export { Call, OptionalCall, type CallInTransactionOptions } from "./clauses/Cal
 export { Create } from "./clauses/Create";
 export { Finish } from "./clauses/Finish";
 export { Foreach, type ForeachClauses } from "./clauses/Foreach";
+export { Let } from "./clauses/Let";
 export { LoadCSV } from "./clauses/LoadCSV";
 export { Match, OptionalMatch } from "./clauses/Match";
 export { Merge } from "./clauses/Merge";

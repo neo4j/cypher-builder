@@ -3,14 +3,15 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Pattern } from "../index";
 import type { CypherEnvironment } from "../Environment";
+import type { Pattern } from "../index";
 import type { PathAssign } from "../pattern/PathAssign";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFinish } from "./mixins/clauses/WithFinish";
+import { WithLet } from "./mixins/clauses/WithLet";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
@@ -21,13 +22,14 @@ import { OnCreate } from "./sub-clauses/OnCreate";
 import { OnMatch } from "./sub-clauses/OnMatch";
 import { mixin } from "./utils/mixin";
 
-export interface Merge extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder {}
+export interface Merge
+    extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder)
+@mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet)
 export class Merge extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
     private readonly onCreateClause: OnCreate;

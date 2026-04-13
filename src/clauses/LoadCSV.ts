@@ -3,24 +3,25 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Variable } from "../index";
 import type { CypherEnvironment } from "../Environment";
+import type { Variable } from "../index";
 import { Clause } from "./Clause";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithLet } from "./mixins/clauses/WithLet";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithWhere } from "./mixins/sub-clauses/WithWhere";
 import { mixin } from "./utils/mixin";
 
-export interface LoadCSV extends WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure {}
+export interface LoadCSV extends WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure, WithLet {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure)
+@mixin(WithReturn, WithCreate, WithMerge, WithWith, WithWhere, WithCallProcedure, WithLet)
 export class LoadCSV extends Clause {
     private readonly url: string;
     private readonly alias: Variable;

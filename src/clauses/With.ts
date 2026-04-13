@@ -12,6 +12,7 @@ import { Clause } from "./Clause";
 import { WithCall } from "./mixins/clauses/WithCall";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithLet } from "./mixins/clauses/WithLet";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
@@ -39,7 +40,8 @@ export interface With
         WithCreate,
         WithMerge,
         WithCallProcedure,
-        WithCall {}
+        WithCall,
+        WithLet {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/with/ | Cypher Documentation}
@@ -56,7 +58,8 @@ export interface With
     WithCreate,
     WithMerge,
     WithCallProcedure,
-    WithCall
+    WithCall,
+    WithLet
 )
 export class With extends Clause {
     private readonly projection: Projection;
