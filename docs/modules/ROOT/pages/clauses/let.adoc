@@ -1,0 +1,43 @@
+[[let]]
+:description: This page describes how to create `LET` clauses.
+= Let
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/current/clauses/let/[`LET`] clause with the `Cypher.Let` class.
+
+A let clause takes tuples of two elements as parameters of its contructor. The first element is the variable to bind to. The second is an expression, its result will be bound to the variable:
+
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+
+const matchQuery = new Cypher.Let([new Cypher.Variable(), movie.property("title")]);
+----
+
+This generates the following `LET` clause:
+
+[source, cypher]
+----
+LET var1 = this0.title
+----
+
+== Bind multiple variables
+
+Multiple tuples can be passed to `Cypher.Let` to  bind multiple variables:
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+
+const matchQuery = new Cypher.Let(
+    [new Cypher.Variable(), movie.property("title")], 
+    [new Cypher.Variable(), movie.property("released")]
+);
+----
+
+This generates the following `LET` clause:
+
+[source, cypher]
+----
+LET var1 = this0.title, var2 = this0.released
+----

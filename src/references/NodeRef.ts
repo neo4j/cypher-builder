@@ -3,12 +3,12 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Expr } from "../index.js";
-import { HasLabel } from "../expressions/HasLabel.js";
-import type { LabelExpr } from "../expressions/labels/label-expressions.js";
-import { DynamicLabel, Label } from "./Label.js";
-import type { NamedReference } from "./Variable.js";
-import { Variable } from "./Variable.js";
+import type { Expr } from "../index";
+import { HasLabel } from "../expressions/HasLabel";
+import type { LabelExpr } from "../expressions/labels/label-expressions";
+import { DynamicLabel, Label } from "./Label";
+import type { NamedReference } from "./Variable";
+import { Variable } from "./Variable";
 
 /** Represents a node reference
  * @group Variables

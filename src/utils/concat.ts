@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Clause } from "../clauses/Clause.js";
-import { CompositeClause } from "../clauses/utils/concat.js";
+import type { Clause } from "../clauses/Clause";
+import { CompositeClause } from "../clauses/utils/concat";
 
 /** Concatenates multiple {@link Clause | clauses} into a single clause
  */

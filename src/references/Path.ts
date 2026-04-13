@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { NamedReference } from "./Variable.js";
-import { Variable } from "./Variable.js";
+import type { NamedReference } from "./Variable";
+import { Variable } from "./Variable";
 
 /** Reference to a path variable
  * @see {@link https://neo4j.com/docs/cypher-manual/current/syntax/patterns | Cypher Documentation}

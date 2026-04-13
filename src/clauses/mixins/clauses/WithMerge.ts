@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Pattern } from "../../../index.js";
-import { Merge } from "../../../index.js";
-import { MixinClause } from "../Mixin.js";
+import type { Pattern } from "../../../index";
+import { Merge } from "../../../index";
+import { MixinClause } from "../Mixin";
 
 export abstract class WithMerge extends MixinClause {
     /** Add a {@link Merge} clause

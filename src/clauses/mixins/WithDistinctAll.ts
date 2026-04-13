@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Mixin } from "./Mixin.js";
+import { Mixin } from "./Mixin";
 
 enum ProjectionMode {
     ALL,

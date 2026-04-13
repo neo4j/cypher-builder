@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../src/index.js";
+import Cypher from "../src/index";
 
 describe("Clause chaining", () => {
     describe("Match", () => {
@@ -28,8 +28,10 @@ describe("Clause chaining", () => {
             "skip",
             "offset",
             "foreach",
+            "let",
+            "finish",
         ] as const)("Match.%s", (value) => {
-            expectTypeOf(clause[value]).toBeFunction();
+            expect(clause[value]).toEqual(expect.any(Function));
         });
     });
 
@@ -49,8 +51,10 @@ describe("Clause chaining", () => {
             "limit",
             "skip",
             "offset",
+            "let",
+            "finish",
         ] as const)("Create.%s", (value) => {
-            expectTypeOf(clause[value]).toBeFunction();
+            expect(clause[value]).toEqual(expect.any(Function));
         });
     });
 
@@ -73,8 +77,9 @@ describe("Clause chaining", () => {
             "limit",
             "skip",
             "offset",
+            "let",
         ] as const)("Call.%s", (value) => {
-            expectTypeOf(clause[value]).toBeFunction();
+            expect(clause[value]).toEqual(expect.any(Function));
         });
     });
 
@@ -87,10 +92,10 @@ describe("Clause chaining", () => {
 
         const clause = new Cypher.Foreach(variable).in(list).do(createMovie);
 
-        it.each(["return", "remove", "set", "delete", "detachDelete", "with", "merge", "create"] as const)(
+        it.each(["return", "remove", "set", "delete", "detachDelete", "with", "merge", "create", "let"] as const)(
             "Foreach.%s",
             (value) => {
-                expectTypeOf(clause[value]).toBeFunction();
+                expect(clause[value]).toEqual(expect.any(Function));
             }
         );
     });
@@ -111,8 +116,9 @@ describe("Clause chaining", () => {
             "limit",
             "skip",
             "offset",
+            "let",
         ] as const)("Merge.%s", (value) => {
-            expectTypeOf(clause[value]).toBeFunction();
+            expect(clause[value]).toEqual(expect.any(Function));
         });
     });
 
@@ -120,7 +126,7 @@ describe("Clause chaining", () => {
         const clause = new Cypher.Return();
 
         it.each(["orderBy", "limit", "skip", "offset"] as const)("Return.%s", (value) => {
-            expectTypeOf(clause[value]).toBeFunction();
+            expect(clause[value]).toEqual(expect.any(Function));
         });
     });
 
@@ -143,8 +149,9 @@ describe("Clause chaining", () => {
             "limit",
             "skip",
             "offset",
+            "let",
         ] as const)("Unwind.%s", (value) => {
-            expectTypeOf(clause[value]).toBeFunction();
+            expect(clause[value]).toEqual(expect.any(Function));
         });
     });
     // describe("Use", () => {
@@ -161,7 +168,7 @@ describe("Clause chaining", () => {
     //         // "merge",
     //         // "create",
     //     ] as const)("Use.%s", (value) => {
-    //         expectTypeOf(clause[value]).toBeFunction();
+    //         expect(clause[value]).toEqual(expect.any(Function));
     //     });
     // });
     describe("With", () => {
@@ -184,8 +191,27 @@ describe("Clause chaining", () => {
             "orderBy",
             "skip",
             "limit",
+            "let",
         ] as const)("With.%s", (value) => {
-            expectTypeOf(clause[value]).toBeFunction();
+            expect(clause[value]).toEqual(expect.any(Function));
+        });
+    });
+
+    describe("Let", () => {
+        const clause = new Cypher.Let();
+
+        it.each([
+            "return",
+            "with",
+            "match",
+            "optionalMatch",
+            "create",
+            "merge",
+            "finish",
+            "callProcedure",
+            "call",
+        ] as const)("With.%s", (value) => {
+            expect(clause[value]).toEqual(expect.any(Function));
         });
     });
 
@@ -210,7 +236,7 @@ describe("Clause chaining", () => {
             "skip",
             "limit",
         ] as const)("With.%s", (value) => {
-            expectTypeOf(clause[value]).toBeFunction();
+            expect(clause[value]).toEqual(expect.any(Function));
         });
     });
 

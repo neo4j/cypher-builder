@@ -3,26 +3,27 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment.js";
-import type { PathAssign } from "../pattern/PathAssign.js";
-import type { Pattern } from "../pattern/Pattern.js";
-import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath.js";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
-import { Clause } from "./Clause.js";
-import { WithCall } from "./mixins/clauses/WithCall.js";
-import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure.js";
-import { WithCreate } from "./mixins/clauses/WithCreate.js";
-import { WithFinish } from "./mixins/clauses/WithFinish.js";
-import { WithForeach } from "./mixins/clauses/WithForeach.js";
-import { WithMerge } from "./mixins/clauses/WithMerge.js";
-import { WithReturn } from "./mixins/clauses/WithReturn.js";
-import { WithUnwind } from "./mixins/clauses/WithUnwind.js";
-import { WithWith } from "./mixins/clauses/WithWith.js";
-import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
-import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
-import { WithWhere } from "./mixins/sub-clauses/WithWhere.js";
-import { mixin } from "./utils/mixin.js";
+import type { CypherEnvironment } from "../Environment";
+import type { PathAssign } from "../pattern/PathAssign";
+import type { Pattern } from "../pattern/Pattern";
+import type { QuantifiedPath } from "../pattern/quantified-patterns/QuantifiedPath";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { Clause } from "./Clause";
+import { WithCall } from "./mixins/clauses/WithCall";
+import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
+import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithFinish } from "./mixins/clauses/WithFinish";
+import { WithForeach } from "./mixins/clauses/WithForeach";
+import { WithLet } from "./mixins/clauses/WithLet";
+import { WithMerge } from "./mixins/clauses/WithMerge";
+import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithUnwind } from "./mixins/clauses/WithUnwind";
+import { WithWith } from "./mixins/clauses/WithWith";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
+import { WithWhere } from "./mixins/sub-clauses/WithWhere";
+import { mixin } from "./utils/mixin";
 
 export interface Match
     extends
@@ -38,7 +39,13 @@ export interface Match
         WithCallProcedure,
         WithCall,
         WithOrder,
-        WithForeach {}
+        WithForeach,
+        WithLet {}
+
+enum MatchMode {
+    REPEATABLE_ELEMENTS,
+    DIFFERENT_RELATIONSHIPS,
+}
 
 type ShortestStatement = {
     type: "ALL SHORTEST" | "SHORTEST" | "ANY" | "SHORTEST_GROUPS";
@@ -65,12 +72,14 @@ export type MatchClausePattern = Pattern | QuantifiedPath | PathAssign<Pattern |
     WithCallProcedure,
     WithCall,
     WithOrder,
-    WithForeach
+    WithForeach,
+    WithLet
 )
 export class Match extends Clause {
     private readonly patterns: MatchClausePattern[];
     private _optional = false;
     private shortestStatement: ShortestStatement | undefined;
+    private mode: MatchMode | undefined;
 
     constructor(...patterns: MatchClausePattern[]) {
         super();
@@ -167,6 +176,24 @@ export class Match extends Clause {
         return this;
     }
 
+    /** Add `REPEATABLE ELEMENTS` mode to `MATCH` clause
+     * @see {@link https://neo4j.com/docs/cypher-manual/25/patterns/match-modes/#repeatable-elements | Cypher Documentation}
+     * @since Neo4j 2025.06
+     */
+    public repeatableElements(): this {
+        this.mode = MatchMode.REPEATABLE_ELEMENTS;
+        return this;
+    }
+
+    /** Add `DIFFERENT RELATIONSHIPS` mode to `MATCH` clause
+     * @see {@link https://neo4j.com/docs/cypher-manual/25/patterns/match-modes/#different-relationships | Cypher Documentation}
+     * @since Neo4j 2025.06
+     */
+    public differentRelationships(): this {
+        this.mode = MatchMode.DIFFERENT_RELATIONSHIPS;
+        return this;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const patternCyphers = this.patterns.map((pattern) => pattern.getCypher(env));
@@ -191,7 +218,9 @@ export class Match extends Clause {
             patternStr = ` ${shortestStatement}${patternCyphers[0]}`;
         }
 
-        return `${optionalMatch}MATCH${patternStr}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
+        const modeStr = this.getModeStr();
+
+        return `${optionalMatch}MATCH${modeStr}${patternStr}${whereCypher}${setCypher}${deleteCypher}${orderByCypher}${nextClause}`;
     }
 
     private getShortestStatement(): string {
@@ -207,6 +236,17 @@ export class Match extends Clause {
                 return `SHORTEST ${this.shortestStatement.k} GROUPS `;
             case "ANY":
                 return "ANY ";
+        }
+    }
+
+    private getModeStr(): string {
+        switch (this.mode) {
+            case MatchMode.DIFFERENT_RELATIONSHIPS:
+                return " DIFFERENT RELATIONSHIPS";
+            case MatchMode.REPEATABLE_ELEMENTS:
+                return " REPEATABLE ELEMENTS";
+            default:
+                return "";
         }
     }
 }

@@ -3,9 +3,9 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../index.js";
-import { TestClause } from "../utils/TestClause.js";
-import { HasLabel } from "./HasLabel.js";
+import Cypher from "../index";
+import { TestClause } from "../utils/TestClause";
+import { HasLabel } from "./HasLabel";
 
 describe("HasLabel", () => {
     test("Fails if no labels are provided", () => {

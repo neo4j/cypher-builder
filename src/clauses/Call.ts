@@ -3,26 +3,37 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherASTNode } from "../CypherASTNode.js";
-import type { CypherEnvironment } from "../Environment.js";
-import type { Variable } from "../references/Variable.js";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
-import { isNumber } from "../utils/is-number.js";
-import { padBlock } from "../utils/pad-block.js";
-import { Clause } from "./Clause.js";
-import { WithCreate } from "./mixins/clauses/WithCreate.js";
-import { WithMatch } from "./mixins/clauses/WithMatch.js";
-import { WithMerge } from "./mixins/clauses/WithMerge.js";
-import { WithReturn } from "./mixins/clauses/WithReturn.js";
-import { WithUnwind } from "./mixins/clauses/WithUnwind.js";
-import { WithWith } from "./mixins/clauses/WithWith.js";
-import { WithDelete } from "./mixins/sub-clauses/WithDelete.js";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
-import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove.js";
-import { mixin } from "./utils/mixin.js";
+import type { CypherASTNode } from "../CypherASTNode";
+import type { CypherEnvironment } from "../Environment";
+import type { Variable } from "../references/Variable";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { isNumber } from "../utils/is-number";
+import { padBlock } from "../utils/pad-block";
+import { Clause } from "./Clause";
+import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithLet } from "./mixins/clauses/WithLet";
+import { WithMatch } from "./mixins/clauses/WithMatch";
+import { WithMerge } from "./mixins/clauses/WithMerge";
+import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithUnwind } from "./mixins/clauses/WithUnwind";
+import { WithWith } from "./mixins/clauses/WithWith";
+import { WithDelete } from "./mixins/sub-clauses/WithDelete";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
+import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
+import { mixin } from "./utils/mixin";
 
 export interface Call
-    extends WithReturn, WithWith, WithUnwind, WithSetRemove, WithDelete, WithMatch, WithCreate, WithMerge, WithOrder {}
+    extends
+        WithReturn,
+        WithWith,
+        WithUnwind,
+        WithSetRemove,
+        WithDelete,
+        WithMatch,
+        WithCreate,
+        WithMerge,
+        WithOrder,
+        WithLet {}
 
 /** @group Subqueries */
 export type CallInTransactionOptions = {
@@ -41,7 +52,18 @@ export type CallInTransactionOptions = {
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/ | Cypher Documentation}
  * @group Subqueries
  */
-@mixin(WithReturn, WithWith, WithUnwind, WithDelete, WithSetRemove, WithMatch, WithCreate, WithMerge, WithOrder)
+@mixin(
+    WithReturn,
+    WithWith,
+    WithUnwind,
+    WithDelete,
+    WithSetRemove,
+    WithMatch,
+    WithCreate,
+    WithMerge,
+    WithOrder,
+    WithLet
+)
 export class Call extends Clause {
     private readonly subquery: CypherASTNode;
     private inTransactionsConfig?: CallInTransactionOptions;

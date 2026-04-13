@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../index.js";
-import { escapeLiteralString } from "./escape.js";
+import Cypher from "../index";
+import { escapeLiteralString } from "./escape";
 
 describe("escaping", () => {
     describe.each(["escapeVariable", "escapeLabel", "escapeType", "escapeProperty"] as const)("utils.%s()", (func) => {

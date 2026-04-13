@@ -3,7 +3,7 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import Cypher from "../../index.js";
+import Cypher from "../../index";
 
 describe("Collect Subquery", () => {
     test("Collect expression with subclause", () => {

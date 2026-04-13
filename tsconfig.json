@@ -8,9 +8,9 @@
         "noImplicitAny": true,
         "rootDir": ".",
         "outDir": "dist",
-        "stripInternal": false, // TODO: Change this after validating output .d.ts
+        "stripInternal": false,
         "noUncheckedIndexedAccess": true,
         "isolatedModules": true
     },
-    "include": ["src/**/*", "tests/**/*", "global.d.ts", "vitest.config.ts"]
+    "include": ["src/**/*", "tests/**/*", "global.d.ts"]
 }

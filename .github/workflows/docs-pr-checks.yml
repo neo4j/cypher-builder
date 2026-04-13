@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - "*.x"
     paths:
       - "docs/**"
 
@@ -14,7 +15,7 @@ permissions:
 jobs:
   #  Generate HTML
   docs-build-pr:
-    uses: neo4j/docs-tools/.github/workflows/reusable-docs-build.yml@2a805652c41c7aaf8b837791b2d244ae7c43a3ad # v2
+    uses: neo4j/docs-tools/.github/workflows/reusable-docs-build.yml@bfe0343b628f4016813bb5c0c2caf40528146efc # v2
     with:
       deploy-id: ${{ github.event.number }}
       retain-artifacts: 14
@@ -25,7 +26,7 @@ jobs:
   # By default, the job fails if there are errors, passes if there are warnings only.
   docs-verify-pr:
     needs: docs-build-pr
-    uses: neo4j/docs-tools/.github/workflows/reusable-docs-verify.yml@2a805652c41c7aaf8b837791b2d244ae7c43a3ad # v2
+    uses: neo4j/docs-tools/.github/workflows/reusable-docs-verify.yml@bfe0343b628f4016813bb5c0c2caf40528146efc # v2
     with:
       failOnWarnings: true
 
@@ -57,7 +58,7 @@ jobs:
   docs-updates-comment-pr:
     if: needs.docs-build-pr.outputs.pages-listed == 'success'
     needs: [docs-build-pr, docs-changes-pr]
-    uses: neo4j/docs-tools/.github/workflows/reusable-docs-pr-changes.yml@2a805652c41c7aaf8b837791b2d244ae7c43a3ad # v2
+    uses: neo4j/docs-tools/.github/workflows/reusable-docs-pr-changes.yml@bfe0343b628f4016813bb5c0c2caf40528146efc # v2
     with:
       pages-modified: ${{ needs.docs-changes-pr.outputs.pages-modified }}
       pages-added: ${{ needs.docs-changes-pr.outputs.pages-added }}

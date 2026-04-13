@@ -3,14 +3,14 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherEnvironment } from "../Environment.js";
-import { compileCypherIfExists } from "../utils/compile-cypher-if-exists.js";
-import { Clause } from "./Clause.js";
-import { WithOrder } from "./mixins/sub-clauses/WithOrder.js";
-import { WithDistinctAll } from "./mixins/WithDistinctAll.js";
-import type { ProjectionColumn } from "./sub-clauses/Projection.js";
-import { Projection } from "./sub-clauses/Projection.js";
-import { mixin } from "./utils/mixin.js";
+import type { CypherEnvironment } from "../Environment";
+import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
+import { Clause } from "./Clause";
+import { WithOrder } from "./mixins/sub-clauses/WithOrder";
+import { WithDistinctAll } from "./mixins/WithDistinctAll";
+import type { ProjectionColumn } from "./sub-clauses/Projection";
+import { Projection } from "./sub-clauses/Projection";
+import { mixin } from "./utils/mixin";
 
 export interface Return extends WithOrder, WithDistinctAll {}
 
