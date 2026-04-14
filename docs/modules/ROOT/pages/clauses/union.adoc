@@ -68,3 +68,37 @@ UNION ALL
 MATCH (this3:Movie)
 RETURN this3 AS var1
 ----
+
+=== distinct
+
+It is possible to explicitly set the default behaviour of unions with `.distinct()` to create `UNION DISTINCT` clause.
+
+=== Combine Union and Union All
+
+If a `UNION`, or `UNION ALL` clause is passed as a clause to another `UNION`, it will be enclosed in curly braces to preserve preference.
+
+
+[source, javascript]
+----
+const query1 = new Cypher.Match(new Cypher.Pattern(n1, { labels: ["Movie"] })).return([n1, returnVar]);
+const query2 = new Cypher.Match(new Cypher.Pattern(n2, { labels: ["Movie"] })).return([n2, returnVar]);
+const query3 = new Cypher.Match(new Cypher.Pattern(n3, { labels: ["Movie"] })).return([n3, returnVar]);
+
+const unionQuery = new Cypher.Union(new Cypher.Union(query1, query2), query3).all();
+----
+
+This generates the following `UNION` clause:
+
+[source, cypher]
+----
+{
+    MATCH (this0:Movie)
+    RETURN this0 AS var1
+    UNION
+    MATCH (this2:Movie)
+    RETURN this2 AS var1
+}
+UNION ALL
+MATCH (this3:Movie)
+RETURN this3 AS var1
+----

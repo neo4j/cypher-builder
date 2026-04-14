@@ -5,6 +5,7 @@
 
 import type { CypherASTNode } from "../CypherASTNode";
 import type { CypherEnvironment } from "../Environment";
+import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
 
 /**
@@ -41,9 +42,17 @@ export class Union extends Clause {
      *  @internal
      */
     public getCypher(env: CypherEnvironment): string {
-        const subqueriesStr = this.subqueries.map((s) => s.getCypher(env));
+        const subqueriesStr = this.subqueries.map((s) => this.getSubqueryCypher(s, env));
         const unionTypeStr = this.unionType ? ` ${this.unionType}` : "";
 
         return subqueriesStr.join(`\nUNION${unionTypeStr}\n`);
+    }
+
+    private getSubqueryCypher(node: CypherASTNode, env: CypherEnvironment): string {
+        const subqueryStr = node.getCypher(env);
+        if (node instanceof Union) {
+            return `{\n${padBlock(subqueryStr)}\n}`;
+        }
+        return subqueryStr;
     }
 }
