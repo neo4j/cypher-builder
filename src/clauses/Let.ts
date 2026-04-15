@@ -10,6 +10,7 @@ import type { Expr } from "../types";
 import { WithCall } from "./mixins/clauses/WithCall";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
@@ -21,14 +22,23 @@ import { mixin } from "./utils/mixin";
 export type LetBinding = [Variable, Expr];
 
 export interface Let
-    extends WithReturn, WithWith, WithMatch, WithCreate, WithMerge, WithFinish, WithCallProcedure, WithCall {}
+    extends
+        WithReturn,
+        WithWith,
+        WithMatch,
+        WithCreate,
+        WithMerge,
+        WithFinish,
+        WithCallProcedure,
+        WithCall,
+        WithFilter {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/25/clauses/let/ | Cypher Documentation}
  * @group Clauses
  * @since Neo4j 2025.06
  */
-@mixin(WithReturn, WithWith, WithMatch, WithCreate, WithMerge, WithFinish, WithCallProcedure, WithCall)
+@mixin(WithReturn, WithWith, WithMatch, WithCreate, WithMerge, WithFinish, WithCallProcedure, WithCall, WithFilter)
 export class Let extends Clause {
     private readonly bindings: LetBinding[];
 

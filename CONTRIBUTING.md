@@ -51,10 +51,20 @@ For example:
 export function abs(expr: Expr): CypherFunction {}
 ```
 
-#### Files
+### Files
 
 - `tsdoc.json` Defines the tsdoc shcema
 - `typedoc.json` Configures the tool typedoc
+
+### File imports
+
+File imports are a bit complex due to a common interface exported, as well as the use of mixins. To prevent issues, follow the following rules:
+
+- `index.ts` **only** re-exports everything from `Cypher.ts`
+- `Cypher.ts` barrel-exports all the public surface of the cypher builder
+- **All** internal imports must point to the local file, not index or Cypher. **Except**
+    - Mixins (e.g `WithUnwind`) must import its clause dependency from `index`.
+- All tests must import from top-level `index`, unless unit testing something internal
 
 ## Branches
 
@@ -63,3 +73,16 @@ These are the branches conventions on the repo:
 - `main` The main branch, this is the latest release version
 - `*.x` The cutoff of an older major version (e.g. `2.x`)
 - `*-dev` development of a new major version
+
+## Mixins
+
+Many clauses in the Cypher Builder share the same interface. For example, `Match.with`, `With.with` and `Create.with`.
+To avoid code duplication, we use mixins, based on https://www.typescriptlang.org/docs/handbook/mixins.html
+These mixins allow to compose a class with other clases, by dynamically extending from all the classes. Traditional inheritance doesn't work here, as there is not a
+clear chain of inheritance. Other composition techniques leave a more complex surface, or duplicate the code.
+
+To work with mixins:
+
+- All mixins follow the convention `With*` (including `WithWith`).
+- To implement a mixin in a class, you need to both use the decorator `@mixin` and use `export interface MyClass extends WithMyMixin` so typescript get the typings
+- A mixin implementing a clause, must import it from the barrel import (`Cypher.ts`) to avoid circular dependencies
