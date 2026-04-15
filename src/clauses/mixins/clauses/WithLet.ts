@@ -4,8 +4,10 @@
  */
 
 import type { LetBinding } from "../../Let";
-import { Let } from "../../Let";
 import { MixinClause } from "../Mixin";
+
+// We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
+import { Let } from "../../../Cypher";
 
 export abstract class WithLet extends MixinClause {
     /** Append a {@link Let} clause.

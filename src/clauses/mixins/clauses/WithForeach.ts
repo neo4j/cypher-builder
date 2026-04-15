@@ -3,9 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Foreach } from "../../../index";
 import Cypher from "../../../index";
 import { MixinClause } from "../Mixin";
+
+// We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
+import type { Foreach } from "../../../index";
 
 export abstract class WithForeach extends MixinClause {
     /** Add a {@link Foreach} clause

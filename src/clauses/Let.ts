@@ -12,6 +12,7 @@ import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
+import { WithLet } from "./mixins/clauses/WithLet";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
@@ -31,31 +32,32 @@ export interface Let
         WithFinish,
         WithCallProcedure,
         WithCall,
-        WithFilter {}
+        WithFilter,
+        WithLet {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/25/clauses/let/ | Cypher Documentation}
  * @group Clauses
  * @since Neo4j 2025.06
  */
-@mixin(WithReturn, WithWith, WithMatch, WithCreate, WithMerge, WithFinish, WithCallProcedure, WithCall, WithFilter)
+@mixin(
+    WithReturn,
+    WithWith,
+    WithMatch,
+    WithCreate,
+    WithMerge,
+    WithFinish,
+    WithCallProcedure,
+    WithCall,
+    WithFilter,
+    WithLet
+)
 export class Let extends Clause {
     private readonly bindings: LetBinding[];
 
     constructor(...bindings: LetBinding[]) {
         super();
         this.bindings = bindings;
-    }
-
-    /** Append a {@link Let} clause.
-     * @see {@link https://neo4j.com/docs/cypher-manual/25/clauses/let/ | Cypher Documentation}
-     */
-    public let(clause: Let): Let;
-    public let(...bindings: LetBinding[]): Let;
-    public let(clauseOrBinding: Let | LetBinding, ...bindings: LetBinding[]): Let {
-        const letClause = this.getLetClause(clauseOrBinding, bindings);
-        this.addNextClause(letClause);
-        return letClause;
     }
 
     /** @internal */
@@ -67,13 +69,5 @@ export class Let extends Clause {
         const nextClause = this.compileNextClause(env);
 
         return `LET ${bindingsStr}${nextClause}`;
-    }
-
-    private getLetClause(clauseOrBinding: Let | LetBinding, bindings: LetBinding[]): Let {
-        if (clauseOrBinding instanceof Let) {
-            return clauseOrBinding;
-        } else {
-            return new Let(clauseOrBinding, ...bindings);
-        }
     }
 }

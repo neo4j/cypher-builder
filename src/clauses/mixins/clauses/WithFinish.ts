@@ -3,8 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Finish } from "../../../index";
 import { MixinClause } from "../Mixin";
+
+// We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
+import { Finish } from "../../../index";
 
 export abstract class WithFinish extends MixinClause {
     /** Append a {@link Finish} clause
