@@ -36,6 +36,16 @@ export class Filter extends Clause {
         return this;
     }
 
+    /** Add a {@link Filter} clause
+     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/filter/ | Cypher Documentation}
+     */
+    public filter(predicate: Predicate): Filter {
+        const matchClause = new Filter(predicate);
+        this.addNextClause(matchClause);
+
+        return matchClause;
+    }
+
     /** @internal */
     public getCypher(env: CypherEnvironment): string {
         const opStr = this.predicate.getCypher(env);

@@ -171,7 +171,7 @@ describe("Clause chaining", () => {
             "merge",
             "create",
             // "let",
-            // "filter",
+            "filter",
         ] as const)("Filter.%s", (value) => {
             expect(clause[value]).toEqual(expect.any(Function));
         });
