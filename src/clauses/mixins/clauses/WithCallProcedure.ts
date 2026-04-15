@@ -3,8 +3,10 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { CypherProcedure, VoidCypherProcedure } from "../../../procedures/CypherProcedure";
 import { MixinClause } from "../Mixin";
+
+// These are not public, so they cannot be barrel imported, unlike other mixins
+import type { CypherProcedure, VoidCypherProcedure } from "../../../procedures/CypherProcedure";
 
 export abstract class WithCallProcedure extends MixinClause {
     /** Add a call {@link Procedure} clause

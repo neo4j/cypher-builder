@@ -3,9 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import { Return } from "../../Return";
 import type { ProjectionColumn } from "../../sub-clauses/Projection";
 import { MixinClause } from "../Mixin";
+
+// We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
+import { Return } from "../../Return";
 
 export abstract class WithReturn extends MixinClause {
     /** Append a {@link Return} clause

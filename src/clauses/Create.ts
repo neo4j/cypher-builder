@@ -8,6 +8,7 @@ import { PathAssign } from "../pattern/PathAssign";
 import { Pattern } from "../pattern/Pattern";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
+import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithLet } from "./mixins/clauses/WithLet";
@@ -20,13 +21,34 @@ import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { mixin } from "./utils/mixin";
 
 export interface Create
-    extends WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder, WithLet, WithFilter {}
+    extends
+        WithReturn,
+        WithSetRemove,
+        WithWith,
+        WithDelete,
+        WithMerge,
+        WithFinish,
+        WithOrder,
+        WithLet,
+        WithFilter,
+        WithCreate {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/create/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder, WithLet, WithFilter)
+@mixin(
+    WithReturn,
+    WithSetRemove,
+    WithWith,
+    WithDelete,
+    WithMerge,
+    WithFinish,
+    WithOrder,
+    WithLet,
+    WithFilter,
+    WithCreate
+)
 export class Create extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
 
@@ -37,21 +59,6 @@ export class Create extends Clause {
         } else {
             this.pattern = new Pattern(pattern);
         }
-    }
-
-    /** Add a {@link Create} clause
-     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/create/ | Cypher Documentation}
-     */
-    public create(clauseOrPattern: Create | Pattern): Create {
-        if (clauseOrPattern instanceof Create) {
-            this.addNextClause(clauseOrPattern);
-            return clauseOrPattern;
-        }
-
-        const matchClause = new Create(clauseOrPattern);
-        this.addNextClause(matchClause);
-
-        return matchClause;
     }
 
     /** @internal */
