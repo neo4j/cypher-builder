@@ -6,6 +6,7 @@
 // Clauses
 export { Call, OptionalCall, type CallInTransactionOptions } from "./clauses/Call";
 export { Create } from "./clauses/Create";
+export { Filter } from "./clauses/Filter";
 export { Finish } from "./clauses/Finish";
 export { Foreach, type ForeachClauses } from "./clauses/Foreach";
 export { Let } from "./clauses/Let";
