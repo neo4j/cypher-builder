@@ -162,19 +162,12 @@ describe("Clause chaining", () => {
     describe("Filter", () => {
         const clause = new Cypher.Filter(Cypher.true);
 
-        it.each([
-            "return",
-            "with",
-            // "unwind",
-            "match",
-            "optionalMatch",
-            "merge",
-            "create",
-            // "let",
-            "filter",
-        ] as const)("Filter.%s", (value) => {
-            expect(clause[value]).toEqual(expect.any(Function));
-        });
+        it.each(["return", "with", "unwind", "match", "optionalMatch", "merge", "create", "let", "filter"] as const)(
+            "Filter.%s",
+            (value) => {
+                expect(clause[value]).toEqual(expect.any(Function));
+            }
+        );
     });
     // describe("Use", () => {
     //     const clause = new Cypher.Use("dsa", new Cypher.Match(new Cypher.Node()));

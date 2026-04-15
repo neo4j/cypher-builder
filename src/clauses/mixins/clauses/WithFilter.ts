@@ -4,8 +4,10 @@
  */
 
 import type { Predicate } from "../../../types";
-import { Filter } from "../../Filter";
 import { MixinClause } from "../Mixin";
+
+// We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
+import { Filter } from "../../../Cypher";
 
 export abstract class WithFilter extends MixinClause {
     /** Add a {@link Filter} clause

@@ -3,9 +3,11 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { UnwindProjectionColumn } from "../../Unwind";
-import { Unwind } from "../../Unwind";
+import type { UnwindProjectionColumn } from "../../../index";
 import { MixinClause } from "../Mixin";
+
+// We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
+import { Unwind } from "../../../Cypher";
 
 export abstract class WithUnwind extends MixinClause {
     /** Append an {@link Unwind} clause.
