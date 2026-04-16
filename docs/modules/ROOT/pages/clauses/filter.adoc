@@ -1,0 +1,40 @@
+[[filter]]
+:description: This page describes how to add `FILTER` clauses.
+= Filter
+
+This page describes how to add a link:https://neo4j.com/docs/cypher-manual/current/clauses/filter/[`FILTER`] clause with the `Cypher.Filter` class.
+
+To add the `Filter` clause, first create a valid predicate:
+
+[source, javascript]
+----
+const movie = new Cypher.Node();
+const predicate = Cypher.eq(movie.property("title"), new Cypher.Param("The Matrix"))
+const filterQuery = new Cypher.Filter(predicate);
+----
+
+This generates the following `FILTER` clause:
+
+[source, cypher]
+----
+FILTER this0.title = "The Matrix"
+----
+
+`FILTER` clauses can also be created as part of a chain with the `.filter` method:
+
+[source, javascript]
+----
+const node = new Cypher.Node();
+const query = new Cypher.Match(new Cypher.Pattern(node))
+    .filter(node.hasLabel("Swedish"))
+    .return([node.property("name"), "name"]);
+----
+
+This generates the following `FILTER` clause:
+
+[source, cypher]
+----
+MATCH (this0)
+FILTER this0:Swedish
+RETURN this0.name AS name
+----
