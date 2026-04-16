@@ -16,6 +16,7 @@
 *** xref:clauses/union.adoc[]
 *** xref:clauses/unwind.adoc[]
 *** xref:clauses/foreach.adoc[]
+*** xref:clauses/filter.adoc[]
 *** xref:clauses/let.adoc[]
 *** xref:clauses/load-csv.adoc[]
 *** xref:clauses/use.adoc[]

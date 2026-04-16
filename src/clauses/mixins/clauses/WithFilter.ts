@@ -12,6 +12,7 @@ import { Filter } from "../../../Cypher";
 export abstract class WithFilter extends MixinClause {
     /** Add a {@link Filter} clause
      * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/filter/ | Cypher Documentation}
+     * @since Neo4j 2025.06
      */
     public filter(predicate: Predicate): Filter {
         const matchClause = new Filter(predicate);
