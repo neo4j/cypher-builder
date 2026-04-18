@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 3.1.1
+
+### Patch Changes
+
+- [#835](https://github.com/neo4j/cypher-builder/pull/835) [`f3f9d84`](https://github.com/neo4j/cypher-builder/commit/f3f9d847ca2450add3b657d239ec969466dd2733) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for combining `UNION`, `UNION ALL` and `UNION DISTINCT` by passing `Cypher.Union` clauses to an Union clause
+
 ## 3.1.0
 
 ### Minor Changes
