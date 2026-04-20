@@ -59,7 +59,7 @@ export abstract class WithOrder extends Mixin {
     }
 
     private getOrCreateOrderBy(): OrderBy {
-        if (!this.orderByStatement) this.orderByStatement = new OrderBy();
+        this.orderByStatement ??= new OrderBy();
         return this.orderByStatement;
     }
 }

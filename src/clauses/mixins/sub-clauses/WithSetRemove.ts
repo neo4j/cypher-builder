@@ -3,8 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Label } from "../../../index";
 import type { CypherEnvironment } from "../../../Environment";
+import type { Label } from "../../../references/Label";
 import type { PropertyRef } from "../../../references/PropertyRef";
 import { compileCypherIfExists } from "../../../utils/compile-cypher-if-exists";
 import { RemoveClause } from "../../sub-clauses/Remove";
@@ -19,9 +19,7 @@ export abstract class WithSetRemove extends Mixin {
      * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/set/ | Cypher Documentation}
      */
     public set(...params: SetParam[]): this {
-        if (!this.subClauses) {
-            this.subClauses = []; // Due to mixin wonkiness, we need to lazy initialize
-        }
+        this.subClauses ??= []; // Due to mixin wonkiness, we need to lazy initialize
 
         const lastSubClause = this.subClauses.at(-1);
         if (lastSubClause instanceof SetClause) {
@@ -37,9 +35,7 @@ export abstract class WithSetRemove extends Mixin {
      * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/remove/ | Cypher Documentation}
      */
     public remove(...properties: Array<PropertyRef | Label>): this {
-        if (!this.subClauses) {
-            this.subClauses = []; // Due to mixin wonkiness, we need to lazy initialize
-        }
+        this.subClauses ??= []; // Due to mixin wonkiness, we need to lazy initialize
 
         const lastSubClause = this.subClauses.at(-1);
         if (lastSubClause instanceof RemoveClause) {
