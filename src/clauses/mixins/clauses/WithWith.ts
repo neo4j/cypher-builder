@@ -7,7 +7,7 @@ import type { WithProjection } from "../../With";
 import { MixinClause } from "../Mixin";
 
 // We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
-import { With } from "../../../index";
+import { With } from "../../../Cypher";
 
 export abstract class WithWith extends MixinClause {
     /** Add a {@link With} clause

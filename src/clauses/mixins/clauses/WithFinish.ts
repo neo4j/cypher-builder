@@ -6,7 +6,7 @@
 import { MixinClause } from "../Mixin";
 
 // We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
-import { Finish } from "../../../index";
+import { Finish } from "../../../Cypher";
 
 export abstract class WithFinish extends MixinClause {
     /** Append a {@link Finish} clause

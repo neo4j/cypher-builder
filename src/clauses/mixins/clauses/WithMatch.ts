@@ -7,7 +7,7 @@ import type { MatchClausePattern } from "../../Match";
 import { MixinClause } from "../Mixin";
 
 // We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
-import { Match, OptionalMatch } from "../../../index";
+import { Match, OptionalMatch } from "../../../Cypher";
 
 export abstract class WithMatch extends MixinClause {
     /** Add a {@link Match} clause

@@ -7,7 +7,7 @@ import type { Clause, Variable } from "../../../index";
 import { MixinClause } from "../Mixin";
 
 // We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
-import { Call, OptionalCall } from "../../../index";
+import { Call, OptionalCall } from "../../../Cypher";
 
 export abstract class WithCall extends MixinClause {
     /** Add a {@link Call} clause
