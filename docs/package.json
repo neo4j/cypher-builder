@@ -28,9 +28,9 @@
         "@neo4j-antora/antora-modify-sitemaps": "^0.7.2",
         "@neo4j-antora/antora-page-roles": "^0.3.2",
         "@neo4j-antora/mark-terms": "1.1.4",
-        "@neo4j-antora/roles-labels": "^0.1.8",
-        "@neo4j-antora/table-footnotes": "^1.0.1",
-        "@neo4j-antora/xref-hash-validator": "^0.1.4",
+        "@neo4j-antora/roles-labels": "^0.1.9",
+        "@neo4j-antora/table-footnotes": "^1.0.2",
+        "@neo4j-antora/xref-hash-validator": "^0.1.5",
         "@neo4j-documentation/macros": "^1.0.4",
         "@neo4j-documentation/remote-include": "^1.0.0",
         "antora": "3.1.14"
