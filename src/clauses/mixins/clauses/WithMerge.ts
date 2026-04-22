@@ -4,8 +4,10 @@
  */
 
 import type { Pattern } from "../../../index";
-import { Merge } from "../../../index";
 import { MixinClause } from "../Mixin";
+
+// We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
+import { Merge } from "../../../Cypher";
 
 export abstract class WithMerge extends MixinClause {
     /** Add a {@link Merge} clause

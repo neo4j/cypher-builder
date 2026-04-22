@@ -13,6 +13,7 @@ import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithLet } from "./mixins/clauses/WithLet";
+import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
@@ -24,13 +25,34 @@ import { OnMatch } from "./sub-clauses/OnMatch";
 import { mixin } from "./utils/mixin";
 
 export interface Merge
-    extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet, WithFilter {}
+    extends
+        WithReturn,
+        WithSetRemove,
+        WithDelete,
+        WithWith,
+        WithCreate,
+        WithFinish,
+        WithOrder,
+        WithLet,
+        WithFilter,
+        WithMerge {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet, WithFilter)
+@mixin(
+    WithReturn,
+    WithSetRemove,
+    WithDelete,
+    WithWith,
+    WithCreate,
+    WithFinish,
+    WithOrder,
+    WithLet,
+    WithFilter,
+    WithMerge
+)
 export class Merge extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
     private readonly onCreateClause: OnCreate;
@@ -52,21 +74,6 @@ export class Merge extends Clause {
     public onMatchSet(...onMatchParams: OnCreateParam[]): this {
         this.onMatchClause.addParams(...onMatchParams);
         return this;
-    }
-
-    /** Add a {@link Merge} clause
-     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
-     */
-    public merge(clauseOrPattern: Merge | Pattern): Merge {
-        if (clauseOrPattern instanceof Merge) {
-            this.addNextClause(clauseOrPattern);
-            return clauseOrPattern;
-        }
-
-        const matchClause = new Merge(clauseOrPattern);
-        this.addNextClause(matchClause);
-
-        return matchClause;
     }
 
     /** @internal */
