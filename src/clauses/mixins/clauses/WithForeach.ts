@@ -3,17 +3,19 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
-import type { Foreach } from "../../../index";
-import Cypher from "../../../index";
+import type { Variable } from "../../../references/Variable";
 import { MixinClause } from "../Mixin";
+
+// We need barrel import from Cypher instead of local file to avoid issues with circular dependencies in mixins
+import { Foreach } from "../../../Cypher";
 
 export abstract class WithForeach extends MixinClause {
     /** Add a {@link Foreach} clause
      * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/foreach/ | Cypher Documentation}
      */
 
-    public foreach(variable: Cypher.Variable): Foreach {
-        const foreach = new Cypher.Foreach(variable);
+    public foreach(variable: Variable): Foreach {
+        const foreach = new Foreach(variable);
         this.addNextClause(foreach);
         return foreach;
     }

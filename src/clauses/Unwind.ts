@@ -5,7 +5,6 @@
 
 import type { CypherEnvironment } from "../Environment";
 import type { Expr, Literal, Variable } from "../index";
-import Cypher from "../index";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
 import { WithCreate } from "./mixins/clauses/WithCreate";
@@ -14,6 +13,7 @@ import { WithLet } from "./mixins/clauses/WithLet";
 import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
+import { WithUnwind } from "./mixins/clauses/WithUnwind";
 import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
@@ -32,7 +32,8 @@ export interface Unwind
         WithMerge,
         WithOrder,
         WithLet,
-        WithFilter {}
+        WithFilter,
+        WithUnwind {}
 
 /** @group Clauses */
 export type UnwindProjectionColumn = [Expr, string | Variable | Literal];
@@ -51,7 +52,8 @@ export type UnwindProjectionColumn = [Expr, string | Variable | Literal];
     WithMerge,
     WithOrder,
     WithLet,
-    WithFilter
+    WithFilter,
+    WithUnwind
 )
 export class Unwind extends Clause {
     private readonly projection: Projection;
@@ -59,23 +61,6 @@ export class Unwind extends Clause {
     constructor(projection: UnwindProjectionColumn) {
         super();
         this.projection = new Projection([projection]);
-    }
-
-    // Cannot be part of WithUnwind due to dependency cycles
-    /** Append an {@link Unwind} clause.
-     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/unwind/ | Cypher Documentation}
-     */
-    public unwind(clause: Unwind): Unwind;
-    public unwind(projection: UnwindProjectionColumn): Unwind;
-    public unwind(clauseOrColumn: Unwind | UnwindProjectionColumn): Unwind {
-        if (clauseOrColumn instanceof Unwind) {
-            this.addNextClause(clauseOrColumn);
-            return clauseOrColumn;
-        } else {
-            const newUnwind = new Cypher.Unwind(clauseOrColumn);
-            this.addNextClause(newUnwind);
-            return newUnwind;
-        }
     }
 
     /** @internal */

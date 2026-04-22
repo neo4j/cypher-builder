@@ -35,8 +35,8 @@ export class Filter extends Clause {
         this.addChildren(this.predicate);
     }
 
-    public and(op: Predicate): this {
-        this.predicate = and(this.predicate, op);
+    public and(predicate: Predicate): this {
+        this.predicate = and(this.predicate, predicate);
         this.addChildren(this.predicate);
         return this;
     }

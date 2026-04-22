@@ -16,6 +16,7 @@ import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithForeach } from "./mixins/clauses/WithForeach";
 import { WithLet } from "./mixins/clauses/WithLet";
+import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
@@ -42,7 +43,8 @@ export interface Match
         WithOrder,
         WithForeach,
         WithLet,
-        WithFilter {}
+        WithFilter,
+        WithMatch {}
 
 enum MatchMode {
     REPEATABLE_ELEMENTS,
@@ -76,7 +78,8 @@ export type MatchClausePattern = Pattern | QuantifiedPath | PathAssign<Pattern |
     WithOrder,
     WithForeach,
     WithLet,
-    WithFilter
+    WithFilter,
+    WithMatch
 )
 export class Match extends Clause {
     private readonly patterns: MatchClausePattern[];
@@ -106,35 +109,6 @@ export class Match extends Clause {
     public optional(): this {
         this._optional = true;
         return this;
-    }
-
-    /** Add a {@link Match} clause
-     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/match/ | Cypher Documentation}
-     */
-    public match(clauseOrPattern: Match | MatchClausePattern): Match {
-        if (clauseOrPattern instanceof Match) {
-            this.addNextClause(clauseOrPattern);
-            return clauseOrPattern;
-        }
-
-        const matchClause = new Match(clauseOrPattern);
-        this.addNextClause(matchClause);
-
-        return matchClause;
-    }
-
-    /** Add an {@link OptionalMatch} clause
-     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/ | Cypher Documentation}
-     */
-    public optionalMatch(clauseOrPattern: OptionalMatch | MatchClausePattern): OptionalMatch {
-        if (clauseOrPattern instanceof OptionalMatch) {
-            this.addNextClause(clauseOrPattern);
-            return clauseOrPattern;
-        }
-        const matchClause = new OptionalMatch(clauseOrPattern);
-        this.addNextClause(matchClause);
-
-        return matchClause;
     }
 
     /**
@@ -216,7 +190,7 @@ export class Match extends Clause {
 
         let patternStr: string;
         if (patternCyphers.length > 1) {
-            patternStr = `${patternCyphers.map((p) => `\n  ${p}`).join(",")}`;
+            patternStr = patternCyphers.map((p) => `\n  ${p}`).join(",");
         } else {
             patternStr = ` ${shortestStatement}${patternCyphers[0]}`;
         }

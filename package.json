@@ -45,21 +45,21 @@
     "homepage": "https://neo4j.github.io/cypher-builder/",
     "devDependencies": {
         "@changesets/changelog-github": "0.6.0",
-        "@changesets/cli": "2.30.0",
+        "@changesets/cli": "2.31.0",
         "@eslint/js": "10.0.1",
         "@tsconfig/node24": "24.0.4",
         "@types/jest": "30.0.0",
         "@types/node": "25.6.0",
-        "eslint": "10.2.0",
+        "eslint": "10.2.1",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-tsdoc": "0.5.2",
         "jest": "30.3.0",
         "jest-extended": "7.0.0",
-        "knip": "6.4.0",
-        "prettier": "3.8.2",
+        "knip": "6.4.1",
+        "prettier": "3.8.3",
         "ts-jest": "29.4.9",
         "typedoc": "0.28.19",
-        "typescript": "6.0.2",
-        "typescript-eslint": "8.58.1"
+        "typescript": "6.0.3",
+        "typescript-eslint": "8.58.2"
     }
 }

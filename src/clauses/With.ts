@@ -18,6 +18,7 @@ import { WithMatch } from "./mixins/clauses/WithMatch";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
 import { WithUnwind } from "./mixins/clauses/WithUnwind";
+import { WithWith } from "./mixins/clauses/WithWith";
 import { WithDelete } from "./mixins/sub-clauses/WithDelete";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
@@ -45,7 +46,8 @@ export interface With
         WithCall,
         WithDistinctAll,
         WithLet,
-        WithFilter {}
+        WithFilter,
+        WithWith {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/with/ | Cypher Documentation}
@@ -65,12 +67,12 @@ export interface With
     WithCall,
     WithDistinctAll,
     WithLet,
-    WithFilter
+    WithFilter,
+    WithWith
 )
 export class With extends Clause {
     private readonly projection: Projection;
     private readonly withStatement: With | undefined;
-    private isDistinct = false;
 
     constructor(...columns: Array<"*" | WithProjection>) {
         super();
@@ -80,23 +82,6 @@ export class With extends Clause {
     public addColumns(...columns: Array<"*" | WithProjection>): this {
         this.projection.addColumns(columns);
         return this;
-    }
-
-    public distinct(): this {
-        this.isDistinct = true;
-        return this;
-    }
-
-    // Cannot be part of WithWith due to dependency cycles
-    /** Add a {@link With} clause
-     * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/with/ | Cypher Documentation}
-     */
-    public with(clause: With): With;
-    public with(...columns: Array<"*" | WithProjection>): With;
-    public with(clauseOrColumn: With | "*" | WithProjection, ...columns: Array<"*" | WithProjection>): With {
-        const withClause = this.getWithClause(clauseOrColumn, columns);
-        this.addNextClause(withClause);
-        return withClause;
     }
 
     /** @internal */
@@ -112,13 +97,5 @@ export class With extends Clause {
         const nextClause = this.compileNextClause(env);
 
         return `WITH${projectionModeStr} ${projectionStr}${whereStr}${setCypher}${orderByStr}${deleteStr}${withStr}${nextClause}`;
-    }
-
-    private getWithClause(clauseOrColumn: With | "*" | WithProjection, columns: Array<"*" | WithProjection>): With {
-        if (clauseOrColumn instanceof With) {
-            return clauseOrColumn;
-        } else {
-            return new With(clauseOrColumn, ...columns);
-        }
     }
 }
