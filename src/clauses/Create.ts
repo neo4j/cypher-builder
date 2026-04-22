@@ -8,6 +8,7 @@ import { PathAssign } from "../pattern/PathAssign";
 import { Pattern } from "../pattern/Pattern";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
+import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithLet } from "./mixins/clauses/WithLet";
 import { WithMerge } from "./mixins/clauses/WithMerge";
@@ -19,13 +20,13 @@ import { WithSetRemove } from "./mixins/sub-clauses/WithSetRemove";
 import { mixin } from "./utils/mixin";
 
 export interface Create
-    extends WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder, WithLet {}
+    extends WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder, WithLet, WithFilter {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/create/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder, WithLet)
+@mixin(WithReturn, WithSetRemove, WithWith, WithDelete, WithMerge, WithFinish, WithOrder, WithLet, WithFilter)
 export class Create extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
 

@@ -12,6 +12,7 @@ import { Clause } from "./Clause";
 import { WithCall } from "./mixins/clauses/WithCall";
 import { WithCallProcedure } from "./mixins/clauses/WithCallProcedure";
 import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithForeach } from "./mixins/clauses/WithForeach";
 import { WithLet } from "./mixins/clauses/WithLet";
@@ -40,7 +41,8 @@ export interface Match
         WithCall,
         WithOrder,
         WithForeach,
-        WithLet {}
+        WithLet,
+        WithFilter {}
 
 enum MatchMode {
     REPEATABLE_ELEMENTS,
@@ -73,7 +75,8 @@ export type MatchClausePattern = Pattern | QuantifiedPath | PathAssign<Pattern |
     WithCall,
     WithOrder,
     WithForeach,
-    WithLet
+    WithLet,
+    WithFilter
 )
 export class Match extends Clause {
     private readonly patterns: MatchClausePattern[];

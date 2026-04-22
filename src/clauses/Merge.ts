@@ -10,6 +10,7 @@ import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { padBlock } from "../utils/pad-block";
 import { Clause } from "./Clause";
 import { WithCreate } from "./mixins/clauses/WithCreate";
+import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
 import { WithLet } from "./mixins/clauses/WithLet";
 import { WithReturn } from "./mixins/clauses/WithReturn";
@@ -23,13 +24,13 @@ import { OnMatch } from "./sub-clauses/OnMatch";
 import { mixin } from "./utils/mixin";
 
 export interface Merge
-    extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet {}
+    extends WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet, WithFilter {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet)
+@mixin(WithReturn, WithSetRemove, WithDelete, WithWith, WithCreate, WithFinish, WithOrder, WithLet, WithFilter)
 export class Merge extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;
     private readonly onCreateClause: OnCreate;
