@@ -6,7 +6,7 @@
 import type { Literal } from "../../../Cypher";
 import { CypherProcedure } from "../../../procedures/CypherProcedure";
 import type { Expr } from "../../../types";
-import { normalizeExpr } from "../../../utils/normalize-variable";
+import { normalizeExpr } from "../../../utils/normalize-expr";
 
 const VECTOR_NAMESPACE = "db.index.vector";
 

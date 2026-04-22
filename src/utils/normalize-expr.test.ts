@@ -4,7 +4,7 @@
  */
 
 import Cypher from "../index";
-import { normalizeExpr } from "./normalize-variable";
+import { normalizeExpr } from "./normalize-expr";
 
 describe("normalizeExpr", () => {
     test("returns the same variable if it is a CypherCompilable", () => {

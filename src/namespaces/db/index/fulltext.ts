@@ -9,7 +9,7 @@ import type { Literal } from "../../../references/Literal";
 import type { Param } from "../../../references/Param";
 import type { Variable } from "../../../references/Variable";
 import type { Expr } from "../../../types";
-import { normalizeExpr, normalizeMap } from "../../../utils/normalize-variable";
+import { normalizeExpr, normalizeMap } from "../../../utils/normalize-expr";
 
 type FulltextPhrase = string | Literal<string> | Param | Variable;
 

@@ -7,7 +7,7 @@ import type { Literal, Param } from "../../Cypher";
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 import { CypherProcedure } from "../../procedures/CypherProcedure";
 import type { Expr } from "../../types";
-import { normalizeExpr, normalizeMap } from "../../utils/normalize-variable";
+import { normalizeExpr, normalizeMap } from "../../utils/normalize-expr";
 
 const GENAI_VECTOR_NAMESPACE = "genai.vector";
 

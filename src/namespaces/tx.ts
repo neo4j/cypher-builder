@@ -7,7 +7,7 @@ import type { VoidCypherProcedure } from "../procedures/CypherProcedure";
 import { CypherProcedure } from "../procedures/CypherProcedure";
 import type { Literal } from "../references/Literal";
 import type { Param } from "../references/Param";
-import { normalizeMap } from "../utils/normalize-variable";
+import { normalizeMap } from "../utils/normalize-expr";
 
 const TX_NAMESPACE = "tx";
 

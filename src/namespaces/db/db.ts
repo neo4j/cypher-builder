@@ -6,7 +6,7 @@
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 import { CypherProcedure, VoidCypherProcedure } from "../../procedures/CypherProcedure";
 import type { Expr } from "../../types";
-import { normalizeExpr } from "../../utils/normalize-variable";
+import { normalizeExpr } from "../../utils/normalize-expr";
 
 export * as cdc from "./cdc";
 /**

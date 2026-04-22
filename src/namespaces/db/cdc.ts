@@ -5,7 +5,7 @@
 
 import { CypherProcedure } from "../../procedures/CypherProcedure";
 import type { Expr } from "../../types";
-import { normalizeExpr, normalizeList } from "../../utils/normalize-variable";
+import { normalizeExpr, normalizeList } from "../../utils/normalize-expr";
 
 const CDC_NAMESPACE = "db.cdc";
 
