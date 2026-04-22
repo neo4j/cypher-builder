@@ -23,6 +23,7 @@ export interface Filter
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/filter/ | Cypher Documentation}
  * @group Clauses
+ * @since Neo4j 2025.06
  */
 @mixin(WithReturn, WithWith, WithMatch, WithMerge, WithCreate, WithUnwind, WithFilter, WithLet)
 export class Filter extends Clause {
