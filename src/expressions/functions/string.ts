@@ -18,7 +18,7 @@ import { CypherFunction } from "./CypherFunctions";
  */
 export function btrim(original: string | Expr, trimCharacter?: string | Expr): CypherFunction {
     const normalizedOriginal = normalizeExpr(original);
-    const normalizedTrimCharacter = trimCharacter ? normalizeExpr(trimCharacter) : undefined;
+    const normalizedTrimCharacter = normalizeExpr(trimCharacter);
     return new CypherFunction("btrim", filterTruthy([normalizedOriginal, normalizedTrimCharacter]));
 }
 
@@ -48,7 +48,7 @@ export function lower(original: Expr): CypherFunction {
  */
 export function ltrim(original: Expr | string, trimCharacter?: string | Expr): CypherFunction {
     const normalizedOriginal = normalizeExpr(original);
-    const normalizedTrimCharacter = trimCharacter ? normalizeExpr(trimCharacter) : undefined;
+    const normalizedTrimCharacter = normalizeExpr(trimCharacter);
     return new CypherFunction("ltrim", filterTruthy([normalizedOriginal, normalizedTrimCharacter]));
 }
 
@@ -61,7 +61,7 @@ export function ltrim(original: Expr | string, trimCharacter?: string | Expr): C
  * @example `Cypher.normalize(param, "NFC")`
  */
 export function normalize(input: Expr, normalForm?: NormalizationType | Expr): CypherFunction {
-    const normalFormExpr = normalForm ? normalizeExpr(normalForm) : undefined;
+    const normalFormExpr = normalizeExpr(normalForm);
     return new CypherFunction("normalize", filterTruthy([input, normalFormExpr]));
 }
 
@@ -91,7 +91,7 @@ export function right(original: Expr, length: Expr): CypherFunction {
  */
 export function rtrim(original: Expr | string, trimCharacter?: string | Expr): CypherFunction {
     const normalizedOriginal = normalizeExpr(original);
-    const normalizedTrimCharacter = trimCharacter ? normalizeExpr(trimCharacter) : undefined;
+    const normalizedTrimCharacter = normalizeExpr(trimCharacter);
     return new CypherFunction("rtrim", filterTruthy([normalizedOriginal, normalizedTrimCharacter]));
 }
 

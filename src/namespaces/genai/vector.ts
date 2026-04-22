@@ -7,7 +7,7 @@ import type { Literal, Param } from "../../Cypher";
 import { CypherFunction } from "../../expressions/functions/CypherFunctions";
 import { CypherProcedure } from "../../procedures/CypherProcedure";
 import type { Expr } from "../../types";
-import { normalizeMap, normalizeVariable } from "../../utils/normalize-variable";
+import { normalizeExpr, normalizeMap } from "../../utils/normalize-variable";
 
 const GENAI_VECTOR_NAMESPACE = "genai.vector";
 
@@ -22,7 +22,7 @@ export function encode(
 ): CypherFunction {
     return new CypherFunction(
         "encode",
-        [resource, normalizeVariable(provider), normalizeMap(configuration)],
+        [resource, normalizeExpr(provider), normalizeMap(configuration)],
         GENAI_VECTOR_NAMESPACE
     );
 }
@@ -38,7 +38,7 @@ export function encodeBatch(
 ): CypherProcedure<"index" | "resource" | "vector"> {
     return new CypherProcedure(
         "encodeBatch",
-        [resources, normalizeVariable(provider), normalizeMap(configuration)],
+        [resources, normalizeExpr(provider), normalizeMap(configuration)],
         GENAI_VECTOR_NAMESPACE
     );
 }

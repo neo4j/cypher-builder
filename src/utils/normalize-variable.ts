@@ -6,32 +6,31 @@
 import { ListExpr } from "../expressions/list/ListExpr";
 import { MapExpr } from "../expressions/map/MapExpr";
 import { Literal } from "../references/Literal";
-import type { Param } from "../references/Param";
 import type { Variable } from "../references/Variable";
 import type { Expr } from "../types";
 import { isCypherCompilable } from "./is-cypher-compilable";
 
-type VariableInput = string | number | Variable | Literal | Param;
+/** Something that can be coerced into a Variable */
+type VariableLike = string | number | Variable | Literal;
 
-export function normalizeVariable(value: VariableInput): Variable | Literal | Param {
+/** Coerces a VariableLike into an Expression. Returns undefined if the value is undefined */
+export function normalizeExpr(value: undefined): undefined;
+export function normalizeExpr(value: VariableLike | Expr): Expr;
+export function normalizeExpr(value: VariableLike | Expr | undefined): Expr | undefined;
+export function normalizeExpr(value: VariableLike | Expr | undefined): Expr | undefined {
+    if (!value) return undefined;
     if (isCypherCompilable(value)) return value;
     return new Literal(value);
 }
 
-// Same as normalizeVariable, just typings are different
-export function normalizeExpr(value: VariableInput | Expr): Variable | Literal | Param | Expr {
-    if (isCypherCompilable(value)) return value;
-    return new Literal(value);
-}
-
-export function normalizeMap(map: Record<string, VariableInput>): MapExpr {
+export function normalizeMap(map: Record<string, VariableLike>): MapExpr {
     return Object.entries(map).reduce((mapExpr, [key, value]) => {
-        mapExpr.set(key, normalizeVariable(value));
+        mapExpr.set(key, normalizeExpr(value));
         return mapExpr;
     }, new MapExpr());
 }
 
-export function normalizeList(list: Array<VariableInput | Expr>): ListExpr {
+export function normalizeList(list: Array<VariableLike | Expr>): ListExpr {
     const expressions = list.map((v) => normalizeExpr(v));
     return new ListExpr(expressions);
 }

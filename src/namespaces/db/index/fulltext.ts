@@ -9,7 +9,7 @@ import type { Literal } from "../../../references/Literal";
 import type { Param } from "../../../references/Param";
 import type { Variable } from "../../../references/Variable";
 import type { Expr } from "../../../types";
-import { normalizeMap, normalizeVariable } from "../../../utils/normalize-variable";
+import { normalizeExpr, normalizeMap } from "../../../utils/normalize-variable";
 
 type FulltextPhrase = string | Literal<string> | Param | Variable;
 
@@ -64,8 +64,8 @@ function getFulltextArguments(
     queryString: FulltextPhrase,
     options?: { skip?: InputArgument<number>; limit?: InputArgument<number>; analyser?: InputArgument<string> }
 ): Expr[] {
-    const phraseVar = normalizeVariable(queryString);
-    const indexNameVar = normalizeVariable(indexName);
+    const phraseVar = normalizeExpr(queryString);
+    const indexNameVar = normalizeExpr(indexName);
 
     const procedureArgs: Expr[] = [indexNameVar, phraseVar];
     if (options) {

@@ -34,7 +34,7 @@ export function labels(nodeRef: Expr): CypherFunction {
  * @category List
  */
 export function range(start: Expr | number, end: Expr | number, step?: Expr | number): CypherFunction {
-    const params = filterTruthy([start, end, step]).map(normalizeExpr);
+    const params = filterTruthy([start, end, step]).map((arg) => normalizeExpr(arg));
     return new CypherFunction("range", params);
 }
 
