@@ -7,7 +7,7 @@
         "automerge": false
     },
     "timezone": "Europe/London",
-    "schedule": ["after 10pm every weekday", "before 5am every weekday", "every weekend"],
+    "schedule": ["* 0-4 1,15 * *"],
     "minimumReleaseAge": "3 days",
     "ignorePaths": [
         "**/node_modules/**",
