@@ -6,7 +6,7 @@
 import type { Literal } from "../../../Cypher";
 import { CypherProcedure } from "../../../procedures/CypherProcedure";
 import type { Expr } from "../../../types";
-import { normalizeVariable } from "../../../utils/normalize-variable";
+import { normalizeExpr } from "../../../utils/normalize-expr";
 
 const VECTOR_NAMESPACE = "db.index.vector";
 
@@ -43,8 +43,8 @@ function getVectorArguments(
     numberOfNearestNeighbours: number,
     query: Expr
 ): Expr[] {
-    const indexNameVar = normalizeVariable(indexName);
-    const numberOfNearestNeighboursVar = normalizeVariable(numberOfNearestNeighbours);
+    const indexNameVar = normalizeExpr(indexName);
+    const numberOfNearestNeighboursVar = normalizeExpr(numberOfNearestNeighbours);
 
     const procedureArgs: Expr[] = [indexNameVar, numberOfNearestNeighboursVar, query];
     return procedureArgs;

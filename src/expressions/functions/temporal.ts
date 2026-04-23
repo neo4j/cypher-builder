@@ -5,7 +5,7 @@
 
 import { Literal } from "../../references/Literal";
 import type { Expr } from "../../types";
-import { normalizeExpr } from "../../utils/normalize-variable";
+import { normalizeExpr } from "../../utils/normalize-expr";
 import { CypherFunction } from "./CypherFunctions";
 
 /** Temporal unit to be used in `.truncate()` functions

@@ -5,7 +5,7 @@
 
 import type { CypherEnvironment } from "../../Environment";
 import type { Expr } from "../../types";
-import { normalizeExpr } from "../../utils/normalize-variable";
+import { normalizeExpr } from "../../utils/normalize-expr";
 import { CypherFunction } from "./CypherFunctions";
 
 /**
