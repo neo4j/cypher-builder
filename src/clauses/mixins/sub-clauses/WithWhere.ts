@@ -64,8 +64,7 @@ export abstract class WithWhere extends Mixin {
             return undefined;
         }
         if (inputOrTarget instanceof Variable || inputOrTarget instanceof PropertyRef) {
-            const generatedOp = this.variableAndObjectToOperation(inputOrTarget, params ?? {});
-            return generatedOp;
+            return this.variableAndObjectToOperation(inputOrTarget, params ?? {});
         }
         return inputOrTarget;
     }
