@@ -1,5 +1,28 @@
 # @neo4j/cypher-builder
 
+## 3.2.0
+
+### Minor Changes
+
+- [#839](https://github.com/neo4j/cypher-builder/pull/839) [`021ff46`](https://github.com/neo4j/cypher-builder/commit/021ff4638720c1298e567975b639ad1680983c26) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `Cypher.Filter`. This implements the `FILTER` clause:
+
+    ```javascript
+    const node = new Cypher.Node();
+    const query = new Cypher.Match(new Cypher.Pattern(node))
+        .filter(node.hasLabel("Swedish"))
+        .return([node.property("name"), "name"]);
+    ```
+
+    ```cypher
+    MATCH (this0)
+    FILTER this0:Swedish
+    RETURN this0.name AS name
+    ```
+
+### Patch Changes
+
+- [#835](https://github.com/neo4j/cypher-builder/pull/835) [`f3f9d84`](https://github.com/neo4j/cypher-builder/commit/f3f9d847ca2450add3b657d239ec969466dd2733) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for combining `UNION`, `UNION ALL` and `UNION DISTINCT` by passing `Cypher.Union` clauses to an Union clause
+
 ## 3.1.0
 
 ### Minor Changes
