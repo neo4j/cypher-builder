@@ -281,6 +281,7 @@ RETURN this0"
 
             expect(queryResult.params).toMatchInlineSnapshot(`{}`);
         });
+
         test("Match where ... and with undefined predicate", () => {
             const movieNode = new Cypher.Node();
 
