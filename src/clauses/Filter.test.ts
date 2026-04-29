@@ -71,4 +71,14 @@ RETURN this0.name AS name"
 }
 `);
     });
+
+    test("Filter with empty predicate doesn't generate clause", () => {
+        const query = new Cypher.Filter(new Cypher.Raw("")).return("*");
+        const queryResult = query.build();
+
+        expect(queryResult.cypher).toMatchInlineSnapshot(`
+"
+RETURN *"
+`);
+    });
 });
