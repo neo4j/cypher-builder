@@ -110,10 +110,10 @@ describe("Literal", () => {
     });
 
     test("Cypher injection in Literal", () => {
-        const attackerInput = "\\' or 1=1 return n; match (m:Movie) DETACH DELETE (m) \\\\";
+        const badInput = "\\' or 1=1 return n; match (m:Movie) DETACH DELETE (m) \\\\";
         const node = new Cypher.NamedNode("n");
         const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["User"] }))
-            .where(Cypher.eq(node.property("name"), new Cypher.Literal(attackerInput)))
+            .where(Cypher.eq(node.property("name"), new Cypher.Literal(badInput)))
             .return(node)
             .build();
         expect(query.cypher).toMatchInlineSnapshot(`
