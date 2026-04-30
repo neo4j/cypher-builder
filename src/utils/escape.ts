@@ -30,9 +30,13 @@ export function escapeVariable(varName: string): string {
     return escapeIfNeeded(varName);
 }
 
-/** Escapes a literal string */
-export function escapeLiteralString(str: string): string {
-    return str.replaceAll(`'`, `\\'`);
+/** Escapes a literal string
+ * Given a string, it adds the single quotes (') and escapes ('), (\) and the unicode versions
+ */
+export function escapeLiteral(str: string): string {
+    const normalizedStr = str.replaceAll("\\u0027", "'").replaceAll("\\u005C", "\\");
+    const escapedStr = normalizedStr.replaceAll("\\", "\\\\").replaceAll(`'`, `\\'`);
+    return `'${escapedStr}'`;
 }
 
 function escapeIfNeeded(str: string): string {

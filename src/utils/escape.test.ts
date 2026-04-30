@@ -4,7 +4,7 @@
  */
 
 import Cypher from "../index";
-import { escapeLiteralString } from "./escape";
+import { escapeLiteral } from "./escape";
 
 describe("escaping", () => {
     describe.each(["escapeVariable", "escapeLabel", "escapeType", "escapeProperty"] as const)("utils.%s()", (func) => {
@@ -26,22 +26,26 @@ describe("escaping", () => {
         });
     });
 
-    describe("escapeLiteralString", () => {
+    describe("escapeLiteral", () => {
         test("Does not escape empty strings", () => {
-            expect(escapeLiteralString("")).toBe("");
+            expect(escapeLiteral("")).toBe("''");
         });
 
         test.each([
-            [`my "var"`, `my "var"`],
-            [`my \\"var`, `my \\"var`],
-            [`my 'var'`, `my \\'var\\'`],
-            [`my \\'var`, `my \\\\'var`],
+            [`my "var"`, `'my "var"'`],
+            [`my \\"var`, `'my \\\\"var'`],
+            [`my 'var'`, `'my \\'var\\''`],
+            [`my \\'var`, `'my \\\\\\'var'`],
+            [`'`, `'\\''`],
+            [`\\'`, `'\\\\\\''`],
+            [`\\u005C`, `'\\\\'`],
+            [`\\u0027`, `'\\''`],
         ])("Escape '%s'", (original, expected) => {
-            expect(escapeLiteralString(original)).toBe(expected);
+            expect(escapeLiteral(original)).toBe(expected);
         });
 
         test.each(["this", "_var", "hello` dsa"])("Does not escape '%s'", (value) => {
-            expect(escapeLiteralString(value)).toBe(value);
+            expect(escapeLiteral(value)).toBe(`'${value}'`);
         });
     });
 });
