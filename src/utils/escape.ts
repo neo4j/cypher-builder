@@ -32,7 +32,9 @@ export function escapeVariable(varName: string): string {
 
 /** Escapes a literal string */
 export function escapeLiteralString(str: string): string {
-    return str.replaceAll(`'`, `\\'`);
+    const normalizedStr = str.replaceAll("\\u0027", "'").replaceAll("\\u005C", "\\");
+
+    return normalizedStr.replaceAll("\\", "\\\\").replaceAll(`'`, `\\'`);
 }
 
 function escapeIfNeeded(str: string): string {

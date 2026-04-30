@@ -108,4 +108,18 @@ describe("Literal", () => {
         const queryResult = testClause.build();
         expect(queryResult.cypher).toBe(`false`);
     });
+
+    test("Cypher injection in Literal", () => {
+        const attackerInput = "\\' or 1=1 return n; match (m:Movie) DETACH DELETE (m) \\\\";
+        const node = new Cypher.NamedNode("n");
+        const query = new Cypher.Match(new Cypher.Pattern(node, { labels: ["User"] }))
+            .where(Cypher.eq(node.property("name"), new Cypher.Literal(attackerInput)))
+            .return(node)
+            .build();
+        expect(query.cypher).toMatchInlineSnapshot(`
+"MATCH (n:User)
+WHERE n.name = '\\\\\\\\\\\\' or 1=1 return n; match (m:Movie) DETACH DELETE (m) \\\\\\\\\\\\\\\\'
+RETURN n"
+`);
+    });
 });
