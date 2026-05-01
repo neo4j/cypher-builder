@@ -1,5 +1,11 @@
 # @neo4j/cypher-builder
 
+## 3.2.1
+
+### Patch Changes
+
+- [#857](https://github.com/neo4j/cypher-builder/pull/857) [`a555e20`](https://github.com/neo4j/cypher-builder/commit/a555e207edb81b27e91b190841c752d87f02b803) Thanks [@angrykoala](https://github.com/angrykoala)! - Improve string literal escaping
+
 ## 3.2.0
 
 ### Minor Changes
