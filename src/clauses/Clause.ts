@@ -116,6 +116,7 @@ export abstract class Clause extends CypherASTNode {
         return this.toString();
     }
 
+    /** Adds the next clause in the chain. Not to mistake with `NEXT` (and `.next()`) clauses */
     protected addNextClause(clause: Clause): void {
         if (this.nextClause) {
             throw new Error(

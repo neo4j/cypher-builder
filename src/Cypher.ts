@@ -13,6 +13,7 @@ export { Let } from "./clauses/Let";
 export { LoadCSV } from "./clauses/LoadCSV";
 export { Match, OptionalMatch } from "./clauses/Match";
 export { Merge } from "./clauses/Merge";
+export { Next } from "./clauses/Next";
 export { Raw, type RawCypherContext } from "./clauses/Raw";
 export { Return } from "./clauses/Return";
 export { Union } from "./clauses/Union";

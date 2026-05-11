@@ -6,19 +6,20 @@
 import type { CypherEnvironment } from "../Environment";
 import { compileCypherIfExists } from "../utils/compile-cypher-if-exists";
 import { Clause } from "./Clause";
+import { WithNext } from "./mixins/clauses/WithNext";
 import { WithOrder } from "./mixins/sub-clauses/WithOrder";
 import { WithDistinctAll } from "./mixins/WithDistinctAll";
 import type { ProjectionColumn } from "./sub-clauses/Projection";
 import { Projection } from "./sub-clauses/Projection";
 import { mixin } from "./utils/mixin";
 
-export interface Return extends WithOrder, WithDistinctAll {}
+export interface Return extends WithOrder, WithDistinctAll, WithNext {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/return/ | Cypher Documentation}
  * @group Clauses
  */
-@mixin(WithOrder, WithDistinctAll)
+@mixin(WithOrder, WithDistinctAll, WithNext)
 export class Return extends Clause {
     private readonly projection: Projection;
 
@@ -38,6 +39,7 @@ export class Return extends Clause {
         const orderStr = compileCypherIfExists(this.orderByStatement, env, { prefix: "\n" });
         const projectionModeStr = this.projectionModeStr();
 
-        return `RETURN${projectionModeStr} ${projectionStr}${orderStr}`;
+        const nextClause = this.compileNextClause(env);
+        return `RETURN${projectionModeStr} ${projectionStr}${orderStr}${nextClause}`;
     }
 }

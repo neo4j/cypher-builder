@@ -55,6 +55,7 @@ describe("Clause chaining", () => {
             "let",
             "finish",
             "filter",
+            "next",
         ] as const)("Create.%s", (value) => {
             expect(clause[value]).toEqual(expect.any(Function));
         });
@@ -94,12 +95,20 @@ describe("Clause chaining", () => {
 
         const clause = new Cypher.Foreach(variable).in(list).do(createMovie);
 
-        it.each(["return", "remove", "set", "delete", "detachDelete", "with", "merge", "create", "let"] as const)(
-            "Foreach.%s",
-            (value) => {
-                expect(clause[value]).toEqual(expect.any(Function));
-            }
-        );
+        it.each([
+            "return",
+            "remove",
+            "set",
+            "delete",
+            "detachDelete",
+            "with",
+            "merge",
+            "create",
+            "let",
+            "next",
+        ] as const)("Foreach.%s", (value) => {
+            expect(clause[value]).toEqual(expect.any(Function));
+        });
     });
 
     describe("Merge", () => {
@@ -120,6 +129,7 @@ describe("Clause chaining", () => {
             "offset",
             "let",
             "filter",
+            "next",
         ] as const)("Merge.%s", (value) => {
             expect(clause[value]).toEqual(expect.any(Function));
         });
@@ -128,7 +138,7 @@ describe("Clause chaining", () => {
     describe("Return", () => {
         const clause = new Cypher.Return();
 
-        it.each(["orderBy", "limit", "skip", "offset"] as const)("Return.%s", (value) => {
+        it.each(["orderBy", "limit", "skip", "offset", "next"] as const)("Return.%s", (value) => {
             expect(clause[value]).toEqual(expect.any(Function));
         });
     });
