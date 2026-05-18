@@ -18,6 +18,7 @@
 *** xref:clauses/foreach.adoc[]
 *** xref:clauses/filter.adoc[]
 *** xref:clauses/let.adoc[]
+*** xref:clauses/next.adoc[]
 *** xref:clauses/load-csv.adoc[]
 *** xref:clauses/use.adoc[]
 ** Variables and parameters
