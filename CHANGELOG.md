@@ -1,5 +1,14 @@
 # @neo4j/cypher-builder
 
+## 3.2.2
+
+### Patch Changes
+
+- [#864](https://github.com/neo4j/cypher-builder/pull/864) [`cdadcad`](https://github.com/neo4j/cypher-builder/commit/cdadcad87b78154e9c67f455eb2d33d335b02c7a) Thanks [@angrykoala](https://github.com/angrykoala)! - Revert change: Emit methods and classes marked as internal again.
+
+    This change was introduced in v3.1.0 as an optimisation of the bundle, and to provide better typings,
+    but caused some incompatibilities when using `compile`
+
 ## 3.2.1
 
 ### Patch Changes
