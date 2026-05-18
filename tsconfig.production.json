@@ -5,7 +5,7 @@
         "outDir": "dist",
         "declarationMap": false,
         "sourceMap": false,
-        "stripInternal": true
+        "stripInternal": false
     },
     "exclude": ["src/**/*.test.ts"],
     "include": ["src/**/*"]
