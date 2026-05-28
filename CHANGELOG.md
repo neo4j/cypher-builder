@@ -1,5 +1,27 @@
 # @neo4j/cypher-builder
 
+## 3.3.0
+
+### Minor Changes
+
+- [#865](https://github.com/neo4j/cypher-builder/pull/865) [`4c1051d`](https://github.com/neo4j/cypher-builder/commit/4c1051d49e4559d0944a9ed318a46d9d1531caa2) Thanks [@angrykoala](https://github.com/angrykoala)! - Add support for `NEXT` clause using the method `next()`
+
+    ```javascript
+    const query = new Cypher.Match(new Cypher.Pattern(customerNode, { labels: ["Customer"] }))
+        .return([customerNode, customer])
+        .next()
+        .match(new Cypher.Pattern(productNode, { labels: ["Product"] }))
+        .return(productNode);
+    ```
+
+    ```cypher
+    MATCH (this0:Customer)
+    RETURN this0 AS var1
+    NEXT
+    MATCH (this2:Product)
+    RETURN this2
+    ```
+
 ## 3.2.2
 
 ### Patch Changes
