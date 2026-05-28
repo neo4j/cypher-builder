@@ -53,7 +53,7 @@ export interface Next
 export class Next extends Clause {
     constructor(clause?: Clause) {
         super();
-        if (clause !== undefined) {
+        if (clause) {
             this.addNextClause(clause);
         }
     }

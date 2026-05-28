@@ -19,7 +19,7 @@ export abstract class WithNext extends MixinClause {
     public next<T extends Clause>(clause?: T): Next | T {
         const nextSeparator = new Next(clause);
         this.addNextClause(nextSeparator);
-        if (clause !== undefined) {
+        if (clause) {
             return clause;
         }
         return nextSeparator;
