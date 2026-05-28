@@ -12,6 +12,7 @@ import { Clause } from "./Clause";
 import { WithCreate } from "./mixins/clauses/WithCreate";
 import { WithFilter } from "./mixins/clauses/WithFilter";
 import { WithFinish } from "./mixins/clauses/WithFinish";
+import { WithNext } from "./mixins/clauses/WithNext";
 import { WithLet } from "./mixins/clauses/WithLet";
 import { WithMerge } from "./mixins/clauses/WithMerge";
 import { WithReturn } from "./mixins/clauses/WithReturn";
@@ -35,7 +36,8 @@ export interface Merge
         WithOrder,
         WithLet,
         WithFilter,
-        WithMerge {}
+        WithMerge,
+        WithNext {}
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/clauses/merge/ | Cypher Documentation}
@@ -51,7 +53,8 @@ export interface Merge
     WithOrder,
     WithLet,
     WithFilter,
-    WithMerge
+    WithMerge,
+    WithNext
 )
 export class Merge extends Clause {
     private readonly pattern: Pattern | PathAssign<Pattern>;

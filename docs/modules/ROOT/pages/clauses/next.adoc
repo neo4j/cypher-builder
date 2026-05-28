@@ -1,0 +1,44 @@
+[[next]]
+:description: This page describes how to create `NEXT` clauses.
+= Next
+
+This page describes how to create a link:https://neo4j.com/docs/cypher-manual/25/queries/composed-queries/sequential-queries/[`NEXT`] clause using the `Cypher.Next` class.
+
+`NEXT` is used to compose sequential queries, where each part is executed independently one after the other.
+
+To chain clauses with `NEXT`, use the `.next()` method followed by the next query:
+
+[source, javascript]
+----
+const customer = new Cypher.Variable();
+const customerNode = new Cypher.Node();
+const productNode = new Cypher.Node();
+
+const query = new Cypher.Match(new Cypher.Pattern(customerNode, { labels: ["Customer"] }))
+    .return([customerNode, customer])
+    .next()
+    .match(new Cypher.Pattern(productNode, { labels: ["Product"] }))
+    .return(productNode);
+----
+
+[source, cypher]
+----
+MATCH (this0:Customer)
+RETURN this0 AS var1
+NEXT
+MATCH (this2:Product)
+RETURN this2
+----
+
+== Passing an existing clause
+
+An existing clause instance can be passed directly to `.next()` to append it as the next sequential query:
+
+[source, javascript]
+----
+const secondMatch = new Cypher.Match(new Cypher.Pattern(productNode, { labels: ["Product"] }));
+
+new Cypher.Match(new Cypher.Pattern(customerNode, { labels: ["Customer"] }))
+    .return([customerNode, customer])
+    .next(secondMatch);
+----
