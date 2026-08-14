@@ -1,13 +1,18 @@
 
 name: "Generate HTML"
 
+permissions:
+  contents: read
+
 # edit the list of branches according to your repository
 # the list of branches should contain all the branches in your Antora publish playbooks
 on:
   push:
     branches:
-    - main
-    - 2.x
+      - 'main'
+      - '2.x'
+    paths:
+      - "docs/**"
   workflow_dispatch:
 
 # change `dev` and `main` according to your repository's branch names
@@ -30,28 +35,37 @@ jobs:
       - name: Set Build Ref
         id: set-ref-env
         run: |
-          if [[ "${GITHUB_REF}" == "refs/heads/${{ env.DEV_BRANCH }}" ]]; then
-            build_from=${{ env.DEV_BRANCH }}
+          dev_branch="${{ env.DEV_BRANCH }}"
+          prod_branch="${{ env.PROD_BRANCH }}"
+
+          if [[ -z "${prod_branch}" ]]; then
+            build_from="${dev_branch}"
+            environments='["dev"]'
+          elif [[ "${GITHUB_REF}" == "refs/heads/${dev_branch}" ]]; then
+            build_from="${dev_branch}"
             environments='["dev"]'
           else
-            build_from=${{ env.PROD_BRANCH }}
+            build_from="${prod_branch}"
             environments='["prod"]'
           fi
-          # if dev branch = prod branch publish to both
-          if [[ "${{ env.DEV_BRANCH }}" == "${{ env.PROD_BRANCH }}" ]]; then
+
+          if [[ -n "${prod_branch}" && "${dev_branch}" == "${prod_branch}" ]]; then
             environments='["dev","prod"]'
           fi
+
           echo "build-ref=${build_from}" >> $GITHUB_OUTPUT
-          echo "environments=${environments[@]}" >> $GITHUB_OUTPUT
+          echo "environments=${environments}" >> $GITHUB_OUTPUT
 
   docs-build:
     name: Generate HTML
     needs: prepare-ref-env
     uses: neo4j/docs-tools/.github/workflows/reusable-docs-build.yml@v2
     with:
-      package-script: 'verify:publish'
       build-ref: ${{needs.prepare-ref-env.outputs.build-ref}}
+      docs-dir: 'docs'
       fetch-depth: 0
+      package-script: 'verify:publish'
+
 
   docs-verify:
     name: Verify HTML
@@ -71,7 +85,7 @@ jobs:
 
     steps:
       - name: Publish to ${{ matrix.environments }}
-        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 #v4
+        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 #v4.0.1
         with:
           token: ${{ secrets.DOCS_DISPATCH_TOKEN }}
           repository: neo4j/docs-publish
@@ -83,8 +97,3 @@ jobs:
               "run_id": "${{ github.run_id }}",
               "publish_env": "${{ matrix.environments }}"
             }
-
-      - name: Echo
-        if: ${{ matrix.environments == 'prod' }}
-        run: |
-          echo "If this step runs then approval has been granted" >> $GITHUB_STEP_SUMMARY
