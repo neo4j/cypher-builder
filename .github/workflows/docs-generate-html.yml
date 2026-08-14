@@ -1,4 +1,3 @@
-
 name: "Generate HTML"
 
 permissions:
@@ -9,8 +8,8 @@ permissions:
 on:
   push:
     branches:
-      - 'main'
-      - '2.x'
+      - "main"
+      - "2.x"
     paths:
       - "docs/**"
   workflow_dispatch:
@@ -20,11 +19,10 @@ on:
 # `main` is the branch you use to build and publish to neo4j.com/docs
 # in some cases, PROD_BRANCH and DEV_BRANCH may be the same branch
 env:
-  DEV_BRANCH: 'main'
-  PROD_BRANCH: 'main'
+  DEV_BRANCH: "main"
+  PROD_BRANCH: "main"
 
 jobs:
-
   prepare-ref-env:
     name: Set build branch and environments
     runs-on: ubuntu-latest
@@ -62,10 +60,9 @@ jobs:
     uses: neo4j/docs-tools/.github/workflows/reusable-docs-build.yml@v2
     with:
       build-ref: ${{needs.prepare-ref-env.outputs.build-ref}}
-      docs-dir: 'docs'
+      docs-dir: "docs"
       fetch-depth: 0
-      package-script: 'verify:publish'
-
+      package-script: "verify:publish"
 
   docs-verify:
     name: Verify HTML
