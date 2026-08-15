@@ -36,6 +36,8 @@ asciidoc:
     - "@neo4j-antora/antora-add-notes"
     - "@neo4j-antora/mark-terms"
   attributes:
+    page-tabs: cypher@
+    page-tabs-index: 40
     page-theme: docs
     page-type: Docs
     page-search-type: Docs
