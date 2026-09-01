@@ -57,7 +57,7 @@ jobs:
   docs-build:
     name: Generate HTML
     needs: prepare-ref-env
-    uses: neo4j/docs-tools/.github/workflows/reusable-docs-build.yml@v2
+    uses: neo4j/docs-tools/.github/workflows/reusable-docs-build.yml@3b1db7e5d0dfd2cfe75dc8aaef4580c36e02440e # v2
     with:
       build-ref: ${{needs.prepare-ref-env.outputs.build-ref}}
       docs-dir: "docs"
@@ -67,7 +67,7 @@ jobs:
   docs-verify:
     name: Verify HTML
     needs: docs-build
-    uses: neo4j/docs-tools/.github/workflows/reusable-docs-verify.yml@v2
+    uses: neo4j/docs-tools/.github/workflows/reusable-docs-verify.yml@3b1db7e5d0dfd2cfe75dc8aaef4580c36e02440e # v2
     with:
       failOnWarnings: true
 
