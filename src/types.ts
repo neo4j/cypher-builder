@@ -51,16 +51,7 @@ export type Expr =
  *  @group Expressions
  */
 export type Predicate =
-    | BooleanOp
-    | ComparisonOp
-    | Raw
-    | Exists
-    | Count
-    | PredicateFunction
-    | Literal<boolean>
-    | Case
-    | HasLabel
-    | IsType;
+    BooleanOp | ComparisonOp | Raw | Exists | Count | PredicateFunction | Literal<boolean> | Case | HasLabel | IsType;
 
 /** @group Utils */
 export type CypherResult = {
