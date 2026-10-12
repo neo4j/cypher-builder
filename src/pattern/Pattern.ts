@@ -30,11 +30,7 @@ export type RelationshipPatternOptions = {
     properties?: Record<string, Expr>;
     direction?: "left" | "right" | "undirected";
     length?:
-        | number
-        | "*"
-        | { min: number; max?: number }
-        | { min?: number; max: number }
-        | { min: number; max: number };
+        number | "*" | { min: number; max?: number } | { min?: number; max: number } | { min: number; max: number };
 };
 
 export type LengthOption = RelationshipPatternOptions["length"];

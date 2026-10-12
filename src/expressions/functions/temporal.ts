@@ -14,15 +14,7 @@ import { CypherFunction } from "./CypherFunctions";
  * @category Temporal
  */
 export type TemporalUnit =
-    | "millennium"
-    | "century"
-    | "decade"
-    | "year"
-    | "weekYear"
-    | "quarter"
-    | "month"
-    | "week"
-    | "day";
+    "millennium" | "century" | "decade" | "year" | "weekYear" | "quarter" | "month" | "week" | "day";
 
 /**
  * @see {@link https://neo4j.com/docs/cypher-manual/current/functions/temporal/#functions-datetime | Cypher Documentation}

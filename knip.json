@@ -6,6 +6,5 @@
     },
     "tags": ["-lintignore"],
     "ignoreFiles": ["examples/**", "docs/**"],
-    "ignoreBinaries": ["tsx"],
     "treatConfigHintsAsErrors": true
 }
