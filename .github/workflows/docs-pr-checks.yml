@@ -41,6 +41,13 @@ jobs:
       pages-modified: ${{ steps.get-file-changes.outputs.pages_modified_files }}
       pages-added: ${{ steps.get-file-changes.outputs.pages_added_files }}
     steps:
+      - name: Patch eMudhra CA compromise (CVE-2026-111943)
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install --only-upgrade -y ca-certificates
+          sudo update-ca-certificates --fresh
+
       - name: Get file changes
         id: get-file-changes
         uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
