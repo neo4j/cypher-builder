@@ -3,6 +3,8 @@
  * Neo4j Sweden AB [http://neo4j.com]
  */
 
+/* eslint-disable @typescript-eslint/unbound-method */
+
 import Cypher from "../src/index";
 
 describe("Clause chaining", () => {
